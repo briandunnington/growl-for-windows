@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Vortex.Growl.WindowsClient.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AutoStart" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FormSize" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">516, 414</Value>
+    </Setting>
+    <Setting Name="FormLocation" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">200, 200</Value>
+    </Setting>
+    <Setting Name="NetworkPassword" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ListenForNetworkNotifications" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AllowRemoteRegistration" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AllowForwarding" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DefaultDisplay" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Standard</Value>
+    </Setting>
+    <Setting Name="ListenForWebNotifications" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AutoEnableWebNotifications" Provider="Vortex.Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
