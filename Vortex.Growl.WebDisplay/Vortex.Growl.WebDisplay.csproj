@@ -33,6 +33,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebKitBrowser, Version=1.0.3064.16890, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WebKitBrowser\WebKitBrowser.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NotificationWindow.cs">
@@ -53,10 +57,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\CVS\WebKit.Net\branches\webkit.net\WebKitBrowser\WebKitBrowser.csproj">
-      <Project>{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}</Project>
-      <Name>WebKitBrowser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Vortex.Growl.Display\Vortex.Growl.DisplayStyle.csproj">
       <Project>{2BDCFDAC-B072-4CFB-A01E-622B3E73A52F}</Project>
       <Name>Vortex.Growl.DisplayStyle</Name>

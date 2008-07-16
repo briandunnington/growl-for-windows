@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample Growl App", "Sample 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample Net Growl App", "Sample Net Growl App\Sample Net Growl App.csproj", "{E966873E-1959-4D26-B3BE-542295D65904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebKitBrowser", "..\..\..\CVS\WebKit.Net\branches\webkit.net\WebKitBrowser\WebKitBrowser.csproj", "{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.Framework", "Vortex.Growl.Framework\Vortex.Growl.Framework.csproj", "{F3F5909B-EAE9-40A3-94CA-FE492201D1E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.AppBridge", "Vortex.Growl.AppBridge\Vortex.Growl.AppBridge.csproj", "{D7554A69-BC4D-4C55-A5FC-AC369CE62BB5}"
@@ -47,10 +45,6 @@ Global
 		{E966873E-1959-4D26-B3BE-542295D65904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E966873E-1959-4D26-B3BE-542295D65904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E966873E-1959-4D26-B3BE-542295D65904}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3F5909B-EAE9-40A3-94CA-FE492201D1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F3F5909B-EAE9-40A3-94CA-FE492201D1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3F5909B-EAE9-40A3-94CA-FE492201D1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU

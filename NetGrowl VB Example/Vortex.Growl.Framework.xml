@@ -4,9 +4,121 @@
         <name>Vortex.Growl.Framework</name>
     </assembly>
     <members>
-        <member name="T:Vortex.Growl.Framework.RegistrationPacket">
+        <member name="T:Vortex.Growl.Framework.Growl">
             <summary>
-            Represents a Registration message sent as a UDP packet as specified by the Growl protocol
+            This is the main class used to send notifications from locally-installed 
+            applications to Growl.
+            </summary>
+            <remarks>
+            Growl will only accept notifications from the same machine when using this
+            interface. If your application runs on computer other than the one where
+            Growl is running, you must use the <see cref="T:Vortex.Growl.Framework.NetGrowl"/> class instead.
+            </remarks>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.DEFAULT_LOCAL_PORT">
+            <summary>
+            Default port for local applications to send notifications
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.growlVersion">
+            <summary>
+            The current version of Growl to target
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.protocolVersion">
+            <summary>
+            The Growl protocol version to use to format data packets
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.ipAddress">
+            <summary>
+            The IP address to send notifications to
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.port">
+            <summary>
+            The port to send notifications to
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.applicationName">
+            <summary>
+            The name of the application sending the notifications
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Growl.password">
+            <summary>
+            The password used to validate notifications (this is always "" for local apps)
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.Growl.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+            <remarks>The default constructor is parameterless to enable COM interoperability.</remarks>
+        </member>
+        <member name="M:Vortex.Growl.Framework.Growl.#ctor(System.String)">
+            <summary>
+            Create a new <see cref="T:Vortex.Growl.Framework.Growl"/> instance
+            </summary>
+            <param name="applicationName">The name of the application sending the notifications</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.Growl.Register(Vortex.Growl.Framework.NotificationType[]@)">
+            <summary>
+            Registers the application with Growl
+            </summary>
+            <param name="notificationTypes">Array of <see cref="T:Vortex.Growl.Framework.NotificationType"/>s that the application will be sending</param>
+            <remarks>
+            An application must register before it can send notifications. If notifications are send and the application is not
+            registered, the notifications will be ignored and discarded. If an application is already registered and calls
+            <c>Register</c> again, the list of notifications that the application is allowed to send will be updated.
+            </remarks>
+        </member>
+        <member name="M:Vortex.Growl.Framework.Growl.Notify(Vortex.Growl.Framework.NotificationType,System.String)">
+            <summary>
+            Sends a basic notification, setting only the title
+            </summary>
+            <param name="notificationType">The <see cref="T:Vortex.Growl.Framework.NotificationType">type</see> of notification</param>
+            <param name="title">The title of the notification</param>
+            <remarks>
+            This method is <c>ComVisible(false)</c> since some COM languages do not allow method overloading.
+            </remarks>
+        </member>
+        <member name="M:Vortex.Growl.Framework.Growl.Notify(Vortex.Growl.Framework.NotificationType,System.String,System.String,Vortex.Growl.Framework.Priority,System.Boolean)">
+            <summary>
+            Sends a notification, setting all available parameters
+            </summary>
+            <param name="notificationType">The <see cref="T:Vortex.Growl.Framework.NotificationType">type</see> of notification</param>
+            <param name="title">The title of the notification</param>
+            <param name="description">The description or extended information of the notifications</param>
+            <param name="priority">The <see cref="T:Vortex.Growl.Framework.Priority"/> of the notification</param>
+            <param name="sticky"><c>true</c> to request that the notification is sticky, <c>false</c> to request the notification be not sticky</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.Growl.Send(Vortex.Growl.Framework.BasePacket)">
+            <summary>
+            Sends the registration or notification message to the Growl instance
+            </summary>
+            <param name="packet">The <see cref="T:Vortex.Growl.Framework.BasePacket"/> representing the message to send</param>
+        </member>
+        <member name="P:Vortex.Growl.Framework.Growl.GrowlVersion">
+            <summary>
+            The version of Growl to target
+            </summary>
+            <remarks>
+            Setting this value has no effect on the protocol version used or any other aspect
+            of how the class operates. It is provided solely as a information source.
+            </remarks>
+        </member>
+        <member name="P:Vortex.Growl.Framework.Growl.ProtocolVersion">
+            <summary>
+            The Growl protocol version to use to format data packets
+            </summary>
+            <remarks>
+            Currently, the only supported version is version 1.
+            </remarks>
+        </member>
+        <member name="P:Vortex.Growl.Framework.Growl.ApplicationName">
+            <summary>
+            The name of the application sending the notifications
             </summary>
         </member>
         <member name="T:Vortex.Growl.Framework.BasePacket">
@@ -72,6 +184,150 @@
             The entire packet's data, encoded as a byte array.
             </summary>
         </member>
+        <member name="T:Vortex.Growl.Framework.PacketType">
+            <summary>
+            Identifies the type of information that a packet contains
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.PacketType.Registration">
+            <summary>
+            Used when sending registration packets
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.PacketType.Notification">
+            <summary>
+            Used when sending notification packets
+            </summary>
+        </member>
+        <member name="T:Vortex.Growl.Framework.UdpListener">
+            <summary>
+            A basic listener that listens for incoming UDP messages on the specified port
+            and passes the event on to application code whenever a message is received.
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.UdpListener.port">
+            <summary>
+            The port to listen for messages on
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.UdpListener.localMessagesOnly">
+            <summary>
+            Indicates if messages from remote machines should be allowed or not
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.UdpListener.udp">
+            <summary>
+            The underlying <see cref="T:System.Net.Sockets.UdpClient"/>
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.UdpListener.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:Vortex.Growl.Framework.UdpListener"/>
+            </summary>
+            <param name="port">The port to listen for messages on</param>
+            <param name="localMessagesOnly"><c>true</c> to only listen for messages from the local machine;<c>false</c> to listen for messages from any source</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.UdpListener.Start">
+            <summary>
+            Starts listening for messages on the specified port
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.UdpListener.Stop">
+            <summary>
+            Stops listening for messages and frees the port
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.UdpListener.ProcessPacket(System.IAsyncResult)">
+            <summary>
+            When a message is received by the listener, the raw data is read from the packet
+            and the <see cref="E:Vortex.Growl.Framework.UdpListener.PacketReceived"/> event is fired.
+            </summary>
+            <param name="ar"><see cref="T:System.IAsyncResult"/></param>
+        </member>
+        <member name="E:Vortex.Growl.Framework.UdpListener.PacketReceived">
+            <summary>
+            Fires when a message is received
+            </summary>
+        </member>
+        <member name="T:Vortex.Growl.Framework.UdpListener.PacketHandler">
+            <summary>
+            Event handlder for the <see cref="E:Vortex.Growl.Framework.UdpListener.PacketReceived"/> event
+            </summary>
+            <param name="bytes">The raw packet data</param>
+            <param name="receivedFrom">The host that sent the message</param>
+        </member>
+        <member name="T:Vortex.Growl.Framework.UdpListener.UdpState">
+            <summary>
+            Simple class to represent state when used with a UdpListener
+            </summary>
+        </member>
+        <member name="T:Vortex.Growl.Framework.IMessageReceiver">
+            <summary>
+            This class is only used to help make COM interop possible.
+            It should not be used from within any application code.
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.IMessageReceiver.RegistrationReceived(Vortex.Growl.Framework.RegistrationPacket,System.String)">
+            <summary>
+            Fired when a registration message is received
+            </summary>
+            <param name="rp"><see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> containing the information received</param>
+            <param name="receivedFrom">The host that sent the message</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.IMessageReceiver.NotificationReceived(Vortex.Growl.Framework.NotificationPacket,System.String)">
+            <summary>
+            Fired when a notification message is received
+            </summary>
+            <param name="np"><see cref="T:Vortex.Growl.Framework.NotificationPacket"/> containing the information received</param>
+            <param name="receivedFrom">The host that sent the message</param>
+        </member>
+        <member name="T:Vortex.Growl.Framework.ByteBuilder">
+            <summary>
+            Helper class for converting basic data types to a byte array.
+            This class is similar to the <see cref="T:System.Text.StringBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Byte)">
+            <summary>
+            Appends a single byte to the array
+            </summary>
+            <param name="val">The byte to append</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Byte[])">
+            <summary>
+            Appends an array of bytes to the array
+            </summary>
+            <param name="val">The bytes to append</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.String)">
+            <summary>
+            Appends a string as an array of UTF8-encoded bytes
+            </summary>
+            <param name="val">The string to append</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Int32)">
+            <summary>
+            Appends an <see cref="T:System.Int32"/> as a 2-byte array using Big Endian encoding
+            </summary>
+            <param name="val">The number to append</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Int16)">
+            <summary>
+            Appends a <see cref="T:System.Int16"/> as a 2-byte array using Big Endian encoding
+            </summary>
+            <param name="val">The number to append</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.ByteBuilder.GetBytes">
+            <summary>
+            Returns all of the bytes as an array
+            </summary>
+            <returns>Array of <see cref="T:System.Byte"/>s</returns>
+        </member>
+        <member name="T:Vortex.Growl.Framework.RegistrationPacket">
+            <summary>
+            Represents a Registration message sent as a UDP packet as specified by the Growl protocol
+            </summary>
+        </member>
         <member name="F:Vortex.Growl.Framework.RegistrationPacket.notificationTypes">
             <summary>
             A <see cref="T:System.Collections.Generic.List`1">list</see> of <see cref="T:Vortex.Growl.Framework.NotificationType"/>s that 
@@ -111,40 +367,318 @@
             All of the <see cref="T:Vortex.Growl.Framework.NotificationType"/>s that this application can send
             </summary>
         </member>
-        <member name="T:Vortex.Growl.Framework.IMessageReceiver">
+        <member name="T:Vortex.Growl.Framework.Priority">
             <summary>
-            This class is only used to help make COM interop possible.
-            It should not be used from within any application code.
+            Indicates the relative priority of a notification.
+            </summary>
+            <remarks>
+            The priority of a notification can be used to change the way the notification is handled
+            and presented to the end user. For instance, higher priority notifications might be displayed
+            with a red color or exclamation icon. However, each display is responsible for
+            handling changes related to priority and may not make any distinction between different priority
+            levels. Further, although each notification can request its own priority, the end user may elect 
+            to override this priority setting, so the notification's requested priority is not guaranteed.
+            </remarks>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Priority.VeryLow">
+            <summary>
+            Very low
             </summary>
         </member>
-        <member name="M:Vortex.Growl.Framework.IMessageReceiver.RegistrationReceived(Vortex.Growl.Framework.RegistrationPacket,System.String)">
+        <member name="F:Vortex.Growl.Framework.Priority.Moderate">
             <summary>
-            Fired when a registration message is received
+            Moderate
             </summary>
-            <param name="rp"><see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> containing the information received</param>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Priority.Normal">
+            <summary>
+            Normal
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Priority.High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.Priority.Emergency">
+            <summary>
+            Emergency
+            </summary>
+        </member>
+        <member name="T:Vortex.Growl.Framework.NotificationType">
+            <summary>
+            Represents a type of notification that an application may send
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationType.name">
+            <summary>
+            The common name of this type of notification
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationType.enabled">
+            <summary>
+            Indicates if this type of notification should be enabled or disabled by default
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.NotificationType.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+            <remarks>The default constructor is parameterless to enable COM interoperability.</remarks>
+        </member>
+        <member name="M:Vortex.Growl.Framework.NotificationType.#ctor(System.String,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:Vortex.Growl.Framework.NotificationType"/>
+            </summary>
+            <param name="name">The common name of this type of notification</param>
+            <param name="enabled"><c>true</c> if this type of notification should be enabled by default; <c>false</c> if this type of notification should be disabled by default</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.NotificationType.GetByName(System.String)">
+            <summary>
+            Returns the associated <see cref="T:Vortex.Growl.Framework.NotificationType"/> given the type's name
+            </summary>
+            <param name="name">The common name of the type of notification</param>
+            <returns><see cref="T:Vortex.Growl.Framework.NotificationType"/></returns>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationType.Name">
+            <summary>
+            The common name of this type of notification
+            </summary>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationType.Enabled">
+            <summary>
+            Indicates if this type of notification should be enabled or disabled by default
+            </summary>
+            <value><c>true</c> if this type of notification should be enabled by default; <c>false</c> if this type of notification should be disabled by default</value>
+        </member>
+        <member name="T:Vortex.Growl.Framework.MessageReceiver">
+            <summary>
+            Represents a client that can listen for and receive Growl-style notifications,
+            parse the information received, and pass on the events to application code.
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.MessageReceiver.DEFAULT_PORT">
+            <summary>
+            The default port to listen for messages on
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.MessageReceiver.port">
+            <summary>
+            The port currently being used to listen for messages on
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.MessageReceiver.udp">
+            <summary>
+            The underlying <see cref="T:Vortex.Growl.Framework.UdpListener"/>
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.MessageReceiver.isRunning">
+            <summary>
+            Indicates if the MessageReceiver is currently listening for messages
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.MessageReceiver.password">
+            <summary>
+            The client password used to validate messages
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.MessageReceiver.localMessagesOnly">
+            <summary>
+            Indicates if messages from remote machines should be allowed or not
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+            <remarks>The default constructor is parameterless to enable COM interoperability.</remarks>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.Start">
+            <summary>
+            Starts listening for incoming notifications
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.Stop">
+            <summary>
+            Stops listening for incoming notifications
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.SetPassword(System.String)">
+            <summary>
+            Sets the password used to validate incoming messages
+            </summary>
+            <param name="password">The password</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.udp_PacketReceived(System.Byte[],System.String)">
+            <summary>
+            Handles incoming packet data when a message is received
+            </summary>
+            <param name="bytes">The raw packet data</param>
+            <param name="receivedFrom">The host that sent the packet</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.OnRegistrationPacketReceived(Vortex.Growl.Framework.RegistrationPacket,System.String)">
+            <summary>
+            Fired when a <see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> is received
+            </summary>
+            <param name="rp">The <see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> containing the information received</param>
+            <param name="receivedFrom">The host from which the packet was received</param>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:Vortex.Growl.Framework.MessageReceiver.OnNotificationPacketReceived(Vortex.Growl.Framework.NotificationPacket,System.String)">
+            <summary>
+            Fired when a <see cref="T:Vortex.Growl.Framework.NotificationPacket"/> is received
+            </summary>
+            <param name="np">The <see cref="T:Vortex.Growl.Framework.NotificationPacket"/> containing the information received</param>
+            <param name="receivedFrom">The host from which the packet was received</param>
+        </member>
+        <member name="E:Vortex.Growl.Framework.MessageReceiver.RegistrationReceived">
+            <summary>
+            Fires when a registration message is received
+            </summary>
+        </member>
+        <member name="E:Vortex.Growl.Framework.MessageReceiver.NotificationReceived">
+            <summary>
+            Fires when a notification message is received
+            </summary>
+        </member>
+        <member name="P:Vortex.Growl.Framework.MessageReceiver.Port">
+            <summary>
+            The port to listen for notifications on.
+            </summary>
+            <remarks>The default value is <see cref="F:Vortex.Growl.Framework.MessageReceiver.DEFAULT_PORT"/></remarks>
+        </member>
+        <member name="P:Vortex.Growl.Framework.MessageReceiver.IsRunning">
+            <summary>
+            Indicates if the MessageReceiver is currently listening for incoming messages
+            </summary>
+            <value><c>true</c> if the MessageReceiver is currently listening, <c>false</c> otherwise</value>
+        </member>
+        <member name="T:Vortex.Growl.Framework.MessageReceiver.RegistrationHandler">
+            <summary>
+            Event handler for the <see cref="E:Vortex.Growl.Framework.MessageReceiver.RegistrationReceived"/> event
+            </summary>
+            <param name="rp">The <see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> containing the data received</param>
             <param name="receivedFrom">The host that sent the message</param>
         </member>
-        <member name="M:Vortex.Growl.Framework.IMessageReceiver.NotificationReceived(Vortex.Growl.Framework.NotificationPacket,System.String)">
+        <member name="T:Vortex.Growl.Framework.MessageReceiver.NotificationHandler">
             <summary>
-            Fired when a notification message is received
+            Event handler for the <see cref="E:Vortex.Growl.Framework.MessageReceiver.NotificationReceived"/> event
             </summary>
-            <param name="np"><see cref="T:Vortex.Growl.Framework.NotificationPacket"/> containing the information received</param>
+            <param name="np">The <see cref="T:Vortex.Growl.Framework.NotificationPacket"/> containing the data received</param>
             <param name="receivedFrom">The host that sent the message</param>
         </member>
-        <member name="T:Vortex.Growl.Framework.PacketType">
+        <member name="T:Vortex.Growl.Framework.ProtocolVersion">
             <summary>
-            Identifies the type of information that a packet contains
+            Protocol version
             </summary>
         </member>
-        <member name="F:Vortex.Growl.Framework.PacketType.Registration">
+        <member name="F:Vortex.Growl.Framework.ProtocolVersion.Original">
             <summary>
-            Used when sending registration packets
+            Original
             </summary>
         </member>
-        <member name="F:Vortex.Growl.Framework.PacketType.Notification">
+        <member name="T:Vortex.Growl.Framework.NotificationPacket">
             <summary>
-            Used when sending notification packets
+            Represents a Notification message sent as a UDP packet as specified by the Growl protocol
             </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationPacket.notificationType">
+            <summary>
+            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> of the notification
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationPacket.title">
+            <summary>
+            The title of the notification
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationPacket.description">
+            <summary>
+            The description or extended information of the notification
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationPacket.priority">
+            <summary>
+            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.Priority"/> of the notification
+            </summary>
+        </member>
+        <member name="F:Vortex.Growl.Framework.NotificationPacket.sticky">
+            <summary>
+            Indicates if the notification is sticky or not
+            </summary>
+        </member>
+        <member name="M:Vortex.Growl.Framework.NotificationPacket.#ctor(System.Int32,System.String,System.String,Vortex.Growl.Framework.NotificationType,System.String,System.String,Vortex.Growl.Framework.Priority,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:Vortex.Growl.Framework.NotificationPacket"/>
+            </summary>
+            <param name="protocolVersion">The Growl protocol version</param>
+            <param name="applicationName">The name of the sending application</param>
+            <param name="password">The password used to validate the receiving client</param>
+            <param name="notificationType">The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> of the notification</param>
+            <param name="title">The title of the notification</param>
+            <param name="description">The description or extended information of the notification</param>
+            <param name="priority">The <see cref="P:Vortex.Growl.Framework.NotificationPacket.Priority"/> of the notification</param>
+            <param name="sticky">Indicates if the notification should be sticky or not</param>
+        </member>
+        <member name="M:Vortex.Growl.Framework.NotificationPacket.PrepareData">
+            <summary>
+            Converts the notification information into a packet of data to be sent 
+            to the Growl receiving application.
+            </summary>
+            <returns>byte array</returns>
+        </member>
+        <member name="M:Vortex.Growl.Framework.NotificationPacket.FromPacket(System.Byte[],System.String)">
+            <summary>
+            Given the raw packet data, converts the data back into a <see cref="T:Vortex.Growl.Framework.NotificationPacket"/>
+            </summary>
+            <param name="bytes">The raw packet data</param>
+            <param name="password">The client password</param>
+            <returns><see cref="T:Vortex.Growl.Framework.NotificationPacket"/></returns>
+            <remarks>
+            If the client password does not match the password used to validate the sent notification,
+            or if the packet is malformed in any way, a <c>null</c> object will be returned.
+            </remarks>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationPacket.NotificationType">
+            <summary>
+            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> of the notification
+            </summary>
+            <remarks>
+            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> must already have been registered with the application
+            or the notification will be discarded.
+            </remarks>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationPacket.Title">
+            <summary>
+            The title of the notification
+            </summary>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationPacket.Description">
+            <summary>
+            The description or extended information of the notification
+            </summary>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationPacket.Priority">
+            <summary>
+            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.Priority"/> of the notification
+            </summary>
+            <remarks>
+            Although the sending application can specify the priority of the notification,
+            the end user may override the priority setting. As such, the priority specified
+            here is not guaranteed.
+            </remarks>
+        </member>
+        <member name="P:Vortex.Growl.Framework.NotificationPacket.Sticky">
+            <summary>
+            Indicates if the notification is sticky or not
+            </summary>
+            <value><c>true</c> if the notification should be sticky; <c>false</c> otherwise</value>
+            <remarks>
+            Although the sending application can specify the stickiness of the notification,
+            the end user may override the stickiness setting. As such, the stickiness specified
+            here is not guaranteed.
+            </remarks>
         </member>
         <member name="T:Vortex.Growl.Framework.NetGrowl">
             <summary>
@@ -288,540 +822,6 @@
             </summary>
             <param name="originalBytes">The byte array to compute</param>
             <returns>MD5 hash as an array of bytes</returns>
-        </member>
-        <member name="T:Vortex.Growl.Framework.MessageReceiver">
-            <summary>
-            Represents a client that can listen for and receive Growl-style notifications,
-            parse the information received, and pass on the events to application code.
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.MessageReceiver.DEFAULT_PORT">
-            <summary>
-            The default port to listen for messages on
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.MessageReceiver.port">
-            <summary>
-            The port currently being used to listen for messages on
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.MessageReceiver.udp">
-            <summary>
-            The underlying <see cref="T:Vortex.Growl.Framework.UdpListener"/>
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.MessageReceiver.isRunning">
-            <summary>
-            Indicates if the MessageReceiver is currently listening for messages
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.MessageReceiver.password">
-            <summary>
-            The client password used to validate messages
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.MessageReceiver.localMessagesOnly">
-            <summary>
-            Indicates if messages from remote machines should be allowed or not
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.#ctor">
-            <summary>
-            Default constructor.
-            </summary>
-            <remarks>The default constructor is parameterless to enable COM interoperability.</remarks>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.Start">
-            <summary>
-            Starts listening for incoming notifications
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.Stop">
-            <summary>
-            Stops listening for incoming notifications
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.SetPassword(System.String)">
-            <summary>
-            Sets the password used to validate incoming messages
-            </summary>
-            <param name="password">The password</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.udp_PacketReceived(System.Byte[],System.String)">
-            <summary>
-            Handles incoming packet data when a message is received
-            </summary>
-            <param name="bytes">The raw packet data</param>
-            <param name="receivedFrom">The host that sent the packet</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.OnRegistrationPacketReceived(Vortex.Growl.Framework.RegistrationPacket,System.String)">
-            <summary>
-            Fired when a <see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> is received
-            </summary>
-            <param name="rp">The <see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> containing the information received</param>
-            <param name="receivedFrom">The host from which the packet was received</param>
-            <remarks>
-            </remarks>
-        </member>
-        <member name="M:Vortex.Growl.Framework.MessageReceiver.OnNotificationPacketReceived(Vortex.Growl.Framework.NotificationPacket,System.String)">
-            <summary>
-            Fired when a <see cref="T:Vortex.Growl.Framework.NotificationPacket"/> is received
-            </summary>
-            <param name="np">The <see cref="T:Vortex.Growl.Framework.NotificationPacket"/> containing the information received</param>
-            <param name="receivedFrom">The host from which the packet was received</param>
-        </member>
-        <member name="E:Vortex.Growl.Framework.MessageReceiver.RegistrationReceived">
-            <summary>
-            Fires when a registration message is received
-            </summary>
-        </member>
-        <member name="E:Vortex.Growl.Framework.MessageReceiver.NotificationReceived">
-            <summary>
-            Fires when a notification message is received
-            </summary>
-        </member>
-        <member name="P:Vortex.Growl.Framework.MessageReceiver.Port">
-            <summary>
-            The port to listen for notifications on.
-            </summary>
-            <remarks>The default value is <see cref="F:Vortex.Growl.Framework.MessageReceiver.DEFAULT_PORT"/></remarks>
-        </member>
-        <member name="P:Vortex.Growl.Framework.MessageReceiver.IsRunning">
-            <summary>
-            Indicates if the MessageReceiver is currently listening for incoming messages
-            </summary>
-            <value><c>true</c> if the MessageReceiver is currently listening, <c>false</c> otherwise</value>
-        </member>
-        <member name="T:Vortex.Growl.Framework.MessageReceiver.RegistrationHandler">
-            <summary>
-            Event handler for the <see cref="E:Vortex.Growl.Framework.MessageReceiver.RegistrationReceived"/> event
-            </summary>
-            <param name="rp">The <see cref="T:Vortex.Growl.Framework.RegistrationPacket"/> containing the data received</param>
-            <param name="receivedFrom">The host that sent the message</param>
-        </member>
-        <member name="T:Vortex.Growl.Framework.MessageReceiver.NotificationHandler">
-            <summary>
-            Event handler for the <see cref="E:Vortex.Growl.Framework.MessageReceiver.NotificationReceived"/> event
-            </summary>
-            <param name="np">The <see cref="T:Vortex.Growl.Framework.NotificationPacket"/> containing the data received</param>
-            <param name="receivedFrom">The host that sent the message</param>
-        </member>
-        <member name="T:Vortex.Growl.Framework.NotificationPacket">
-            <summary>
-            Represents a Notification message sent as a UDP packet as specified by the Growl protocol
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationPacket.notificationType">
-            <summary>
-            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> of the notification
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationPacket.title">
-            <summary>
-            The title of the notification
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationPacket.description">
-            <summary>
-            The description or extended information of the notification
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationPacket.priority">
-            <summary>
-            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.Priority"/> of the notification
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationPacket.sticky">
-            <summary>
-            Indicates if the notification is sticky or not
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.NotificationPacket.#ctor(System.Int32,System.String,System.String,Vortex.Growl.Framework.NotificationType,System.String,System.String,Vortex.Growl.Framework.Priority,System.Boolean)">
-            <summary>
-            Creates a new <see cref="T:Vortex.Growl.Framework.NotificationPacket"/>
-            </summary>
-            <param name="protocolVersion">The Growl protocol version</param>
-            <param name="applicationName">The name of the sending application</param>
-            <param name="password">The password used to validate the receiving client</param>
-            <param name="notificationType">The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> of the notification</param>
-            <param name="title">The title of the notification</param>
-            <param name="description">The description or extended information of the notification</param>
-            <param name="priority">The <see cref="P:Vortex.Growl.Framework.NotificationPacket.Priority"/> of the notification</param>
-            <param name="sticky">Indicates if the notification should be sticky or not</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.NotificationPacket.PrepareData">
-            <summary>
-            Converts the notification information into a packet of data to be sent 
-            to the Growl receiving application.
-            </summary>
-            <returns>byte array</returns>
-        </member>
-        <member name="M:Vortex.Growl.Framework.NotificationPacket.FromPacket(System.Byte[],System.String)">
-            <summary>
-            Given the raw packet data, converts the data back into a <see cref="T:Vortex.Growl.Framework.NotificationPacket"/>
-            </summary>
-            <param name="bytes">The raw packet data</param>
-            <param name="password">The client password</param>
-            <returns><see cref="T:Vortex.Growl.Framework.NotificationPacket"/></returns>
-            <remarks>
-            If the client password does not match the password used to validate the sent notification,
-            or if the packet is malformed in any way, a <c>null</c> object will be returned.
-            </remarks>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationPacket.NotificationType">
-            <summary>
-            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> of the notification
-            </summary>
-            <remarks>
-            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.NotificationType"/> must already have been registered with the application
-            or the notification will be discarded.
-            </remarks>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationPacket.Title">
-            <summary>
-            The title of the notification
-            </summary>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationPacket.Description">
-            <summary>
-            The description or extended information of the notification
-            </summary>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationPacket.Priority">
-            <summary>
-            The <see cref="P:Vortex.Growl.Framework.NotificationPacket.Priority"/> of the notification
-            </summary>
-            <remarks>
-            Although the sending application can specify the priority of the notification,
-            the end user may override the priority setting. As such, the priority specified
-            here is not guaranteed.
-            </remarks>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationPacket.Sticky">
-            <summary>
-            Indicates if the notification is sticky or not
-            </summary>
-            <value><c>true</c> if the notification should be sticky; <c>false</c> otherwise</value>
-            <remarks>
-            Although the sending application can specify the stickiness of the notification,
-            the end user may override the stickiness setting. As such, the stickiness specified
-            here is not guaranteed.
-            </remarks>
-        </member>
-        <member name="T:Vortex.Growl.Framework.Growl">
-            <summary>
-            This is the main class used to send notifications from locally-installed 
-            applications to Growl.
-            </summary>
-            <remarks>
-            Growl will only accept notifications from the same machine when using this
-            interface. If your application runs on computer other than the one where
-            Growl is running, you must use the <see cref="T:Vortex.Growl.Framework.NetGrowl"/> class instead.
-            </remarks>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.DEFAULT_LOCAL_PORT">
-            <summary>
-            Default port for local applications to send notifications
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.growlVersion">
-            <summary>
-            The current version of Growl to target
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.protocolVersion">
-            <summary>
-            The Growl protocol version to use to format data packets
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.ipAddress">
-            <summary>
-            The IP address to send notifications to
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.port">
-            <summary>
-            The port to send notifications to
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.applicationName">
-            <summary>
-            The name of the application sending the notifications
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Growl.password">
-            <summary>
-            The password used to validate notifications (this is always "" for local apps)
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.Growl.#ctor">
-            <summary>
-            Default constructor.
-            </summary>
-            <remarks>The default constructor is parameterless to enable COM interoperability.</remarks>
-        </member>
-        <member name="M:Vortex.Growl.Framework.Growl.#ctor(System.String)">
-            <summary>
-            Create a new <see cref="T:Vortex.Growl.Framework.Growl"/> instance
-            </summary>
-            <param name="applicationName">The name of the application sending the notifications</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.Growl.Register(Vortex.Growl.Framework.NotificationType[]@)">
-            <summary>
-            Registers the application with Growl
-            </summary>
-            <param name="notificationTypes">Array of <see cref="T:Vortex.Growl.Framework.NotificationType"/>s that the application will be sending</param>
-            <remarks>
-            An application must register before it can send notifications. If notifications are send and the application is not
-            registered, the notifications will be ignored and discarded. If an application is already registered and calls
-            <c>Register</c> again, the list of notifications that the application is allowed to send will be updated.
-            </remarks>
-        </member>
-        <member name="M:Vortex.Growl.Framework.Growl.Notify(Vortex.Growl.Framework.NotificationType,System.String)">
-            <summary>
-            Sends a basic notification, setting only the title
-            </summary>
-            <param name="notificationType">The <see cref="T:Vortex.Growl.Framework.NotificationType">type</see> of notification</param>
-            <param name="title">The title of the notification</param>
-            <remarks>
-            This method is <c>ComVisible(false)</c> since some COM languages do not allow method overloading.
-            </remarks>
-        </member>
-        <member name="M:Vortex.Growl.Framework.Growl.Notify(Vortex.Growl.Framework.NotificationType,System.String,System.String,Vortex.Growl.Framework.Priority,System.Boolean)">
-            <summary>
-            Sends a notification, setting all available parameters
-            </summary>
-            <param name="notificationType">The <see cref="T:Vortex.Growl.Framework.NotificationType">type</see> of notification</param>
-            <param name="title">The title of the notification</param>
-            <param name="description">The description or extended information of the notifications</param>
-            <param name="priority">The <see cref="T:Vortex.Growl.Framework.Priority"/> of the notification</param>
-            <param name="sticky"><c>true</c> to request that the notification is sticky, <c>false</c> to request the notification be not sticky</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.Growl.Send(Vortex.Growl.Framework.BasePacket)">
-            <summary>
-            Sends the registration or notification message to the Growl instance
-            </summary>
-            <param name="packet">The <see cref="T:Vortex.Growl.Framework.BasePacket"/> representing the message to send</param>
-        </member>
-        <member name="P:Vortex.Growl.Framework.Growl.GrowlVersion">
-            <summary>
-            The version of Growl to target
-            </summary>
-            <remarks>
-            Setting this value has no effect on the protocol version used or any other aspect
-            of how the class operates. It is provided solely as a information source.
-            </remarks>
-        </member>
-        <member name="P:Vortex.Growl.Framework.Growl.ProtocolVersion">
-            <summary>
-            The Growl protocol version to use to format data packets
-            </summary>
-            <remarks>
-            Currently, the only supported version is version 1.
-            </remarks>
-        </member>
-        <member name="P:Vortex.Growl.Framework.Growl.ApplicationName">
-            <summary>
-            The name of the application sending the notifications
-            </summary>
-        </member>
-        <member name="T:Vortex.Growl.Framework.ProtocolVersion">
-            <summary>
-            Protocol version
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.ProtocolVersion.Original">
-            <summary>
-            Original
-            </summary>
-        </member>
-        <member name="T:Vortex.Growl.Framework.NotificationType">
-            <summary>
-            Represents a type of notification that an application may send
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationType.name">
-            <summary>
-            The common name of this type of notification
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.NotificationType.enabled">
-            <summary>
-            Indicates if this type of notification should be enabled or disabled by default
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.NotificationType.#ctor">
-            <summary>
-            Default constructor.
-            </summary>
-            <remarks>The default constructor is parameterless to enable COM interoperability.</remarks>
-        </member>
-        <member name="M:Vortex.Growl.Framework.NotificationType.#ctor(System.String,System.Boolean)">
-            <summary>
-            Creates a new <see cref="T:Vortex.Growl.Framework.NotificationType"/>
-            </summary>
-            <param name="name">The common name of this type of notification</param>
-            <param name="enabled"><c>true</c> if this type of notification should be enabled by default; <c>false</c> if this type of notification should be disabled by default</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.NotificationType.GetByName(System.String)">
-            <summary>
-            Returns the associated <see cref="T:Vortex.Growl.Framework.NotificationType"/> given the type's name
-            </summary>
-            <param name="name">The common name of the type of notification</param>
-            <returns><see cref="T:Vortex.Growl.Framework.NotificationType"/></returns>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationType.Name">
-            <summary>
-            The common name of this type of notification
-            </summary>
-        </member>
-        <member name="P:Vortex.Growl.Framework.NotificationType.Enabled">
-            <summary>
-            Indicates if this type of notification should be enabled or disabled by default
-            </summary>
-            <value><c>true</c> if this type of notification should be enabled by default; <c>false</c> if this type of notification should be disabled by default</value>
-        </member>
-        <member name="T:Vortex.Growl.Framework.UdpListener">
-            <summary>
-            A basic listener that listens for incoming UDP messages on the specified port
-            and passes the event on to application code whenever a message is received.
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.UdpListener.port">
-            <summary>
-            The port to listen for messages on
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.UdpListener.localMessagesOnly">
-            <summary>
-            Indicates if messages from remote machines should be allowed or not
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.UdpListener.udp">
-            <summary>
-            The underlying <see cref="T:System.Net.Sockets.UdpClient"/>
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.UdpListener.#ctor(System.Int32,System.Boolean)">
-            <summary>
-            Creates a new <see cref="T:Vortex.Growl.Framework.UdpListener"/>
-            </summary>
-            <param name="port">The port to listen for messages on</param>
-            <param name="localMessagesOnly"><c>true</c> to only listen for messages from the local machine;<c>false</c> to listen for messages from any source</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.UdpListener.Start">
-            <summary>
-            Starts listening for messages on the specified port
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.UdpListener.Stop">
-            <summary>
-            Stops listening for messages and frees the port
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.UdpListener.ProcessPacket(System.IAsyncResult)">
-            <summary>
-            When a message is received by the listener, the raw data is read from the packet
-            and the <see cref="E:Vortex.Growl.Framework.UdpListener.PacketReceived"/> event is fired.
-            </summary>
-            <param name="ar"><see cref="T:System.IAsyncResult"/></param>
-        </member>
-        <member name="E:Vortex.Growl.Framework.UdpListener.PacketReceived">
-            <summary>
-            Fires when a message is received
-            </summary>
-        </member>
-        <member name="T:Vortex.Growl.Framework.UdpListener.PacketHandler">
-            <summary>
-            Event handlder for the <see cref="E:Vortex.Growl.Framework.UdpListener.PacketReceived"/> event
-            </summary>
-            <param name="bytes">The raw packet data</param>
-            <param name="receivedFrom">The host that sent the message</param>
-        </member>
-        <member name="T:Vortex.Growl.Framework.UdpListener.UdpState">
-            <summary>
-            Simple class to represent state when used with a UdpListener
-            </summary>
-        </member>
-        <member name="T:Vortex.Growl.Framework.Priority">
-            <summary>
-            Indicates the relative priority of a notification.
-            </summary>
-            <remarks>
-            The priority of a notification can be used to change the way the notification is handled
-            and presented to the end user. For instance, higher priority notifications might be displayed
-            with a red color or exclamation icon. However, each display is responsible for
-            handling changes related to priority and may not make any distinction between different priority
-            levels. Further, although each notification can request its own priority, the end user may elect 
-            to override this priority setting, so the notification's requested priority is not guaranteed.
-            </remarks>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Priority.VeryLow">
-            <summary>
-            Very low
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Priority.Moderate">
-            <summary>
-            Moderate
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Priority.Normal">
-            <summary>
-            Normal
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Priority.High">
-            <summary>
-            High
-            </summary>
-        </member>
-        <member name="F:Vortex.Growl.Framework.Priority.Emergency">
-            <summary>
-            Emergency
-            </summary>
-        </member>
-        <member name="T:Vortex.Growl.Framework.ByteBuilder">
-            <summary>
-            Helper class for converting basic data types to a byte array.
-            This class is similar to the <see cref="T:System.Text.StringBuilder"/> class.
-            </summary>
-        </member>
-        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Byte)">
-            <summary>
-            Appends a single byte to the array
-            </summary>
-            <param name="val">The byte to append</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Byte[])">
-            <summary>
-            Appends an array of bytes to the array
-            </summary>
-            <param name="val">The bytes to append</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.String)">
-            <summary>
-            Appends a string as an array of UTF8-encoded bytes
-            </summary>
-            <param name="val">The string to append</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Int32)">
-            <summary>
-            Appends an <see cref="T:System.Int32"/> as a 2-byte array using Big Endian encoding
-            </summary>
-            <param name="val">The number to append</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.ByteBuilder.Append(System.Int16)">
-            <summary>
-            Appends a <see cref="T:System.Int16"/> as a 2-byte array using Big Endian encoding
-            </summary>
-            <param name="val">The number to append</param>
-        </member>
-        <member name="M:Vortex.Growl.Framework.ByteBuilder.GetBytes">
-            <summary>
-            Returns all of the bytes as an array
-            </summary>
-            <returns>Array of <see cref="T:System.Byte"/>s</returns>
         </member>
     </members>
 </doc>

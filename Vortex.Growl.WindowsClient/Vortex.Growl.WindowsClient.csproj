@@ -10,7 +10,7 @@
     <RootNamespace>Vortex.Growl.WindowsClient</RootNamespace>
     <AssemblyName>Vortex.Growl.WindowsClient</AssemblyName>
     <ApplicationIcon>Resources\growl.ico</ApplicationIcon>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -105,10 +106,6 @@
     <None Include="stuff.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\CVS\WebKit.Net\branches\webkit.net\WebKitBrowser\WebKitBrowser.csproj">
-      <Project>{4FB5D473-2E5D-4229-BEE3-DF6FE5A7FEDD}</Project>
-      <Name>WebKitBrowser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Vortex.Growl.AppBridge\Vortex.Growl.AppBridge.csproj">
       <Project>{D7554A69-BC4D-4C55-A5FC-AC369CE62BB5}</Project>
       <Name>Vortex.Growl.AppBridge</Name>
@@ -131,13 +128,14 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.EmailDisplay\bin\Debug\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Debug\Displays\EmailDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.VisorDisplay\bin\Debug\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Debug\Displays\VisorDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WebDisplay\bin\Debug\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Debug\Displays\WebDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.SimpleDisplay\bin\Debug\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Debug\Displays\SimpleDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.EmailDisplay\bin\Release\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Release\Displays\EmailDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.VisorDisplay\bin\Release\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Release\Displays\VisorDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WebDisplay\bin\Release\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Release\Displays\WebDisplay\" /E /Y /C
-xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.SimpleDisplay\bin\Release\*.*" "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.WindowsClient\bin\Release\Displays\SimpleDisplay\" /E /Y /C</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Vortex.Growl.EmailDisplay\bin\Debug\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Debug\Displays\EmailDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.VisorDisplay\bin\Debug\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Debug\Displays\VisorDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.WebDisplay\bin\Debug\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Debug\Displays\WebDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.SimpleDisplay\bin\Debug\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Debug\Displays\SimpleDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.EmailDisplay\bin\Release\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Release\Displays\EmailDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.VisorDisplay\bin\Release\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Release\Displays\VisorDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.WebDisplay\bin\Release\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Release\Displays\WebDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Vortex.Growl.SimpleDisplay\bin\Release\*.*" "$(SolutionDir)\Vortex.Growl.WindowsClient\bin\Release\Displays\SimpleDisplay\" /E /Y /C
+regsvr32 /s $(SolutionDir)\Vortex.Growl.WindowsClient\bin\Release\Displays\WebDisplay\WebKitDependencies\WebKit.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

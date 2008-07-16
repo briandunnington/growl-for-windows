@@ -10,7 +10,7 @@
     <RootNamespace>Vortex.Growl.Framework</RootNamespace>
     <AssemblyName>Vortex.Growl.Framework</AssemblyName>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>Vortex.Growl.Framework.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -65,7 +65,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "D:\_PROJECTS\Vortex Software\Growl\Vortex.Growl.Framework\bin\Debug\*.*" "D:\_PROJECTS\Vortex Software\Growl\NetGrowl VB Example\" /Y
-C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\regasm.exe "D:\_PROJECTS\Vortex Software\Growl\NetGrowl VB Example\Vortex.Growl.Framework.dll" /tlb:"D:\_PROJECTS\Vortex Software\Growl\NetGrowl VB Example\Vortex.Growl.Framework.tlb" /codebase</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)Vortex.Growl.Framework\bin\Debug\*.*" "$(SolutionDir)NetGrowl VB Example\" /Y
+$(FrameworkDir)\regasm.exe "$(SolutionDir)NetGrowl VB Example\Vortex.Growl.Framework.dll" /tlb:"$(SolutionDir)NetGrowl VB Example\Vortex.Growl.Framework.tlb" /codebase</PostBuildEvent>
   </PropertyGroup>
 </Project>
