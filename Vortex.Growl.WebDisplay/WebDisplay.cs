@@ -14,6 +14,7 @@ namespace Vortex.Growl.WebDisplay
         private const string TEMPLATE_FILENAME = "template.html";
         private bool defaultOnly = false;
         private Dictionary<string, WebDisplayStyle> webDisplayStyles = new Dictionary<string, WebDisplayStyle>();
+        private List<NotificationWindow> activeWindows = new List<NotificationWindow>();
 
         public WebDisplay()
         {
@@ -188,18 +189,42 @@ namespace Vortex.Growl.WebDisplay
         {
             string baseUrl;
             string html = Merge(notification, displayName, out baseUrl);
-
+            
             NotificationWindow nw = new NotificationWindow();
             nw.TopMost = true;
             nw.Sticky = notification.Sticky;
             nw.SetHtml(html, baseUrl);
-            nw.Width = 350;
-            nw.Height = 150;
+            nw.Size = new Size(320, 110);
             Screen screen = Screen.FromControl(nw);
-            int x = screen.WorkingArea.Right - nw.Width;
-            int y = screen.WorkingArea.Bottom - nw.Height;
+            int x = screen.WorkingArea.Right - nw.Size.Width;
+            int y = screen.WorkingArea.Bottom - nw.Size.Height;
             nw.DesktopLocation = new Point(x, y);
+            nw.Shown += new EventHandler(nw_Shown);
+            nw.FormClosed += new FormClosedEventHandler(nw_FormClosed);
             nw.Show();
+        }
+
+        void nw_Shown(object sender, EventArgs e)
+        {
+            NotificationWindow nw = (NotificationWindow)sender;
+             
+            foreach (NotificationWindow enw in this.activeWindows)
+            {
+                enw.DesktopLocation = new Point(enw.DesktopLocation.X, enw.DesktopLocation.Y - nw.Size.Height);
+            }
+
+           this.activeWindows.Add(nw);
+         }
+
+        void nw_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            NotificationWindow nw = (NotificationWindow)sender;
+            this.activeWindows.Remove(nw);
+
+            foreach (NotificationWindow enw in this.activeWindows)
+            {
+               enw.DesktopLocation = new Point(enw.DesktopLocation.X, enw.DesktopLocation.Y + nw.Size.Height);
+            }
         }
 
         public override string[] GetListOfAvailableDisplays()

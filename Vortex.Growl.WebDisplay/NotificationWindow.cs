@@ -67,7 +67,7 @@ namespace Vortex.Growl.WebDisplay
             }
             else
             {
-                this.Hide();
+                this.Close();
                 this.fadeTimer.Stop();
             }
         }

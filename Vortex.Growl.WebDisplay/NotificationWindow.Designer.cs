@@ -50,7 +50,7 @@ namespace Vortex.Growl.WebDisplay
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.webKitBrowser.BackColor = System.Drawing.Color.White;
-            this.webKitBrowser.Location = new System.Drawing.Point(15, 0);
+            this.webKitBrowser.Location = new System.Drawing.Point(0, 0);
             this.webKitBrowser.Name = "webKitBrowser";
             this.webKitBrowser.Size = new System.Drawing.Size(330, 300);
             this.webKitBrowser.TabIndex = 0;
@@ -73,7 +73,9 @@ namespace Vortex.Growl.WebDisplay
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "webkitform";
             this.TransparencyKey = System.Drawing.Color.White;
+            this.AutoScroll = false;
             this.ResumeLayout(false);
+
 
         }
 
