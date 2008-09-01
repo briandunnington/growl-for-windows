@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Vortex.Growl.Framework;
+using Growl.Framework;
 
 namespace Sample_Net_Growl_App
 {

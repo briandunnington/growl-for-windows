@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Vortex.Growl.Framework;
+using Growl.Framework;
 
 namespace Sample_Growl_App
 {
@@ -21,7 +21,7 @@ namespace Sample_Growl_App
 
         private void sendNotificationButton_Click(object sender, EventArgs e)
         {
-            Growl growl = new Growl("Test Application");
+            Growler growl = new Growler("Test Application");
             growl.Notify(serverCrashed, "Your server has crashed", this.notificationTextBox.Text, Priority.Moderate, false);
         }
 
@@ -29,7 +29,7 @@ namespace Sample_Growl_App
         {
             NotificationType[] notificationTypes = new NotificationType[] { serverCrashed, siteRestarted };
 
-            Growl growl = new Growl("Test Application");
+            Growler growl = new Growler("Test Application");
             growl.Register(ref notificationTypes);
         }
     }

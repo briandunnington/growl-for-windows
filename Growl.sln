@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.WindowsClient", "Vortex.Growl.WindowsClient\Vortex.Growl.WindowsClient.csproj", "{306396C9-85B0-479D-8774-D7D1ADD3E27B}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.WindowsClient", "Growl.WindowsClient\Growl.WindowsClient.csproj", "{306396C9-85B0-479D-8774-D7D1ADD3E27B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4E6B5911-9B31-4B40-8301-77A8468FF790} = {4E6B5911-9B31-4B40-8301-77A8468FF790}
 		{8B30CB18-697A-44F2-9162-88DEEEDE2399} = {8B30CB18-697A-44F2-9162-88DEEEDE2399}
@@ -17,25 +17,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample Growl App", "Sample 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample Net Growl App", "Sample Net Growl App\Sample Net Growl App.csproj", "{E966873E-1959-4D26-B3BE-542295D65904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.Framework", "Vortex.Growl.Framework\Vortex.Growl.Framework.csproj", "{F3F5909B-EAE9-40A3-94CA-FE492201D1E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Framework", "Growl.Framework\Growl.Framework.csproj", "{F3F5909B-EAE9-40A3-94CA-FE492201D1E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.AppBridge", "Vortex.Growl.AppBridge\Vortex.Growl.AppBridge.csproj", "{D7554A69-BC4D-4C55-A5FC-AC369CE62BB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.AppBridge", "Growl.AppBridge\Growl.AppBridge.csproj", "{D7554A69-BC4D-4C55-A5FC-AC369CE62BB5}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Deployment", "Deployment\Deployment.vdproj", "{F24DD0EA-6B2B-4780-8128-8B893084A393}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.DisplayStyle", "Vortex.Growl.Display\Vortex.Growl.DisplayStyle.csproj", "{2BDCFDAC-B072-4CFB-A01E-622B3E73A52F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.DisplayStyle", "Growl.Display\Growl.DisplayStyle.csproj", "{2BDCFDAC-B072-4CFB-A01E-622B3E73A52F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.EmailDisplay", "Vortex.Growl.EmailDisplay\Vortex.Growl.EmailDisplay.csproj", "{E87B8F5A-B3FD-4975-8624-100B902BAA49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.EmailDisplay", "Growl.EmailDisplay\Growl.EmailDisplay.csproj", "{E87B8F5A-B3FD-4975-8624-100B902BAA49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.WebDisplay", "Vortex.Growl.WebDisplay\Vortex.Growl.WebDisplay.csproj", "{D3F7E688-A767-42AD-A3F2-CBE8EE479FF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.WebDisplay", "Growl.WebDisplay\Growl.WebDisplay.csproj", "{D3F7E688-A767-42AD-A3F2-CBE8EE479FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.VisorDisplay", "Vortex.Growl.VisorDisplay\Vortex.Growl.VisorDisplay.csproj", "{8B30CB18-697A-44F2-9162-88DEEEDE2399}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.VisorDisplay", "Growl.VisorDisplay\Growl.VisorDisplay.csproj", "{8B30CB18-697A-44F2-9162-88DEEEDE2399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.GrowlProtocolHandler", "Vortex.Growl.GrowlProtocolHandler\Vortex.Growl.GrowlProtocolHandler.csproj", "{4E6B5911-9B31-4B40-8301-77A8468FF790}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.GrowlProtocolHandler", "Growl.GrowlProtocolHandler\Growl.GrowlProtocolHandler.csproj", "{4E6B5911-9B31-4B40-8301-77A8468FF790}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebServer", "TestWebServer\TestWebServer.csproj", "{A932DCAD-7382-4B78-A212-CA60E11F992E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex.Growl.SimpleDisplay", "Vortex.Growl.SimpleDisplay\Vortex.Growl.SimpleDisplay.csproj", "{AE3A1F5F-8BF0-4C5C-A038-06ACC858A25B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.SimpleDisplay", "Growl.SimpleDisplay\Growl.SimpleDisplay.csproj", "{AE3A1F5F-8BF0-4C5C-A038-06ACC858A25B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
