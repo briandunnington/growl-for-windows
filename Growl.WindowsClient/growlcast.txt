@@ -1,0 +1,24 @@
+server (actually, a url) that takes the following actions:
+	subscribe (POST) [ip, port, guid/password] : returns timestamp when subscribing expires
+	unsubscribe (DELETE) [guid/password] : return bool
+
+in Growl, can subscribe to growlcasts (similar to forwarding UI)
+	you supply the url and Growl does the subscribe
+	auto-renews you every so often/application launch/etc
+	otherwise, subscription expires on its own (lease)
+	each first-time subscription generates a unique guid/password
+	after subscribing, server sends a registration packet (one application per server?)
+
+when a Growl server has you in its subscribed list, it broadcasts notifications to you, using your ip/port/guid(password)
+	NetAppBridge (and MessageReceiver) might have to change to accomodate figuring out passwords
+	we can extract the checksum from the packet and compare to a list of our internal guids to look for matches
+	after that, notifications work as normal (growl server should send registration with each notification as well)
+	
+	
+ - add new protocol versions and packet types to Framework
+ - modify MessageReceiver to remove password
+ - modify MessageReceiver to pass off packet deserialization to another class (also creates objects like .FromPacket)
+ - ?add event to MessageReceiver to allow AppBridges to provide their own authentication?
+   - maybe combine the two above and expose an overridable ValidatePacket(bytes[]) method that can be implemented according to the appbridge
+ - ?how do we want to make sure growlcast senders are valid? (cant change what checksum does since it ensures no tampering)
+ - subscribed growlcasts contain a list of guids/passwords that we might want to hook into
