@@ -36,6 +36,10 @@ namespace Growl.WindowsClient
         public MainForm()
         {
             InitializeComponent();
+
+            // default these so that the form is initially invisible until our ShowForm is called
+            this.Opacity = 0;
+            this.ShowInTaskbar = false;
         }
 
         // private methods
@@ -147,6 +151,10 @@ namespace Growl.WindowsClient
 
         internal void ShowForm()
         {
+            // always reset these, in case the app was just loaded
+            this.Opacity = 1.0;
+            this.ShowInTaskbar = true;
+
             Show();
             WindowState = FormWindowState.Normal;
             this.Activate();
@@ -519,7 +527,7 @@ namespace Growl.WindowsClient
         // form event handlers
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // link to the application bridge first
+             // link to the application bridge first
             this.appBridge = BridgeFactory.GetAppBridge();
 
             // initialize preferences & UI

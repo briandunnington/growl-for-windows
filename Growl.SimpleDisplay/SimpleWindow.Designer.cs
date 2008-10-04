@@ -37,10 +37,10 @@ namespace Growl.SimpleDisplay
             // 
             this.titleLabel.AutoSize = true;
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
-            this.titleLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleLabel.Location = new System.Drawing.Point(3, 30);
+            this.titleLabel.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titleLabel.Location = new System.Drawing.Point(3, 4);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(56, 18);
+            this.titleLabel.Size = new System.Drawing.Size(49, 16);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "[title]";
             // 
@@ -51,29 +51,30 @@ namespace Growl.SimpleDisplay
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionLabel.BackColor = System.Drawing.Color.Transparent;
             this.descriptionLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriptionLabel.Location = new System.Drawing.Point(3, 55);
+            this.descriptionLabel.Location = new System.Drawing.Point(3, 25);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(175, 51);
+            this.descriptionLabel.Size = new System.Drawing.Size(175, 29);
             this.descriptionLabel.TabIndex = 1;
             this.descriptionLabel.Text = "[description]";
             // 
             // applicationNameLabel
             // 
-            this.applicationNameLabel.AutoSize = true;
             this.applicationNameLabel.BackColor = System.Drawing.Color.Transparent;
-            this.applicationNameLabel.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.applicationNameLabel.Location = new System.Drawing.Point(3, 5);
+            this.applicationNameLabel.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.applicationNameLabel.Location = new System.Drawing.Point(6, 59);
             this.applicationNameLabel.Name = "applicationNameLabel";
-            this.applicationNameLabel.Size = new System.Drawing.Size(127, 16);
+            this.applicationNameLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.applicationNameLabel.Size = new System.Drawing.Size(239, 12);
             this.applicationNameLabel.TabIndex = 2;
             this.applicationNameLabel.Text = "[applicationName]";
+            this.applicationNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // SimpleWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(250, 120);
+            this.ClientSize = new System.Drawing.Size(250, 75);
             this.ControlBox = false;
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.applicationNameLabel);
@@ -84,7 +85,9 @@ namespace Growl.SimpleDisplay
             this.Name = "SimpleWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Simple";
+            this.Load += new System.EventHandler(this.SimpleWindow_Load);
             this.Click += new System.EventHandler(this.SimpleWindow_Click);
+            this.Resize += new System.EventHandler(this.SimpleWindow_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 

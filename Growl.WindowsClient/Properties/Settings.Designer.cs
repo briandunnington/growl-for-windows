@@ -117,7 +117,7 @@ namespace Growl.WindowsClient.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.AppBridge.UserSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Standard")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Simple")]
         public string DefaultDisplay {
             get {
                 return ((string)(this["DefaultDisplay"]));

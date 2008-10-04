@@ -49,8 +49,8 @@ namespace Growl.VisorDisplay
 
             // set size
             Screen screen = Screen.FromControl(this);
-            int screenX = screen.WorkingArea.Width;
-            int screenY = screen.WorkingArea.Height;
+            int screenX = screen.Bounds.Width;
+            int screenY = screen.Bounds.Height;
             int w = screenX;
             int h = (int)Math.Round(0.1 * screenY);
             this.Width = w;
@@ -60,7 +60,7 @@ namespace Growl.VisorDisplay
             this.Location = new Point(0, -h + 10);  // the extra 10 is so that at least part of the form is on the screen initially, otherwise the opacity goes all screwy
 
             // set initial opacity
-            this.Opacity = 0.7;
+            this.Opacity = 0.85;
 
             // setup child controls
             //this.BackColor = //get from settings;
@@ -162,7 +162,7 @@ namespace Growl.VisorDisplay
                 result = true;
                 newY = destY;
             }
-            
+
             this.Location = new Point(this.Location.X, newY);
 
             return result;

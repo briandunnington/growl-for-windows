@@ -21,8 +21,8 @@ namespace Growl.SimpleDisplay
 
         private void SimpleSettingsPanel_Load(object sender, EventArgs e)
         {
-            this.color1PictureBox.BackColor = this.GetColorFromSetting(SETTING_COLOR1, Color.SkyBlue);
-            this.color2PictureBox.BackColor = this.GetColorFromSetting(SETTING_COLOR2, Color.White);
+            this.color1PictureBox.BackColor = this.GetColorFromSetting(SETTING_COLOR1, SimpleDisplay.COLOR1);
+            this.color2PictureBox.BackColor = this.GetColorFromSetting(SETTING_COLOR2, SimpleDisplay.COLOR2);
         }
 
         private void color1PictureBox_Click(object sender, EventArgs e)

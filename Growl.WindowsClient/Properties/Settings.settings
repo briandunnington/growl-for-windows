@@ -24,7 +24,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DefaultDisplay" Provider="Growl.AppBridge.UserSettingsProvider" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Standard</Value>
+      <Value Profile="(Default)">Simple</Value>
     </Setting>
     <Setting Name="ListenForWebNotifications" Provider="Growl.AppBridge.UserSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

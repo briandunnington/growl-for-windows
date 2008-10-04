@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using Growl.DisplayStyle;
 
 namespace Growl.SimpleDisplay
@@ -16,22 +17,44 @@ namespace Growl.SimpleDisplay
         protected Timer fadeTimer;
         private bool fading = false;
         private bool sticky = false;
-        private Color color1 = Color.SkyBlue;
-        private Color color2 = Color.White;
+        private Color color1 = SimpleDisplay.COLOR1;
+        private Color color2 = SimpleDisplay.COLOR2;
         private Color textColor1 = Color.White;
         private Color textColor2 = Color.Black;
+        private GDIDB.DBGraphics dbg;
 
         public SimpleWindow()
         {
             InitializeComponent();
 
             this.Click += new EventHandler(SimpleWindow_Click);
+            HookUpClickEvents(this.Controls);
+
+            dbg = new GDIDB.DBGraphics();
 
             // deal with fade out
             this.displayTimer = new Timer();
             this.displayTimer.Tick += new EventHandler(displayTimer_Tick);
             this.fadeTimer = new Timer();
             this.fadeTimer.Tick += new EventHandler(fadeTimer_Tick);
+
+
+            // dont show in taskbar
+            this.ShowInTaskbar = false;
+            this.TopMost = true;
+
+            // set size
+            this.Width = 250;
+            this.Height = 75;
+
+            // set initial location
+            Screen screen = Screen.FromControl(this);
+            int x = screen.WorkingArea.Width - this.Width;
+            int y = screen.WorkingArea.Height - this.Height;
+            this.Location = new Point(x, y);
+
+            // set initial opacity
+            this.Opacity = 0.99;
         }
 
         public bool Sticky
@@ -73,24 +96,39 @@ namespace Growl.SimpleDisplay
             }
         }
 
+        /*
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(rect, this.color1, this.color2, LinearGradientMode.ForwardDiagonal);
-            Blend blend = new Blend();
-            blend.Factors = new float[] { 0.3F };
-            blend.Positions = new float[] { 0.2F };
-            gradientBrush.Blend = blend;
+            int bw = 1;
+
+            Rectangle brect = new Rectangle(0, 0, this.Width, this.Height);
+            Brush borderBrush = Brushes.Black;
+            e.Graphics.FillRectangle(borderBrush, brect);
+
+            Rectangle rect = new Rectangle(bw, bw, this.Width - bw, this.Height - bw);
+            LinearGradientBrush gradientBrush = new LinearGradientBrush(rect, this.color1, this.color2, LinearGradientMode.Vertical);
+            //Blend blend = new Blend();
+            //blend.Factors = new float[] { 0.3F };
+            //blend.Positions = new float[] { 0.2F };
+            //gradientBrush.Blend = blend;
             e.Graphics.FillRectangle(gradientBrush, rect);
 
-            Rectangle t = new Rectangle(0, 0, this.Width, 30);
-            Brush b = new LinearGradientBrush(t, this.color1, Color.DarkGray, LinearGradientMode.Vertical);
+            Rectangle t = new Rectangle(bw, bw, this.Width - bw, 18);
+            //Brush b = Brushes.White;
+            Brush b = new LinearGradientBrush(t, Color.FromArgb(60, Color.White), Color.FromArgb(20, Color.White), LinearGradientMode.Vertical);
             e.Graphics.FillRectangle(b, t);
+
+            this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 12, 12)); // adjust these parameters to get the lookyou want.
+        }
+         * */
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
         }
 
         protected override void OnResize(EventArgs e)
         {
-            this.Invalidate();
+            //this.Invalidate();
             base.OnResize(e);
         }
 
@@ -106,22 +144,7 @@ namespace Growl.SimpleDisplay
 
         private void Reset()
         {
-            // dont show in taskbar
-            this.ShowInTaskbar = false;
-            this.TopMost = true;
 
-            // set size
-            this.Width = 250;
-            this.Height = 100;
-
-            // set initial location
-            Screen screen = Screen.FromControl(this);
-            int x = screen.WorkingArea.Right - this.Width;
-            int y = screen.WorkingArea.Bottom - this.Height;
-            this.DesktopLocation = new Point(x, y);
-
-            // set initial opacity
-            this.Opacity = 0.9;
         }
 
         void displayTimer_Tick(object sender, EventArgs e)
@@ -174,7 +197,7 @@ namespace Growl.SimpleDisplay
 
         void SimpleWindow_Click(object sender, EventArgs e)
         {
-            FadeOut();
+            c_Click(sender, e);
         }
 
         private void FadeOut()
@@ -194,6 +217,78 @@ namespace Growl.SimpleDisplay
             int bgDelta = Convert.ToInt32((bg.R * 0.299) + (bg.G * 0.587) + (bg.B * 0.114));
             Color foreColor = (255 - bgDelta < nThreshold) ? Color.Black : Color.White;
             return foreColor;
+        }
+
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect, // x-coordinate of upper-left corner
+            int nTopRect, // y-coordinate of upper-left corner
+            int nRightRect, // x-coordinate of lower-right corner
+            int nBottomRect, // y-coordinate of lower-right corner
+            int nWidthEllipse, // height of ellipse
+            int nHeightEllipse // width of ellipse
+            );
+
+        private void HookUpClickEvents(Control.ControlCollection controls)
+        {
+            if (controls != null)
+            {
+                foreach (Control c in controls)
+                {
+                    HookUpClickEvents(c.Controls);
+                    c.Click += new EventHandler(c_Click);
+                }
+            }
+        }
+
+        void c_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void SimpleWindow_Load(object sender, EventArgs e)
+        {
+            InitDBG();
+        }
+
+        private void SimpleWindow_Resize(object sender, EventArgs e)
+        {
+            InitDBG();
+            this.Invalidate();
+        }
+
+        private void InitDBG()
+        {
+            dbg.CreateDoubleBuffer(this.CreateGraphics(), this.ClientRectangle.Width, this.ClientRectangle.Height);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            bool buffered = dbg.CanDoubleBuffer();
+
+            if (buffered) g = dbg.g;
+
+            int radius = 12;
+            int borderWidth = 1;
+
+            Region borderRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, radius, radius));
+            Brush borderBrush = Brushes.Black;
+            g.FillRegion(borderBrush, borderRegion);
+
+            Region gradientRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderWidth, this.Width - (1 * borderWidth), Height - (1 * borderWidth), radius - borderWidth, radius - borderWidth));
+            RectangleF rect = gradientRegion.GetBounds(e.Graphics);
+            LinearGradientBrush gradientBrush = new LinearGradientBrush(rect, this.color1, this.color2, LinearGradientMode.Vertical);
+            g.FillRegion(gradientBrush, gradientRegion);
+
+            RectangleF glassRect = gradientRegion.GetBounds(e.Graphics);
+            glassRect.Height = 18;
+            Brush glassBrush = new LinearGradientBrush(glassRect, Color.FromArgb(60, Color.White), Color.FromArgb(20, Color.White), LinearGradientMode.Vertical);
+            g.FillRectangle(glassBrush, glassRect);
+
+            this.Region = borderRegion;
+
+            if (buffered) dbg.Render(e.Graphics);
         }
     }
 }

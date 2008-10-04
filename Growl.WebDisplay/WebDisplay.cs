@@ -10,7 +10,7 @@ namespace Growl.WebDisplay
 {
     public class WebDisplay : Growl.DisplayStyle.Display
     {
-        public const string DEFAULT_DISPLAY_NAME = "Standard";
+        public const string DEFAULT_DISPLAY_NAME = "Simple";
         private const string TEMPLATE_FILENAME = "template.html";
         private bool defaultOnly = false;
         private Dictionary<string, WebDisplayStyle> webDisplayStyles = new Dictionary<string, WebDisplayStyle>();
@@ -198,7 +198,7 @@ namespace Growl.WebDisplay
             Screen screen = Screen.FromControl(nw);
             int x = screen.WorkingArea.Right - nw.Size.Width;
             int y = screen.WorkingArea.Bottom - nw.Size.Height;
-            nw.DesktopLocation = new Point(x, y);
+            nw.Location = new Point(x, y);
             nw.Shown += new EventHandler(nw_Shown);
             nw.FormClosed += new FormClosedEventHandler(nw_FormClosed);
             nw.Show();
@@ -221,10 +221,12 @@ namespace Growl.WebDisplay
             NotificationWindow nw = (NotificationWindow)sender;
             this.activeWindows.Remove(nw);
 
+            /*
             foreach (NotificationWindow enw in this.activeWindows)
             {
                enw.DesktopLocation = new Point(enw.DesktopLocation.X, enw.DesktopLocation.Y + nw.Size.Height);
             }
+             * */
         }
 
         public override string[] GetListOfAvailableDisplays()

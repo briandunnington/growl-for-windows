@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_002ECC72E67C9DC802D76BF42A1398F3"
-        "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0AC08003839149D2885D46B156966476"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -33,19 +27,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_11B92ACBA174E77F8792E62107CC8EE9"
-        "OwnerKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_11B92ACBA174E77F8792E62107CC8EE9"
-        "OwnerKey" = "8:_D8735853615DA97FDA5B69140790103B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_11B92ACBA174E77F8792E62107CC8EE9"
+        "MsmKey" = "8:_11EFA2C3B78C1B1D6CFE4348DBE197FF"
         "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -63,20 +45,32 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_306D9272E7F1FF990B3C73251E946579"
+        "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_61B3659AD256EB6602B28C4D90C55643"
+        "MsmKey" = "8:_411E1E3486FCE7D1782C2DE105813D48"
+        "OwnerKey" = "8:_477CBCA9ABF958366F463967CAB270F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_411E1E3486FCE7D1782C2DE105813D48"
         "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_61B3659AD256EB6602B28C4D90C55643"
-        "OwnerKey" = "8:_002ECC72E67C9DC802D76BF42A1398F3"
+        "MsmKey" = "8:_477CBCA9ABF958366F463967CAB270F9"
+        "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -87,49 +81,67 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6B0D3AC172B989622CD9C881BEB0E105"
+        "OwnerKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6B0D3AC172B989622CD9C881BEB0E105"
+        "OwnerKey" = "8:_306D9272E7F1FF990B3C73251E946579"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6B0D3AC172B989622CD9C881BEB0E105"
+        "OwnerKey" = "8:_C919F10C09044FD5C32994F00D4870E0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_72E9983B6FF1473FADED02E9AC0FB3FC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_826E88FA4C1B3A4D0E741A0053A1A804"
-        "OwnerKey" = "8:_B7F69CFC4F810E3EF0ABF0290961F478"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
         "OwnerKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
+        "OwnerKey" = "8:_AF8907B1F8744035AADB522339ED5555"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
         "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
-        "OwnerKey" = "8:_002ECC72E67C9DC802D76BF42A1398F3"
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
+        "OwnerKey" = "8:_477CBCA9ABF958366F463967CAB270F9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
-        "OwnerKey" = "8:_D8735853615DA97FDA5B69140790103B"
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
+        "OwnerKey" = "8:_C1985CDB2279647FE6BC28055330C066"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
         "OwnerKey" = "8:_C544A1295E1B43139E3BAC1D02BEA9EF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
+        "MsmKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
         "OwnerKey" = "8:_B750233B863F4ED1894F540D9E916868"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -141,20 +153,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9F986C733CE5C86B77806ED5CFFF987C"
-        "OwnerKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
+        "MsmKey" = "8:_9A1CB58E98104EE1FAB3A34930760048"
+        "OwnerKey" = "8:_477CBCA9ABF958366F463967CAB270F9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9F986C733CE5C86B77806ED5CFFF987C"
+        "MsmKey" = "8:_9A1CB58E98104EE1FAB3A34930760048"
         "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9F986C733CE5C86B77806ED5CFFF987C"
-        "OwnerKey" = "8:_11B92ACBA174E77F8792E62107CC8EE9"
+        "MsmKey" = "8:_AF8907B1F8744035AADB522339ED5555"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B11BB6A0B153EC081581013AEB69335C"
+        "OwnerKey" = "8:_411E1E3486FCE7D1782C2DE105813D48"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -165,13 +183,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B7F69CFC4F810E3EF0ABF0290961F478"
-        "OwnerKey" = "8:_002ECC72E67C9DC802D76BF42A1398F3"
+        "MsmKey" = "8:_C1985CDB2279647FE6BC28055330C066"
+        "OwnerKey" = "8:_477CBCA9ABF958366F463967CAB270F9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B7F69CFC4F810E3EF0ABF0290961F478"
+        "MsmKey" = "8:_C1985CDB2279647FE6BC28055330C066"
         "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -185,6 +203,18 @@
         {
         "MsmKey" = "8:_C6A6787B94F24097A321641AF8104A1A"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C919F10C09044FD5C32994F00D4870E0"
+        "OwnerKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C919F10C09044FD5C32994F00D4870E0"
+        "OwnerKey" = "8:_C1985CDB2279647FE6BC28055330C066"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -207,14 +237,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D8735853615DA97FDA5B69140790103B"
-        "OwnerKey" = "8:_002ECC72E67C9DC802D76BF42A1398F3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D8735853615DA97FDA5B69140790103B"
-        "OwnerKey" = "8:_D3138398F6B447129F6CB803B0A2FDB0"
+        "MsmKey" = "8:_DF996A1CD94D4AF5A5E4477A1EE28BD1"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -232,37 +256,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_002ECC72E67C9DC802D76BF42A1398F3"
+        "OwnerKey" = "8:_DF996A1CD94D4AF5A5E4477A1EE28BD1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B7F69CFC4F810E3EF0ABF0290961F478"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D8735853615DA97FDA5B69140790103B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8AF734DE8870372CFA2290D0E87AE52F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_11B92ACBA174E77F8792E62107CC8EE9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9F986C733CE5C86B77806ED5CFFF987C"
+        "OwnerKey" = "8:_AF8907B1F8744035AADB522339ED5555"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -286,7 +286,43 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_61B3659AD256EB6602B28C4D90C55643"
+        "OwnerKey" = "8:_306D9272E7F1FF990B3C73251E946579"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_11EFA2C3B78C1B1D6CFE4348DBE197FF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_477CBCA9ABF958366F463967CAB270F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_411E1E3486FCE7D1782C2DE105813D48"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C1985CDB2279647FE6BC28055330C066"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_78FF808DF6A62EF5A9AA0B785F6A47C5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9A1CB58E98104EE1FAB3A34930760048"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -305,6 +341,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_39E1664360984BE9A8E3AE1C36146229"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C919F10C09044FD5C32994F00D4870E0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6B0D3AC172B989622CD9C881BEB0E105"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -397,40 +445,9 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_002ECC72E67C9DC802D76BF42A1398F3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.AppBridge, Version=1.0.3063.33633, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_002ECC72E67C9DC802D76BF42A1398F3"
-                    {
-                    "Name" = "8:Vortex.Growl.AppBridge.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Vortex.Growl.AppBridge.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0AC08003839149D2885D46B156966476"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\libxml2.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\libxml2.dll"
             "TargetName" = "8:libxml2.dll"
             "Tag" = "8:"
             "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
@@ -450,7 +467,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0DE6F8021C13421984C6DE7E316A7B73"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WindowsClient\\uninstall.bat"
+            "SourcePath" = "8:..\\Growl.WindowsClient\\uninstall.bat"
             "TargetName" = "8:uninstall.bat"
             "Tag" = "8:"
             "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
@@ -468,23 +485,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_11B92ACBA174E77F8792E62107CC8EE9"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_11EFA2C3B78C1B1D6CFE4348DBE197FF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebKitBrowser, Version=1.0.3063.33632, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WebKit, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_11B92ACBA174E77F8792E62107CC8EE9"
+                    "_11EFA2C3B78C1B1D6CFE4348DBE197FF"
                     {
-                    "Name" = "8:WebKitBrowser.dll"
+                    "Name" = "8:WebKit.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:WebKitBrowser.dll"
+            "SourcePath" = "8:WebKit.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_28D66A29367441348A7101C71F6589CE"
+            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -503,16 +520,16 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_2937796915A249DD86D4F728B50F319C"
                     {
-                    "Name" = "8:Vortex.Growl.DisplayStyle.dll"
+                    "Name" = "8:Growl.DisplayStyle.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Vortex.Growl.VisorDisplay\\bin\\Release\\Vortex.Growl.DisplayStyle.dll"
+            "SourcePath" = "8:..\\Growl.VisorDisplay\\bin\\Release\\Growl.DisplayStyle.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E0980578D9944346A1AF262B4CF3E40F"
@@ -532,7 +549,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_304C59EE12D2428B8800A38009D40C23"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\WebKit.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\WebKit.dll"
             "TargetName" = "8:WebKit.dll"
             "Tag" = "8:"
             "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
@@ -550,20 +567,82 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_61B3659AD256EB6602B28C4D90C55643"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_306D9272E7F1FF990B3C73251E946579"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Json, Version=1.0.2821.20109, Culture=neutral, PublicKeyToken=e0b9c68a59fc9efd, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WebKitBrowser, Version=1.0.3064.16890, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_61B3659AD256EB6602B28C4D90C55643"
+                    "_306D9272E7F1FF990B3C73251E946579"
                     {
-                    "Name" = "8:System.Net.Json.dll"
+                    "Name" = "8:WebKitBrowser.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:System.Net.Json.dll"
+            "SourcePath" = "8:WebKitBrowser.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_411E1E3486FCE7D1782C2DE105813D48"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.Framework, Version=1.0.3199.23727, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_411E1E3486FCE7D1782C2DE105813D48"
+                    {
+                    "Name" = "8:Growl.Framework.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.Framework.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_477CBCA9ABF958366F463967CAB270F9"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.AppBridge, Version=1.0.3199.23728, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_477CBCA9ABF958366F463967CAB270F9"
+                    {
+                    "Name" = "8:Growl.AppBridge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.AppBridge.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
@@ -583,7 +662,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_694514379EBF4411942362004B2895A1"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\iconv.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\iconv.dll"
             "TargetName" = "8:iconv.dll"
             "Tag" = "8:"
             "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
@@ -601,116 +680,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_72E9983B6FF1473FADED02E9AC0FB3FC"
-            {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\zlib1.dll"
-            "TargetName" = "8:zlib1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_826E88FA4C1B3A4D0E741A0053A1A804"
-            {
-            "SourcePath" = "8:Vortex.Growl.Framework.tlb"
-            "TargetName" = "8:Vortex.Growl.Framework.tlb"
-            "Tag" = "8:"
-            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:2"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AF734DE8870372CFA2290D0E87AE52F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8AF734DE8870372CFA2290D0E87AE52F"
-                    {
-                    "Name" = "8:Vortex.Growl.DisplayStyle.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Vortex.Growl.DisplayStyle.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E7288D72414441A192E382C85A08F3C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8F4B05AFE6264D119C2DE2AAEBC30DC9"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8F4B05AFE6264D119C2DE2AAEBC30DC9"
-                    {
-                    "Name" = "8:Vortex.Growl.DisplayStyle.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Vortex.Growl.WindowsClient\\bin\\Release\\Vortex.Growl.DisplayStyle.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F986C733CE5C86B77806ED5CFFF987C"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6B0D3AC172B989622CD9C881BEB0E105"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:WebKit, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_9F986C733CE5C86B77806ED5CFFF987C"
+                    "_6B0D3AC172B989622CD9C881BEB0E105"
                     {
                     "Name" = "8:WebKit.dll"
                     "Attributes" = "3:512"
@@ -734,20 +711,153 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B7F69CFC4F810E3EF0ABF0290961F478"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_72E9983B6FF1473FADED02E9AC0FB3FC"
+            {
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\zlib1.dll"
+            "TargetName" = "8:zlib1.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_78FF808DF6A62EF5A9AA0B785F6A47C5"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.Framework, Version=1.0.3063.33632, Culture=neutral, PublicKeyToken=6ee24bacef36dc44, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B7F69CFC4F810E3EF0ABF0290961F478"
+                    "_78FF808DF6A62EF5A9AA0B785F6A47C5"
                     {
-                    "Name" = "8:Vortex.Growl.Framework.dll"
+                    "Name" = "8:Growl.DisplayStyle.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Vortex.Growl.Framework.dll"
+            "SourcePath" = "8:Growl.DisplayStyle.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E7288D72414441A192E382C85A08F3C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8F4B05AFE6264D119C2DE2AAEBC30DC9"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8F4B05AFE6264D119C2DE2AAEBC30DC9"
+                    {
+                    "Name" = "8:Growl.DisplayStyle.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Growl.WindowsClient\\bin\\Release\\Growl.DisplayStyle.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9A1CB58E98104EE1FAB3A34930760048"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Net.Json, Version=1.0.2821.20109, Culture=neutral, PublicKeyToken=e0b9c68a59fc9efd, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9A1CB58E98104EE1FAB3A34930760048"
+                    {
+                    "Name" = "8:System.Net.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Net.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B11BB6A0B153EC081581013AEB69335C"
+            {
+            "SourcePath" = "8:Vortex.Growl.Framework.tlb"
+            "TargetName" = "8:Vortex.Growl.Framework.tlb"
+            "Tag" = "8:"
+            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:2"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C1985CDB2279647FE6BC28055330C066"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.WebDisplay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C1985CDB2279647FE6BC28055330C066"
+                    {
+                    "Name" = "8:Growl.WebDisplay.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.WebDisplay.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
@@ -769,16 +879,16 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_C6A6787B94F24097A321641AF8104A1A"
                     {
-                    "Name" = "8:Vortex.Growl.DisplayStyle.dll"
+                    "Name" = "8:Growl.DisplayStyle.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\bin\\Release\\Vortex.Growl.DisplayStyle.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\bin\\Release\\Growl.DisplayStyle.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_28D66A29367441348A7101C71F6589CE"
@@ -796,9 +906,40 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C919F10C09044FD5C32994F00D4870E0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WebKitBrowser, Version=1.0.3064.16890, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C919F10C09044FD5C32994F00D4870E0"
+                    {
+                    "Name" = "8:WebKitBrowser.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WebKitBrowser.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_28D66A29367441348A7101C71F6589CE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CC7744BB3CE54345B7D069F3DB1A94F3"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\icudt34.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\icudt34.dll"
             "TargetName" = "8:icudt34.dll"
             "Tag" = "8:"
             "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
@@ -818,7 +959,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D4EED1349D0E4B6FB75D53324A3B8EB7"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\icuuc34.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\icuuc34.dll"
             "TargetName" = "8:icuuc34.dll"
             "Tag" = "8:"
             "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
@@ -836,23 +977,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D8735853615DA97FDA5B69140790103B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DF996A1CD94D4AF5A5E4477A1EE28BD1"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vortex.Growl.WebDisplay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_D8735853615DA97FDA5B69140790103B"
+                    "_DF996A1CD94D4AF5A5E4477A1EE28BD1"
                     {
-                    "Name" = "8:Vortex.Growl.WebDisplay.dll"
+                    "Name" = "8:Growl.DisplayStyle.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Vortex.Growl.WebDisplay.dll"
+            "SourcePath" = "8:..\\Growl.Display\\bin\\Release\\Growl.DisplayStyle.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
+            "Folder" = "8:_81BAE40F5F114E9AB6C0780762C79F60"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -864,12 +1005,12 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E5F18AF54367484EACEFF4F406A488CC"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\WebKitDependencies\\libxslt.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\WebKitDependencies\\libxslt.dll"
             "TargetName" = "8:libxslt.dll"
             "Tag" = "8:"
             "Folder" = "8:_776DC633EE2445668CFF33CE46659124"
@@ -978,6 +1119,17 @@
                                     }
                                 }
                             }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_81BAE40F5F114E9AB6C0780762C79F60"
+                            {
+                            "Name" = "8:SimpleDisplay"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_48216089E7904CB89411697C7EDAE005"
+                                "Folders"
+                                {
+                                }
+                            }
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_E0980578D9944346A1AF262B4CF3E40F"
                             {
                             "Name" = "8:VisorDisplay"
@@ -1014,13 +1166,14 @@
         "MsiBootstrapper"
         {
         "LangId" = "3:1033"
+        "RequiresElevation" = "11:FALSE"
         }
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl for Windows"
         "ProductCode" = "8:{835B5DEB-905D-4A8B-A088-26BAF30CE69A}"
-        "PackageCode" = "8:{40474902-B325-4244-861C-7C38BBE9CCA5}"
+        "PackageCode" = "8:{14C302FF-F0A1-40B1-98D8-B8461F0D8785}"
         "UpgradeCode" = "8:{0642D955-32C2-4A4F-AE70-23981A1672DC}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -1638,7 +1791,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_39E1664360984BE9A8E3AE1C36146229"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WebDisplay\\obj\\Release\\Vortex.Growl.WebDisplay.dll"
+            "SourcePath" = "8:..\\Growl.WebDisplay\\obj\\Release\\Growl.WebDisplay.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_28D66A29367441348A7101C71F6589CE"
@@ -1664,9 +1817,37 @@
                 {
                 }
             }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AF8907B1F8744035AADB522339ED5555"
+            {
+            "SourcePath" = "8:..\\Growl.SimpleDisplay\\obj\\Release\\Growl.SimpleDisplay.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_81BAE40F5F114E9AB6C0780762C79F60"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{AE3A1F5F-8BF0-4C5C-A038-06ACC858A25B}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B750233B863F4ED1894F540D9E916868"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.VisorDisplay\\obj\\Release\\Vortex.Growl.VisorDisplay.dll"
+            "SourcePath" = "8:..\\Growl.VisorDisplay\\obj\\Release\\Growl.VisorDisplay.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E0980578D9944346A1AF262B4CF3E40F"
@@ -1694,7 +1875,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C544A1295E1B43139E3BAC1D02BEA9EF"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.EmailDisplay\\obj\\Release\\Vortex.Growl.EmailDisplay.dll"
+            "SourcePath" = "8:..\\Growl.EmailDisplay\\obj\\Release\\Growl.EmailDisplay.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E7288D72414441A192E382C85A08F3C3"
@@ -1722,7 +1903,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D3138398F6B447129F6CB803B0A2FDB0"
             {
-            "SourcePath" = "8:..\\Vortex.Growl.WindowsClient\\obj\\Release\\Vortex.Growl.WindowsClient.exe"
+            "SourcePath" = "8:..\\Growl.WindowsClient\\obj\\Release\\Growl.WindowsClient.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F1D46206ECB0495BAF62B830F5A27A47"
