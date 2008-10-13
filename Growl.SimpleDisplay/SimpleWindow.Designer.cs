@@ -43,6 +43,7 @@ namespace Growl.SimpleDisplay
             this.titleLabel.Size = new System.Drawing.Size(49, 16);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "[title]";
+            this.titleLabel.UseMnemonic = false;
             // 
             // descriptionLabel
             // 
@@ -53,9 +54,10 @@ namespace Growl.SimpleDisplay
             this.descriptionLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descriptionLabel.Location = new System.Drawing.Point(3, 25);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(175, 29);
+            this.descriptionLabel.Size = new System.Drawing.Size(242, 29);
             this.descriptionLabel.TabIndex = 1;
             this.descriptionLabel.Text = "[description]";
+            this.descriptionLabel.UseMnemonic = false;
             // 
             // applicationNameLabel
             // 
@@ -68,6 +70,7 @@ namespace Growl.SimpleDisplay
             this.applicationNameLabel.TabIndex = 2;
             this.applicationNameLabel.Text = "[applicationName]";
             this.applicationNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.applicationNameLabel.UseMnemonic = false;
             // 
             // SimpleWindow
             // 

@@ -54,7 +54,7 @@ namespace Growl.SimpleDisplay
             this.Location = new Point(x, y);
 
             // set initial opacity
-            this.Opacity = 0.99;
+            this.Opacity = 0.98;
         }
 
         public bool Sticky
@@ -92,6 +92,7 @@ namespace Growl.SimpleDisplay
             set
             {
                 this.color2 = value;
+                HandleTextColor();
                 this.Invalidate();
             }
         }
@@ -137,9 +138,9 @@ namespace Growl.SimpleDisplay
             this.textColor1 = GetTextColor(this.color1);
             this.textColor2 = GetTextColor(this.color2);
 
-            this.applicationNameLabel.ForeColor = this.textColor1;
-            this.titleLabel.ForeColor = this.textColor2;
-            this.descriptionLabel.ForeColor = this.textColor2;
+            this.applicationNameLabel.ForeColor = this.textColor2;
+            this.titleLabel.ForeColor = this.textColor1;
+            this.descriptionLabel.ForeColor = this.textColor1;
         }
 
         private void Reset()
@@ -279,12 +280,17 @@ namespace Growl.SimpleDisplay
             Region gradientRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderWidth, this.Width - (1 * borderWidth), Height - (1 * borderWidth), radius - borderWidth, radius - borderWidth));
             RectangleF rect = gradientRegion.GetBounds(e.Graphics);
             LinearGradientBrush gradientBrush = new LinearGradientBrush(rect, this.color1, this.color2, LinearGradientMode.Vertical);
+            Blend blend = new Blend();
+            blend.Factors = new float[] { 0.0F, 0.1F, 1.0F };
+            blend.Positions = new float[] {0.0F, 0.3F, 1.0F };
+            gradientBrush.Blend = blend;
             g.FillRegion(gradientBrush, gradientRegion);
 
-            RectangleF glassRect = gradientRegion.GetBounds(e.Graphics);
-            glassRect.Height = 18;
-            Brush glassBrush = new LinearGradientBrush(glassRect, Color.FromArgb(60, Color.White), Color.FromArgb(20, Color.White), LinearGradientMode.Vertical);
-            g.FillRectangle(glassBrush, glassRect);
+            int glassHeight = 22;
+            Region glassRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderWidth, this.Width - (1 * borderWidth), glassHeight, radius - borderWidth, radius - borderWidth));
+            RectangleF glassRect = glassRegion.GetBounds(e.Graphics);
+            Brush glassBrush = new LinearGradientBrush(glassRect, Color.FromArgb(140, Color.White), Color.FromArgb(20, Color.White), LinearGradientMode.Vertical);
+            g.FillRegion(glassBrush, glassRegion);
 
             this.Region = borderRegion;
 
