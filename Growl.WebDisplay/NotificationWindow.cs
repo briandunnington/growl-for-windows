@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Growl.WebDisplay
 {
-    public partial class NotificationWindow : Form
+    public partial class NotificationWindow : Growl.DisplayStyle.NotificationWindow
     {
         protected Timer displayTimer;
         protected Timer fadeTimer;
@@ -18,9 +18,6 @@ namespace Growl.WebDisplay
         public NotificationWindow()
         {
             InitializeComponent();
-
-            // dont show in taskbar
-            this.ShowInTaskbar = false;
 
             // deal with fade out
             this.displayTimer = new Timer();
@@ -70,13 +67,6 @@ namespace Growl.WebDisplay
                 this.Close();
                 this.fadeTimer.Stop();
             }
-        }
-
-        public new void Show()
-        {
-            User32DLL.ShowWindow(this.Handle, User32DLL.SW_SHOWNOACTIVATE);
-            //User32DLL.SetWindowPos(this.Handle, User32DLL.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, User32DLL.SWP_NOACTIVATE);
-            OnShown(EventArgs.Empty);
         }
 
         protected override void OnShown(EventArgs e)

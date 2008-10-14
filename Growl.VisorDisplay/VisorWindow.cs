@@ -9,7 +9,7 @@ using Growl.DisplayStyle;
 
 namespace Growl.VisorDisplay
 {
-    public partial class VisorWindow : Form
+    public partial class VisorWindow : NotificationWindow
     {
         protected Timer displayTimer;
         protected Timer slideInTimer;
@@ -102,13 +102,10 @@ namespace Growl.VisorDisplay
             }
         }
 
-        public new void Show()
+        public override void Show()
         {
             Reset();
-
-            User32DLL.ShowWindow(this.Handle, User32DLL.SW_SHOWNOACTIVATE);
-            User32DLL.SetWindowPos(this.Handle, User32DLL.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, User32DLL.SWP_NOACTIVATE);
-            OnShown(EventArgs.Empty);
+            base.Show();
         }
 
         public void SetNotification(Notification n)
@@ -121,6 +118,7 @@ namespace Growl.VisorDisplay
 
         protected override void OnShown(EventArgs e)
         {
+            User32DLL.SetWindowPos(this.Handle, User32DLL.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, User32DLL.SWP_NOACTIVATE);
             base.OnShown(e);
             SlideIn();
         }

@@ -11,7 +11,7 @@ using Growl.DisplayStyle;
 
 namespace Growl.SimpleDisplay
 {
-    public partial class SimpleWindow : Form
+    public partial class SimpleWindow : NotificationWindow
     {
         protected Timer displayTimer;
         protected Timer fadeTimer;
@@ -37,11 +37,6 @@ namespace Growl.SimpleDisplay
             this.displayTimer.Tick += new EventHandler(displayTimer_Tick);
             this.fadeTimer = new Timer();
             this.fadeTimer.Tick += new EventHandler(fadeTimer_Tick);
-
-
-            // dont show in taskbar
-            this.ShowInTaskbar = false;
-            this.TopMost = true;
 
             // set size
             this.Width = 250;
@@ -97,40 +92,8 @@ namespace Growl.SimpleDisplay
             }
         }
 
-        /*
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            int bw = 1;
-
-            Rectangle brect = new Rectangle(0, 0, this.Width, this.Height);
-            Brush borderBrush = Brushes.Black;
-            e.Graphics.FillRectangle(borderBrush, brect);
-
-            Rectangle rect = new Rectangle(bw, bw, this.Width - bw, this.Height - bw);
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(rect, this.color1, this.color2, LinearGradientMode.Vertical);
-            //Blend blend = new Blend();
-            //blend.Factors = new float[] { 0.3F };
-            //blend.Positions = new float[] { 0.2F };
-            //gradientBrush.Blend = blend;
-            e.Graphics.FillRectangle(gradientBrush, rect);
-
-            Rectangle t = new Rectangle(bw, bw, this.Width - bw, 18);
-            //Brush b = Brushes.White;
-            Brush b = new LinearGradientBrush(t, Color.FromArgb(60, Color.White), Color.FromArgb(20, Color.White), LinearGradientMode.Vertical);
-            e.Graphics.FillRectangle(b, t);
-
-            this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 12, 12)); // adjust these parameters to get the lookyou want.
-        }
-         * */
-
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            //this.Invalidate();
-            base.OnResize(e);
         }
 
         private void HandleTextColor()
@@ -145,7 +108,6 @@ namespace Growl.SimpleDisplay
 
         private void Reset()
         {
-
         }
 
         void displayTimer_Tick(object sender, EventArgs e)
@@ -164,16 +126,15 @@ namespace Growl.SimpleDisplay
             }
             else
             {
-                this.Hide();
+                this.Close();
                 this.fadeTimer.Stop();
             }
         }
 
-        public new void Show()
+        public override void Show()
         {
             Reset();
-            User32DLL.ShowWindow(this.Handle, User32DLL.SW_SHOWNOACTIVATE);
-            OnShown(EventArgs.Empty);
+            base.Show();
         }
 
         public void SetNotification(Notification n)
@@ -244,7 +205,7 @@ namespace Growl.SimpleDisplay
 
         void c_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void SimpleWindow_Load(object sender, EventArgs e)
