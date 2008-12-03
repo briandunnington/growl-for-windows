@@ -194,6 +194,8 @@ namespace Growl.AppBridge
 
                 // save application information
                 SaveAppState();
+
+                DisplayStyleManager.Unload();
             }
             catch
             {

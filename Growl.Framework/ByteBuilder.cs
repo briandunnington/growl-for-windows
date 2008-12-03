@@ -69,5 +69,15 @@ namespace Growl.Framework
         {
             return this.byteList.ToArray();
         }
+
+        /// <summary>
+        /// Returns the number of bytes making up the string
+        /// </summary>
+        /// <param name="val">The string whose length you want</param>
+        /// <returns>The number of bytes making up the string (NOT the number of characters, since some characters will require 2 bytes)</returns>
+        public static int GetStringLength(string val)
+        {
+            return Encoding.UTF8.GetBytes(val).Length;
+        }
     }
 }

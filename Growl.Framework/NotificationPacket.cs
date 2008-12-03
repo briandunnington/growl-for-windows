@@ -143,10 +143,10 @@ namespace Growl.Framework
             bb.Append((byte)this.protocolVersion);
             bb.Append((byte)this.packetType);
             bb.Append(flags);
-            bb.Append(this.notificationType.Name.Length);
-            bb.Append(this.title.Length);
-            bb.Append(this.description.Length);
-            bb.Append(this.applicationName.Length);
+            bb.Append(ByteBuilder.GetStringLength(this.notificationType.Name));
+            bb.Append(ByteBuilder.GetStringLength(this.title));
+            bb.Append(ByteBuilder.GetStringLength(this.description));
+            bb.Append(ByteBuilder.GetStringLength(this.applicationName));
             bb.Append(this.notificationType.Name);
             bb.Append(this.title);
             bb.Append(this.description);

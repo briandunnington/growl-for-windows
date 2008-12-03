@@ -181,6 +181,9 @@ namespace Growl.WindowsClient
 
             // get rid of system tray icon
             this.notifyIcon.Dispose();
+
+            // exit
+            Application.Exit();
         }
 
         private void StartGrowl()
@@ -582,8 +585,7 @@ namespace Growl.WindowsClient
 
         private void contextMenuItemQuit_Click(object sender, EventArgs e)
         {
-            // exit
-            Application.Exit();
+            ExitApp();
         }
 
         private void appBridge_RegistrationReceived(ReceivedRegistration rr)

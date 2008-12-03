@@ -76,7 +76,7 @@ namespace Growl.Framework
             ByteBuilder bb = new ByteBuilder();
             bb.Append((byte)this.protocolVersion);
             bb.Append((byte)this.packetType);
-            bb.Append(this.applicationName.Length);
+            bb.Append(ByteBuilder.GetStringLength(this.applicationName));
             bb.Append((byte)notificationTypeCount);
             bb.Append((byte)notificationTypeEnabledCount);
             bb.Append(this.applicationName);
