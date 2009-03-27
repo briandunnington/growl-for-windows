@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Growl.Connector.xml</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -63,6 +64,7 @@
     <Compile Include="MessageParser.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationType.cs" />
+    <None Include="Password.cs.OLD" />
     <Compile Include="Password.cs" />
     <Compile Include="PasswordManager.cs" />
     <Compile Include="Priority.cs" />

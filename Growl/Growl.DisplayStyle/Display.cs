@@ -233,6 +233,13 @@ namespace Growl.DisplayStyle
         /// </remarks>
         public abstract void CloseLastNotification();
 
+        /// <summary>
+        /// Forces any on-screen notifications to redraw themselves.
+        /// </summary>
+        /// <remarks>
+        /// This is generally only applicable to displays that show a visual element,
+        /// but all displays must implement the method nonetheless.
+        /// </remarks>
         public virtual void Refresh()
         {
             // do nothing

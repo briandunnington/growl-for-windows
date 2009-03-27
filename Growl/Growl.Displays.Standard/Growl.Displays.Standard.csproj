@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -88,7 +89,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Standard\bin\Debug\*.*" "$(SolutionDir)\Growl\bin\Debug\Displays\StandardDisplay\" /E /Y /C
-xcopy "$(SolutionDir)\Growl.Displays.Standard\bin\Release\*.*" "$(SolutionDir)\Growl\bin\Release\Displays\StandardDisplay\" /E /Y /C</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Standard\$(OutDir)*.*" "$(SolutionDir)\Growl\$(OutDir)Displays\StandardDisplay\" /E /Y /C</PostBuildEvent>
   </PropertyGroup>
 </Project>

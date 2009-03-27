@@ -174,6 +174,13 @@ namespace Growl.DisplayStyle
             return false;
         }
 
+        /// <summary>
+        /// Forces any on-screen notifications to redraw themselves.
+        /// </summary>
+        /// <remarks>
+        /// This is generally only applicable to displays that show a visual element,
+        /// but all displays must implement the method nonetheless.
+        /// </remarks>
         public override void Refresh()
         {
             foreach (NotificationWindow activeWindow in this.activeWindows)

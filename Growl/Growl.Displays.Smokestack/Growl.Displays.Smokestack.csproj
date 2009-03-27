@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -103,7 +104,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Smokestack\bin\Debug\*.*" "$(SolutionDir)\Growl\bin\Debug\Displays\SmokestackDisplay\" /E /Y /C
-xcopy "$(SolutionDir)\Growl.Displays.Smokestack\bin\Release\*.*" "$(SolutionDir)\Growl\bin\Release\Displays\SmokestackDisplay\" /E /Y /C</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Smokestack\$(OutDir)*.*" "$(SolutionDir)\Growl\$(OutDir)Displays\SmokestackDisplay\" /E /Y /C</PostBuildEvent>
   </PropertyGroup>
 </Project>

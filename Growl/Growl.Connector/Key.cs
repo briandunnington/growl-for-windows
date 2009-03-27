@@ -247,6 +247,7 @@ namespace Growl.Connector
         /// <param name="keyHash">The hex-encoded key hash</param>
         /// <param name="salt">The hex-encoded salt value</param>
         /// <param name="hashAlgorithm">The <see cref="Cryptography.HashAlgorithmType"/> used to generate the key hash</param>
+        /// <param name="encryptionAlgorithm">The <see cref="Cryptography.SymmetricAlgorithmType"/> used by this key to do encryption/decryption</param>
         /// <param name="matchingKey">If a match is found, returns the matching <see cref="Key"/>;if no match is found, returns <c>null</c>.</param>
         /// <returns>
         /// <c>true</c> if the key hash and salt match the password;
