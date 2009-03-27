@@ -568,7 +568,7 @@ namespace Growl.Daemon
                                         {
                                             this.keyHashAlgorithm = GetKeyHashType(keyHashAlgorithmType);
                                             string salt = match.Groups["Salt"].Value.ToUpper();
-                                            authorized = this.passwordManager.IsValid(keyHash, salt, this.keyHashAlgorithm, out this.key);
+                                            authorized = this.passwordManager.IsValid(keyHash, salt, this.keyHashAlgorithm, this.encryptionAlgorithm, out this.key);
                                         }
                                     }
                                     else

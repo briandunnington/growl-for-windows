@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -339,7 +339,7 @@ namespace Growl.Connector
                     throw new CryptographicException(String.Format("Decrypt: Algorithm '{0}' requires an IV size of {1} - (you supplied an IV that was {2} long)", algorithmType, ivSize, iv.Length));
                 algorithm.IV = iv;
 
-                algorithm.Padding = PaddingMode.None;   //TODO: agree on a padding scheme
+                algorithm.Padding = PaddingMode.PKCS7;   //TODO: agree on a padding scheme
                 algorithm.Mode = CipherMode.CBC;
 
                 // decrypt

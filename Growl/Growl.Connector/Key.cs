@@ -252,7 +252,7 @@ namespace Growl.Connector
         /// <c>true</c> if the key hash and salt match the password;
         /// <c>false</c> otherwise
         /// </returns>
-        public static bool Compare(string password, string keyHash, string salt, Cryptography.HashAlgorithmType hashAlgorithm, out Key matchingKey)
+        public static bool Compare(string password, string keyHash, string salt, Cryptography.HashAlgorithmType hashAlgorithm, Cryptography.SymmetricAlgorithmType encryptionAlgorithm, out Key matchingKey)
         {
             matchingKey = null;
             if (!String.IsNullOrEmpty(password))
@@ -275,7 +275,7 @@ namespace Growl.Connector
                     matchingKey.keyHash = keyHash;
                     matchingKey.hashAlgorithm = hashAlgorithm;
                     matchingKey.encryptionKey = keyBytes;
-                    //matchingKey.encryptionAlgorithm = key.encryptionAlgorithm;
+                    matchingKey.encryptionAlgorithm = encryptionAlgorithm;
                     return true;
                 }
             }

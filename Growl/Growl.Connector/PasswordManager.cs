@@ -78,8 +78,10 @@ namespace Growl.Connector
         /// </returns>
         public bool IsValid(string keyHash, string salt, Cryptography.HashAlgorithmType hashAlgorithm)
         {
+            // the key returned here will not actually be valid, but will indicate a match
+            // (this is because the EncryptionAlgorithm will not be set properly)
             Key key;
-            return IsValid(keyHash, salt, hashAlgorithm, out key);
+            return IsValid(keyHash, salt, hashAlgorithm, Cryptography.SymmetricAlgorithmType.PlainText, out key);
         }
 
         /// <summary>
@@ -89,13 +91,14 @@ namespace Growl.Connector
         /// <param name="keyHash">The hex-encoded hash to validate</param>
         /// <param name="salt">The hex-encoded salt value</param>
         /// <param name="hashAlgorithm">The <see cref="Cryptography.HashAlgorithmType"/> used to generate the hash</param>
+        /// <param name="encryptionAlgorithm">The <see cref="Cryptography.SymmetricAlgorithmType"/> used by this key to do encryption/decryption</param>
         /// <param name="matchingKey">Contains the matching <see cref="Key"/> if a match is found</param>
         /// <returns>
         /// <c>true</c> if the hash matches one of the stored password/key values;
         /// <c>false</c> if no match is found
         /// If no match is found, <paramref name="matchingKey"/> will return <c>null</c>.
         /// </returns>
-        public bool IsValid(string keyHash, string salt, Cryptography.HashAlgorithmType hashAlgorithm, out Key matchingKey)
+        public bool IsValid(string keyHash, string salt, Cryptography.HashAlgorithmType hashAlgorithm, Cryptography.SymmetricAlgorithmType encryptionAlgorithm, out Key matchingKey)
         {
             matchingKey = null;
 
@@ -104,7 +107,7 @@ namespace Growl.Connector
             keyHash = keyHash.ToUpper();
             foreach (Password password in this.passwords.Values)
             {
-                bool match = Key.Compare(password.ActualPassword, keyHash, salt, hashAlgorithm, out matchingKey);
+                bool match = Key.Compare(password.ActualPassword, keyHash, salt, hashAlgorithm, encryptionAlgorithm, out matchingKey);
                 if (match)
                 {
                     return true;
