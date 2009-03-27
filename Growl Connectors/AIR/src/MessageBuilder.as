@@ -5,6 +5,7 @@
 	import com.hurlant.crypto.symmetric.ICipher;
 	import com.hurlant.crypto.symmetric.ISymmetricKey;
 	import com.hurlant.crypto.symmetric.IVMode;
+	import com.hurlant.crypto.symmetric.PKCS5;
 	import flash.utils.ByteArray;
 	import com.hurlant.crypto.symmetric.IMode;
 	import com.hurlant.crypto.symmetric.NullPad;
@@ -15,6 +16,7 @@
 	import com.hurlant.crypto.hash.SHA1;
 	import com.hurlant.crypto.hash.IHash;
 	import com.hurlant.util.Hex;
+	import com.hurlant.crypto.prng.Random;
 	
 	public class MessageBuilder 
 	{
@@ -46,13 +48,6 @@
 		
 		public function getBytes():ByteArray
 		{
-			/*
-			var iv:ByteArray = new ByteArray();
-			//iv.writeUTFBytes("1234567890123456");
-			iv.writeUTFBytes("12345678");
-			iv.position = 0;
-			*/
-
 			var encryptedBytes:ByteArray = new ByteArray();
 			encryptedBytes.writeBytes(this.bytes, 0, this.bytes.length);
 			encryptedBytes.position = 0;
@@ -62,13 +57,17 @@
 			var hashInfo:String = "";
 			if (this.password != null && this.password != "")
 			{
+				var r:Random = new Random;
+				var salt:ByteArray = new ByteArray;
+				r.nextBytes(salt, 16);
+				
 				var hasher:IHash = getHasher(this.keyHashAlgorithm);
 				var passwordBytes:ByteArray = new ByteArray();
 				passwordBytes.writeUTFBytes(this.password);
+				passwordBytes.writeBytes(salt, 0, salt.length);
 				key = hasher.hash(passwordBytes);
 				var keyHash:ByteArray = hasher.hash(key);
 				
-				//var cipher:IMode = getCipherWithIV(key, iv);
 				var cipher:IMode = getCipher(key);	// auto-generate the IV
 				cipher.encrypt(encryptedBytes);
 				
@@ -80,7 +79,8 @@
 				}
 				
 				var keyHashHex:String = Hex.fromArray(keyHash);
-				hashInfo = this.keyHashAlgorithm + ":" + keyHashHex.toUpperCase();
+				var saltHex:String = Hex.fromArray(salt);
+				hashInfo = this.keyHashAlgorithm + ":" + keyHashHex.toUpperCase() + "." + saltHex;
 			}
 			
 			var headerBytes:ByteArray = new ByteArray();
@@ -126,15 +126,15 @@
 			{
 				case EncryptionAlgorithm.AES :
 					key = getKeyFromSize(key, 24);
-					cipher = new CBCMode(new AESKey(key), new NullPad());
+					cipher = new CBCMode(new AESKey(key), new PKCS5);
 					break;
 				case EncryptionAlgorithm.DES :
 					key = getKeyFromSize(key, 8);
-					cipher = new CBCMode(new DESKey(key), new NullPad());
+					cipher = new CBCMode(new DESKey(key), new PKCS5);
 					break;
 				case EncryptionAlgorithm.TripleDES :
 					key = getKeyFromSize(key, 16);
-					cipher = new CBCMode(new TripleDESKey(key), new NullPad());
+					cipher = new CBCMode(new TripleDESKey(key), new PKCS5);
 					break;
 				default :
 					cipher = new PlainTextMode();
