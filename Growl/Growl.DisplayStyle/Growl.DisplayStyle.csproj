@@ -1,0 +1,105 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{97E4D21E-FD5C-47D9-BC28-AE5EE8B6288D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Growl.DisplayStyle</RootNamespace>
+    <AssemblyName>Growl.DisplayStyle</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Growl.DisplayStyle.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DefaultSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DefaultSettingsPanel.designer.cs">
+      <DependentUpon>DefaultSettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Display.cs" />
+    <Compile Include="ExpandingLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FadeAnimator.cs" />
+    <Compile Include="IAnimator.cs" />
+    <Compile Include="ISettingsProvider.cs" />
+    <Compile Include="NotificationLite.cs" />
+    <Compile Include="PopupAnimator.cs" />
+    <Compile Include="Win32Animator.cs" />
+    <Compile Include="IDisplay.cs" />
+    <Compile Include="ImageData.cs" />
+    <Compile Include="LayoutManager.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="NotificationWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteLoader.cs" />
+    <Compile Include="SettingSaver.cs" />
+    <Compile Include="SettingsPanelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsPanelBase.designer.cs">
+      <DependentUpon>SettingsPanelBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User32DLL.cs" />
+    <Compile Include="VisualDisplay.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DefaultSettingsPanel.resx">
+      <DependentUpon>DefaultSettingsPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificationWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NotificationWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsPanelBase.resx">
+      <DependentUpon>SettingsPanelBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Growl.CoreLibrary\Growl.CoreLibrary.csproj">
+      <Project>{BCFE7FCD-6055-4872-95EA-5C4C73DE342D}</Project>
+      <Name>Growl.CoreLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.DisplayStyle\bin\Release\*.dll" "$(SolutionDir)\..\Growl Extras\Growl Display SDK\libraries\" /E /Y /C</PostBuildEvent>
+  </PropertyGroup>
+</Project>

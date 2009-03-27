@@ -1,0 +1,109 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9C213ABF-3B98-4AC6-BD93-CA7EFD2174BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Growl.Displays.Smokestack</RootNamespace>
+    <AssemblyName>Growl.Displays.Smokestack</AssemblyName>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PanelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SmokestackDisplay.cs" />
+    <Compile Include="SmokestackWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SmokestackWindow.Designer.cs">
+      <DependentUpon>SmokestackWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SmokestackSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SmokestackSettingsPanel.designer.cs">
+      <DependentUpon>SmokestackSettingsPanel.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Growl.CoreLibrary\Growl.CoreLibrary.csproj">
+      <Project>{BCFE7FCD-6055-4872-95EA-5C4C73DE342D}</Project>
+      <Name>Growl.CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Growl.DisplayStyle\Growl.DisplayStyle.csproj">
+      <Project>{97E4D21E-FD5C-47D9-BC28-AE5EE8B6288D}</Project>
+      <Name>Growl.DisplayStyle</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SmokestackWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SmokestackWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SmokestackSettingsPanel.resx">
+      <DependentUpon>SmokestackSettingsPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\My-Computer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\overlay.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Smokestack\bin\Debug\*.*" "$(SolutionDir)\Growl\bin\Debug\Displays\SmokestackDisplay\" /E /Y /C
+xcopy "$(SolutionDir)\Growl.Displays.Smokestack\bin\Release\*.*" "$(SolutionDir)\Growl\bin\Release\Displays\SmokestackDisplay\" /E /Y /C</PostBuildEvent>
+  </PropertyGroup>
+</Project>

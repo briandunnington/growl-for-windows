@@ -1,0 +1,78 @@
+v2.0 (current version)
+------------------------------
+ - entirely new UI
+ - added support for new GNTP (Growl Notification Protocol) for cross-platform compatibility 
+ - support for images in notifications (via GNTP)
+ - supports sending callbacks when a notification is clicked/closed (via GNTP)
+ - added ability to initiate notification forwarding from the receiving client (subscriptions)
+ - added keyboard shortcuts for closing last notification and closing all notifications
+ - right-click immediately closes notification
+ - new History feature that records all notifications 
+ - new Missed Notifications summary 
+ - added Bonjour support to enable automatic discovery of other Growl instances on your network (PC or Mac) 
+ - new Smokestack display; improved Standard and Visor displays 
+ - added idle/away detection
+ - support for playing sounds when notifications arrive
+ - Password Manager allows multiple passwords (can be used for individual applications, etc)
+ - fixed a bug in the UDP connector that incorrectly handled the length of 2-byte UTF-8 strings (thanks to snaka.gml for reporting)
+ - fixed a bug where growl was not always properly shutdown when exiting
+ - removed support for WebKit-based displays
+ EXTRAS::
+ - plug-ins for Outlook (2003/2007), Visual Studio (2005/2008), and iTunes 
+ - iRate for ITunes display
+ - complete developer SDK for creating custom displays 
+
+v1.2.1.1
+------------------------------
+ - now starts up in the system tray only (doesn't initially show the control form)
+ - most displays now support a simple stacking routine so multiple notifications dont show up on top of each other (all Webkit-based displays as well as the Simple display) 
+ - the Simple display's visual style has been updated (hopefully improved)
+ - fixed bug in SimpleWindow labels where ampersands were not displaying correctly (UseMnemonic)
+ - added a base Form class to Growl.Display; changed other styles to inherit from this class
+
+v1.2.1
+------------------------------
+ - released as open source under BSD license on Google Code: http://code.google.com/p/growl-for-windows/
+ - minor code clean-up and refactoring
+
+v1.2.0
+------------------------------
+ - added ability to receive notifications from web applications
+ - fixed a bug the didnt always save user settings when the application was shutdown
+ - added 'Preview' button to Display configuration screen
+ - internal refactoring to better seperate and control how notifications from different sources are handled (local apps, network apps, websites)
+
+v1.1.0
+------------------------------
+ - created IDisplay/Display interface for building custom display plugins
+ - updated main program code to load/handle display plugins as well as user-configurable settings
+ - re-wrote WebKit-based display to use the IDisplay interface
+ - created sample EmailDisplay to forward notifications to an email address
+ - created sample Visor display as an example of a custom display plugin
+ - fixed a bug where multiple instances of Growl could be started simultaneously
+
+v1.0.1
+------------------------------
+ - notification sticky override
+ - handle line breaks in WebKit-based displays
+ - created new installer that handles WebKit COM dependencies and initial Display styles
+ - changed location of 'user.config', 'application.settings', and 'forward.settings' files to Application.LocalUserAppDataPath
+ - fixed bug with notification list that occurred if the parent application item was deselected
+
+v1.0.0 (initial release)
+------------------------------
+ - taskbar icon
+ - start/stop service
+ - autostart at login
+ - default display type
+ - application display override
+ - notification display & priority overrides
+ - listen for network notifications
+ - accept remote registrations
+ - forward notifications
+ - about
+ 
+ inspiration:
+ "@everyone who wants a windows port - I've humored this for years. I no longer care to. 
+ If someone wants to do it, that'd be great. Snarl is probably your best bet though."
+ - Chris Forsythe (http://brok3n.org/archivesextreme/growl/index.html)

@@ -1,0 +1,351 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D4FAD0E4-FD93-4379-8684-F3288F06A588}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Growl</RootNamespace>
+    <AssemblyName>Growl</AssemblyName>
+    <ApplicationIcon>Resources\growl.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TrackBar, Version=1.0.2486.37933, Culture=neutral, PublicKeyToken=503bf28f63ad27b4" />
+    <Reference Include="ZeroconfService, Version=0.5.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Growl.Daemon\Third Party Assemblies\ZeroconfService.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddComputer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddComputer.Designer.cs">
+      <DependentUpon>AddComputer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChooseForwarding.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChooseForwarding.Designer.cs">
+      <DependentUpon>ChooseForwarding.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BonjourListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\BonjourListItem.cs" />
+    <Compile Include="UI\ButtonEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ForwardListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\HighlightTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\HistoryListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ImageButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ListControlItem.cs" />
+    <Compile Include="UI\ListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\MissedNotificationsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MissedNotificationsWindow.Designer.cs">
+      <DependentUpon>MissedNotificationsWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OnOffButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\OnOffButton.Designer.cs">
+      <DependentUpon>OnOffButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_source\AutoUpdate\UpdateException.cs" />
+    <Compile Include="_source\GrowlException.cs" />
+    <Compile Include="_source\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddComputer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AddComputer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChooseForwarding.resx">
+      <DependentUpon>ChooseForwarding.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\BonjourListBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BonjourListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ForwardListView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ForwardListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\HistoryListView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HistoryListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MissedNotificationsWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MissedNotificationsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\OnOffButton.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OnOffButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PasswordManagerControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PasswordManagerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_source\AutoUpdate\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UI\PasswordManagerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PasswordManagerControl.Designer.cs">
+      <DependentUpon>PasswordManagerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PasswordManagerControlListItem.cs" />
+    <Compile Include="UI\Toolbar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ToolbarRenderer.cs" />
+    <Compile Include="_source\ActivityMonitor.cs" />
+    <Compile Include="_source\ApplicationMain.cs" />
+    <Compile Include="_source\AutoUpdate\UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_source\AutoUpdate\UpdateForm.designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_source\AutoUpdate\CheckForUpdateCompleteEventArgs.cs" />
+    <Compile Include="_source\AutoUpdate\CheckForUpdateCompleteEventHandler.cs" />
+    <Compile Include="_source\AutoUpdate\Manifest.cs" />
+    <Compile Include="_source\AutoUpdate\UpdateErrorEventArgs.cs" />
+    <Compile Include="_source\AutoUpdate\UpdateErrorEventHandler.cs" />
+    <Compile Include="_source\AutoUpdate\Updater.cs" />
+    <Compile Include="_source\Bonjour.cs" />
+    <Compile Include="_source\BonjourForwardComputer.cs" />
+    <Compile Include="_source\DetectedService.cs" />
+    <Compile Include="_source\DisplayDefault.cs" />
+    <Compile Include="_source\DisplayNone.cs" />
+    <Compile Include="_source\ForwardComputer.cs" />
+    <Compile Include="_source\ForwardComputerPlatformType.cs" />
+    <Compile Include="_source\Forwarder.cs" />
+    <Compile Include="_source\GrowlBonjourEventArgs.cs" />
+    <Compile Include="_source\MissedNotificationsDisplay.cs" />
+    <Compile Include="_source\NoneDisplay.cs" />
+    <Compile Include="_source\NotificationPreferences.cs" />
+    <Compile Include="_source\Controller.cs" />
+    <Compile Include="_source\DefaultablePreference.cs" />
+    <Compile Include="_source\Display.cs" />
+    <Compile Include="_source\DisplayNotificationCallbackDelegate.cs" />
+    <Compile Include="_source\DisplayStyleManager.cs" />
+    <Compile Include="_source\Keyboard.cs" />
+    <Compile Include="_source\LoadedDisplayStyle.cs" />
+    <Compile Include="_source\ApplicationPreferences.cs" />
+    <Compile Include="_source\PastNotification.cs" />
+    <Compile Include="_source\PortConflictEventArgs.cs" />
+    <Compile Include="_source\PrefEnabled.cs" />
+    <Compile Include="_source\PrefForward.cs" />
+    <Compile Include="_source\PrefPriority.cs" />
+    <Compile Include="_source\PrefSound.cs" />
+    <Compile Include="_source\PrefSticky.cs" />
+    <Compile Include="_source\RegisteredApplication.cs" />
+    <Compile Include="_source\RegisteredNotification.cs" />
+    <Compile Include="_source\IRegisteredObject.cs" />
+    <Compile Include="_source\Serialization.cs" />
+    <Compile Include="_source\SettingSaver.cs" />
+    <Compile Include="UI\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_source\SingleInstanceApplication.cs" />
+    <Compile Include="_source\SubscribedForwardComputer.cs" />
+    <Compile Include="_source\Subscription.cs" />
+    <Compile Include="_source\UserSettingsProvider.cs" />
+    <Compile Include="_source\Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Locker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\growl.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Config-Tools.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\My-Computer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\Network.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\growl-big.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\off_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\on_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Growl.exe.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons_license.pdf" />
+    <None Include="Resources\Clock2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Growl.Connector\Growl.Connector.csproj">
+      <Project>{19C22138-B905-47BA-9E6E-EF9356907E53}</Project>
+      <Name>Growl.Connector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Growl.CoreLibrary\Growl.CoreLibrary.csproj">
+      <Project>{BCFE7FCD-6055-4872-95EA-5C4C73DE342D}</Project>
+      <Name>Growl.CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Growl.Daemon\Growl.Daemon.csproj">
+      <Project>{6112CD52-1F16-4068-8D16-CB9C5467E8C3}</Project>
+      <Name>Growl.Daemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Growl.Displays.Standard\Growl.Displays.Standard.csproj">
+      <Project>{6CAA2424-5F26-4C76-A1B3-EF9FFE1194D4}</Project>
+      <Name>Growl.Displays.Standard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Growl.DisplayStyle\Growl.DisplayStyle.csproj">
+      <Project>{97E4D21E-FD5C-47D9-BC28-AE5EE8B6288D}</Project>
+      <Name>Growl.DisplayStyle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Growl.UDPLegacy\Growl.UDPLegacy.csproj">
+      <Project>{901C016A-9008-4190-A067-E578E7E66B1A}</Project>
+      <Name>Growl.UDPLegacy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="installer.jpg" />
+    <Content Include="license.txt" />
+    <Content Include="release_notes.txt" />
+    <None Include="Resources\growl_highlighted.png" />
+    <None Include="Resources\button_bg_dim.png" />
+    <None Include="Resources\other.png" />
+    <None Include="Resources\iphone.png" />
+    <None Include="Resources\internet.png" />
+    <None Include="Resources\windows.png" />
+    <None Include="Resources\mobile.png" />
+    <None Include="Resources\mac.png" />
+    <None Include="Resources\linux.png" />
+    <None Include="Resources\button_remove_dim.png" />
+    <None Include="Resources\button_remove.png" />
+    <None Include="Resources\button_add_dim.png" />
+    <None Include="Resources\button_add.png" />
+    <None Include="Resources\Symbol-Restricted.png" />
+    <None Include="Resources\Symbol-Add.png" />
+    <None Include="Resources\close_red.png" />
+    <None Include="Resources\close_blue.png" />
+    <None Include="Resources\Symbol-Delete.png" />
+    <None Include="Resources\button_bg.png" />
+    <None Include="Resources\generic_application.png" />
+    <None Include="Resources\growl_stopped.ico" />
+    <None Include="Resources\growl_paused.ico" />
+    <None Include="Resources\growl_dim.ico" />
+    <None Include="TrackBar.dll" />
+    <Content Include="update.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRate iTunes Display", "iRate iTunes Display\iRate iTunes Display.csproj", "{CA52D521-009F-4CC0-A7F2-9029AB48CA86}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Deployment", "Deployment\Deployment.vdproj", "{9F66403C-15ED-4011-A598-F503E7676A26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Display Installer", "..\Growl Display SDK\Display Installer\Display Installer.csproj", "{14E259B7-AAB0-4855-BD58-ADB4458C8C4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA52D521-009F-4CC0-A7F2-9029AB48CA86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA52D521-009F-4CC0-A7F2-9029AB48CA86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA52D521-009F-4CC0-A7F2-9029AB48CA86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA52D521-009F-4CC0-A7F2-9029AB48CA86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F66403C-15ED-4011-A598-F503E7676A26}.Debug|Any CPU.ActiveCfg = Debug
+		{9F66403C-15ED-4011-A598-F503E7676A26}.Release|Any CPU.ActiveCfg = Release
+		{14E259B7-AAB0-4855-BD58-ADB4458C8C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14E259B7-AAB0-4855-BD58-ADB4458C8C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14E259B7-AAB0-4855-BD58-ADB4458C8C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14E259B7-AAB0-4855-BD58-ADB4458C8C4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

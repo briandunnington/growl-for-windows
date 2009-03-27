@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<flex-config xmlns="http://www.adobe.com/2006/flex-config">
+  <output>D:\_Growl\Growl Connectors\Javascript\bin\GrowlFlashConnector.swc</output>
+  <use-network>true</use-network>
+  <warnings>true</warnings>
+  <benchmark>false</benchmark>
+  <compiler>
+    <accessible>false</accessible>
+    <allow-source-path-overlap>false</allow-source-path-overlap>
+    <optimize>false</optimize>
+    <strict>true</strict>
+    <es>false</es>
+    <show-actionscript-warnings>true</show-actionscript-warnings>
+    <show-binding-warnings>true</show-binding-warnings>
+    <show-unused-type-selector-warnings>true</show-unused-type-selector-warnings>
+    <use-resource-bundle-metadata>true</use-resource-bundle-metadata>
+    <verbose-stacktraces>false</verbose-stacktraces>
+    <source-path>
+      <path-element>D:\_Growl\Growl Connectors\Javascript\src</path-element>
+    </source-path>
+    <library-path>
+      <path-element>D:\_Growl\Growl Connectors\Javascript\lib\GrowlAIRConnector.swc</path-element>
+    </library-path>
+  </compiler>
+  <include-classes>
+    <class>GrowlJSConnector</class>
+    <class>Main</class>
+  </include-classes>
+</flex-config>

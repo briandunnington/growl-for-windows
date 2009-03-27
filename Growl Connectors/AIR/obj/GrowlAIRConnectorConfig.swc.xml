@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<flex-config xmlns="http://www.adobe.com/2006/flex-config">
+  <output>D:\_Growl\Growl Connectors\AIR\bin\GrowlAIRConnector.swc</output>
+  <use-network>true</use-network>
+  <warnings>true</warnings>
+  <benchmark>false</benchmark>
+  <compiler>
+    <accessible>false</accessible>
+    <allow-source-path-overlap>false</allow-source-path-overlap>
+    <optimize>false</optimize>
+    <strict>true</strict>
+    <es>false</es>
+    <show-actionscript-warnings>true</show-actionscript-warnings>
+    <show-binding-warnings>true</show-binding-warnings>
+    <show-unused-type-selector-warnings>true</show-unused-type-selector-warnings>
+    <use-resource-bundle-metadata>true</use-resource-bundle-metadata>
+    <verbose-stacktraces>false</verbose-stacktraces>
+    <source-path>
+      <path-element>D:\_Growl\Growl Connectors\AIR\src</path-element>
+    </source-path>
+    <library-path>
+      <path-element>D:\_Growl\Growl Connectors\AIR\lib\as3crypto.swc</path-element>
+    </library-path>
+  </compiler>
+  <include-classes>
+    <class>EncryptionAlgorithm</class>
+    <class>FlashSocket</class>
+    <class>GNTPResponseEvent</class>
+    <class>GNTPSocket</class>
+    <class>GrowlAIRConnector</class>
+    <class>GrowlCallbackResponseEvent</class>
+    <class>GrowlErrorResponseEvent</class>
+    <class>GrowlOKResponseEvent</class>
+    <class>HashAlgorithm</class>
+    <class>MessageBuilder</class>
+    <class>MessageType</class>
+    <class>PlainTextKey</class>
+    <class>PlainTextMode</class>
+    <class>RemotingEvent</class>
+    <class>RemotingSocket</class>
+    <class>ResponseType</class>
+    <class>SocketManager</class>
+  </include-classes>
+</flex-config>

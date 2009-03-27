@@ -1,0 +1,67 @@
+
+#file-cache D:\_Growl\Growl Connectors\AIR\src\EncryptionAlgorithm.as
+package{public class EncryptionAlgorithm{public static var PlainText : String;public static var AES : String;public static var DES : String;public static var TripleDES : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\FlashSocket.as
+package{import flash.external.ExternalInterface;import flash.events.*;import flash.net.Socket;import flash.utils.ByteArray;internal class FlashSocket extends EventDispatcher{private var socket : RemotingSocket;private var id : String;public function FlashSocket (id:String);private function remotingSocketHandler (event:RemotingEvent) : void;public function writeString (str:String) : void;public function write (bytes:ByteArray) : void;public function disconnect () : void;public function connect (host:String, port:int) : void;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\GNTPResponseEvent.as
+package{import flash.events.Event;public class GNTPResponseEvent extends Event{public static const RESPONSE : String;public var message : String;public var gntpSocket : GNTPSocket;public function GNTPResponseEvent (message:String, gntpSocket:GNTPSocket);public function clone () : Event;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\GNTPSocket.as
+package{import flash.external.ExternalInterface;import flash.events.*;import flash.net.Socket;import flash.utils.ByteArray;internal class GNTPSocket extends EventDispatcher{public var id : String;public var waitForCallback : Boolean;private var socket : RemotingSocket;public function GNTPSocket (id:String, waitForCallback:Boolean);private function remotingSocketHandler (event:RemotingEvent) : void;public function writeString (str:String) : void;public function write (bytes:ByteArray) : void;public function disconnect () : void;public function connect (host:String, port:int) : void;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\GrowlAIRConnector.as
+package{import com.hurlant.util.der.ByteString;import flash.events.*;import flash.external.ExternalInterface;import flash.system.Capabilities;import flash.system.System;import flash.utils.ByteArray;import SocketManager;public class GrowlAIRConnector extends EventDispatcher{private var host : String;private var port : int;private var sm : SocketManager;private var password : String;private var passwordHashAlgorithm : String;private var encryptionAlgorithm : String;private var responseRegex : RegExp;private var headerRegex : RegExp;private const HEADER_APPLICATION_NAME : String;public function GrowlAIRConnector (host:String, port:int);public function register (application:Object, notificationTypes:Array) : void;public function notify (appName:String, notification:Object) : void;public function setPassword (password:String) : void;public function setPasswordHashAlgorithm (passwordHashAlgorithm:String) : void;public function setEncryptionAlgorithm (encryptionAlgorithm:String) : void;private function addOriginHeaders (mb:MessageBuilder) : MessageBuilder;private function gntpResponseHandler (event:GNTPResponseEvent) : void;private function handleEvent (event:Event, ...rest) : void;private function parseUTCDate (value:String) : Date;private function parseResponse (response:String) : Object;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\GrowlCallbackResponseEvent.as
+package{import flash.events.Event;public class GrowlCallbackResponseEvent extends Event{public static const CALLBACK_RESPONSE : String;public var notificationID : String;public var action : String;public var context : String;public var contextType : String;public var timestamp : Date;public function GrowlCallbackResponseEvent (notificationID:String, action:String, context:String, contextType:String, timestamp:Date);}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\GrowlErrorResponseEvent.as
+package{import flash.events.Event;public class GrowlErrorResponseEvent extends Event{public static const ERROR_RESPONSE : String;public var errorCode : int;public var errorDescription : String;public function GrowlErrorResponseEvent (errorCode:int, errorDescription:String);}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\GrowlOKResponseEvent.as
+package{import flash.events.Event;public class GrowlOKResponseEvent extends Event{public static const OK_RESPONSE : String;public function GrowlOKResponseEvent ();}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\HashAlgorithm.as
+package{public class HashAlgorithm{public static var MD5 : String;public static var SHA1 : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\MessageBuilder.as
+package{import com.hurlant.crypto.symmetric.CBCMode;import com.hurlant.crypto.symmetric.ECBMode;import com.hurlant.crypto.symmetric.ICipher;import com.hurlant.crypto.symmetric.ISymmetricKey;import com.hurlant.crypto.symmetric.IVMode;import flash.utils.ByteArray;import com.hurlant.crypto.symmetric.IMode;import com.hurlant.crypto.symmetric.NullPad;import com.hurlant.crypto.symmetric.AESKey;import com.hurlant.crypto.symmetric.DESKey;import com.hurlant.crypto.symmetric.TripleDESKey;import com.hurlant.crypto.hash.MD5;import com.hurlant.crypto.hash.SHA1;import com.hurlant.crypto.hash.IHash;import com.hurlant.util.Hex;public class MessageBuilder{private var messageType : String;private var password : String;private var keyHashAlgorithm : String;private var encryptionAlgorithm : String;private var bytes : ByteArray;public function MessageBuilder (messageType:String, password:String, keyHashAlgorithm:String, encryptionAlgorithm:String);public function addHeader (name:String, value:String) : void;public function addBlankLine () : void;public function getBytes () : ByteArray;public function toString () : String;private function getHasher (name:String) : IHash;private function getCipher (key:ByteArray) : IMode;private function getCipherWithIV (key:ByteArray, iv:ByteArray) : IMode;private function getKeyFromSize (key:ByteArray, size:int) : ByteArray;private function getJSFunctionName (functionName:String) : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\MessageType.as
+package{public class MessageType{public static var Register : String;public static var Notify : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\PlainTextKey.as
+package{import com.hurlant.crypto.symmetric.ISymmetricKey;import flash.utils.ByteArray;public class PlainTextKey implements ISymmetricKey{public function PlainTextKey ();public function encrypt (block:ByteArray, index:uint = 0) : void;public function decrypt (block:ByteArray, index:uint = 0) : void;public function getBlockSize () : uint;public function toString () : String;public function dispose () : void;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\PlainTextMode.as
+package{import com.hurlant.crypto.symmetric.IMode;import com.hurlant.crypto.symmetric.IPad;import com.hurlant.crypto.symmetric.ISymmetricKey;import com.hurlant.crypto.symmetric.IVMode;import com.hurlant.crypto.symmetric.NullPad;import flash.utils.ByteArray;public class PlainTextMode extends IVMode implements IMode{public function PlainTextMode ();public function encrypt (block:ByteArray) : void;public function decrypt (block:ByteArray) : void;public function toString () : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\RemotingEvent.as
+package{import flash.events.Event;/**
+* This custom Event class adds a message property to a basic Event.
+*/
+public class RemotingEvent extends Event{/**
+* The name of the new RemotingEvent type.
+*/
+public static const REMOTING : String;/**
+* A text message that can be passed to an event handler
+		 * with this event object.
+*/
+public var message : String;/**
+*  Constructor.
+		 *  @param message The text to display when the alarm goes off.
+*/
+public function RemotingEvent (message:String);/**
+* Creates and returns a copy of the current instance.
+		 * @return	A copy of the current instance.
+*/
+public function clone () : Event;/**
+* Returns a String containing all the properties of the current
+		 * instance.
+		 * @return A string representation of the current instance.
+*/
+public function toString () : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\RemotingSocket.as
+package{import flash.events.*;import flash.net.Socket;import flash.system.Security;import flash.utils.ByteArray;import flash.external.ExternalInterface;public class RemotingSocket extends Socket{private var _queue : Array;public function RemotingSocket ();/**
+* Helper function to write to a socket
+*/
+public function write (ba:ByteArray) : void;/**
+* When socket connects, send out any buffered messages
+*/
+private function connectHandler (event:Event) : void;/**
+* Received data, create a new event to send it on
+*/
+private function dataHandler (event:ProgressEvent) : void;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\ResponseType.as
+package{public class ResponseType{public static var OK : String;public static var Callback : String;public static var Error : String;}}
+#file-cache D:\_Growl\Growl Connectors\AIR\src\SocketManager.as
+package{import flash.events.*;import flash.net.Socket;import flash.utils.ByteArray;import flash.utils.Dictionary;import flash.external.ExternalInterface;public class SocketManager extends EventDispatcher{private var sockets : Dictionary;private var host : String;private var port : int;public function SocketManager ();public function setServer (host:String, port:int) : void;public function send (bytes:ByteArray, waitForCallback:Boolean) : void;private function disconnectHandler (id:String) : void;}}

@@ -1,0 +1,72 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Growl.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AutoStart" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FormSize" Provider="Growl.UserSettingsProvider" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">670, 390</Value>
+    </Setting>
+    <Setting Name="FormLocation" Provider="Growl.UserSettingsProvider" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">-1, -1</Value>
+    </Setting>
+    <Setting Name="AllowNetworkNotifications" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AllowForwarding" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DefaultDisplay" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Standard</Value>
+    </Setting>
+    <Setting Name="HistorySortBy" Provider="Growl.UserSettingsProvider" Type="Growl.UI.HistoryGroupItemsBy" Scope="User">
+      <Value Profile="(Default)">Date</Value>
+    </Setting>
+    <Setting Name="HistoryDays" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="EnableLogging" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RequireLocalPassword" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DefaultSound" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CheckForIdle" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IdleAfterSeconds" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="SubscriptionTTL" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="AllowSubscriptions" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="KeyboardShortcutCloseLast" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Alt+X</Value>
+    </Setting>
+    <Setting Name="KeyboardShortcutCloseAll" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Alt+Shift+X</Value>
+    </Setting>
+    <Setting Name="AllowWebNotifications" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableSubscriptions" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DisableLegacySupport" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ManuallyEnableNewApplications" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AutomaticallyCheckForUpdates" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

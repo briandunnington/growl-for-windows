@@ -1,0 +1,96 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19C22138-B905-47BA-9E6E-EF9356907E53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Growl.Connector</RootNamespace>
+    <AssemblyName>Growl.Connector</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Growl.Connector.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Growl.Connector.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application.cs" />
+    <Compile Include="CallbackContext.cs" />
+    <Compile Include="CallbackDataBase.cs" />
+    <Compile Include="CallbackData.cs" />
+    <Compile Include="ConnectorBase.cs" />
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="CustomHeader.cs" />
+    <Compile Include="DataHeader.cs" />
+    <Compile Include="DisplayName.cs" />
+    <Compile Include="DisplayNameAttribute.cs" />
+    <Compile Include="EncryptionResult.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="ErrorDescription.cs" />
+    <Compile Include="ExtensibleObject.cs" />
+    <Compile Include="GrowlCentralConnector.cs" />
+    <Compile Include="GrowlConnector.cs" />
+    <Compile Include="GrowlException.cs" />
+    <Compile Include="Header.cs" />
+    <Compile Include="HeaderCollection.cs" />
+    <Compile Include="Key.cs" />
+    <Compile Include="MessageBuilder.cs" />
+    <Compile Include="MessageParser.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="NotificationType.cs" />
+    <Compile Include="Password.cs" />
+    <Compile Include="PasswordManager.cs" />
+    <Compile Include="Priority.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestData.cs" />
+    <Compile Include="RequestType.cs" />
+    <Compile Include="Response.cs" />
+    <Compile Include="ResponseType.cs" />
+    <Compile Include="UrlCallbackTarget.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Growl.Connector.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Growl.CoreLibrary\Growl.CoreLibrary.csproj">
+      <Project>{BCFE7FCD-6055-4872-95EA-5C4C73DE342D}</Project>
+      <Name>Growl.CoreLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Connector\bin\Release\*.dll" "$(SolutionDir)\..\Growl Connectors\NET\libraries\" /E /Y /C</PostBuildEvent>
+  </PropertyGroup>
+</Project>

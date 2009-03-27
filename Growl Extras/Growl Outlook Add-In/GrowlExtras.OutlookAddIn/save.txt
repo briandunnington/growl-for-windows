@@ -1,0 +1,4 @@
+/assemblyName="GrowlOutlookAddIn.dll" /targetDir="[TARGETDIR]\" /solutionCodeGroupName="Vortex.GrowlOutlookAddIn" /solutionCodeGroupDescription="Code group for GrowlOutlookAddIn" /assemblyCodeGroupName="GrowlOutlookAddIn" /assemblyCodeGroupDescription="Code group for GrowlOutlookAddIn" /allUsers=[ALLUSERS]
+
+
+/solutionCodeGroupName="Vortex.GrowlOutlookAddIn"

@@ -1,0 +1,28 @@
+test cases:
+ - random junk
+ - flash policy request
+ - invalid flash policy request
+ - long random request with < first character (looks like flash policy, but isnt)
+ - valid register with 1 notification
+ - valid register with 2 notifications
+ - invalid register with no notifications
+ - invalid register with no application name
+ - invalid register with no notifications-count
+ - valid register with binary data
+ - invalid register with missing resource ID header
+ - invalid register with missing resource length header
+ - invalid register with too little binary data
+ - invalid register with too much binary data
+ - invalid register with no blank lines
+ - invalid register with no ending line feed
+ - invalid register with extra blank line in headers
+ - invalid register with extra blank line in notifications
+ - invalid register with extra blank line in resource headers
+ - valid register with binary data that includes CRLF
+ - wrong version
+ - invalid directive
+ - message header with extra data (should this be ok?)
+ - invalid duplicate header
+ - invalid value for Yes/No header
+ - invalid value for int value (notifications-count)
+ repeat for NOTIFY and other requests

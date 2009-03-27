@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <script src="swfobject.js"></script>
+	<script src="growl.js"></script>
+    </head>
+    
+    <body>
+        <a href="#" onclick="register();return false;">register</a><br /><br />
+        
+        <a href="#" onclick="notify();return false;">notify</a><br /><br />
+        
+        <a href="#" onclick="notify2();return false;">notify (w/ callback)</a><br /><br />
+        
+        <script>
+        function register(){
+            var application = new Growl.Application();
+            application.name = "test app";
+            application.icon = "http://www.google.com/images/logo_sm.gif";
+            
+            var notificationTypes = new Array();
+            var nt1 = new Growl.NotificationType();
+            nt1.name = "NT1";
+            nt1.displayName = "notification type one";
+            nt1.enabled = true;
+            notificationTypes.push(nt1);
+            
+            Growl.register(application, notificationTypes);
+        }
+        
+        function notify(){
+            var notification = new Growl.Notification();
+            notification.name = "NT1";
+            notification.title = "you got notified";
+            notification.text = "this is the text";
+            notification.icon = "http://www.google.com/images/logo_sm.gif";
+            notification.priority = "normal";
+            
+            Growl.notify("test app", notification);
+        }
+
+        function notify2(){
+            var notification = new Growl.Notification();
+            notification.name = "NT1";
+            notification.title = "you got notified";
+            notification.text = "this is the text";
+            notification.icon = "http://www.google.com/images/logo_sm.gif";
+            notification.priority = "normal";
+            notification.callback.context = "my context";
+            notification.callback.type = "string";
+            
+            Growl.notify("test app", notification);
+        }
+        </script>
+        <script>
+        window.onload = function(){
+            var config = {};
+            //config.scope = "Growl"; //optional
+            //config.containerID = null; //optional
+            //config.password = "x";
+            //config.passwordHashAlgorithm = Growl.PasswordHashAlgorithm.SHA1;
+            config.encryptionAlgorithm = Growl.EncryptionAlgorithm.PlainText;
+            //config.encryptionAlgorithm = Growl.EncryptionAlgorithm.TripleDES;
+            config.oncallback = cb;
+            config.onerror = onerror;
+            Growl.init(config);
+        }
+        
+        function cb(notificationID, action, context, type, timestamp){
+            if(action == Growl.CallbackAction.Click) alert("the notification was clicked");
+
+            var s = "";
+            s += "id: " + notificationID + "\r\n";
+            s += "action: " + action + "\r\n";
+            s += "context: " + context + "\r\n";
+            s += "type: " + type + "\r\n";
+            s += "timestamp: " + timestamp + "\r\n";
+            alert(s);
+        }
+        
+        function onerror(errorCode, errorDescription){
+            alert("ERROR:\r\n\r\n" + errorCode + " - " + errorDescription);
+        }
+        </script>
+        
+    </body>
+</html>

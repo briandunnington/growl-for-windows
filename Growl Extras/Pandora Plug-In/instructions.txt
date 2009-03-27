@@ -1,0 +1,39 @@
+
+Growl Plug-In for Pandora AIR Application
+--------------------------------------------------------------------------------
+
+Adobe AIR applications don't have a built-in plug-in architecture, but
+fortunately, the Pandora AIR application is nothing more than some html pages 
+and javascript. Thus the method of adding Growl support involves editing the
+main Pandora html page to include some additional Growl javascript.
+
+*** These instructions require overwriting the original Pandora html file - 
+*** Install this plug-in at your own risk.
+
+1. Locate the Pandora installation. On Windows, the default location is:
+	C:\Program Files\Pandora
+
+2. Copy the included 'growl' folder and all of its contents into the Pandora
+   folder.
+
+3. Open the 'html' folder and find the 'Pandora.html' file. Make a backup copy
+   of this file before proceeding.
+
+4. Copy the included 'Pandora.html' file into the 'html' folder, overwriting
+   the original file.
+
+
+If the Pandora AIR app is already running, you will have to restart it.
+
+
+*** If you mess up the main Pandora html file, there is a chance that the 
+*** Pandora application will no longer work. If the application no longer loads
+*** properly after your edits, restore the original 'Pandora.html' file.
+
+*** These instructions are intended for version 1 of the Pandora AIR
+*** application. Other versions may not work with these instructions or the 
+*** included Growl javascript files.
+
+*** If you install an update to the Pandora AIR application that overwrites the
+*** 'Pandora.html' file, Growl notifications will no longer work. You will have
+*** to re-edit the html file in order to include the Growl javascript files.

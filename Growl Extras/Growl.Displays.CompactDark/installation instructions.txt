@@ -1,0 +1,9 @@
+1. Navigate to the folder where Growl for windows is installed (Example: c:\Program Files\Growl for Windows\)
+
+2. Open the 'Displays' subfolder.
+
+3. Create a new folder called 'CompactDark' in the 'Displays' folder and open the new folder.
+
+4. Copy the files from this .zip file into the new 'CompactDark' folder.
+
+5. Restart Growl for Windows

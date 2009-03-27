@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speak Display", "Speak Display\Speak Display.csproj", "{794E7E2C-6320-4CEF-ADFA-85E6B3B62BE0}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Deployment", "Deployment\Deployment.vdproj", "{8FFEE506-421C-46C3-90A9-5B3ADF9272DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{794E7E2C-6320-4CEF-ADFA-85E6B3B62BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{794E7E2C-6320-4CEF-ADFA-85E6B3B62BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{794E7E2C-6320-4CEF-ADFA-85E6B3B62BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{794E7E2C-6320-4CEF-ADFA-85E6B3B62BE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FFEE506-421C-46C3-90A9-5B3ADF9272DE}.Debug|Any CPU.ActiveCfg = Debug
+		{8FFEE506-421C-46C3-90A9-5B3ADF9272DE}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
