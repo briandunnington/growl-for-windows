@@ -22,11 +22,61 @@ namespace Growl
         {
             InitializeComponent();
 
-            /* DONT USE THIS 
-            // default these so that the form is initially invisible until our ShowForm is called
-            //this.Opacity = 0;
-            //this.ShowInTaskbar = false;
-             * */
+            // localize text
+            this.Text = Properties.Resources.SettingsForm_FormTitle;
+            this.labelInitializationStage.Text = Properties.Resources.Loading_Initializing;
+            this.toolbarButtonGeneral.Text = Properties.Resources.Toolbar_General;
+            this.toolbarButtonApplications.Text = Properties.Resources.Toolbar_Applications;
+            this.toolbarButtonDisplays.Text = Properties.Resources.Toolbar_Displays;
+            this.toolbarButtonNetwork.Text = Properties.Resources.Toolbar_Network;
+            this.toolbarButtonSecurity.Text = Properties.Resources.Toolbar_Security;
+            this.toolbarButtonHistory.Text = Properties.Resources.Toolbar_History;
+            this.toolbarButtonAbout.Text = Properties.Resources.Toolbar_About;
+
+            this.groupBoxIdleSettings.Text = Properties.Resources.General_IdleSettingsTitle;
+            this.radioButtonIdleAfter.Text = Properties.Resources.General_IdleSettings_IdleAfter;
+            this.radioButtonIdleNever.Text = Properties.Resources.General_IdleSettings_NeverIdle;
+            this.groupBoxDefaultSettings.Text = Properties.Resources.General_DefaultSettingsTitle;
+            this.labelDefaultSound.Text = Properties.Resources.General_DefaultSettings_SoundLabel;
+            this.labelDefaultDisplay.Text = Properties.Resources.General_DefaultSettings_DisplayLabel;
+            this.checkBoxAutoStart.Text = Properties.Resources.General_AutoStart;
+
+            this.labelPrefSound.Text = Properties.Resources.Applications_Preferences_SoundLabel;
+            this.labelPrefSticky.Text = Properties.Resources.Applications_Preferences_StickyLabel;
+            this.labelPrefPriority.Text = Properties.Resources.Applications_Preferences_PriorityLabel;
+            this.labelPrefForward.Text = Properties.Resources.Applications_Preferences_ForwardingLabel;
+            this.labelPrefDisplay.Text = Properties.Resources.Applications_Preferences_DisplayLabel;
+            this.labelPrefEnabled.Text = Properties.Resources.Applications_Preferences_EnabledLabel;
+            this.labelNoApps.Text = Properties.Resources.Applications_NoAppsRegistered;
+            this.removeApplicationToolStripMenuItem.Text = Properties.Resources.Applications_RemoveApplication;
+
+            this.buttonPreviewDisplay.Text = Properties.Resources.Button_Preview;
+
+            this.labelPasswordManager.Text = Properties.Resources.Security_PasswordManager_Title;
+            this.checkBoxAllowSubscriptions.Text = Properties.Resources.Security_AllowSubscriptions;
+            this.checkBoxAllowWebNotifications.Text = Properties.Resources.Security_AllowWebNotifications;
+            this.checkBoxAllowNetworkNotifications.Text = Properties.Resources.Security_AllowNetworkNotifications;
+            this.checkBoxRequireLocalPassword.Text = Properties.Resources.Security_RequirePasswordLocalApps;
+            this.removeComputerToolStripMenuItem.Text = Properties.Resources.Network_RemoveComputer;
+
+            this.checkBoxEnableSubscriptions.Text = Properties.Resources.Network_SubscribeToNotifications;
+            this.checkBoxEnableForwarding.Text = Properties.Resources.Network_ForwardNotifications;
+
+            this.buttonClearHistory.Text = Properties.Resources.Button_Clear;
+            this.historyDaysGroupBox.Text = Properties.Resources.History_NumberOfDaysTitle;
+            this.historySortByGroupBox.Text = Properties.Resources.History_SortByTitle;
+            this.historySortByDateRadioButton.Text = Properties.Resources.History_SortBy_Date;
+            this.historySortByApplicationRadioButton.Text = Properties.Resources.History_SortBy_Application;
+
+            this.labelAboutBuildNumber.Text = Properties.Resources.About_BuildNumber;
+            this.labelAboutUs.Text = Properties.Resources.About_FindInformationLabel;
+            this.labelAboutIcons.Text = Properties.Resources.About_IconInfoLabel;
+            this.labelAboutIcons2.Text = Properties.Resources.About_IconInfoLabel2;
+            this.labelAboutOriginal.Text = Properties.Resources.About_OriginalLabel;
+            this.labelAboutOriginal2.Text = Properties.Resources.About_OriginalLabel2;
+            this.labelAboutGrowlVersion.Text = Properties.Resources.About_GrowlVersion;
+
+
         }
 
         # region visual style
@@ -195,12 +245,6 @@ namespace Growl
 
         internal void ShowForm()
         {
-            /*
-            // always reset these, in case the app was just loaded
-            this.Opacity = 1.0;
-            this.ShowInTaskbar = true;
-             * */
-
             Show();
             WindowState = FormWindowState.Normal;
             this.Activate();
@@ -511,7 +555,7 @@ namespace Growl
         {
             panel_SettingsChanged(this.panelDisplaySettings.Tag, EventArgs.Empty);
             Display display = (Display)this.listControlDisplays.SelectedItem;
-            this.controller.SendSystemNotification("Preview Display Style", String.Format("This is a preview of the '{0}' display style.", display.Name), display);
+            this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Preview_Title, String.Format(Properties.Resources.SystemNotification_Preview_Text, display.Name), display);
         }
 
         private void displayStyleWebsiteLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -605,7 +649,7 @@ namespace Growl
                 this.labelApplication.Text = app.Name;
 
                 // add a default item to the list
-                ListControlItem appLCI = new ListControlItem("(All notifications)", app);
+                ListControlItem appLCI = new ListControlItem(Properties.Resources.Applications_AllNotifications, app);
                 this.listControlApplicationNotifications.AddItem(appLCI);
 
                 foreach (RegisteredNotification rn in app.Notifications.Values)

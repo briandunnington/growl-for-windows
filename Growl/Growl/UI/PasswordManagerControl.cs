@@ -20,6 +20,14 @@ namespace Growl.UI
         {
             InitializeComponent();
 
+            // localize text
+            this.contextMenuEdit.Text = Properties.Resources.Security_PasswordManager_Edit;
+            this.labelDescriptionBox.Text = Properties.Resources.Security_PasswordManager_DescriptionLabel;
+            this.labelPasswordBox.Text = Properties.Resources.Security_PasswordManager_PasswordLabel;
+            this.labelInstructions.Text = Properties.Resources.Security_PasswordManager_Instructions;
+            this.buttonCancel.Text = Properties.Resources.Button_Cancel;
+            this.buttonSave.Text = Properties.Resources.Button_Save;
+
             this.tooltip = new ToolTip();
         }
 

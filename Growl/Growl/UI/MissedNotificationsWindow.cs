@@ -22,6 +22,9 @@ namespace Growl.UI
         {
             InitializeComponent();
 
+            // localize text
+            this.labelMessage.Text = Properties.Resources.Missed_Summary;
+
             // set initial location
             Screen screen = Screen.FromControl(this);
             int x = screen.WorkingArea.Width - this.Width;

@@ -118,7 +118,7 @@ namespace Growl
 
         void DisplayStyleManager_DisplayLoaded(string displayName)
         {
-            this.OnItemLoaded(String.Format("Loading display '{0}'...", displayName));
+            this.OnItemLoaded(String.Format(Properties.Resources.Loading_Display, displayName));
         }
 
         public bool Start()
@@ -181,7 +181,7 @@ namespace Growl
             StartActivityMonitor();
 
             // send a notification that growl is running
-            SendSystemNotification("Growl", "Growl is running");
+            SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text);
 
             return true;
         }
@@ -332,7 +332,7 @@ namespace Growl
 
             DisplayStyle.Notification n = new Growl.DisplayStyle.Notification();
             n.UUID = requestInfo.RequestID;
-            n.ApplicationName = "Growl";
+            n.ApplicationName = Properties.Resources.SystemNotification_ApplicationName;
             n.Description = text;
             n.Name = "Growl System Message";
             n.Priority = (int)Growl.Connector.Priority.Normal;
@@ -353,7 +353,7 @@ namespace Growl
 
         private void LoadApplications()
         {
-            this.OnItemLoaded("Loading application list...");
+            this.OnItemLoaded(Properties.Resources.Loading_ApplicationList);
 
             this.applications = (Dictionary<string, RegisteredApplication>) raSettingSaver.Load();
             if (this.applications == null) this.applications = new Dictionary<string, RegisteredApplication>();
@@ -367,7 +367,7 @@ namespace Growl
 
         private void LoadDisplays()
         {
-            this.OnItemLoaded("Loading displays...");
+            this.OnItemLoaded(Properties.Resources.Loading_Displays);
 
             this.missedNotificationsDisplay = new MissedNotificationsDisplay();
 
@@ -470,7 +470,7 @@ namespace Growl
 
         private void LoadPastNotifications()
         {
-            this.OnItemLoaded("Loading history...");
+            this.OnItemLoaded(Properties.Resources.Loading_History);
             ReloadPastNotifications();
         }
 
@@ -906,11 +906,11 @@ namespace Growl
                 n.UUID = requestInfo.RequestID;
                 n.NotificationID = requestInfo.RequestID;
                 n.ApplicationName = ra.Name;
-                n.Description = String.Format("The application '{0}' has registered to send notifications.", ra.Name);
+                n.Description = String.Format(Properties.Resources.SystemNotification_AppRegistered_Text, ra.Name);
                 n.Name = ra.Name;
                 n.Priority = (int)Growl.Connector.Priority.Normal;
                 n.Sticky = false;   // registration notifications are never sticky
-                n.Title = "Application Registration";
+                n.Title = Properties.Resources.SystemNotification_AppRegistered_Title;
 
                 if (application.Icon != null && application.Icon.IsSet)
                 {
@@ -978,8 +978,8 @@ namespace Growl
 
             if (alertUser)
             {
-                string title = "Client Subscribed";
-                string text = String.Format("The client '{0}' has subscribed to received forwarded notifications.", subscriber.Name);
+                string title = Properties.Resources.SystemNotification_ClientSubscribed_Title;
+                string text = String.Format(Properties.Resources.SystemNotification_ClientSubscribed_Text, subscriber.Name);
                 SendSystemNotification(title, text);
             }
 

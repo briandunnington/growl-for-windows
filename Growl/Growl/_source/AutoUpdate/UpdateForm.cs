@@ -16,6 +16,13 @@ namespace Growl.AutoUpdate
         {
             InitializeComponent();
 
+            // localize text
+            this.Text = Properties.Resources.Updater_FormTitle;
+            this.InfoLabel.Text = Properties.Resources.Updater_GrowlIsUpToDate;
+            this.YesButton.Text = Properties.Resources.Button_Yes;
+            this.NoButton.Text = Properties.Resources.Button_Later;
+            this.OKButton.Text = Properties.Resources.Button_OK;
+
             this.BackColor = Color.FromArgb(240, 240, 240);
         }
 
@@ -42,7 +49,7 @@ namespace Growl.AutoUpdate
                     this.YesButton.Visible = true;
                     this.progressBar1.Visible = false;
                     this.OKButton.Visible = false;
-                    this.InfoLabel.Text = String.Format("Version {0} of Growl is available. Would you like to update Growl to the latest version? (Current version: {1})", manifest.Version, this.updater.CurrentVersion);
+                    this.InfoLabel.Text = String.Format(Properties.Resources.Updater_UpdateAvailable, manifest.Version, this.updater.CurrentVersion);
                 }
                 else
                 {
@@ -50,7 +57,7 @@ namespace Growl.AutoUpdate
                     this.YesButton.Visible = false;
                     this.progressBar1.Visible = false;
                     this.OKButton.Visible = true;
-                    this.InfoLabel.Text = String.Format("Growl is up-to-date. Current Version: {0}", this.updater.CurrentVersion);
+                    this.InfoLabel.Text = String.Format(Properties.Resources.Updater_GrowlIsUpToDate, this.updater.CurrentVersion, this.updater.CurrentVersion);
                 }
                 this.Show();
                 this.Activate();
@@ -74,7 +81,7 @@ namespace Growl.AutoUpdate
 
         private void YesButton_Click(object sender, EventArgs e)
         {
-            this.InfoLabel.Text = "Downloading update...";
+            this.InfoLabel.Text = Properties.Resources.Updater_DownloadingUpdate;
             this.progressBar1.Value = 0;
             this.progressBar1.Visible = true;
             this.NoButton.Enabled = false;
@@ -84,7 +91,7 @@ namespace Growl.AutoUpdate
 
         void updater_DownloadComplete(object sender, EventArgs e)
         {
-            this.InfoLabel.Text = "Download complete. Starting installation...";
+            this.InfoLabel.Text = Properties.Resources.Updater_DownloadComplete;
         }
 
         void updater_DownloadProgressChanged(object sender, ProgressChangedEventArgs e)

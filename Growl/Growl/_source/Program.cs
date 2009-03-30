@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using Growl.AutoUpdate;
 
@@ -36,6 +37,21 @@ namespace Growl
         {
             Console.WriteLine(Utility.UserSettingFolder);   //NOTE: this is here as a bit of hack to ensure that the Utility static constructor runs first
 
+            // handle setting/overriding the culture information
+            if (!String.IsNullOrEmpty(Properties.Settings.Default.CultureCode))
+            {
+                try
+                {
+                    CultureInfo culture = new CultureInfo(Properties.Settings.Default.CultureCode);
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+                }
+                catch
+                {
+                    // suppress any exception (in case the culture in the .config file is not valid)
+                }
+            }
+            Properties.Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+
             this.splash = new SplashScreen();
             this.splash.Shown += new EventHandler(splash_Shown);
             base.MainForm = this.splash;
@@ -68,7 +84,7 @@ namespace Growl
             // 
             this.notifyIcon.ContextMenuStrip = this.contextMenu;
             this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_stopped;
-            this.notifyIcon.Text = "Growl (not running)";
+            this.notifyIcon.Text = Properties.Resources.NotifyIcon_NotRunning;
             this.notifyIcon.Visible = true;
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
             // 
@@ -89,14 +105,14 @@ namespace Growl
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Settings;
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // pauseGrowlToolStripMenuItem
             // 
             this.pauseGrowlToolStripMenuItem.Name = "pauseGrowlToolStripMenuItem";
             this.pauseGrowlToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.pauseGrowlToolStripMenuItem.Text = "Pause Growl";
+            this.pauseGrowlToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Pause;
             this.pauseGrowlToolStripMenuItem.Visible = false;
             this.pauseGrowlToolStripMenuItem.Click += new System.EventHandler(this.pauseGrowlToolStripMenuItem_Click);
             // 
@@ -104,7 +120,7 @@ namespace Growl
             // 
             this.unpauseGrowlToolStripMenuItem.Name = "unpauseGrowlToolStripMenuItem";
             this.unpauseGrowlToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.unpauseGrowlToolStripMenuItem.Text = "Unpause Growl";
+            this.unpauseGrowlToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Unpause;
             this.unpauseGrowlToolStripMenuItem.Visible = false;
             this.unpauseGrowlToolStripMenuItem.Click += new System.EventHandler(this.unpauseGrowlToolStripMenuItem_Click);
             // 
@@ -112,7 +128,7 @@ namespace Growl
             // 
             this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
+            this.checkForUpdatesToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_CheckForUpdates;
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -124,7 +140,7 @@ namespace Growl
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Exit;
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 
             this.contextMenu.ResumeLayout();
@@ -180,7 +196,7 @@ namespace Growl
 
         private void InitializeApplication()
         {
-            this.mainForm.UpdateInitializationProgress("Loading Displays...", 25);
+            this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Displays, 25);
 
             // configure the controller
             this.controller = Controller.GetController();
@@ -197,7 +213,7 @@ namespace Growl
 
             this.mainForm.Controller = this.controller;
 
-            this.mainForm.UpdateInitializationProgress("Loading Preferences...", 75);
+            this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Preferences, 75);
 
             try
             {
@@ -213,7 +229,7 @@ namespace Growl
             // load all user preferences
             Microsoft.Win32.SystemEvents.TimeChanged += new EventHandler(SystemEvents_TimeChanged);
             this.mainForm.InitializePreferences();
-            this.mainForm.UpdateInitializationProgress("Starting Growl...", 90);
+            this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Starting, 90);
 
             // start growl (and set button at the same time)
             this.mainForm.OnOffButton.Switched +=new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
@@ -222,7 +238,7 @@ namespace Growl
             this.mainForm.Hide();
 
             this.mainForm.DoneInitializing();
-            this.mainForm.UpdateInitializationProgress("Ready", 100);
+            this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Ready, 100);
 
             base.MainForm.Hide();
         }
@@ -293,7 +309,7 @@ namespace Growl
 
         internal void AlreadyRunning()
         {
-            this.controller.SendSystemNotification("Growl", "Growl is running", null);
+            this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
         }
 
         private bool StartGrowl()
@@ -321,21 +337,21 @@ namespace Growl
 
             if (!isRunning)
             {
-                this.mainForm.UpdateState("Growl is not running", Color.Red);
-                this.notifyIcon.Text = "Growl (not running)";
+                this.mainForm.UpdateState(Properties.Resources.General_ApplicationStopped, Color.Red);
+                this.notifyIcon.Text = Properties.Resources.NotifyIcon_NotRunning;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_stopped;
             }
             else if (isPaused)
             {
-                this.mainForm.UpdateState("Growl is paused", Color.FromArgb(SystemColors.GrayText.ToArgb()));  // avoid using SystemColors directly
-                this.notifyIcon.Text = "Growl (paused)";
+                this.mainForm.UpdateState(Properties.Resources.General_ApplicationPaused, Color.FromArgb(SystemColors.GrayText.ToArgb()));  // avoid using SystemColors directly
+                this.notifyIcon.Text = Properties.Resources.NotifyIcon_Paused;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_dim;
                 this.controller.Pause();
             }
             else
             {
-                this.mainForm.UpdateState("Growl is running", Color.Green);
-                this.notifyIcon.Text = "Growl";
+                this.mainForm.UpdateState(Properties.Resources.General_ApplicationRunning, Color.Green);
+                this.notifyIcon.Text = Properties.Resources.NotifyIcon_Running;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_on;
                 this.controller.Unpause();
             }
@@ -390,15 +406,15 @@ namespace Growl
 
         void controller_FailedToStartUDPLegacy(object sender, PortConflictEventArgs e)
         {
-            string caption = "Growl was unable to start";
-            string text = String.Format("There is already a listener enabled on Growl's legacy UDP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again.", e.Port);
+            string caption = Properties.Resources.FailedToStart_Caption;
+            string text = String.Format(Properties.Resources.FailedToStart_Message_UDP, e.Port);
             MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0, false);
         }
 
         void controller_FailedToStart(object sender, PortConflictEventArgs e)
         {
-            string caption = "Growl was unable to start";
-            string text = String.Format("There is already a listener enabled on Growl's TCP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again.", e.Port);
+            string caption = Properties.Resources.FailedToStart_Caption;
+            string text = String.Format(Properties.Resources.FailedToStart_Message_GNTP, e.Port);
             MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0, false);
         }
 

@@ -10,9 +10,9 @@ namespace Growl
     [Serializable]
     public class PrefSticky : DefaultablePreference, ISerializable
     {
-        private const string NEVER_NAME = "Never";
-        private const string ALWAYS_NAME = "Always";
-        private const string WHENIDLE_NAME = "When Idle";
+        private static string NEVER_NAME = Properties.Resources.PrefSticky_Never;
+        private static string ALWAYS_NAME = Properties.Resources.PrefSticky_Always;
+        private static string WHENIDLE_NAME = Properties.Resources.PrefSticky_WhenIdle;
 
         public static PrefSticky Default = new PrefSticky(null, DEFAULT_DISPLAY_LABEL, true);
         private static PrefSticky Never = new PrefSticky(StickyPreferenceOption.Never, NEVER_NAME);

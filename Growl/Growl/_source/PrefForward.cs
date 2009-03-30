@@ -10,8 +10,8 @@ namespace Growl
     [Serializable]
     public class PrefForward : DefaultablePreference, ISerializable
     {
-        private const string DONT_FORWARD_DISPLAY_LABEL = "Don't Forward";
-        private const string CUSTOM_DISPLAY_LABEL = "Choose...";
+        private static string DONT_FORWARD_DISPLAY_LABEL = Properties.Resources.PrefForward_Never;
+        private static string CUSTOM_DISPLAY_LABEL = Properties.Resources.PrefForward_Choose;
 
         public static PrefForward Default = new PrefForward(null, DEFAULT_DISPLAY_LABEL, true);
         private static PrefForward DontForward = new PrefForward(false, DONT_FORWARD_DISPLAY_LABEL);
@@ -80,15 +80,12 @@ namespace Growl
 
         private static PrefForward GetByName(string name)
         {
-            switch (name)
-            {
-                case DONT_FORWARD_DISPLAY_LABEL:
-                    return PrefForward.DontForward;
-                case CUSTOM_DISPLAY_LABEL:
-                    return PrefForward.Custom;
-                default:
-                    return PrefForward.Default;
-            }
+            if (name == DONT_FORWARD_DISPLAY_LABEL)
+                return PrefForward.DontForward;
+            else if (name == CUSTOM_DISPLAY_LABEL)
+                return PrefForward.Custom;
+            else
+                return PrefForward.Default;
         }
 
         #region ISerializable Members

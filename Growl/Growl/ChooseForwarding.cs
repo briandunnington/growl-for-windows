@@ -18,6 +18,11 @@ namespace Growl
         public ChooseForwarding()
         {
             InitializeComponent();
+
+            // localize text
+            this.buttonSave.Text = Properties.Resources.Button_Save;
+            this.buttonClose.Text = Properties.Resources.Button_Cancel;
+            this.Text = Properties.Resources.ChooseForwarding_FormTitle;
         }
 
         private void ChooseForwarding_Load(object sender, EventArgs e)

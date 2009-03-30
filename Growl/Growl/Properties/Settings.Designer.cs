@@ -308,5 +308,18 @@ namespace Growl.Properties {
                 this["AutomaticallyCheckForUpdates"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CultureCode {
+            get {
+                return ((string)(this["CultureCode"]));
+            }
+            set {
+                this["CultureCode"] = value;
+            }
+        }
     }
 }

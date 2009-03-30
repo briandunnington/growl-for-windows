@@ -60,6 +60,222 @@ namespace Growl.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to (build: {0}).
+        /// </summary>
+        internal static string About_BuildNumber {
+            get {
+                return ResourceManager.GetString("About_BuildNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find displays, extensions, and updates at:.
+        /// </summary>
+        internal static string About_FindInformationLabel {
+            get {
+                return ResourceManager.GetString("About_FindInformationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl v{0}.
+        /// </summary>
+        internal static string About_GrowlVersion {
+            get {
+                return ResourceManager.GetString("About_GrowlVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icons:.
+        /// </summary>
+        internal static string About_IconInfoLabel {
+            get {
+                return ResourceManager.GetString("About_IconInfoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VistaICO Aero Pack -.
+        /// </summary>
+        internal static string About_IconInfoLabel2 {
+            get {
+                return ResourceManager.GetString("About_IconInfoLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original idea, inspiration, and logo:.
+        /// </summary>
+        internal static string About_OriginalLabel {
+            get {
+                return ResourceManager.GetString("About_OriginalLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl for OSX -.
+        /// </summary>
+        internal static string About_OriginalLabel2 {
+            get {
+                return ResourceManager.GetString("About_OriginalLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hostname:.
+        /// </summary>
+        internal static string AddComputer_AddressLabel {
+            get {
+                return ResourceManager.GetString("AddComputer_AddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format:.
+        /// </summary>
+        internal static string AddComputer_FormatLabel {
+            get {
+                return ResourceManager.GetString("AddComputer_FormatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forward Notifications.
+        /// </summary>
+        internal static string AddComputer_FormTitle_Forward {
+            get {
+                return ResourceManager.GetString("AddComputer_FormTitle_Forward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscribe to notifications.
+        /// </summary>
+        internal static string AddComputer_FormTitle_Subscriptions {
+            get {
+                return ResourceManager.GetString("AddComputer_FormTitle_Subscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Click here to manually add a computer\nthat is not in this list].
+        /// </summary>
+        internal static string AddComputer_ManualAdd {
+            get {
+                return ResourceManager.GetString("AddComputer_ManualAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        internal static string AddComputer_NameLabel {
+            get {
+                return ResourceManager.GetString("AddComputer_NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        internal static string AddComputer_PasswordLabel {
+            get {
+                return ResourceManager.GetString("AddComputer_PasswordLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port:.
+        /// </summary>
+        internal static string AddComputer_PortLabel {
+            get {
+                return ResourceManager.GetString("AddComputer_PortLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (All notifications).
+        /// </summary>
+        internal static string Applications_AllNotifications {
+            get {
+                return ResourceManager.GetString("Applications_AllNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No applications have registered yet.\r\n\r\nWhen a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings..
+        /// </summary>
+        internal static string Applications_NoAppsRegistered {
+            get {
+                return ResourceManager.GetString("Applications_NoAppsRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display:.
+        /// </summary>
+        internal static string Applications_Preferences_DisplayLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_DisplayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled:.
+        /// </summary>
+        internal static string Applications_Preferences_EnabledLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_EnabledLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forwarding:.
+        /// </summary>
+        internal static string Applications_Preferences_ForwardingLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_ForwardingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Priority:.
+        /// </summary>
+        internal static string Applications_Preferences_PriorityLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_PriorityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound:.
+        /// </summary>
+        internal static string Applications_Preferences_SoundLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_SoundLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sticky:.
+        /// </summary>
+        internal static string Applications_Preferences_StickyLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_StickyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Application.
+        /// </summary>
+        internal static string Applications_RemoveApplication {
+            get {
+                return ResourceManager.GetString("Applications_RemoveApplication", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap button_add {
             get {
                 object obj = ResourceManager.GetObject("button_add", resourceCulture);
@@ -88,6 +304,60 @@ namespace Growl.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Button_Cancel {
+            get {
+                return ResourceManager.GetString("Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string Button_Clear {
+            get {
+                return ResourceManager.GetString("Button_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Button_Close {
+            get {
+                return ResourceManager.GetString("Button_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Later.
+        /// </summary>
+        internal static string Button_Later {
+            get {
+                return ResourceManager.GetString("Button_Later", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string Button_OK {
+            get {
+                return ResourceManager.GetString("Button_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        internal static string Button_Preview {
+            get {
+                return ResourceManager.GetString("Button_Preview", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap button_remove {
             get {
                 object obj = ResourceManager.GetObject("button_remove", resourceCulture);
@@ -99,6 +369,33 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("button_remove_dim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Button_Save {
+            get {
+                return ResourceManager.GetString("Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string Button_Yes {
+            get {
+                return ResourceManager.GetString("Button_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Forwarding.
+        /// </summary>
+        internal static string ChooseForwarding_FormTitle {
+            get {
+                return ResourceManager.GetString("ChooseForwarding_FormTitle", resourceCulture);
             }
         }
         
@@ -141,6 +438,132 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("Config-Tools", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Default].
+        /// </summary>
+        internal static string DefaultPreference_Name {
+            get {
+                return ResourceManager.GetString("DefaultPreference_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl was unable to start.
+        /// </summary>
+        internal static string FailedToStart_Caption {
+            get {
+                return ResourceManager.GetString("FailedToStart_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already a listener enabled on Growl&apos;s TCP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again..
+        /// </summary>
+        internal static string FailedToStart_Message_GNTP {
+            get {
+                return ResourceManager.GetString("FailedToStart_Message_GNTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already a listener enabled on Growl&apos;s legacy UDP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again..
+        /// </summary>
+        internal static string FailedToStart_Message_UDP {
+            get {
+                return ResourceManager.GetString("FailedToStart_Message_UDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl is paused.
+        /// </summary>
+        internal static string General_ApplicationPaused {
+            get {
+                return ResourceManager.GetString("General_ApplicationPaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl is running.
+        /// </summary>
+        internal static string General_ApplicationRunning {
+            get {
+                return ResourceManager.GetString("General_ApplicationRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl is stopped.
+        /// </summary>
+        internal static string General_ApplicationStopped {
+            get {
+                return ResourceManager.GetString("General_ApplicationStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically start Growl at login.
+        /// </summary>
+        internal static string General_AutoStart {
+            get {
+                return ResourceManager.GetString("General_AutoStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display:.
+        /// </summary>
+        internal static string General_DefaultSettings_DisplayLabel {
+            get {
+                return ResourceManager.GetString("General_DefaultSettings_DisplayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound:.
+        /// </summary>
+        internal static string General_DefaultSettings_SoundLabel {
+            get {
+                return ResourceManager.GetString("General_DefaultSettings_SoundLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Settings.
+        /// </summary>
+        internal static string General_DefaultSettingsTitle {
+            get {
+                return ResourceManager.GetString("General_DefaultSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consider me idle after            seconds.
+        /// </summary>
+        internal static string General_IdleSettings_IdleAfter {
+            get {
+                return ResourceManager.GetString("General_IdleSettings_IdleAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never consider me idle or away.
+        /// </summary>
+        internal static string General_IdleSettings_NeverIdle {
+            get {
+                return ResourceManager.GetString("General_IdleSettings_NeverIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Idle Settings.
+        /// </summary>
+        internal static string General_IdleSettingsTitle {
+            get {
+                return ResourceManager.GetString("General_IdleSettingsTitle", resourceCulture);
             }
         }
         
@@ -200,6 +623,51 @@ namespace Growl.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to (No notifications for this date).
+        /// </summary>
+        internal static string History_NoNotificationsForDate {
+            get {
+                return ResourceManager.GetString("History_NoNotificationsForDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Days.
+        /// </summary>
+        internal static string History_NumberOfDaysTitle {
+            get {
+                return ResourceManager.GetString("History_NumberOfDaysTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application.
+        /// </summary>
+        internal static string History_SortBy_Application {
+            get {
+                return ResourceManager.GetString("History_SortBy_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string History_SortBy_Date {
+            get {
+                return ResourceManager.GetString("History_SortBy_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort By.
+        /// </summary>
+        internal static string History_SortByTitle {
+            get {
+                return ResourceManager.GetString("History_SortByTitle", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap internet {
             get {
                 object obj = ResourceManager.GetObject("internet", resourceCulture);
@@ -221,6 +689,123 @@ namespace Growl.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to format.
+        /// </summary>
+        internal static string LiteralString_Format {
+            get {
+                return ResourceManager.GetString("LiteralString_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received At.
+        /// </summary>
+        internal static string LiteralString_ReceivedAt {
+            get {
+                return ResourceManager.GetString("LiteralString_ReceivedAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received From.
+        /// </summary>
+        internal static string LiteralString_ReceivedFrom {
+            get {
+                return ResourceManager.GetString("LiteralString_ReceivedFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        internal static string LiteralString_Today {
+            get {
+                return ResourceManager.GetString("LiteralString_Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yesterday.
+        /// </summary>
+        internal static string LiteralString_Yesterday {
+            get {
+                return ResourceManager.GetString("LiteralString_Yesterday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading application list....
+        /// </summary>
+        internal static string Loading_ApplicationList {
+            get {
+                return ResourceManager.GetString("Loading_ApplicationList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading display &apos;{0}&apos; ....
+        /// </summary>
+        internal static string Loading_Display {
+            get {
+                return ResourceManager.GetString("Loading_Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Displays....
+        /// </summary>
+        internal static string Loading_Displays {
+            get {
+                return ResourceManager.GetString("Loading_Displays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading history....
+        /// </summary>
+        internal static string Loading_History {
+            get {
+                return ResourceManager.GetString("Loading_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initializing....
+        /// </summary>
+        internal static string Loading_Initializing {
+            get {
+                return ResourceManager.GetString("Loading_Initializing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Preferences....
+        /// </summary>
+        internal static string Loading_Preferences {
+            get {
+                return ResourceManager.GetString("Loading_Preferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        internal static string Loading_Ready {
+            get {
+                return ResourceManager.GetString("Loading_Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting Growl....
+        /// </summary>
+        internal static string Loading_Starting {
+            get {
+                return ResourceManager.GetString("Loading_Starting", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap Locker {
             get {
                 object obj = ResourceManager.GetObject("Locker", resourceCulture);
@@ -232,6 +817,15 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("mac", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You missed {0} messages while you were away..
+        /// </summary>
+        internal static string Missed_Summary {
+            get {
+                return ResourceManager.GetString("Missed_Summary", resourceCulture);
             }
         }
         
@@ -256,6 +850,105 @@ namespace Growl.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Forward notifications to other computers.
+        /// </summary>
+        internal static string Network_ForwardNotifications {
+            get {
+                return ResourceManager.GetString("Network_ForwardNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Computer.
+        /// </summary>
+        internal static string Network_RemoveComputer {
+            get {
+                return ResourceManager.GetString("Network_RemoveComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscribe to notifications from other computers.
+        /// </summary>
+        internal static string Network_SubscribeToNotifications {
+            get {
+                return ResourceManager.GetString("Network_SubscribeToNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        internal static string NotifyIcon_ContextMenu_CheckForUpdates {
+            get {
+                return ResourceManager.GetString("NotifyIcon_ContextMenu_CheckForUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string NotifyIcon_ContextMenu_Exit {
+            get {
+                return ResourceManager.GetString("NotifyIcon_ContextMenu_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause Growl.
+        /// </summary>
+        internal static string NotifyIcon_ContextMenu_Pause {
+            get {
+                return ResourceManager.GetString("NotifyIcon_ContextMenu_Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string NotifyIcon_ContextMenu_Settings {
+            get {
+                return ResourceManager.GetString("NotifyIcon_ContextMenu_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpause Growl.
+        /// </summary>
+        internal static string NotifyIcon_ContextMenu_Unpause {
+            get {
+                return ResourceManager.GetString("NotifyIcon_ContextMenu_Unpause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl (not running).
+        /// </summary>
+        internal static string NotifyIcon_NotRunning {
+            get {
+                return ResourceManager.GetString("NotifyIcon_NotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl (paused).
+        /// </summary>
+        internal static string NotifyIcon_Paused {
+            get {
+                return ResourceManager.GetString("NotifyIcon_Paused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl.
+        /// </summary>
+        internal static string NotifyIcon_Running {
+            get {
+                return ResourceManager.GetString("NotifyIcon_Running", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap off_button {
             get {
                 object obj = ResourceManager.GetObject("off_button", resourceCulture);
@@ -274,6 +967,447 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("other", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to False.
+        /// </summary>
+        internal static string PrefEnabled_False {
+            get {
+                return ResourceManager.GetString("PrefEnabled_False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to True.
+        /// </summary>
+        internal static string PrefEnabled_True {
+            get {
+                return ResourceManager.GetString("PrefEnabled_True", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose....
+        /// </summary>
+        internal static string PrefForward_Choose {
+            get {
+                return ResourceManager.GetString("PrefForward_Choose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t Forward.
+        /// </summary>
+        internal static string PrefForward_Never {
+            get {
+                return ResourceManager.GetString("PrefForward_Never", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emergency.
+        /// </summary>
+        internal static string PrefPriority_Emergency {
+            get {
+                return ResourceManager.GetString("PrefPriority_Emergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        internal static string PrefPriority_High {
+            get {
+                return ResourceManager.GetString("PrefPriority_High", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low.
+        /// </summary>
+        internal static string PrefPriority_Low {
+            get {
+                return ResourceManager.GetString("PrefPriority_Low", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        internal static string PrefPriority_Normal {
+            get {
+                return ResourceManager.GetString("PrefPriority_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Very Low.
+        /// </summary>
+        internal static string PrefPriority_VeryLow {
+            get {
+                return ResourceManager.GetString("PrefPriority_VeryLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string PrefSound_None {
+            get {
+                return ResourceManager.GetString("PrefSound_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always.
+        /// </summary>
+        internal static string PrefSticky_Always {
+            get {
+                return ResourceManager.GetString("PrefSticky_Always", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never.
+        /// </summary>
+        internal static string PrefSticky_Never {
+            get {
+                return ResourceManager.GetString("PrefSticky_Never", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When Idle.
+        /// </summary>
+        internal static string PrefSticky_WhenIdle {
+            get {
+                return ResourceManager.GetString("PrefSticky_WhenIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNTP.
+        /// </summary>
+        internal static string Protocol_Type_GNTP {
+            get {
+                return ResourceManager.GetString("Protocol_Type_GNTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UDP.
+        /// </summary>
+        internal static string Protocol_Type_UDP {
+            get {
+                return ResourceManager.GetString("Protocol_Type_UDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow network notifications.
+        /// </summary>
+        internal static string Security_AllowNetworkNotifications {
+            get {
+                return ResourceManager.GetString("Security_AllowNetworkNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow clients to subscribe to notifications.
+        /// </summary>
+        internal static string Security_AllowSubscriptions {
+            get {
+                return ResourceManager.GetString("Security_AllowSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow notifications from websites.
+        /// </summary>
+        internal static string Security_AllowWebNotifications {
+            get {
+                return ResourceManager.GetString("Security_AllowWebNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string Security_PasswordManager_DescriptionLabel {
+            get {
+                return ResourceManager.GetString("Security_PasswordManager_DescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Security_PasswordManager_Edit {
+            get {
+                return ResourceManager.GetString("Security_PasswordManager_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your password below as well as a short description to identify the password..
+        /// </summary>
+        internal static string Security_PasswordManager_Instructions {
+            get {
+                return ResourceManager.GetString("Security_PasswordManager_Instructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        internal static string Security_PasswordManager_PasswordLabel {
+            get {
+                return ResourceManager.GetString("Security_PasswordManager_PasswordLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Manager.
+        /// </summary>
+        internal static string Security_PasswordManager_Title {
+            get {
+                return ResourceManager.GetString("Security_PasswordManager_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Require password for local apps.
+        /// </summary>
+        internal static string Security_RequirePasswordLocalApps {
+            get {
+                return ResourceManager.GetString("Security_RequirePasswordLocalApps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl.
+        /// </summary>
+        internal static string SettingsForm_FormTitle {
+            get {
+                return ResourceManager.GetString("SettingsForm_FormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string SplashScreen_Loading {
+            get {
+                return ResourceManager.GetString("SplashScreen_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl for Windows.
+        /// </summary>
+        internal static string SplashScreen_Title {
+            get {
+                return ResourceManager.GetString("SplashScreen_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version: {0}.
+        /// </summary>
+        internal static string SplashScreen_Version {
+            get {
+                return ResourceManager.GetString("SplashScreen_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl.
+        /// </summary>
+        internal static string SystemNotification_ApplicationName {
+            get {
+                return ResourceManager.GetString("SystemNotification_ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application &apos;{0}&apos; has registered to send notifications..
+        /// </summary>
+        internal static string SystemNotification_AppRegistered_Text {
+            get {
+                return ResourceManager.GetString("SystemNotification_AppRegistered_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Registration.
+        /// </summary>
+        internal static string SystemNotification_AppRegistered_Title {
+            get {
+                return ResourceManager.GetString("SystemNotification_AppRegistered_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The client &apos;{0}&apos; has subscribed to received forwarded notifications..
+        /// </summary>
+        internal static string SystemNotification_ClientSubscribed_Text {
+            get {
+                return ResourceManager.GetString("SystemNotification_ClientSubscribed_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client Subscribed.
+        /// </summary>
+        internal static string SystemNotification_ClientSubscribed_Title {
+            get {
+                return ResourceManager.GetString("SystemNotification_ClientSubscribed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a preview of the &apos;{0}&apos; display style..
+        /// </summary>
+        internal static string SystemNotification_Preview_Text {
+            get {
+                return ResourceManager.GetString("SystemNotification_Preview_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Display Style.
+        /// </summary>
+        internal static string SystemNotification_Preview_Title {
+            get {
+                return ResourceManager.GetString("SystemNotification_Preview_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl is running.
+        /// </summary>
+        internal static string SystemNotification_Running_Text {
+            get {
+                return ResourceManager.GetString("SystemNotification_Running_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl.
+        /// </summary>
+        internal static string SystemNotification_Running_Title {
+            get {
+                return ResourceManager.GetString("SystemNotification_Running_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string Toolbar_About {
+            get {
+                return ResourceManager.GetString("Toolbar_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applications.
+        /// </summary>
+        internal static string Toolbar_Applications {
+            get {
+                return ResourceManager.GetString("Toolbar_Applications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displays.
+        /// </summary>
+        internal static string Toolbar_Displays {
+            get {
+                return ResourceManager.GetString("Toolbar_Displays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        internal static string Toolbar_General {
+            get {
+                return ResourceManager.GetString("Toolbar_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        internal static string Toolbar_History {
+            get {
+                return ResourceManager.GetString("Toolbar_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network.
+        /// </summary>
+        internal static string Toolbar_Network {
+            get {
+                return ResourceManager.GetString("Toolbar_Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security.
+        /// </summary>
+        internal static string Toolbar_Security {
+            get {
+                return ResourceManager.GetString("Toolbar_Security", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download complete. Starting installation....
+        /// </summary>
+        internal static string Updater_DownloadComplete {
+            get {
+                return ResourceManager.GetString("Updater_DownloadComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading update....
+        /// </summary>
+        internal static string Updater_DownloadingUpdate {
+            get {
+                return ResourceManager.GetString("Updater_DownloadingUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for Updates.
+        /// </summary>
+        internal static string Updater_FormTitle {
+            get {
+                return ResourceManager.GetString("Updater_FormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Growl is up-to-date. Current Version: {1}.
+        /// </summary>
+        internal static string Updater_GrowlIsUpToDate {
+            get {
+                return ResourceManager.GetString("Updater_GrowlIsUpToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0} of Growl is available. Would you like to update Growl to the latest version? (Current version: {1}).
+        /// </summary>
+        internal static string Updater_UpdateAvailable {
+            get {
+                return ResourceManager.GetString("Updater_UpdateAvailable", resourceCulture);
             }
         }
         

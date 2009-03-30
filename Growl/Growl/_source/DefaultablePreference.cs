@@ -8,7 +8,7 @@ namespace Growl
     [Serializable]
     public class DefaultablePreference
     {
-        public const string DEFAULT_DISPLAY_LABEL = "[Default]";
+        public static string DEFAULT_DISPLAY_LABEL = Properties.Resources.DefaultPreference_Name;
         private string name;
         private bool isDefault;
 

@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Displays.Toast", "Gro
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Windows Deployment", "Windows Deployment\Windows Deployment.vdproj", "{F412ED29-C8E0-408D-BBB7-00A2C8381291}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.en-GB", "..\..\..\_Growl\Growl\Growl.Localization.en-GB\Growl.Localization.en-GB.csproj", "{0D6853EB-B690-4048-9979-1AD80457A65B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{3780640E-ADAE-4F17-AFCB-1158BCDD88D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F412ED29-C8E0-408D-BBB7-00A2C8381291}.Debug|Any CPU.ActiveCfg = Debug
 		{F412ED29-C8E0-408D-BBB7-00A2C8381291}.Release|Any CPU.ActiveCfg = Release
+		{0D6853EB-B690-4048-9979-1AD80457A65B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D6853EB-B690-4048-9979-1AD80457A65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D6853EB-B690-4048-9979-1AD80457A65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D6853EB-B690-4048-9979-1AD80457A65B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

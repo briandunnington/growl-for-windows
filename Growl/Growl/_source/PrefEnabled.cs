@@ -10,8 +10,8 @@ namespace Growl
     [Serializable]
     public class PrefEnabled    // NOTE: this class does *not* inherit from DefaultablePreference since it has no default setting
     {
-        public static PrefEnabled True = new PrefEnabled(true, Boolean.TrueString);
-        public static PrefEnabled False = new PrefEnabled(false, Boolean.FalseString);
+        public static PrefEnabled True = new PrefEnabled(true, Properties.Resources.PrefEnabled_True);
+        public static PrefEnabled False = new PrefEnabled(false, Properties.Resources.PrefEnabled_False);
 
         private string name;
         private bool enabled;

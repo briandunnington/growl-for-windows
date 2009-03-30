@@ -68,5 +68,8 @@
     <Setting Name="AutomaticallyCheckForUpdates" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="CultureCode" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> </Value>
+    </Setting>
   </Settings>
 </SettingsFile>

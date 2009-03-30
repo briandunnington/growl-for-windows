@@ -8,7 +8,7 @@ namespace Growl
     public class PrefSound : DefaultablePreference
     {
         public static PrefSound Default = new PrefSound(null, DEFAULT_DISPLAY_LABEL, null, true);
-        public static PrefSound None = new PrefSound(false, "None", null);
+        public static PrefSound None = new PrefSound(false, Properties.Resources.PrefSound_None, null);
 
         private bool? playSound = null;
         private string soundFile = null;

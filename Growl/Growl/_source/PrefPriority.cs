@@ -12,11 +12,11 @@ namespace Growl
     public class PrefPriority : DefaultablePreference, ISerializable
     {
         public static PrefPriority Default = new PrefPriority(null, DEFAULT_DISPLAY_LABEL, true);
-        private static PrefPriority Emergency = new PrefPriority(Growl.Connector.Priority.Emergency, "Emergency");
-        private static PrefPriority High = new PrefPriority(Growl.Connector.Priority.High, "High");
-        private static PrefPriority Normal = new PrefPriority(Growl.Connector.Priority.Normal, "Normal");
-        private static PrefPriority Low = new PrefPriority(Growl.Connector.Priority.Moderate, "Low");
-        private static PrefPriority VeryLow = new PrefPriority(Growl.Connector.Priority.VeryLow, "Very Low");
+        private static PrefPriority Emergency = new PrefPriority(Growl.Connector.Priority.Emergency, Properties.Resources.PrefPriority_Emergency);
+        private static PrefPriority High = new PrefPriority(Growl.Connector.Priority.High, Properties.Resources.PrefPriority_High);
+        private static PrefPriority Normal = new PrefPriority(Growl.Connector.Priority.Normal, Properties.Resources.PrefPriority_Normal);
+        private static PrefPriority Low = new PrefPriority(Growl.Connector.Priority.Moderate, Properties.Resources.PrefPriority_Low);
+        private static PrefPriority VeryLow = new PrefPriority(Growl.Connector.Priority.VeryLow, Properties.Resources.PrefPriority_VeryLow);
 
         private Priority? priority = null;
 

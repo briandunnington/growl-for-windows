@@ -83,7 +83,7 @@ namespace Growl.UI
                 ForwardComputer fc = (ForwardComputer)e.Item.Tag;
                 string display = Escape(fc.Display);
                 string address = Escape(fc.AddressDisplay);
-                string tooltip = String.Format("{0}\r\n{1}\r\n{2} format", fc.Display, fc.AddressDisplay, (fc.UseUDP ? "UDP" : "GNTP"));
+                string tooltip = String.Format("{0}\r\n{1}\r\n{2} {3}", fc.Display, fc.AddressDisplay, (fc.UseUDP ? Properties.Resources.Protocol_Type_UDP : Properties.Resources.Protocol_Type_GNTP), Properties.Resources.LiteralString_Format);
                 e.Item.ToolTipText = tooltip;
                 // NOTE: dont set the .Text or .SubItem properties here - it causes an erratic exception
 
@@ -232,7 +232,7 @@ namespace Growl.UI
         {
             string display = Escape(fc.Display);
             string address = Escape(fc.AddressDisplay);
-            string tooltip = String.Format("{0}\r\n{1}\r\n{2} format", fc.Display, fc.AddressDisplay, (fc.UseUDP ? "UDP" : "GNTP"));
+            string tooltip = String.Format("{0}\r\n{1}\r\n{2} {3}", fc.Display, fc.AddressDisplay, (fc.UseUDP ? Properties.Resources.Protocol_Type_UDP : Properties.Resources.Protocol_Type_GNTP), Properties.Resources.LiteralString_Format);
 
             string[] items = new string[] { display, address };
             ListViewItem lvi = new ListViewItem(items, fc.Platform.Name);

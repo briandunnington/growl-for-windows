@@ -292,7 +292,7 @@ namespace Growl.UI
                 if (group.Items.Count == 0)
                 {
                     string[] items = new string[this.Columns.Count];
-                    items[0] = "(No notifications for this date)";
+                    items[0] = Properties.Resources.History_NoNotificationsForDate;
                     ListViewItem lvi = new ListViewItem(items, group);
                     this.Items.Add(lvi);
                 }
@@ -322,7 +322,7 @@ namespace Growl.UI
             string title = Escape(pn.Notification.Title);
             string text = Escape(pn.Notification.Description);
             string appName = Escape(pn.Notification.ApplicationName);
-            string tooltip = String.Format("{0}\r\n{1}\r\nReceived from: {2}\r\nReceived at: {3}", pn.Notification.Title, pn.Notification.Description, pn.Notification.ApplicationName, pn.Timestamp.ToString());
+            string tooltip = String.Format("{0}\r\n{1}\r\n{4}: {2}\r\n{5}: {3}", pn.Notification.Title, pn.Notification.Description, pn.Notification.ApplicationName, pn.Timestamp.ToString(), Properties.Resources.LiteralString_ReceivedFrom, Properties.Resources.LiteralString_ReceivedAt);
 
             string[] items = new string[] { title, text, appName };
             ListViewItem lvi = new ListViewItem(items, pn.ImageKey, this.Groups[groupName]);
@@ -363,8 +363,8 @@ namespace Growl.UI
                 string name = date.DayOfWeek.ToString();
 
                 // special case
-                if (i == 0) name = "Today";
-                else if (i == 1) name = "Yesterday";
+                if (i == 0) name = Properties.Resources.LiteralString_Today;
+                else if (i == 1) name = Properties.Resources.LiteralString_Yesterday;
 
                 this.dateGroups.Add(name);
             }

@@ -21,6 +21,11 @@ namespace Growl
         {
             InitializeComponent();
 
+            // localize text
+            this.labelAppName.Text = Properties.Resources.SplashScreen_Title;
+            this.labelVersion.Text = Properties.Resources.SplashScreen_Version;
+            this.labelLoading.Text = Properties.Resources.SplashScreen_Loading;
+
             this.BackColor = Color.White;
             this.pictureBox1.Image = global::Growl.Properties.Resources.growl;
             this.labelVersion.Text = String.Format(this.labelVersion.Text, Utility.FileVersionInfo.ProductVersion);

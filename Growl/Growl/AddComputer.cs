@@ -22,6 +22,16 @@ namespace Growl
         public AddComputer()
         {
             InitializeComponent();
+
+            // localize text
+            this.labelFormat.Text = Properties.Resources.AddComputer_FormatLabel;
+            this.labelPassword.Text = Properties.Resources.AddComputer_PasswordLabel;
+            this.labelPort.Text = Properties.Resources.AddComputer_PortLabel;
+            this.labelAddress.Text = Properties.Resources.AddComputer_AddressLabel;
+            this.labelDescription.Text = Properties.Resources.AddComputer_NameLabel;
+            this.buttonSave.Text = Properties.Resources.Button_Save;
+            this.buttonClose.Text = Properties.Resources.Button_Close;
+            this.Text = Properties.Resources.AddComputer_FormTitle_Forward;
         }
 
         public AddComputer(bool isSubscription)
@@ -39,8 +49,8 @@ namespace Growl
             this.textBoxPort.HighlightColor = highlightColor;
             this.textBoxPassword.HighlightColor = highlightColor;
 
-            this.comboBoxFormat.Items.Add("GNTP");
-            this.comboBoxFormat.Items.Add("UDP");
+            this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_GNTP);
+            this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_UDP);
 
             if (this.controller != null)
             {
@@ -52,13 +62,13 @@ namespace Growl
                     this.bonjourListBox1.AddItem(bli);
                 }
             }
-            BonjourListItem manual = new BonjourListItem("[Click here to manually add a computer\nthat is not in this list]", ForwardComputerPlatformType.Other.Icon);
+            BonjourListItem manual = new BonjourListItem(Properties.Resources.AddComputer_ManualAdd, ForwardComputerPlatformType.Other.Icon);
             manual.Selected += new BonjourListItemSelectedEventHandler(manual_Selected);
             this.bonjourListBox1.AddItem(manual);
 
             if (this.isSubscription)
             {
-                this.Text = "Subscribe to notifications";
+                this.Text = Properties.Resources.AddComputer_FormTitle_Subscriptions;
                 manual_Selected(null);
                 labelFormat.Visible = false;
                 comboBoxFormat.Visible = false;
@@ -137,7 +147,7 @@ namespace Growl
                 }
                 else
                 {
-                    bool useUDP = (comboBoxFormat.SelectedItem.ToString() == "UDP" ? true : false);
+                    bool useUDP = (comboBoxFormat.SelectedItem.ToString() == Properties.Resources.Protocol_Type_UDP ? true : false);
                     fc = new ForwardComputer(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text, useUDP);
                 }
                 this.controller.AddForwardComputer(fc);
