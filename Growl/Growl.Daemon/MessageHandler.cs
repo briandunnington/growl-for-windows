@@ -515,6 +515,7 @@ namespace Growl.Daemon
                         {
                             Data response = new Data(FlashPolicy.ResponseBytes);
                             socket.Write(response, TIMEOUT_FLASHPOLICYRESPONSE, FLASH_POLICY_RESPONSE_TAG);
+                            socket.DisconnectAfterWriting();
                         }
                         else
                         {
