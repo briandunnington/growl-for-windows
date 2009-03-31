@@ -298,7 +298,7 @@
     <comment>General tab: Default Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>アイドル中と判断する秒数          秒</value>
+    <value>アイドル中を判断する　　　　　　秒後</value>
     <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
