@@ -17,6 +17,41 @@ namespace Growl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
             this.panelGeneral = new System.Windows.Forms.Panel();
             this.groupBoxIdleSettings = new System.Windows.Forms.GroupBox();
             this.textBoxIdleAfterSeconds = new System.Windows.Forms.TextBox();
@@ -399,9 +434,9 @@ namespace Growl
             // 
             this.comboBoxPrefSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefSound.FormattingEnabled = true;
-            this.comboBoxPrefSound.Location = new System.Drawing.Point(98, 197);
+            this.comboBoxPrefSound.Location = new System.Drawing.Point(106, 197);
             this.comboBoxPrefSound.Name = "comboBoxPrefSound";
-            this.comboBoxPrefSound.Size = new System.Drawing.Size(163, 21);
+            this.comboBoxPrefSound.Size = new System.Drawing.Size(160, 21);
             this.comboBoxPrefSound.TabIndex = 16;
             this.comboBoxPrefSound.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefSound_SelectionChangeCommitted);
             // 
@@ -409,9 +444,9 @@ namespace Growl
             // 
             this.comboBoxPrefSticky.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefSticky.FormattingEnabled = true;
-            this.comboBoxPrefSticky.Location = new System.Drawing.Point(98, 113);
+            this.comboBoxPrefSticky.Location = new System.Drawing.Point(106, 113);
             this.comboBoxPrefSticky.Name = "comboBoxPrefSticky";
-            this.comboBoxPrefSticky.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPrefSticky.Size = new System.Drawing.Size(118, 21);
             this.comboBoxPrefSticky.TabIndex = 15;
             this.comboBoxPrefSticky.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefSticky_SelectionChangeCommitted);
             // 
@@ -429,9 +464,9 @@ namespace Growl
             // 
             this.comboBoxPrefPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefPriority.FormattingEnabled = true;
-            this.comboBoxPrefPriority.Location = new System.Drawing.Point(98, 169);
+            this.comboBoxPrefPriority.Location = new System.Drawing.Point(106, 169);
             this.comboBoxPrefPriority.Name = "comboBoxPrefPriority";
-            this.comboBoxPrefPriority.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPrefPriority.Size = new System.Drawing.Size(118, 21);
             this.comboBoxPrefPriority.TabIndex = 13;
             this.comboBoxPrefPriority.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefPriority_SelectionChangeCommitted);
             // 
@@ -449,9 +484,9 @@ namespace Growl
             // 
             this.comboBoxPrefForward.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefForward.FormattingEnabled = true;
-            this.comboBoxPrefForward.Location = new System.Drawing.Point(98, 141);
+            this.comboBoxPrefForward.Location = new System.Drawing.Point(106, 141);
             this.comboBoxPrefForward.Name = "comboBoxPrefForward";
-            this.comboBoxPrefForward.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPrefForward.Size = new System.Drawing.Size(118, 21);
             this.comboBoxPrefForward.TabIndex = 11;
             this.comboBoxPrefForward.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefForward_SelectionChangeCommitted);
             // 
@@ -490,9 +525,9 @@ namespace Growl
             this.comboBoxPrefDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPrefDisplay.FormattingEnabled = true;
-            this.comboBoxPrefDisplay.Location = new System.Drawing.Point(98, 85);
+            this.comboBoxPrefDisplay.Location = new System.Drawing.Point(106, 85);
             this.comboBoxPrefDisplay.Name = "comboBoxPrefDisplay";
-            this.comboBoxPrefDisplay.Size = new System.Drawing.Size(163, 21);
+            this.comboBoxPrefDisplay.Size = new System.Drawing.Size(160, 21);
             this.comboBoxPrefDisplay.TabIndex = 7;
             this.comboBoxPrefDisplay.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefDisplay_SelectionChangeCommitted);
             // 
@@ -522,9 +557,9 @@ namespace Growl
             this.comboBoxPrefEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPrefEnabled.FormattingEnabled = true;
             this.comboBoxPrefEnabled.ItemHeight = 13;
-            this.comboBoxPrefEnabled.Location = new System.Drawing.Point(98, 57);
+            this.comboBoxPrefEnabled.Location = new System.Drawing.Point(106, 57);
             this.comboBoxPrefEnabled.Name = "comboBoxPrefEnabled";
-            this.comboBoxPrefEnabled.Size = new System.Drawing.Size(72, 21);
+            this.comboBoxPrefEnabled.Size = new System.Drawing.Size(69, 21);
             this.comboBoxPrefEnabled.TabIndex = 5;
             this.comboBoxPrefEnabled.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefEnabled_SelectionChangeCommitted);
             // 
@@ -864,7 +899,7 @@ namespace Growl
             // 
             this.labelPasswordManager.AutoSize = true;
             this.labelPasswordManager.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.labelPasswordManager.Location = new System.Drawing.Point(399, 10);
+            this.labelPasswordManager.Location = new System.Drawing.Point(397, 14);
             this.labelPasswordManager.Name = "labelPasswordManager";
             this.labelPasswordManager.Size = new System.Drawing.Size(116, 18);
             this.labelPasswordManager.TabIndex = 16;
@@ -885,6 +920,7 @@ namespace Growl
             this.checkBoxAllowSubscriptions.AutoSize = true;
             this.checkBoxAllowSubscriptions.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxAllowSubscriptions.Location = new System.Drawing.Point(83, 192);
+            this.checkBoxAllowSubscriptions.MaximumSize = new System.Drawing.Size(293, 44);
             this.checkBoxAllowSubscriptions.Name = "checkBoxAllowSubscriptions";
             this.checkBoxAllowSubscriptions.Size = new System.Drawing.Size(268, 22);
             this.checkBoxAllowSubscriptions.TabIndex = 14;
@@ -1027,6 +1063,44 @@ namespace Growl
             this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.historyListView.FullRowSelect = true;
             this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
+            listViewGroup8.Header = "Today";
+            listViewGroup8.Name = "Today";
+            listViewGroup9.Header = "Yesterday";
+            listViewGroup9.Name = "Yesterday";
+            listViewGroup10.Header = "Sunday";
+            listViewGroup10.Name = "Sunday";
+            listViewGroup11.Header = "Saturday";
+            listViewGroup11.Name = "Saturday";
+            listViewGroup12.Header = "Friday";
+            listViewGroup12.Name = "Friday";
+            listViewGroup13.Header = "Thursday";
+            listViewGroup13.Name = "Thursday";
+            listViewGroup14.Header = "Wednesday";
+            listViewGroup14.Name = "Wednesday";
+            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup8,
+            listViewGroup9,
+            listViewGroup10,
+            listViewGroup11,
+            listViewGroup12,
+            listViewGroup13,
+            listViewGroup14});
+            this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            listViewItem8.Group = listViewGroup8;
+            listViewItem9.Group = listViewGroup9;
+            listViewItem10.Group = listViewGroup10;
+            listViewItem11.Group = listViewGroup11;
+            listViewItem12.Group = listViewGroup12;
+            listViewItem13.Group = listViewGroup13;
+            listViewItem14.Group = listViewGroup14;
+            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14});
             this.historyListView.LabelWrap = false;
             this.historyListView.Location = new System.Drawing.Point(196, 5);
             this.historyListView.MultiSelect = false;
@@ -1369,14 +1443,14 @@ namespace Growl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 366);
             this.Controls.Add(this.toolbarPanel);
+            this.Controls.Add(this.panelAbout);
+            this.Controls.Add(this.panelSecurity);
+            this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
             this.Controls.Add(this.panelGeneral);
             this.Controls.Add(this.panelDisplays);
-            this.Controls.Add(this.panelAbout);
-            this.Controls.Add(this.panelSecurity);
-            this.Controls.Add(this.panelHistory);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

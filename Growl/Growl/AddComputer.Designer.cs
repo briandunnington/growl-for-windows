@@ -30,20 +30,20 @@ namespace Growl
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddComputer));
             this.panelBonjour = new System.Windows.Forms.Panel();
-            this.bonjourListBox1 = new Growl.UI.BonjourListBox();
             this.panelDetails = new System.Windows.Forms.Panel();
             this.comboBoxFormat = new System.Windows.Forms.ComboBox();
             this.labelFormat = new System.Windows.Forms.Label();
-            this.textBoxPassword = new Growl.UI.HighlightTextBox();
             this.labelPassword = new System.Windows.Forms.Label();
-            this.textBoxPort = new Growl.UI.HighlightTextBox();
             this.labelPort = new System.Windows.Forms.Label();
-            this.textBoxAddress = new Growl.UI.HighlightTextBox();
             this.labelAddress = new System.Windows.Forms.Label();
-            this.textBoxDescription = new Growl.UI.HighlightTextBox();
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonSave = new Growl.UI.ButtonEx();
             this.buttonClose = new Growl.UI.ButtonEx();
+            this.textBoxPassword = new Growl.UI.HighlightTextBox();
+            this.textBoxPort = new Growl.UI.HighlightTextBox();
+            this.textBoxAddress = new Growl.UI.HighlightTextBox();
+            this.textBoxDescription = new Growl.UI.HighlightTextBox();
+            this.bonjourListBox1 = new Growl.UI.BonjourListBox();
             this.panelBonjour.SuspendLayout();
             this.panelDetails.SuspendLayout();
             this.SuspendLayout();
@@ -55,18 +55,6 @@ namespace Growl
             this.panelBonjour.Name = "panelBonjour";
             this.panelBonjour.Size = new System.Drawing.Size(338, 137);
             this.panelBonjour.TabIndex = 5;
-            // 
-            // bonjourListBox1
-            // 
-            this.bonjourListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.bonjourListBox1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bonjourListBox1.FormattingEnabled = true;
-            this.bonjourListBox1.IntegralHeight = false;
-            this.bonjourListBox1.ItemHeight = 48;
-            this.bonjourListBox1.Location = new System.Drawing.Point(0, 0);
-            this.bonjourListBox1.Name = "bonjourListBox1";
-            this.bonjourListBox1.Size = new System.Drawing.Size(338, 137);
-            this.bonjourListBox1.TabIndex = 4;
             // 
             // panelDetails
             // 
@@ -90,93 +78,56 @@ namespace Growl
             // 
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
-            this.comboBoxFormat.Location = new System.Drawing.Point(97, 111);
+            this.comboBoxFormat.Location = new System.Drawing.Point(109, 111);
             this.comboBoxFormat.Name = "comboBoxFormat";
-            this.comboBoxFormat.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxFormat.Size = new System.Drawing.Size(109, 21);
             this.comboBoxFormat.TabIndex = 9;
             // 
             // labelFormat
             // 
             this.labelFormat.AutoSize = true;
             this.labelFormat.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelFormat.Location = new System.Drawing.Point(21, 112);
+            this.labelFormat.Location = new System.Drawing.Point(19, 112);
             this.labelFormat.Name = "labelFormat";
             this.labelFormat.Size = new System.Drawing.Size(50, 18);
             this.labelFormat.TabIndex = 8;
             this.labelFormat.Text = "Format:";
             // 
-            // textBoxPassword
-            // 
-            this.textBoxPassword.HighlightColor = System.Drawing.Color.Red;
-            this.textBoxPassword.Location = new System.Drawing.Point(97, 85);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(211, 20);
-            this.textBoxPassword.TabIndex = 7;
-            this.textBoxPassword.UseSystemPasswordChar = true;
-            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
-            // 
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
             this.labelPassword.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPassword.Location = new System.Drawing.Point(21, 86);
+            this.labelPassword.Location = new System.Drawing.Point(19, 86);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(63, 18);
             this.labelPassword.TabIndex = 6;
             this.labelPassword.Text = "Password:";
             // 
-            // textBoxPort
-            // 
-            this.textBoxPort.HighlightColor = System.Drawing.Color.Red;
-            this.textBoxPort.Location = new System.Drawing.Point(97, 59);
-            this.textBoxPort.Name = "textBoxPort";
-            this.textBoxPort.Size = new System.Drawing.Size(211, 20);
-            this.textBoxPort.TabIndex = 5;
-            this.textBoxPort.TextChanged += new System.EventHandler(this.textBoxPort_TextChanged);
-            // 
             // labelPort
             // 
             this.labelPort.AutoSize = true;
             this.labelPort.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort.Location = new System.Drawing.Point(21, 60);
+            this.labelPort.Location = new System.Drawing.Point(19, 60);
             this.labelPort.Name = "labelPort";
             this.labelPort.Size = new System.Drawing.Size(36, 18);
             this.labelPort.TabIndex = 4;
             this.labelPort.Text = "Port:";
             // 
-            // textBoxAddress
-            // 
-            this.textBoxAddress.HighlightColor = System.Drawing.Color.Red;
-            this.textBoxAddress.Location = new System.Drawing.Point(97, 33);
-            this.textBoxAddress.Name = "textBoxAddress";
-            this.textBoxAddress.Size = new System.Drawing.Size(211, 20);
-            this.textBoxAddress.TabIndex = 3;
-            this.textBoxAddress.TextChanged += new System.EventHandler(this.textBoxAddress_TextChanged);
-            // 
             // labelAddress
             // 
             this.labelAddress.AutoSize = true;
             this.labelAddress.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAddress.Location = new System.Drawing.Point(21, 34);
+            this.labelAddress.Location = new System.Drawing.Point(19, 34);
             this.labelAddress.Name = "labelAddress";
             this.labelAddress.Size = new System.Drawing.Size(66, 18);
             this.labelAddress.TabIndex = 2;
             this.labelAddress.Text = "Hostname:";
             // 
-            // textBoxDescription
-            // 
-            this.textBoxDescription.HighlightColor = System.Drawing.Color.Red;
-            this.textBoxDescription.Location = new System.Drawing.Point(97, 7);
-            this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(211, 20);
-            this.textBoxDescription.TabIndex = 1;
-            this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
-            // 
             // labelDescription
             // 
             this.labelDescription.AutoSize = true;
             this.labelDescription.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDescription.Location = new System.Drawing.Point(21, 8);
+            this.labelDescription.Location = new System.Drawing.Point(19, 8);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(42, 18);
             this.labelDescription.TabIndex = 0;
@@ -222,6 +173,55 @@ namespace Growl
             this.buttonClose.Text = "Close";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // textBoxPassword
+            // 
+            this.textBoxPassword.HighlightColor = System.Drawing.Color.Red;
+            this.textBoxPassword.Location = new System.Drawing.Point(109, 85);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(199, 20);
+            this.textBoxPassword.TabIndex = 7;
+            this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
+            // 
+            // textBoxPort
+            // 
+            this.textBoxPort.HighlightColor = System.Drawing.Color.Red;
+            this.textBoxPort.Location = new System.Drawing.Point(109, 59);
+            this.textBoxPort.Name = "textBoxPort";
+            this.textBoxPort.Size = new System.Drawing.Size(199, 20);
+            this.textBoxPort.TabIndex = 5;
+            this.textBoxPort.TextChanged += new System.EventHandler(this.textBoxPort_TextChanged);
+            // 
+            // textBoxAddress
+            // 
+            this.textBoxAddress.HighlightColor = System.Drawing.Color.Red;
+            this.textBoxAddress.Location = new System.Drawing.Point(109, 33);
+            this.textBoxAddress.Name = "textBoxAddress";
+            this.textBoxAddress.Size = new System.Drawing.Size(199, 20);
+            this.textBoxAddress.TabIndex = 3;
+            this.textBoxAddress.TextChanged += new System.EventHandler(this.textBoxAddress_TextChanged);
+            // 
+            // textBoxDescription
+            // 
+            this.textBoxDescription.HighlightColor = System.Drawing.Color.Red;
+            this.textBoxDescription.Location = new System.Drawing.Point(109, 7);
+            this.textBoxDescription.Name = "textBoxDescription";
+            this.textBoxDescription.Size = new System.Drawing.Size(199, 20);
+            this.textBoxDescription.TabIndex = 1;
+            this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
+            // 
+            // bonjourListBox1
+            // 
+            this.bonjourListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.bonjourListBox1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bonjourListBox1.FormattingEnabled = true;
+            this.bonjourListBox1.IntegralHeight = false;
+            this.bonjourListBox1.ItemHeight = 48;
+            this.bonjourListBox1.Location = new System.Drawing.Point(0, 0);
+            this.bonjourListBox1.Name = "bonjourListBox1";
+            this.bonjourListBox1.Size = new System.Drawing.Size(338, 137);
+            this.bonjourListBox1.TabIndex = 4;
             // 
             // AddComputer
             // 

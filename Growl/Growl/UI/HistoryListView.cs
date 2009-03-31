@@ -360,7 +360,8 @@ namespace Growl.UI
             for (int i = 0; i < this.NumberOfDays; i++)
             {
                 DateTime date = today.AddDays(-i);
-                string name = date.DayOfWeek.ToString();
+                string name = Properties.Resources.Culture.DateTimeFormat.DayNames[(int)date.DayOfWeek];
+                //string name = date.DayOfWeek.ToString();
 
                 // special case
                 if (i == 0) name = Properties.Resources.LiteralString_Today;

@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Connector", "Growl.Connector\Growl.Connector.csproj", "{19C22138-B905-47BA-9E6E-EF9356907E53}"
@@ -27,6 +28,8 @@ EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Windows Deployment", "Windows Deployment\Windows Deployment.vdproj", "{F412ED29-C8E0-408D-BBB7-00A2C8381291}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.en-GB", "Growl.Localization.en-GB\Growl.Localization.en-GB.csproj", "{0D6853EB-B690-4048-9979-1AD80457A65B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.nl-NL", "Growl.Localization.nl-NL\Growl.Localization.nl-NL.csproj", "{8D29E78A-8203-4037-9A14-C8D46A4C323C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.ja-JP", "Growl.Localization.ja-JP\Growl.Localization.ja-JP.csproj", "{98141345-02ED-4928-8177-B77DCFEA3462}"
 EndProject
@@ -90,6 +93,10 @@ Global
 		{0D6853EB-B690-4048-9979-1AD80457A65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D6853EB-B690-4048-9979-1AD80457A65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D6853EB-B690-4048-9979-1AD80457A65B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D29E78A-8203-4037-9A14-C8D46A4C323C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D29E78A-8203-4037-9A14-C8D46A4C323C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D29E78A-8203-4037-9A14-C8D46A4C323C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D29E78A-8203-4037-9A14-C8D46A4C323C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{98141345-02ED-4928-8177-B77DCFEA3462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{98141345-02ED-4928-8177-B77DCFEA3462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98141345-02ED-4928-8177-B77DCFEA3462}.Release|Any CPU.ActiveCfg = Release|Any CPU
