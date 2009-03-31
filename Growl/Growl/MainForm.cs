@@ -34,7 +34,6 @@ namespace Growl
             this.toolbarButtonAbout.Text = Properties.Resources.Toolbar_About;
 
             this.groupBoxIdleSettings.Text = Properties.Resources.General_IdleSettingsTitle;
-            this.radioButtonIdleAfter.Text = Properties.Resources.General_IdleSettings_IdleAfter;
             this.radioButtonIdleNever.Text = Properties.Resources.General_IdleSettings_NeverIdle;
             this.groupBoxDefaultSettings.Text = Properties.Resources.General_DefaultSettingsTitle;
             this.labelDefaultSound.Text = Properties.Resources.General_DefaultSettings_SoundLabel;
@@ -76,7 +75,18 @@ namespace Growl
             this.labelAboutOriginal2.Text = Properties.Resources.About_OriginalLabel2;
             this.labelAboutGrowlVersion.Text = Properties.Resources.About_GrowlVersion;
 
-
+            // handle the 'consider me idle after X seconds' radio button
+            // (since the textbox needs to be placed at the appropriate position within the label)
+            string idleAfterText = Properties.Resources.General_IdleSettings_IdleAfter;
+            if (idleAfterText.Contains("{0}"))
+            {
+                string before = idleAfterText.Substring(0, idleAfterText.IndexOf('{'));
+                string after = idleAfterText.Substring(idleAfterText.IndexOf('}') + 1);
+                this.radioButtonIdleAfter.Text = before;
+                this.textBoxIdleAfterSeconds.Location = new Point(this.radioButtonIdleAfter.Bounds.Right - 6, this.radioButtonIdleAfter.Location.Y - 1);
+                idleAfterText = String.Format(idleAfterText, "         "); // this leaves space for the textbox
+            }
+            this.radioButtonIdleAfter.Text = idleAfterText;
         }
 
         # region visual style

@@ -58,7 +58,7 @@ namespace Growl.UI
 
             //this.TileSize = new System.Drawing.Size(this.TileSize.Width, DEFAULT_TILE_HEIGHT);
 
-            this.NumberOfDays = DEFAULT_NUMBER_OF_DAYS;
+            this.numberOfDays = DEFAULT_NUMBER_OF_DAYS;
 
             this.Resize += new EventHandler(HistoryListView_Resize);
             this.DrawItem += new DrawListViewItemEventHandler(HistoryListView_DrawItem);
@@ -360,8 +360,12 @@ namespace Growl.UI
             for (int i = 0; i < this.NumberOfDays; i++)
             {
                 DateTime date = today.AddDays(-i);
-                string name = Properties.Resources.Culture.DateTimeFormat.DayNames[(int)date.DayOfWeek];
-                //string name = date.DayOfWeek.ToString();
+
+                // the Visual Studio form designer has a bug in it, so we have to check first in order to be able to set the name
+                // using the culture (since the culture doesnt get set until runtime)
+                string name = date.DayOfWeek.ToString();
+                if(Properties.Resources.Culture != null)
+                    name = Properties.Resources.Culture.DateTimeFormat.DayNames[(int)date.DayOfWeek];
 
                 // special case
                 if (i == 0) name = Properties.Resources.LiteralString_Today;

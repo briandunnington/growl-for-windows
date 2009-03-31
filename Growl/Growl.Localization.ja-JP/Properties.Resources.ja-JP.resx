@@ -298,8 +298,8 @@
     <comment>General tab: Default Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>アイドル中を判断する　　　　　　秒後</value>
-    <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
+    <value>アイドル中を判断する {0} 秒後</value>
+    <comment>General tab: Radio button text for 'consider me idle after x seconds' - Placeholder {0} is where the TextBox will go</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
     <value>アイドル中や離席中を判断しない</value>

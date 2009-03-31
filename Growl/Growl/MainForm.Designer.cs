@@ -17,6 +17,13 @@ namespace Growl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
@@ -24,6 +31,34 @@ namespace Growl
             System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
             System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "(No notifications for this date)",
             "",
@@ -1063,6 +1098,20 @@ namespace Growl
             this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.historyListView.FullRowSelect = true;
             this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
+            listViewGroup1.Header = "Today";
+            listViewGroup1.Name = "Today";
+            listViewGroup2.Header = "Yesterday";
+            listViewGroup2.Name = "Yesterday";
+            listViewGroup3.Header = "Sunday";
+            listViewGroup3.Name = "Sunday";
+            listViewGroup4.Header = "Saturday";
+            listViewGroup4.Name = "Saturday";
+            listViewGroup5.Header = "Friday";
+            listViewGroup5.Name = "Friday";
+            listViewGroup6.Header = "Thursday";
+            listViewGroup6.Name = "Thursday";
+            listViewGroup7.Header = "Wednesday";
+            listViewGroup7.Name = "Wednesday";
             listViewGroup8.Header = "Today";
             listViewGroup8.Name = "Today";
             listViewGroup9.Header = "Yesterday";
@@ -1078,6 +1127,13 @@ namespace Growl
             listViewGroup14.Header = "Wednesday";
             listViewGroup14.Name = "Wednesday";
             this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6,
+            listViewGroup7,
             listViewGroup8,
             listViewGroup9,
             listViewGroup10,
@@ -1086,6 +1142,13 @@ namespace Growl
             listViewGroup13,
             listViewGroup14});
             this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            listViewItem1.Group = listViewGroup1;
+            listViewItem2.Group = listViewGroup2;
+            listViewItem3.Group = listViewGroup3;
+            listViewItem4.Group = listViewGroup4;
+            listViewItem5.Group = listViewGroup5;
+            listViewItem6.Group = listViewGroup6;
+            listViewItem7.Group = listViewGroup7;
             listViewItem8.Group = listViewGroup8;
             listViewItem9.Group = listViewGroup9;
             listViewItem10.Group = listViewGroup10;
@@ -1094,6 +1157,13 @@ namespace Growl
             listViewItem13.Group = listViewGroup13;
             listViewItem14.Group = listViewGroup14;
             this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
             listViewItem8,
             listViewItem9,
             listViewItem10,
@@ -1298,12 +1368,12 @@ namespace Growl
             this.removeApplicationToolStripMenuItem});
             this.contextMenuStripApplications.Name = "contextMenuStripApplications";
             this.contextMenuStripApplications.ShowImageMargin = false;
-            this.contextMenuStripApplications.Size = new System.Drawing.Size(155, 26);
+            this.contextMenuStripApplications.Size = new System.Drawing.Size(144, 26);
             // 
             // removeApplicationToolStripMenuItem
             // 
             this.removeApplicationToolStripMenuItem.Name = "removeApplicationToolStripMenuItem";
-            this.removeApplicationToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.removeApplicationToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.removeApplicationToolStripMenuItem.Text = "Remove Application";
             this.removeApplicationToolStripMenuItem.Click += new System.EventHandler(this.removeApplicationToolStripMenuItem_Click);
             // 
@@ -1313,12 +1383,12 @@ namespace Growl
             this.removeComputerToolStripMenuItem});
             this.contextMenuStripForwardComputers.Name = "contextMenuStripForwardComputers";
             this.contextMenuStripForwardComputers.ShowImageMargin = false;
-            this.contextMenuStripForwardComputers.Size = new System.Drawing.Size(150, 26);
+            this.contextMenuStripForwardComputers.Size = new System.Drawing.Size(139, 26);
             // 
             // removeComputerToolStripMenuItem
             // 
             this.removeComputerToolStripMenuItem.Name = "removeComputerToolStripMenuItem";
-            this.removeComputerToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.removeComputerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.removeComputerToolStripMenuItem.Text = "Remove Computer";
             this.removeComputerToolStripMenuItem.Click += new System.EventHandler(this.removeComputerToolStripMenuItem_Click);
             // 
@@ -1443,14 +1513,14 @@ namespace Growl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 366);
             this.Controls.Add(this.toolbarPanel);
+            this.Controls.Add(this.panelGeneral);
+            this.Controls.Add(this.panelDisplays);
             this.Controls.Add(this.panelAbout);
             this.Controls.Add(this.panelSecurity);
             this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
-            this.Controls.Add(this.panelGeneral);
-            this.Controls.Add(this.panelDisplays);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

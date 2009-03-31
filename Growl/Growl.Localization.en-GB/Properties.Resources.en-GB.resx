@@ -298,8 +298,8 @@
     <comment>General tab: Default Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>Consider me idle after            seconds</value>
-    <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
+    <value>Consider me idle after {0} seconds</value>
+    <comment>General tab: Radio button text for 'consider me idle after x seconds' - Placeholder {0} is where the TextBox will go</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
     <value>Never consider me idle or away</value>
