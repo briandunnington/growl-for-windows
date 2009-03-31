@@ -158,7 +158,7 @@ namespace Growl
             this.panelGeneral.Controls.Add(this.labelCurrentState);
             this.panelGeneral.Controls.Add(this.checkBoxAutoStart);
             this.panelGeneral.Controls.Add(this.onOffButton1);
-            this.panelGeneral.Location = new System.Drawing.Point(0, 67);
+            this.panelGeneral.Location = new System.Drawing.Point(0, 70);
             this.panelGeneral.Name = "panelGeneral";
             this.panelGeneral.Size = new System.Drawing.Size(663, 298);
             this.panelGeneral.TabIndex = 2;
@@ -309,7 +309,7 @@ namespace Growl
             this.panelApplications.Controls.Add(this.listControlApplications);
             this.panelApplications.Controls.Add(this.panelSelectedApplication);
             this.panelApplications.Controls.Add(this.panelNoApps);
-            this.panelApplications.Location = new System.Drawing.Point(0, 67);
+            this.panelApplications.Location = new System.Drawing.Point(0, 70);
             this.panelApplications.Name = "panelApplications";
             this.panelApplications.Size = new System.Drawing.Size(663, 298);
             this.panelApplications.TabIndex = 3;
@@ -576,7 +576,7 @@ namespace Growl
             this.panelDisplays.BackColor = System.Drawing.Color.Transparent;
             this.panelDisplays.Controls.Add(this.listControlDisplays);
             this.panelDisplays.Controls.Add(this.panelDisplaySettings);
-            this.panelDisplays.Location = new System.Drawing.Point(0, 67);
+            this.panelDisplays.Location = new System.Drawing.Point(0, 70);
             this.panelDisplays.Name = "panelDisplays";
             this.panelDisplays.Size = new System.Drawing.Size(663, 298);
             this.panelDisplays.TabIndex = 2;
@@ -718,7 +718,7 @@ namespace Growl
             this.panelAbout.Controls.Add(this.labelAboutOriginal);
             this.panelAbout.Controls.Add(this.pictureBox1);
             this.panelAbout.Controls.Add(this.labelAboutGrowlVersion);
-            this.panelAbout.Location = new System.Drawing.Point(0, 67);
+            this.panelAbout.Location = new System.Drawing.Point(0, 70);
             this.panelAbout.Name = "panelAbout";
             this.panelAbout.Size = new System.Drawing.Size(663, 298);
             this.panelAbout.TabIndex = 4;
@@ -854,7 +854,7 @@ namespace Growl
             this.panelSecurity.Controls.Add(this.checkBoxAllowWebNotifications);
             this.panelSecurity.Controls.Add(this.checkBoxAllowNetworkNotifications);
             this.panelSecurity.Controls.Add(this.checkBoxRequireLocalPassword);
-            this.panelSecurity.Location = new System.Drawing.Point(0, 67);
+            this.panelSecurity.Location = new System.Drawing.Point(0, 70);
             this.panelSecurity.Name = "panelSecurity";
             this.panelSecurity.Size = new System.Drawing.Size(663, 298);
             this.panelSecurity.TabIndex = 4;
@@ -938,7 +938,7 @@ namespace Growl
             this.panelHistory.Controls.Add(this.historyDaysGroupBox);
             this.panelHistory.Controls.Add(this.historySortByGroupBox);
             this.panelHistory.Controls.Add(this.historyListView);
-            this.panelHistory.Location = new System.Drawing.Point(0, 67);
+            this.panelHistory.Location = new System.Drawing.Point(0, 70);
             this.panelHistory.Name = "panelHistory";
             this.panelHistory.Size = new System.Drawing.Size(663, 298);
             this.panelHistory.TabIndex = 3;
@@ -1050,7 +1050,7 @@ namespace Growl
             this.panelInitializing.Controls.Add(this.labelInitializationStage);
             this.panelInitializing.Controls.Add(this.progressBarInitializing);
             this.panelInitializing.Controls.Add(this.labelInitializing);
-            this.panelInitializing.Location = new System.Drawing.Point(0, 67);
+            this.panelInitializing.Location = new System.Drawing.Point(0, 70);
             this.panelInitializing.Name = "panelInitializing";
             this.panelInitializing.Size = new System.Drawing.Size(663, 298);
             this.panelInitializing.TabIndex = 2;
@@ -1096,7 +1096,7 @@ namespace Growl
             this.panelNetwork.Controls.Add(this.buttonAddComputer);
             this.panelNetwork.Controls.Add(this.forwardListView);
             this.panelNetwork.Controls.Add(this.checkBoxEnableForwarding);
-            this.panelNetwork.Location = new System.Drawing.Point(0, 67);
+            this.panelNetwork.Location = new System.Drawing.Point(0, 70);
             this.panelNetwork.Name = "panelNetwork";
             this.panelNetwork.Size = new System.Drawing.Size(663, 298);
             this.panelNetwork.TabIndex = 3;
@@ -1257,7 +1257,7 @@ namespace Growl
             this.toolbarPanel.Location = new System.Drawing.Point(0, 0);
             this.toolbarPanel.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarPanel.Name = "toolbarPanel";
-            this.toolbarPanel.Size = new System.Drawing.Size(663, 66);
+            this.toolbarPanel.Size = new System.Drawing.Size(663, 69);
             this.toolbarPanel.TabIndex = 0;
             // 
             // toolStrip1
@@ -1282,7 +1282,7 @@ namespace Growl
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
             this.toolStrip1.ShowItemToolTips = false;
-            this.toolStrip1.Size = new System.Drawing.Size(521, 64);
+            this.toolStrip1.Size = new System.Drawing.Size(521, 67);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1367,7 +1367,7 @@ namespace Growl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 363);
+            this.ClientSize = new System.Drawing.Size(662, 366);
             this.Controls.Add(this.toolbarPanel);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
@@ -1380,7 +1380,7 @@ namespace Growl
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(670, 390);
+            this.MinimumSize = new System.Drawing.Size(670, 393);
             this.Name = "MainForm";
             this.Text = "Growl";
             this.Load += new System.EventHandler(this.MainForm_Load);
