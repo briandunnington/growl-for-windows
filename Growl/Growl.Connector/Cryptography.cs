@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -313,7 +313,7 @@ namespace Growl.Connector
                         break;
                     case SymmetricAlgorithmType.TripleDES:
                         algorithm = new TripleDESCryptoServiceProvider();
-                        keySize = 16;
+                        keySize = 24;
                         ivSize = 8;
                         blockSize = algorithm.BlockSize;
                         break;
