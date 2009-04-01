@@ -97,7 +97,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\MissedNotificationsWindow.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\MissedNotificationsWindow.Designer.cs">
       <DependentUpon>MissedNotificationsWindow.cs</DependentUpon>

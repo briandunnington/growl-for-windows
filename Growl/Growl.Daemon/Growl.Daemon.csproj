@@ -69,8 +69,8 @@
     <Content Include="flashpolicy.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Third Party Assemblies\ZeroconfService.dll" />
-    <Content Include="todo.txt" />
+    <None Include="Third Party Assemblies\ZeroconfService.dll" />
+    <None Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
