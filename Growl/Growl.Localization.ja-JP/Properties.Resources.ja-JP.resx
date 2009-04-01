@@ -166,7 +166,8 @@
     <comment>Add Computer form title - when subscribing</comment>
   </data>
   <data name="AddComputer_ManualAdd" xml:space="preserve">
-    <value>[以下のリストに存在しない場合は\n手動で追加する場合にはここをクリックして下さい。]</value>
+    <value>[以下のリストに存在しない場合は
+手動で追加する場合にはここをクリックして下さい。]</value>
     <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
   </data>
   <data name="AddComputer_NameLabel" xml:space="preserve">
@@ -186,7 +187,9 @@
     <comment>Applications tab: list item for application-wide preferences</comment>
   </data>
   <data name="Applications_NoAppsRegistered" xml:space="preserve">
-    <value>アプリケーションはまだ登録されていません。\r\n\r\n通知を行う有効なGrowlアプリケーションが登録された場合、それらは左側のリストに表示されカスタマイズ出来る様になります。</value>
+    <value>アプリケーションはまだ登録されていません。
+
+通知を行う有効なGrowlアプリケーションが登録された場合、それらは左側のリストに表示されカスタマイズ出来る様になります。</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
@@ -262,11 +265,15 @@
     <comment>MessageBox caption shown if Growl fails to start</comment>
   </data>
   <data name="FailedToStart_Message_GNTP" xml:space="preserve">
-    <value>GrowlのTCPポート({0}) を使用しているリスナが既に存在しています。\r\n\r\n別のバージョンのGrowlが起動中の場合は、それらを終了し、再度実行して下さい。</value>
+    <value>GrowlのTCPポート({0}) を使用しているリスナが既に存在しています。
+
+別のバージョンのGrowlが起動中の場合は、それらを終了し、再度実行して下さい。</value>
     <comment>MessageBox text shown if Growl fails to start the GNTP listener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="FailedToStart_Message_UDP" xml:space="preserve">
-    <value>GrowlのUDPポート({0}) を使用しているリスナが既に存在しています。\r\n\r\n別のバージョンのGrowlが起動中の場合は、それらを終了し、再度実行して下さい。</value>
+    <value>GrowlのUDPポート({0}) を使用しているリスナが既に存在しています。
+
+別のバージョンのGrowlが起動中の場合は、それらを終了し、再度実行して下さい。</value>
     <comment>MessageBox text shown if Growl fails to start the UDPlistener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="General_ApplicationPaused" xml:space="preserve">

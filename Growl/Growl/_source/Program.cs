@@ -254,12 +254,10 @@ namespace Growl
 
             // check less frequently after initial startup
             this.autoUpdateTimer.Interval = 4 * 60 * 60 * 1000; // four hours
-            this.autoUpdateTimer.Tick += new EventHandler(autoUpdateTimer_Tick);
 
             if (Properties.Settings.Default.AutomaticallyCheckForUpdates)
             {
                 this.updater.CheckForUpdate(false);
-                this.autoUpdateTimer.Start();
             }
         }
 

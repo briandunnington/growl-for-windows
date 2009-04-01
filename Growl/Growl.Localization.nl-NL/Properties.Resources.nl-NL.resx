@@ -166,7 +166,8 @@
     <comment>Add Computer form title - when subscribing</comment>
   </data>
   <data name="AddComputer_ManualAdd" xml:space="preserve">
-    <value>[Klik hier om handmatig een computer\nniet in de lijst toe te voegen]</value>
+    <value>[Klik hier om handmatig een computer
+niet in de lijst toe te voegen]</value>
     <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
   </data>
   <data name="AddComputer_NameLabel" xml:space="preserve">
@@ -186,7 +187,9 @@
     <comment>Applications tab: list item for application-wide preferences</comment>
   </data>
   <data name="Applications_NoAppsRegistered" xml:space="preserve">
-    <value>Nog geen geregistreerde applicaties.\r\n\r\nZodra een applicatie, met Growl ondersteuning, zich registreert zal deze in de lijst links verschijnen en kunnen de applicatie specifieke instellingen aangepast worden.</value>
+    <value>Nog geen geregistreerde applicaties.
+
+Zodra een applicatie, met Growl ondersteuning, zich registreert zal deze in de lijst links verschijnen en kunnen de applicatie specifieke instellingen aangepast worden.</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
@@ -262,11 +265,15 @@
     <comment>MessageBox caption shown if Growl fails to start</comment>
   </data>
   <data name="FailedToStart_Message_GNTP" xml:space="preserve">
-    <value>Er is reeds een luisterproces actief op Growl TCP poort ({0}).\r\n\r\nAls er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opnieuw.</value>
+    <value>Er is reeds een luisterproces actief op Growl TCP poort ({0}).
+
+Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opnieuw.</value>
     <comment>MessageBox text shown if Growl fails to start the GNTP listener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="FailedToStart_Message_UDP" xml:space="preserve">
-    <value>Er is reeds een luisterproces actief op Growl UDP poort ({0}).\r\n\r\nAls er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opnieuw.</value>
+    <value>Er is reeds een luisterproces actief op Growl UDP poort ({0}).
+
+Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opnieuw.</value>
     <comment>MessageBox text shown if Growl fails to start the UDPlistener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="General_ApplicationPaused" xml:space="preserve">

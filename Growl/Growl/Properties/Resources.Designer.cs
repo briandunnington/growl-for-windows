@@ -160,7 +160,8 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Click here to manually add a computer\nthat is not in this list].
+        ///   Looks up a localized string similar to [Click here to manually add a computer
+        ///that is not in this list].
         /// </summary>
         internal static string AddComputer_ManualAdd {
             get {
@@ -205,7 +206,9 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No applications have registered yet.\r\n\r\nWhen a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings..
+        ///   Looks up a localized string similar to No applications have registered yet.
+        ///
+        ///When a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings..
         /// </summary>
         internal static string Applications_NoAppsRegistered {
             get {
@@ -460,7 +463,9 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is already a listener enabled on Growl&apos;s TCP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again..
+        ///   Looks up a localized string similar to There is already a listener enabled on Growl&apos;s TCP port ({0}).
+        ///
+        ///If another version of Growl is already running, please close that version and try again..
         /// </summary>
         internal static string FailedToStart_Message_GNTP {
             get {
@@ -469,7 +474,9 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is already a listener enabled on Growl&apos;s legacy UDP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again..
+        ///   Looks up a localized string similar to There is already a listener enabled on Growl&apos;s legacy UDP port ({0}).
+        ///
+        ///If another version of Growl is already running, please close that version and try again..
         /// </summary>
         internal static string FailedToStart_Message_UDP {
             get {

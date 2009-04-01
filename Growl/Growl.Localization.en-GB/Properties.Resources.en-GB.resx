@@ -166,7 +166,8 @@
     <comment>Add Computer form title - when subscribing</comment>
   </data>
   <data name="AddComputer_ManualAdd" xml:space="preserve">
-    <value>[Click here to manually add a computer\nthat is not in this list]</value>
+    <value>[Click here to manually add a computer
+that is not in this list]</value>
     <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
   </data>
   <data name="AddComputer_NameLabel" xml:space="preserve">
@@ -186,7 +187,9 @@
     <comment>Applications tab: list item for application-wide preferences</comment>
   </data>
   <data name="Applications_NoAppsRegistered" xml:space="preserve">
-    <value>No applications have registered yet.\r\n\r\nWhen a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings.</value>
+    <value>No applications have registered yet.
+
+When a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings.</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
@@ -262,11 +265,15 @@
     <comment>MessageBox caption shown if Growl fails to start</comment>
   </data>
   <data name="FailedToStart_Message_GNTP" xml:space="preserve">
-    <value>There is already a listener enabled on Growl's TCP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again.</value>
+    <value>There is already a listener enabled on Growl's TCP port ({0}).
+
+If another version of Growl is already running, please close that version and try again.</value>
     <comment>MessageBox text shown if Growl fails to start the GNTP listener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="FailedToStart_Message_UDP" xml:space="preserve">
-    <value>There is already a listener enabled on Growl's legacy UDP port ({0}).\r\n\r\nIf another version of Growl is already running, please close that version and try again.</value>
+    <value>There is already a listener enabled on Growl's legacy UDP port ({0}).
+
+If another version of Growl is already running, please close that version and try again.</value>
     <comment>MessageBox text shown if Growl fails to start the UDPlistener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="General_ApplicationPaused" xml:space="preserve">
