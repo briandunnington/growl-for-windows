@@ -1,5 +1,6 @@
 ﻿package  
 {
+	import com.hurlant.crypto.hash.SHA256;
 	import com.hurlant.crypto.symmetric.CBCMode;
 	import com.hurlant.crypto.symmetric.ECBMode;
 	import com.hurlant.crypto.symmetric.ICipher;
@@ -112,6 +113,9 @@
 				case HashAlgorithm.SHA1 :
 					hasher = new SHA1();
 					break;
+				case HashAlgorithm.SHA256 :
+					hasher = new SHA256();
+					break;
 				default :
 					hasher = new MD5();
 					break;
@@ -133,7 +137,7 @@
 					cipher = new CBCMode(new DESKey(key), new PKCS5);
 					break;
 				case EncryptionAlgorithm.TripleDES :
-					key = getKeyFromSize(key, 16);
+					key = getKeyFromSize(key, 24);
 					cipher = new CBCMode(new TripleDESKey(key), new PKCS5);
 					break;
 				default :

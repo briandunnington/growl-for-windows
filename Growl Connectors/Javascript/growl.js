@@ -107,6 +107,7 @@ Growl.Notification = function(){
 Growl.PasswordHashAlgorithm = {};
 Growl.PasswordHashAlgorithm.MD5 = "MD5";
 Growl.PasswordHashAlgorithm.SHA1 = "SHA1";
+Growl.PasswordHashAlgorithm.SHA256 = "SHA256";
 
 Growl.EncryptionAlgorithm = {};
 Growl.EncryptionAlgorithm.PlainText = "NONE";

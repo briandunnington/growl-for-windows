@@ -57,10 +57,15 @@
             //config.scope = "Growl"; //optional
             //config.containerID = null; //optional
 config.password = "secret";
+
             //config.passwordHashAlgorithm = Growl.PasswordHashAlgorithm.SHA1;
+            //config.passwordHashAlgorithm = Growl.PasswordHashAlgorithm.SHA256;
+
             //config.encryptionAlgorithm = Growl.EncryptionAlgorithm.PlainText;
+            //config.encryptionAlgorithm = Growl.EncryptionAlgorithm.DES;
             //config.encryptionAlgorithm = Growl.EncryptionAlgorithm.TripleDES;
-config.encryptionAlgorithm = Growl.EncryptionAlgorithm.DES;
+            //config.encryptionAlgorithm = Growl.EncryptionAlgorithm.AES;
+
             config.oncallback = cb;
             config.onerror = onerror;
             Growl.init(config);
