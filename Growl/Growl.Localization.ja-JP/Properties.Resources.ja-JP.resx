@@ -569,7 +569,7 @@
     <comment>Notification text shown for preview notifications - Placeholder {0} is the actual display name</comment>
   </data>
   <data name="SystemNotification_Preview_Title" xml:space="preserve">
-    <value>ディスプレイスタイルをプレビューする</value>
+    <value>ディスプレイスタイルのプレビュー</value>
     <comment>The title used for preview notifications</comment>
   </data>
   <data name="SystemNotification_Running_Text" xml:space="preserve">
