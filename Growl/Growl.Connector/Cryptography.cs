@@ -216,7 +216,7 @@ namespace Growl.Connector
                         break;
                     case SymmetricAlgorithmType.TripleDES:
                         algorithm = new TripleDESCryptoServiceProvider();
-                        keySize = 16;
+                        keySize = 24;
                         ivSize = 8;
                         break;
                     case SymmetricAlgorithmType.AES:
