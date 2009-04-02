@@ -9,7 +9,7 @@ Growl = function(){
     var encryptionAlgorithm;
 
     function generateSWF(containerID, scope) {
-        var so = new SWFObject("GrowlFlashConnector.swf", swfID, "100", "100", "8", "#ff00ff");
+        var so = new SWFObject("GrowlFlashConnector.swf", swfID, "1", "1", "8", "#ff00ff");
         so.addParam("allowScriptAccess", "always");
         so.addVariable("scope", scope);
         so.write(containerID);
@@ -31,7 +31,7 @@ Growl = function(){
             swf.setPassword(password);
             swf.setPasswordHashAlgorithm(passwordHashAlgorithm);
             swf.setEncryptionAlgorithm(encryptionAlgorithm);
-            alert("ready");
+            //alert("ready");
             Growl.onready2();
         },
         

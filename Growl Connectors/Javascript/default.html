@@ -1,62 +1,123 @@
 <html>
     <head>
         <script src="swfobject.js"></script>
-	<script src="growl.js"></script>
+        <script src="growl.js"></script>
+
+        <link rel="stylesheet" href="http://www.growlforwindows.com/gfw/reset.css" media="all">
+        <link rel="stylesheet" href="http://www.growlforwindows.com/gfw/style.css" media="all">
+        <link rel="stylesheet" href="http://www.growlforwindows.com/gfw/help/help.css" media="all">
+
+        <style>
+        #notifyarea {display:none;}
+        button {background-color:#eeeeee;
+            border-color:#CCCCCC rgb(153, 153, 153) rgb(153, 153, 153) rgb(204, 204, 204);
+            border-style:double;
+            border-width:3px;
+            color:#777777;
+            cursor:pointer;
+            font-size:1.2em;
+            font-weight:bold;
+            padding:0 20px;
+            x-min-width:160px;
+            x-_width:160px;}
+        input, textarea {width:320px;}
+        </style>
     </head>
     
     <body>
-        <a href="#" onclick="register();return false;">register</a><br /><br />
+        <div id="page">
+            <div id="header">
+                <h1 id="title">Growl for Windows</h1>
+                <h2 id="tagline">Know What Happens</h2>
+            </div>
+
+            <div id="content">
+                <div class="section">
+                    <h3>Growl for Windows - Javascript Connector Example</h3>
+                    <hr />
+                    
+                    <p>&nbsp;</p>
+                    
+                    <p>This example requires Growl for Windows v2.0b4 (2.0.0.4) or higher.</p>
+                    
+                    <p>Make sure Growl for Windows is running and that 'Allow network notifications' and 'Allow notifications
+                    from websites' are check on the 'Security' tab.</p>
+                    
+                    <p>&nbsp;</p>
+                    
+                    <p><button onclick="register();return false;">register</button></p>
+                    
+                    <p>&nbsp;</p>
+                    
+                    <div id="notifyarea">
+                        notification title:<br />
+                        <input type="text" id="notificationtitle" value="test notification" /><br /><br />
+                        
+                        notification text:<br />
+                        <textarea id="notificationtext">you got notified</textarea><br /><br />
+                        
+                        <p>
+                            <button onclick="notify();return false;">notify</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button onclick="notify2();return false;">notify (w/ callback)</button>
+                        </p>
+                    </div>
+                    
+                    <div id="growlconnectorcontainer"></div>
+                </div>
+            </div>
+        </div>
         
-        <a href="#" onclick="notify();return false;">notify</a><br /><br />
-        
-        <a href="#" onclick="notify2();return false;">notify (w/ callback)</a><br /><br />
-        
-        <script>
+        <script type="text/javascript">
         function register(){
             var application = new Growl.Application();
-            application.name = "test app";
-            application.icon = "http://www.google.com/images/logo_sm.gif";
+            application.name = "Javascript Example App";
+            application.icon = "http://www.growlforwindows.com/gfw/examples/js/growl.png";
             
             var notificationTypes = new Array();
             var nt1 = new Growl.NotificationType();
             nt1.name = "NT1";
-            nt1.displayName = "notification type one";
+            nt1.displayName = "Example Notification One";
             nt1.enabled = true;
             notificationTypes.push(nt1);
             
             Growl.register(application, notificationTypes);
+            
+            document.getElementById("notifyarea").style.display = "block";
         }
         
         function notify(){
             var notification = new Growl.Notification();
             notification.name = "NT1";
-            notification.title = "you got notified";
-            notification.text = "this is the text";
-            notification.icon = "http://www.google.com/images/logo_sm.gif";
+            notification.title = document.getElementById("notificationtitle").value;
+            notification.text = document.getElementById("notificationtext").value;
+            notification.icon = "http://www.growlforwindows.com/gfw/examples/js/growl.png";
             notification.priority = "normal";
             
-            Growl.notify("test app", notification);
+            Growl.notify("Javascript Example App", notification);
         }
 
         function notify2(){
             var notification = new Growl.Notification();
             notification.name = "NT1";
-            notification.title = "you got notified";
-            notification.text = "this is the text";
-            notification.icon = "http://www.google.com/images/logo_sm.gif";
+            notification.title = document.getElementById("notificationtitle").value;
+            notification.text = document.getElementById("notificationtext").value;
+            notification.icon = "http://www.growlforwindows.com/gfw/examples/js/growl.png";
             notification.priority = "normal";
             notification.callback.context = "my context";
             notification.callback.type = "string";
             
-            Growl.notify("test app", notification);
+            Growl.notify("Javascript Example App", notification);
         }
         </script>
-        <script>
+
+        <script type="text/javascript">
         window.onload = function(){
             var config = {};
             //config.scope = "Growl"; //optional
             //config.containerID = null; //optional
-config.password = "secret";
+
+            //config.password = "secret";
 
             //config.passwordHashAlgorithm = Growl.PasswordHashAlgorithm.SHA1;
             //config.passwordHashAlgorithm = Growl.PasswordHashAlgorithm.SHA256;
@@ -72,7 +133,7 @@ config.password = "secret";
         }
         
         function cb(notificationID, action, context, type, timestamp){
-            if(action == Growl.CallbackAction.Click) alert("the notification was clicked");
+            //if(action == Growl.CallbackAction.Click) alert("the notification was clicked");
 
             var s = "";
             s += "id: " + notificationID + "\r\n";
@@ -87,6 +148,5 @@ config.password = "secret";
             alert("ERROR:\r\n\r\n" + errorCode + " - " + errorDescription);
         }
         </script>
-        
     </body>
 </html>
