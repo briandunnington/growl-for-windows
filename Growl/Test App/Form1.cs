@@ -25,9 +25,11 @@ namespace Test_App
             this.growl.ErrorResponse += new GrowlConnector.ResponseEventHandler(growl_ErrorResponse);
             this.growl.NotificationCallback +=new GrowlConnector.CallbackEventHandler(growl_NotificationCallback);
 
-            //growl.KeyHashAlgorithm = Cryptography.HashAlgorithmType.SHA1;
+            growl.KeyHashAlgorithm = Cryptography.HashAlgorithmType.SHA256;
             growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
             //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.DES;
+            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.TripleDES;
+            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
 
             this.app = new Growl.Connector.Application("SurfWriter");
             //app.Icon = "http://atomicbride.com/Apple.gif";

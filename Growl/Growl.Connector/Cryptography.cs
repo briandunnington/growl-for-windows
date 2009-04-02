@@ -243,6 +243,9 @@ namespace Growl.Connector
                     throw new CryptographicException(String.Format("Encrypt: Algorithm '{0}' requires an IV size of {1} - (you supplied an IV that was {2} long)", algorithmType, ivSize, algorithm.IV.Length));
                 result.IV = algorithm.IV;
 
+                algorithm.Padding = PaddingMode.PKCS7;
+                algorithm.Mode = CipherMode.CBC;
+
                 // encrypt the input string
                 ICryptoTransform encryptor = algorithm.CreateEncryptor();
                 byte[] encryptedBytes = encryptor.TransformFinalBlock(inputBytes, 0, inputBytes.Length);
@@ -339,7 +342,7 @@ namespace Growl.Connector
                     throw new CryptographicException(String.Format("Decrypt: Algorithm '{0}' requires an IV size of {1} - (you supplied an IV that was {2} long)", algorithmType, ivSize, iv.Length));
                 algorithm.IV = iv;
 
-                algorithm.Padding = PaddingMode.PKCS7;   //TODO: agree on a padding scheme
+                algorithm.Padding = PaddingMode.PKCS7;
                 algorithm.Mode = CipherMode.CBC;
 
                 // decrypt
