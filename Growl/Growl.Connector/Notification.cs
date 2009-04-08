@@ -312,9 +312,12 @@ namespace Growl.Connector
             bool sticky = headers.GetHeaderBooleanValue(Header.NOTIFICATION_STICKY, false);
             string p = headers.GetHeaderStringValue(Header.NOTIFICATION_PRIORITY, false);
             Priority priority = Growl.Connector.Priority.Normal;
-            if(p != null && Enum.IsDefined(typeof(Priority), p))
+            if(p != null)
             {
-                priority = (Priority)Enum.Parse(typeof(Priority), p);
+                int pval = 0;
+                bool pok = int.TryParse(p, out pval);
+                if (pok && Enum.IsDefined(typeof(Priority), pval))
+                    priority = (Priority)pval;
             }
 
             Notification notification = new Notification(appName, name, id, title, text, icon, sticky, priority, coalescingID);

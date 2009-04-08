@@ -10,7 +10,8 @@ namespace Growl
         System.Drawing.Image Icon { get;set;}
         bool Enabled { get;}
         Display Display { get;}
-        Growl.Connector.Priority Priority { get;}
+
+        Growl.Connector.Priority Priority(Growl.Connector.Priority requestedPriority);
 
         bool ShouldStayOnScreen(bool stayWhenIdle, bool isUserIdle, bool requested);
 

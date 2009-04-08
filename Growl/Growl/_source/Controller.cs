@@ -754,7 +754,7 @@ namespace Growl
                         n.ApplicationName = notification.ApplicationName;
                         n.Description = notification.Text;
                         n.Name = notification.Name;
-                        n.Priority = (int)rn.Priority;
+                        n.Priority = (int)rn.Priority(notification.Priority);
                         n.Sticky = sticky;
                         n.Title = notification.Title;
 

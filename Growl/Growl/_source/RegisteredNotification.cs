@@ -109,15 +109,12 @@ namespace Growl
             }
         }
 
-        public virtual Growl.Connector.Priority Priority
+        public virtual Growl.Connector.Priority Priority(Growl.Connector.Priority requestedPriority)
         {
-            get
-            {
-                if (this.preferences.PrefPriority.IsDefault)
-                    return this.ra.Priority;
-                else
-                    return this.preferences.PrefPriority.Priority.Value;
-            }
+            if (this.preferences.PrefPriority.IsDefault)
+                return this.ra.Priority(requestedPriority);
+            else
+                return this.preferences.PrefPriority.Priority.Value;
         }
 
         public virtual bool ShouldStayOnScreen(bool stayWhenIdle, bool isUserIdle, bool requested)
