@@ -46,7 +46,13 @@ namespace Growl.Daemon
         /// </summary>
         static ResourceCache()
         {
-            PurgeCache();
+            try
+            {
+                PurgeCache();
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>

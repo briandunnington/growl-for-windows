@@ -34,11 +34,18 @@ namespace Growl.Daemon
         /// </summary>
         static FlashPolicy()
         {
-            requestBytes = System.Text.Encoding.UTF8.GetBytes(REQUEST);
-            byte[] bytes = System.IO.File.ReadAllBytes("flashpolicy.xml");
-            responseBytes = new byte[bytes.Length + 1];
-            Array.Copy(bytes, responseBytes, bytes.Length);
-            responseBytes[bytes.Length] = 0;
+            try
+            {
+                requestBytes = System.Text.Encoding.UTF8.GetBytes(REQUEST);
+                byte[] bytes = System.IO.File.ReadAllBytes("flashpolicy.xml");
+                responseBytes = new byte[bytes.Length + 1];
+                Array.Copy(bytes, responseBytes, bytes.Length);
+                responseBytes[bytes.Length] = 0;
+            }
+            catch
+            {
+                // flashpolicy.xml is missing?
+            }
         }
 
         /// <summary>
