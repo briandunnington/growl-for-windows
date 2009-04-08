@@ -21,18 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_40FC4A5921FB935C1D99B899AB4CABBD"
-        "OwnerKey" = "8:_E52D6327F930D896903195C56314F4AA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_40FC4A5921FB935C1D99B899AB4CABBD"
-        "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7F8FD0B9A3D07D71E969F3C24F6EFFDA"
         "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
         "MsmSig" = "8:_UNDEFINED"
@@ -63,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A4954E56AD3AC4E46CF9F686C5BFEBD8"
+        "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -71,6 +65,18 @@
         {
         "MsmKey" = "8:_AD3BD530033E3597CE522DCF9B2EDA64"
         "OwnerKey" = "8:_815F5328584AD38B51CB933D46AB5900"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D12544566D6B7C017F416899A9998313"
+        "OwnerKey" = "8:_A4954E56AD3AC4E46CF9F686C5BFEBD8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D12544566D6B7C017F416899A9998313"
+        "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -88,12 +94,6 @@
         "Entry"
         {
         "MsmKey" = "8:_E04B9D430FF3430B721B046ABEC7452C"
-        "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E52D6327F930D896903195C56314F4AA"
         "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -124,13 +124,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E52D6327F930D896903195C56314F4AA"
+        "OwnerKey" = "8:_A4954E56AD3AC4E46CF9F686C5BFEBD8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_40FC4A5921FB935C1D99B899AB4CABBD"
+        "OwnerKey" = "8:_D12544566D6B7C017F416899A9998313"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -307,37 +307,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_40FC4A5921FB935C1D99B899AB4CABBD"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_40FC4A5921FB935C1D99B899AB4CABBD"
-                    {
-                    "Name" = "8:Growl.CoreLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Growl.CoreLibrary.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7F8FD0B9A3D07D71E969F3C24F6EFFDA"
             {
             "AssemblyRegister" = "3:1"
@@ -400,6 +369,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A4954E56AD3AC4E46CF9F686C5BFEBD8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_A4954E56AD3AC4E46CF9F686C5BFEBD8"
+                    {
+                    "Name" = "8:Growl.Connector.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.Connector.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
             {
             "SourcePath" = "8:..\\..\\Growl Visual Studio Add-In\\Growl Visual Studio Add-In\\installer.jpg"
@@ -440,20 +440,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E04B9D430FF3430B721B046ABEC7452C"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D12544566D6B7C017F416899A9998313"
             {
             "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:office, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_E04B9D430FF3430B721B046ABEC7452C"
+                    "_D12544566D6B7C017F416899A9998313"
                     {
-                    "Name" = "8:office.dll"
+                    "Name" = "8:Growl.CoreLibrary.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:office.dll"
+            "SourcePath" = "8:Growl.CoreLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"
@@ -471,20 +471,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E52D6327F930D896903195C56314F4AA"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E04B9D430FF3430B721B046ABEC7452C"
             {
             "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:office, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"
                 "ScatterAssemblies"
                 {
-                    "_E52D6327F930D896903195C56314F4AA"
+                    "_E04B9D430FF3430B721B046ABEC7452C"
                     {
-                    "Name" = "8:Growl.Connector.dll"
+                    "Name" = "8:office.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Growl.Connector.dll"
+            "SourcePath" = "8:office.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"
@@ -589,7 +589,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl Outlook Add-In"
         "ProductCode" = "8:{39EA65B0-FA0D-465D-B216-3C0B6FBA680D}"
-        "PackageCode" = "8:{8CFE7363-F7F8-425C-82A4-C1276B1DA177}"
+        "PackageCode" = "8:{96042B1A-46D9-4BC1-885C-225E7ECD2275}"
         "UpgradeCode" = "8:{49A7FB61-9235-4718-B57C-A8C2DB8C84C8}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
