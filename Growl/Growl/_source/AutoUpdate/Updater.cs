@@ -31,6 +31,7 @@ namespace Growl.AutoUpdate
         public event EventHandler DownloadComplete;
         public event UpdateErrorEventHandler UpdateError;
 
+        private WebClient checker;
         private string appPath;
         private string manifestFile;
         private string currentVersion;
@@ -52,6 +53,10 @@ namespace Growl.AutoUpdate
             this.currentVersion = currentVersion;
             this.updateLocation = updateLocation;
             this.updateTempFolder = Path.Combine(this.appPath, UPDATE_FOLDER);
+
+            this.checker = new WebClient();
+            checker.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
+            checker.DownloadStringCompleted += new DownloadStringCompletedEventHandler(checker_DownloadStringCompleted);
         }
 
         public string CurrentVersion
@@ -71,36 +76,32 @@ namespace Growl.AutoUpdate
                 if (ub.Query.Length > 1)
                     qs = ub.Query.Substring(1) + qs;
                 ub.Query = qs;
-                WebClient checker = new WebClient();
-                checker.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
-                checker.DownloadStringCompleted += new DownloadStringCompletedEventHandler(checker_DownloadStringCompleted);
+
+                if (checker.IsBusy) checker.CancelAsync();
                 checker.DownloadStringAsync(ub.Uri, userInitiated);
             }
         }
 
         void checker_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            CheckForUpdateCompleteEventArgs args;
-            bool userInitiated = (bool)e.UserState;
+            if (!e.Cancelled)
+            {
+                CheckForUpdateCompleteEventArgs args;
+                bool userInitiated = (bool)e.UserState;
 
-            if (e.Error == null)
-            {
-                this.updatedManifest = Manifest.Parse(e.Result);
-                args = new CheckForUpdateCompleteEventArgs(this.updatedManifest, this.currentVersion, userInitiated, null);
-                this.updateAvailable = args.UpdateAvailable;
+                if (e.Error == null)
+                {
+                    this.updatedManifest = Manifest.Parse(e.Result);
+                    args = new CheckForUpdateCompleteEventArgs(this.updatedManifest, this.currentVersion, userInitiated, null);
+                    this.updateAvailable = args.UpdateAvailable;
+                }
+                else
+                {
+                    UpdateErrorEventArgs errorArgs = new UpdateErrorEventArgs(e.Error, "Growl was unable to determine if a newer version is available. Please try again later.");
+                    args = new CheckForUpdateCompleteEventArgs(null, this.currentVersion, userInitiated, errorArgs);
+                }
+                this.OnCheckForUpdateComplete(args);
             }
-            else if (e.Cancelled)
-            {
-                UpdateException ex = new UpdateException("Update was cancelled");
-                UpdateErrorEventArgs errorArgs = new UpdateErrorEventArgs(ex, "Update cancelled.");
-                args = new CheckForUpdateCompleteEventArgs(null, this.currentVersion, userInitiated, errorArgs);
-            }
-            else
-            {
-                UpdateErrorEventArgs errorArgs = new UpdateErrorEventArgs(e.Error, "Growl was unable to determine if a newer version is available. Please try again later.");
-                args = new CheckForUpdateCompleteEventArgs(null, this.currentVersion, userInitiated, errorArgs);
-            }
-            this.OnCheckForUpdateComplete(args);
         }
 
         public void Update()
