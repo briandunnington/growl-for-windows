@@ -72,6 +72,21 @@ namespace Growl.Connector
         }
 
         /// <summary>
+        /// Detects if Growl is currently running on the local machine.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if Growl is running;
+        /// <c>false</c> if Growl is not running;
+        /// </returns>
+        public bool IsGrowlRunning()
+        {
+            bool createdNew = true;
+            Mutex mutex = new Mutex(true, String.Format(@"Global\{0}", Growl.CoreLibrary.Detector.MUTEX_NAME), out createdNew);
+            mutex.Close();
+            return !createdNew;
+        }
+
+        /// <summary>
         /// Registers the specified application and notification types.
         /// </summary>
         /// <param name="application">The <see cref="Application"/> to register.</param>

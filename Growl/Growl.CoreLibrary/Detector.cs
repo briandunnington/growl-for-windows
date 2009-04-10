@@ -18,6 +18,11 @@ namespace Growl.CoreLibrary
     public class Detector
     {
         /// <summary>
+        /// The name of the mutex obtained by a running instance of Growl
+        /// </summary>
+        public const string MUTEX_NAME = "GrowlForWindows_Running";
+
+        /// <summary>
         /// The registry key that holds installation information.
         /// The key is: HKEY_CURRENT_USER\SOFTWARE\Growl
         /// (We can't use HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\ because of UAC restrictions)

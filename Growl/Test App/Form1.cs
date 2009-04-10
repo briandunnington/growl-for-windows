@@ -49,6 +49,15 @@ namespace Test_App
             {
                 InvokeWrite("Growl is not available on this machine");
             }
+
+            if (growl.IsGrowlRunning())
+            {
+                InvokeWrite("Growl is running");
+            }
+            else
+            {
+                InvokeWrite("Growl is not running");
+            }
         }
 
         void growl_ErrorResponse(Response response)

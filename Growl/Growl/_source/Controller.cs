@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using Microsoft.Win32;
 
 namespace Growl
@@ -35,6 +36,7 @@ namespace Growl
 
         private static Controller singleton;
         private bool disposed;
+        private Mutex mutex;
 
         private const string APPLICATION_AUTORUN_KEY = "Growl";
         private const string REGISTERED_APPLICATIONS_SETTINGS_FILENAME = "applications.settings";
@@ -178,6 +180,10 @@ namespace Growl
             }
 
             this.isRunning = true;
+
+            bool createdNew = true;
+            this.mutex = new Mutex(true, String.Format(@"Global\{0}", Growl.CoreLibrary.Detector.MUTEX_NAME), out createdNew);
+
             StartActivityMonitor();
 
             // send a notification that growl is running
@@ -191,6 +197,12 @@ namespace Growl
             this.isRunning = false;
 
             StopActivityMonitor();
+
+            if (this.mutex != null)
+            {
+                this.mutex.ReleaseMutex();
+                this.mutex.Close();
+            }
 
             if (this.gntpListener != null) this.gntpListener.Stop();
             if (this.udpListener != null) this.udpListener.Stop();
