@@ -6,15 +6,15 @@
 <flex-config>
   <compiler>
     <source-path append="true">
-      <path-element>D:\_Growl\Growl Connectors\Javascript\src</path-element>
+      <path-element>D:\CVS\growl-for-windows\Growl Connectors\Javascript\src</path-element>
       <path-element>C:\Documents and Settings\brian\Local Settings\Application Data\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\_Growl\Growl Connectors\Javascript\lib\GrowlAIRConnector.swc</path-element>
+      <path-element>D:\CVS\growl-for-windows\Growl Connectors\Javascript\lib\GrowlAIRConnector.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\_Growl\Growl Connectors\Javascript\src\Main.as</path-element>
+    <path-element>D:\CVS\growl-for-windows\Growl Connectors\Javascript\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

@@ -4,7 +4,7 @@ package
     import flash.net.Socket;
     import flash.system.Security;
     import flash.utils.ByteArray;
-	import flash.external.ExternalInterface;
+	//import flash.external.ExternalInterface;
 
     public class RemotingSocket extends Socket
     {

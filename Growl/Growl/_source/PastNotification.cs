@@ -33,11 +33,15 @@ namespace Growl
 
                 if (!imageList.ContainsKey(this.imageKey))
                 {
-                    System.Drawing.Image image = (System.Drawing.Image)notification.Image;
-                    if (image != null)
+                    lock (imageList)
                     {
-                        System.Drawing.Image thumb = GenerateThumbnail(image, 48, 48);
-                        imageList.Add(this.imageKey, thumb);
+                        System.Drawing.Image image = (System.Drawing.Image)notification.Image;
+                        if (image != null)
+                        {
+                            System.Drawing.Image thumb = GenerateThumbnail(image, 48, 48);
+                            if (!imageList.ContainsKey(this.imageKey))
+                                imageList.Add(this.imageKey, thumb);
+                        }
                     }
                 }
 

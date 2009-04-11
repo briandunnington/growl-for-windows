@@ -1,6 +1,6 @@
 ﻿package
 {
-	import flash.external.ExternalInterface;
+	//import flash.external.ExternalInterface;
 	import flash.events.*;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;

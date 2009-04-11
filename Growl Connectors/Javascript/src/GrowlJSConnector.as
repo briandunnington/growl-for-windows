@@ -23,7 +23,7 @@
 		{
 			this.scope = scope;
 			this.growl = new GrowlAIRConnector(host, port);
-			
+
 			ExternalInterface.addCallback("register", register);
 			ExternalInterface.addCallback("notify", notify);
 			ExternalInterface.addCallback("setPassword", setPassword);

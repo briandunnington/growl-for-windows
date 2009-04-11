@@ -4,7 +4,7 @@
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	import flash.external.ExternalInterface;
+	//import flash.external.ExternalInterface;
 
 	public class SocketManager extends EventDispatcher
 	{

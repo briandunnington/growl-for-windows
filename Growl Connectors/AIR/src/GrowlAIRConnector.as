@@ -2,7 +2,7 @@
 {
 	import com.hurlant.util.der.ByteString;
 	import flash.events.*;
-	import flash.external.ExternalInterface;
+	//import flash.external.ExternalInterface;
 	import flash.system.Capabilities;
 	import flash.system.System;
 	import flash.utils.ByteArray;
@@ -83,7 +83,7 @@
 			}
 			catch(errObject:Error)
 			{
-				ExternalInterface.call("alert", errObject.message);
+				//ExternalInterface.call("alert", errObject.message);
 			}
 		}
 		
@@ -193,7 +193,7 @@
 			}
 			catch (e:Error)
 			{
-				ExternalInterface.call("alert", "ERROR: " + e.message);
+				//ExternalInterface.call("alert", "ERROR: " + e.message);
 			}
         }
 		

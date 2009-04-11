@@ -7,7 +7,7 @@
 	{
 		public function Main():void
 		{
-			ExternalInterface.marshallExceptions = true;
+			//ExternalInterface.marshallExceptions = true;
 			
 			var scope:String = root.loaderInfo.parameters.scope;
 			if (scope == null) scope = "Growl";
