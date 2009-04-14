@@ -114,13 +114,13 @@ namespace Growl.DisplayStyle
             {
                 this.interval = Convert.ToInt32(this.form.Height / steps);
 
-                finalX = this.form.DesktopLocation.X;
-                finalY = this.form.DesktopLocation.Y;
+                finalX = this.form.Location.X;
+                finalY = this.form.Location.Y;
 
                 // set initial (hidden) position
-                int x = this.form.DesktopLocation.X;
+                int x = this.form.Location.X;
                 int y = this.form.Bottom;
-                this.form.DesktopLocation = new Point(x, y);
+                this.form.Location = new Point(x, y);
                 this.form.Region = new Region(new Rectangle(0, 0, this.form.Width, regionHeight));
 
                 this.timer.Start();
@@ -166,7 +166,7 @@ namespace Growl.DisplayStyle
 
                 willAnimate = true;
 
-                finalX = this.form.DesktopLocation.X;
+                finalX = this.form.Location.X;
                 finalY = this.form.Bottom;
                 regionHeight = this.form.Height;
 

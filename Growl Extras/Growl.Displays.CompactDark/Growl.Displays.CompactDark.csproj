@@ -67,7 +67,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.CompactDark\bin\Debug\*.*" "$(SolutionDir)\Growl\bin\Debug\Displays\CompactDarkDisplay\" /E /Y /C
-xcopy "$(SolutionDir)\Growl.Displays.CompactDark\bin\Release\*.*" "$(SolutionDir)\Growl\bin\Release\Displays\CompactDarkDisplay\" /E /Y /C</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\Debug\*.*" "$(SolutionDir)..\..\Growl\bin\Debug\Displays\CompactDarkDisplay\" /E /Y /C
+REM xcopy "$(ProjectDir)bin\Release\*.*" "$(SolutionDir)..\..\Growl\bin\Release\Displays\CompactDarkDisplay\" /E /Y /C</PostBuildEvent>
   </PropertyGroup>
 </Project>

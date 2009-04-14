@@ -140,7 +140,7 @@ namespace Growl.DisplayStyle
                 {
                     if (closing)
                     {
-                        int x = currentWin.DesktopLocation.X;
+                        int x = currentWin.Location.X;
                         int y = (this.direction == AutoPositionDirection.UpLeft || this.direction == AutoPositionDirection.UpRight ? currentWin.Bottom : currentWin.Top);
 
                         int index = this.ActiveWindows.IndexOf(currentWin);
@@ -156,7 +156,7 @@ namespace Growl.DisplayStyle
                                         if (y + aw.Height > screen.Bounds.Bottom)
                                         {
                                             y = screen.WorkingArea.Top;
-                                            x = aw.DesktopLocation.X;
+                                            x = aw.Location.X;
                                         }
                                         break;
                                     case AutoPositionDirection.UpLeft:
@@ -165,21 +165,21 @@ namespace Growl.DisplayStyle
                                         if (y < screen.Bounds.Top)
                                         {
                                             y = screen.WorkingArea.Bottom - aw.Height;
-                                            x = aw.DesktopLocation.X;
+                                            x = aw.Location.X;
                                         }
                                         break;
                                 }
 
-                                aw.DesktopLocation = new System.Drawing.Point(x, y);
-                                x = aw.DesktopLocation.X;
+                                aw.Location = new System.Drawing.Point(x, y);
+                                x = aw.Location.X;
                                 y = (this.direction == AutoPositionDirection.UpLeft || this.direction == AutoPositionDirection.UpRight ? aw.Top - this.verticalPadding : aw.Bottom + this.verticalPadding);
                             }
                         }
                     }
                     else
                     {
-                        int x = currentWin.DesktopLocation.X;
-                        int y = currentWin.DesktopLocation.Y;
+                        int x = currentWin.Location.X;
+                        int y = currentWin.Location.Y;
                         foreach (NotificationWindow aw in this.ActiveWindows)
                         {
                             if (aw != currentWin)
@@ -187,32 +187,32 @@ namespace Growl.DisplayStyle
                                 switch (this.direction)
                                 {
                                     case AutoPositionDirection.DownLeft:
-                                        y = currentWin.Bottom + this.verticalPadding;
-                                        if (y + aw.Height > screen.Bounds.Bottom)
+                                        y = y + currentWin.Size.Height + this.verticalPadding;
+                                        if (y + aw.Height > screen.WorkingArea.Bottom)
                                         {
                                             y = screen.WorkingArea.Top;
                                             x = x - currentWin.Size.Width - this.horizontalPadding;
                                         }
                                         break;
                                     case AutoPositionDirection.DownRight:
-                                        y = currentWin.Bottom + this.verticalPadding;
-                                        if (y + aw.Height > screen.Bounds.Bottom)
+                                        y = y + currentWin.Size.Height + this.verticalPadding;
+                                        if (y + aw.Height > screen.WorkingArea.Bottom)
                                         {
                                             y = screen.WorkingArea.Top;
                                             x = x + currentWin.Size.Width + this.horizontalPadding;
                                         }
                                         break;
                                     case AutoPositionDirection.UpLeft:
-                                        y = currentWin.Top - this.verticalPadding - aw.Height;
-                                        if (y < screen.Bounds.Top)
+                                        y = y - this.verticalPadding - aw.Height;
+                                        if (y < screen.WorkingArea.Top)
                                         {
                                             y = screen.WorkingArea.Bottom - aw.Height;
                                             x = x - currentWin.Size.Width - this.horizontalPadding;
                                         }
                                         break;
                                     case AutoPositionDirection.UpRight:
-                                        y = currentWin.Top - this.verticalPadding - aw.Height;
-                                        if (y < screen.Bounds.Top)
+                                        y = y - this.verticalPadding - aw.Height;
+                                        if (y < screen.WorkingArea.Top)
                                         {
                                             y = screen.WorkingArea.Bottom - aw.Height;
                                             x = x + currentWin.Size.Width + this.horizontalPadding;
@@ -220,8 +220,8 @@ namespace Growl.DisplayStyle
                                         break;
                                 }
 
-                                aw.DesktopLocation = new System.Drawing.Point(x, y);
-                                x = aw.DesktopLocation.X;
+                                aw.Location = new System.Drawing.Point(x, y);
+                                x = aw.Location.X;
                                 currentWin = aw;
                             }
                         }
