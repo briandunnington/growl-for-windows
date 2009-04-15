@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
+using System.Security.Policy;
 
 namespace CaspolManager
 {
@@ -18,53 +21,62 @@ namespace CaspolManager
 
         public override void Install(System.Collections.IDictionary stateSaver)
         {
-            // Call the base implementation.
-            base.Install(stateSaver);
-
-            string targetDir = this.Context.Parameters["targetDir"];
-            string groupName = this.Context.Parameters["groupName"];
-
             try
             {
-                try
+                PolicyLevel enterprise;
+                PolicyLevel machine;
+                PolicyLevel user;
+
+                string assemblyLocation = this.Context.Parameters["assemblyLocation"];
+                string groupName = this.Context.Parameters["groupName"];
+
+                IEnumerator enumerator = SecurityManager.PolicyHierarchy();
+                // 1st one is enterprise
+                enumerator.MoveNext();
+                enterprise = (PolicyLevel)enumerator.Current;
+                // 2nd one is machine
+                enumerator.MoveNext();
+                machine = (PolicyLevel)enumerator.Current;
+                // 3rd one is user
+                enumerator.MoveNext();
+                user = (PolicyLevel)enumerator.Current;
+
+                PermissionSet permissionSet = user.GetNamedPermissionSet("FullTrust");
+                PolicyStatement statement = new PolicyStatement(permissionSet, PolicyStatementAttribute.Nothing);
+                UrlMembershipCondition condition = new UrlMembershipCondition(assemblyLocation);
+                CodeGroup codeGroup = new UnionCodeGroup(condition, statement);
+                codeGroup.Name = groupName;
+
+                // see if the code group already exists, and if so, remove it
+                CodeGroup existingCodeGroup = null;
+                foreach (CodeGroup group in user.RootCodeGroup.Children)
                 {
-                    Caspol.RemoveSecurityPolicy(groupName);
+                    if (group.Name == codeGroup.Name)
+                    {
+                        existingCodeGroup = group;
+                        break;
+                    }
                 }
-                catch { }
+                if (existingCodeGroup != null) user.RootCodeGroup.RemoveChild(existingCodeGroup);
+                SecurityManager.SavePolicy();
 
-                Caspol.AddSecurityPolicy(targetDir, groupName);
-                stateSaver.Add("groupName", groupName);
-
+                // add the code group
+                user.RootCodeGroup.AddChild(codeGroup);
+                SecurityManager.SavePolicy();
             }
             catch (Exception ex)
             {
                 throw new InstallException("Cannot set the security policy.", ex);
             }
+
+            // Call the base implementation.
+            base.Install(stateSaver);
         }
 
         public override void Rollback(System.Collections.IDictionary savedState)
         {
             // Call the base implementation.
             base.Rollback(savedState);
-
-            // Check whether the "groupName" property is saved.
-            // If it is not set, the Install method did not set the security policy.
-            if ((savedState == null) || (savedState["groupName"] == null))
-                return;
-
-            // The groupName must be a unique name; otherwise, the method might delete wrong code group.
-            string groupName = this.Context.Parameters["groupName"];
-            if (String.IsNullOrEmpty(groupName))
-                throw new InstallException("Cannot remove the security policy. The specified solution code group name is not valid.");
-
-            try
-            {
-                Caspol.RemoveSecurityPolicy(groupName);
-            }
-            catch (Exception ex)
-            {
-                throw new InstallException("Cannot remove the security policy.", ex);
-            }
         }
 
 
@@ -72,25 +84,6 @@ namespace CaspolManager
         {
             // Call the base implementation.
             base.Uninstall(savedState);
-
-            // Check whether the "groupName" property is saved.
-            // If it is not set, the Install method did not set the security policy.
-            if ((savedState == null) || (savedState["groupName"] == null))
-                return;
-
-            // The groupName must be a unique name; otherwise, the method might delete wrong code group.
-            string groupName = this.Context.Parameters["groupName"];
-            if (String.IsNullOrEmpty(groupName))
-                throw new InstallException("Cannot remove the security policy. The specified solution code group name is not valid.");
-
-            try
-            {
-                Caspol.RemoveSecurityPolicy(groupName);
-            }
-            catch
-            {
-                // suppress exception so the uninstall does not stop
-            }
         }
     }
 }

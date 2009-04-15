@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_43C7177F756142C59EBB22C653F779F4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7F8FD0B9A3D07D71E969F3C24F6EFFDA"
         "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
         "MsmSig" = "8:_UNDEFINED"
@@ -53,12 +59,6 @@
         {
         "MsmKey" = "8:_A4954E56AD3AC4E46CF9F686C5BFEBD8"
         "OwnerKey" = "8:_94C037B730824DDBBC4BEDB6C2A2415A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -210,15 +210,15 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.2.0"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.VSTORuntime.2.0.SE"
                     {
-                    "Name" = "8:.NET Framework 2.0"
-                    "ProductCode" = "8:Microsoft.Net.Framework.2.0"
+                    "Name" = "8:Microsoft Visual Studio 2005 Tools for Office Second Edition runtime"
+                    "ProductCode" = "8:Microsoft.VSTORuntime.2.0.SE"
                     }
                 }
             }
@@ -240,7 +240,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_9E516F58_7E06_445C_B235_945917249CA5"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/targetDir=\"[TARGETDIR]*\" /groupName=\"GrowlExtras.OutlookAddIn\""
+            "CustomActionData" = "8:/assemblyLocation=\"[TARGETDIR]\\*\" /groupName=\"GrowlExtras.OutlookAddIn\""
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_447E7E1A78564315908982735ACF2063"
             {
@@ -254,7 +254,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_85E95E12_46C4_4A55_9FF1_A212CFF42C1A"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/groupName=\"GrowlExtras.OutlookAddIn\""
+            "CustomActionData" = "8:/assemblyLocation=\"[TARGETDIR]\\*\" /groupName=\"GrowlExtras.OutlookAddIn\""
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_49A6253763FC489988BFD1131E412175"
             {
@@ -268,7 +268,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_09CB57BB_9694_4130_9AF6_A87EAF99C7B4"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
+            "CustomActionData" = "8:/assemblyLocation=\"[TARGETDIR]\\*\" /groupName=\"GrowlExtras.OutlookAddIn\""
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_5F2B55C550A24CDA970900035F942D66"
             {
@@ -282,7 +282,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_F1F5C585_FFC3_41E2_9229_8F505CDCC5D1"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/groupName=\"GrowlExtras.OutlookAddIn\""
+            "CustomActionData" = "8:/assemblyLocation=\"[TARGETDIR]\\*\" /groupName=\"GrowlExtras.OutlookAddIn\""
             }
         }
         "DefaultFeature"
@@ -307,6 +307,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_43C7177F756142C59EBB22C653F779F4"
+            {
+            "SourcePath" = "8:..\\GrowlExtras.OutlookAddIn\\installer.jpg"
+            "TargetName" = "8:installer.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7F8FD0B9A3D07D71E969F3C24F6EFFDA"
             {
             "AssemblyRegister" = "3:1"
@@ -398,26 +418,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
-            {
-            "SourcePath" = "8:..\\..\\Growl Visual Studio Add-In\\Growl Visual Studio Add-In\\installer.jpg"
-            "TargetName" = "8:installer.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AD3BD530033E3597CE522DCF9B2EDA64"
@@ -588,14 +588,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl Outlook Add-In"
-        "ProductCode" = "8:{39EA65B0-FA0D-465D-B216-3C0B6FBA680D}"
-        "PackageCode" = "8:{DBAC6AD8-C9BC-441D-8CF0-EEE9CC7A8F81}"
+        "ProductCode" = "8:{B68E9306-8D4C-4E96-8F11-C83310526EBC}"
+        "PackageCode" = "8:{92FC6943-35EB-4DA2-AE47-D671D526712F}"
         "UpgradeCode" = "8:{49A7FB61-9235-4718-B57C-A8C2DB8C84C8}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Growl Extras"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -611,7 +611,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:cscript.exe \"$(ProjectDir)CustomAction_NoImpersonate.js\" \"$(BuiltOuputPath)\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -762,7 +762,7 @@
                                                             "Condition" = "8:"
                                                             "Transitive" = "11:FALSE"
                                                             "ValueTypes" = "3:1"
-                                                            "Value" = "8:GrowExtras.OutlookAddIn.dll.manifest"
+                                                            "Value" = "8:GrowlExtras.OutlookAddIn.dll.manifest"
                                                             }
                                                         }
                                                     }
@@ -917,7 +917,7 @@
                                                                     "Condition" = "8:"
                                                                     "Transitive" = "11:FALSE"
                                                                     "ValueTypes" = "3:1"
-                                                                    "Value" = "8:GrowExtras.OutlookAddIn.dll.manifest"
+                                                                    "Value" = "8:GrowlExtras.OutlookAddIn.dll.manifest"
                                                                     }
                                                                     "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_9F3EC7BB2DDB4F8090D90F1AF8A38C6A"
                                                                     {
@@ -1169,7 +1169,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
+                            "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -1218,7 +1218,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
+                            "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -1241,7 +1241,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
+                            "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -1286,7 +1286,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
+                            "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -1331,7 +1331,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_A676DEE1D5D1462FA2B8ACB2A1B12D04"
+                            "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -1458,7 +1458,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_94C037B730824DDBBC4BEDB6C2A2415A"
             {
-            "SourcePath" = "8:..\\GrowlExtras.OutlookAddIn\\obj\\Release\\GrowExtras.OutlookAddIn.dll"
+            "SourcePath" = "8:..\\GrowlExtras.OutlookAddIn\\obj\\Release\\GrowlExtras.OutlookAddIn.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A4FA6ACE7DD7482289679FBBE6EADF29"

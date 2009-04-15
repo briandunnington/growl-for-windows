@@ -28,7 +28,6 @@ namespace GrowlExtras.OutlookAddIn
 
             this.NewMailEx += new Microsoft.Office.Interop.Outlook.ApplicationEvents_11_NewMailExEventHandler(ThisApplication_NewMailEx);
             this.Reminder += new Microsoft.Office.Interop.Outlook.ApplicationEvents_11_ReminderEventHandler(ThisApplication_Reminder);
-            _settingsMenu.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(_settingsMenu_Click);
 
             // setup our growl object
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -263,6 +262,7 @@ namespace GrowlExtras.OutlookAddIn
             _settingsMenu.Caption = "Growl Notification Settings...";
             _settingsMenu.Visible = true;
             _settingsMenu.Enabled = true;
+            _settingsMenu.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(_settingsMenu_Click);
         }
 
         #region VSTO generated code

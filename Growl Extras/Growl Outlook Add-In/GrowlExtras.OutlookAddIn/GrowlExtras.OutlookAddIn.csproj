@@ -16,7 +16,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>GrowlExtras.OutlookAddIn</RootNamespace>
-    <AssemblyName>GrowExtras.OutlookAddIn</AssemblyName>
+    <AssemblyName>GrowlExtras.OutlookAddIn</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>GrowlExtras.OutlookAddIn.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -192,7 +192,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="save.txt" />
   </ItemGroup>
   <!-- Include the build rules for a C# project.-->
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
