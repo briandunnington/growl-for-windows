@@ -854,6 +854,7 @@ namespace Growl.Daemon
                 foreach (Header header in notification.Pointers)
                 {
                     Pointer pointer = new Pointer(notification);
+                    pointer.Identifier = header.GrowlResourcePointerID;
                     this.pointers.Add(pointer);
 
                     if (ResourceCache.IsCached(this.applicationName, header.GrowlResourcePointerID))
