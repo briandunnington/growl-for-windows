@@ -57,5 +57,13 @@ namespace Growl
 
             program.AlreadyRunning();
         }
+
+        static public Program Program
+        {
+            get
+            {
+                return program;
+            }
+        }
     }
 }

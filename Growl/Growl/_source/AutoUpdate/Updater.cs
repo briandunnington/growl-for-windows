@@ -154,7 +154,7 @@ namespace Growl.AutoUpdate
                 System.Diagnostics.Process.Start(si);
 
                 // exit this application
-                System.Windows.Forms.Application.Exit();
+                ApplicationMain.Program.ExitApp();
             }
         }
 
