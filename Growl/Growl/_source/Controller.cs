@@ -731,7 +731,8 @@ namespace Growl
 
         private void AddToMissedNotificationList(PastNotification pn)
         {
-            this.missedNotifications.Add(pn);
+            if(this.CheckForIdle || this.idle || this.paused)
+                this.missedNotifications.Add(pn);
         }
 
         void udpListener_NotificationReceived(Growl.UDPLegacy.NotificationPacket np, string receivedFrom)
@@ -1125,7 +1126,9 @@ namespace Growl
         {
             if (args.Reason == ActivityMonitor.ActivityMonitorEventReason.ApplicationPaused)
                 this.paused = true;
-            else if(args.Reason == ActivityMonitor.ActivityMonitorEventReason.UserInactivity)
+            else if (args.Reason == ActivityMonitor.ActivityMonitorEventReason.UserInactivity)
+                this.idle = true;
+            else if (args.Reason == ActivityMonitor.ActivityMonitorEventReason.DesktopLocked)
                 this.idle = true;
         }
 
