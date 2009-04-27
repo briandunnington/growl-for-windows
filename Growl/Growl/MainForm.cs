@@ -35,9 +35,9 @@ namespace Growl
 
             this.groupBoxIdleSettings.Text = Properties.Resources.General_IdleSettingsTitle;
             this.radioButtonIdleNever.Text = Properties.Resources.General_IdleSettings_NeverIdle;
-            this.groupBoxDefaultSettings.Text = Properties.Resources.General_DefaultSettingsTitle;
-            this.labelDefaultSound.Text = Properties.Resources.General_DefaultSettings_SoundLabel;
-            this.labelDefaultDisplay.Text = Properties.Resources.General_DefaultSettings_DisplayLabel;
+            this.groupBoxSoundSettings.Text = Properties.Resources.General_SoundSettingsTitle;
+            this.labelDefaultSound.Text = Properties.Resources.General_SoundSettings_SoundLabel;
+            this.checkBoxMuteAllSounds.Text = Properties.Resources.General_SoundSettings_MuteLabel;
             this.checkBoxAutoStart.Text = Properties.Resources.General_AutoStart;
 
             this.labelPrefSound.Text = Properties.Resources.Applications_Preferences_SoundLabel;
@@ -46,10 +46,15 @@ namespace Growl
             this.labelPrefForward.Text = Properties.Resources.Applications_Preferences_ForwardingLabel;
             this.labelPrefDisplay.Text = Properties.Resources.Applications_Preferences_DisplayLabel;
             this.labelPrefEnabled.Text = Properties.Resources.Applications_Preferences_EnabledLabel;
-            this.labelNoApps.Text = Properties.Resources.Applications_NoAppsRegistered;
+            this.labelNoApps.Text = Properties.Resources.Applications_NoAppsRegistered_Title;
+            this.labelNoAppsDesc.Text = Properties.Resources.Applications_NoAppsRegistered_Description;
             this.removeApplicationToolStripMenuItem.Text = Properties.Resources.Applications_RemoveApplication;
+            this.listControlApplications.HeaderText = Properties.Resources.Applications_ApplicationListHeader;
+            this.listControlApplicationNotifications.HeaderText = Properties.Resources.Applications_NotificationListHeader;
 
             this.buttonPreviewDisplay.Text = Properties.Resources.Button_Preview;
+            this.buttonSetAsDefault.Text = Properties.Resources.Button_SetAsDefault;
+            this.listControlDisplays.HeaderText = Properties.Resources.Displays_DisplayListHeader;
 
             this.labelPasswordManager.Text = Properties.Resources.Security_PasswordManager_Title;
             this.checkBoxAllowSubscriptions.Text = Properties.Resources.Security_AllowSubscriptions;
@@ -101,8 +106,8 @@ namespace Growl
             int h = 0;
             //Color c1 = Color.FromArgb(220, 220, 220);
             //Color c2 = Color.WhiteSmoke;
-            Color c1 = Color.FromArgb(210, 210, 210);
-            Color c2 = Color.FromArgb(240, 240, 240);
+            Color c1 = Color.FromArgb(255, 255, 255);
+            Color c2 = Color.FromArgb(255, 255, 255);
 
             w = this.toolbarPanel.Size.Width;
             h = this.toolbarPanel.Size.Height;
@@ -161,15 +166,10 @@ namespace Growl
             // GENERAL
             // start (default to running when launched - handled later in Form_Load)
             this.checkBoxAutoStart.Checked = Properties.Settings.Default.AutoStart;
-            this.comboBoxDefaultDisplay.Items.Clear();
             this.comboBoxPrefDisplay.Items.Add(Display.None);
-            foreach (Display display in this.controller.AvailableDisplays.Values)
-            {
-                this.comboBoxDefaultDisplay.Items.Add(display);
-            }
-            this.comboBoxDefaultDisplay.SelectedItem = controller.DefaultDisplay;
             this.comboBoxDefaultSound.DataSource = PrefSound.GetList(false);
             this.comboBoxDefaultSound.SelectedItem = controller.DefaultSound;
+            this.checkBoxMuteAllSounds.Checked = Properties.Settings.Default.MuteAllSounds;
             this.textBoxIdleAfterSeconds.Text = controller.IdleAfterSeconds.ToString();
             if (controller.CheckForIdle)
             {
@@ -182,6 +182,7 @@ namespace Growl
 
             // DISPLAYS
             LoadAvailableDisplays();
+            this.listControlDisplays.IsDefaultComparer = new Growl.UI.ListControl.IsDefaultComparerDelegate(defaultDisplayComparer);
 
             // SECURITY
             this.checkBoxRequireLocalPassword.Checked = this.controller.RequireLocalPassword;
@@ -355,6 +356,11 @@ namespace Growl
         {
             this.labelCurrentState.Text = text;
             this.labelCurrentState.ForeColor = color;
+        }
+
+        internal void Mute(bool mute)
+        {
+            this.checkBoxMuteAllSounds.Checked = mute;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -741,7 +747,7 @@ namespace Growl
 
                     this.displayStyleNameLabel.Text = display.Name;
                     this.displayStyleDescriptionLabel.Text = display.Description;
-                    this.displayStyleAuthorLabel.Text = display.Author;
+                    this.displayStyleAuthorLabel.Text = String.Format("{0} {1}", Properties.Resources.Displays_CreatedBy, display.Author);
                     this.displayStyleWebsiteLabel.Text = display.Website;
                     this.displayStyleVersionLabel.Text = display.Version;
 
@@ -871,6 +877,7 @@ namespace Growl
         private void listControlApplications_MouseDown(object sender, MouseEventArgs e)
         {
             this.contextMenuStripApplications.Hide();
+            this.listControlApplications.Refresh();
 
             if(e.Button == MouseButtons.Right)
             {
@@ -882,12 +889,6 @@ namespace Growl
                     this.contextMenuStripApplications.Show(this.listControlApplications, e.Location);
                 }
             }
-        }
-
-        private void comboBoxDefaultDisplay_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            Display newDefault = (Display)this.comboBoxDefaultDisplay.SelectedItem;
-            this.controller.DefaultDisplay = newDefault;
         }
 
         private void comboBoxDefaultSound_SelectionChangeCommitted(object sender, EventArgs e)
@@ -1026,6 +1027,29 @@ namespace Growl
         private void checkBoxAllowSubscriptions_CheckedChanged(object sender, EventArgs e)
         {
             this.controller.AllowSubscriptions = this.checkBoxAllowSubscriptions.Checked;
+        }
+
+        private void buttonSetAsDefault_Click(object sender, EventArgs e)
+        {
+            Display newDefault = (Display)this.listControlDisplays.SelectedItem;
+            this.controller.DefaultDisplay = newDefault;
+            this.listControlDisplays.Refresh();
+        }
+
+        private bool defaultDisplayComparer(object obj)
+        {
+            Display display = obj as Display;
+            if (display != null)
+            {
+                if (display.ActualName == this.controller.DefaultDisplay.ActualName)
+                    return true;
+            }
+            return false;
+        }
+
+        private void checkBoxMuteAllSounds_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplicationMain.Program.Mute(this.checkBoxMuteAllSounds.Checked);
         }
     }
 }

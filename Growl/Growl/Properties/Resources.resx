@@ -283,10 +283,8 @@ that is not in this list]</value>
     <value>(All notifications)</value>
     <comment>Applications tab: list item for application-wide preferences</comment>
   </data>
-  <data name="Applications_NoAppsRegistered" xml:space="preserve">
-    <value>No applications have registered yet.
-
-When a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings.</value>
+  <data name="Applications_NoAppsRegistered_Title" xml:space="preserve">
+    <value>No Applications Have Registered Yet</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
@@ -389,17 +387,13 @@ If another version of Growl is already running, please close that version and tr
     <value>Automatically start Growl at login</value>
     <comment>General tab: auto start checkbox text</comment>
   </data>
-  <data name="General_DefaultSettings_DisplayLabel" xml:space="preserve">
-    <value>Display:</value>
-    <comment>General tab: Default Display label</comment>
-  </data>
-  <data name="General_DefaultSettings_SoundLabel" xml:space="preserve">
-    <value>Sound:</value>
+  <data name="General_SoundSettings_SoundLabel" xml:space="preserve">
+    <value>Default Sound:</value>
     <comment>General tab: Default Sound label</comment>
   </data>
-  <data name="General_DefaultSettingsTitle" xml:space="preserve">
-    <value>Default Settings</value>
-    <comment>General tab: Default Settings group box title</comment>
+  <data name="General_SoundSettingsTitle" xml:space="preserve">
+    <value>Sound Settings</value>
+    <comment>General tab: Sound Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
     <value>Consider me idle after            seconds</value>
@@ -724,5 +718,41 @@ If another version of Growl is already running, please close that version and tr
   <data name="Updater_UpdateAvailable" xml:space="preserve">
     <value>Version {0} of Growl is available. Would you like to update Growl to the latest version? (Current version: {1})</value>
     <comment>Check for Updates form: displayed when an update is available. Placeholder {0} is the newer version number, {1} is the current version number</comment>
+  </data>
+  <data name="Button_SetAsDefault" xml:space="preserve">
+    <value>Set as Default</value>
+    <comment>Any 'Set as Default' button</comment>
+  </data>
+  <data name="Displays_CreatedBy" xml:space="preserve">
+    <value>Author:</value>
+    <comment>Displays tab: created by label</comment>
+  </data>
+  <data name="General_SoundSettings_MuteLabel" xml:space="preserve">
+    <value>Mute all sounds</value>
+    <comment>General tab: mute all sounds label</comment>
+  </data>
+  <data name="Applications_NoAppsRegistered_Description" xml:space="preserve">
+    <value>When a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings.</value>
+    <comment>Applications tab: shown when no applications are registered</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Mute" xml:space="preserve">
+    <value>Mute</value>
+    <comment>Notify icon context menu: Mute</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Unmute" xml:space="preserve">
+    <value>Unmute</value>
+    <comment>Notify icon context menu: Unmute</comment>
+  </data>
+  <data name="Applications_ApplicationListHeader" xml:space="preserve">
+    <value>Application Name</value>
+    <comment>Applications tab: Header text for applications list box</comment>
+  </data>
+  <data name="Applications_NotificationListHeader" xml:space="preserve">
+    <value>Notification Type</value>
+    <comment>Applications tab: Header text for notifications list box</comment>
+  </data>
+  <data name="Displays_DisplayListHeader" xml:space="preserve">
+    <value>Display Name</value>
+    <comment>Displays tab: Header text for displays list box</comment>
   </data>
 </root>

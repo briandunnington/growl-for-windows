@@ -7,20 +7,6 @@ using System.Net;
 
 namespace Growl.AutoUpdate
 {
-    /* in the actual app:
- * - add this component
- * - call 'CheckForUpdate'
- * - if no update available, do nothing
- * - if update is available, show form to prompt user
- * - if user says no, do nothing
- * - if user says yes, download .msi
- * - when download is complete, launch GrowlAuto.Update.exe and **terminate this app**
- * 
- * in Growl.AutoUpdate.exe:
- * - wait a bit for original app to close
- * - launch .msi file
- * - close this program
- * */
     public class Updater
     {
         private const string UPDATE_FOLDER = "__update";
@@ -52,7 +38,7 @@ namespace Growl.AutoUpdate
             this.manifestFile = Path.Combine(this.appPath, MANIFEST_FILE_NAME);
             this.currentVersion = currentVersion;
             this.updateLocation = updateLocation;
-            this.updateTempFolder = Path.Combine(this.appPath, UPDATE_FOLDER);
+            this.updateTempFolder = Path.Combine(Utility.UserSettingFolder, UPDATE_FOLDER);
 
             this.checker = new WebClient();
             checker.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");

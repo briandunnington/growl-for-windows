@@ -1430,14 +1430,20 @@ namespace Growl
 
         private void PlaySound(string soundFile)
         {
-            try
+            if (!Properties.Settings.Default.MuteAllSounds)
             {
-                System.Media.SoundPlayer sp = new System.Media.SoundPlayer(soundFile);
-                sp.Play();
-            }
-            catch
-            {
-                // suppress - dont fail just because the sound could not play
+                try
+                {
+                    System.Media.SoundPlayer sp = new System.Media.SoundPlayer(soundFile);
+                    using (sp)
+                    {
+                        sp.Play();
+                    }
+                }
+                catch
+                {
+                    // suppress - dont fail just because the sound could not play
+                }
             }
         }
 

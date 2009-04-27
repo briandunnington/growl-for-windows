@@ -72,6 +72,9 @@
     <Compile Include="UI\ButtonEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\ListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\CustomPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -94,8 +97,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ListControlItem.cs" />
-    <Compile Include="UI\ListControl.cs">
-      <SubType>Component</SubType>
+    <Compile Include="UI\ListControl_OLD.cs">
     </Compile>
     <Compile Include="UI\MissedNotificationsWindow.cs">
       <SubType>Form</SubType>

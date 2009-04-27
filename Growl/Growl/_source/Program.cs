@@ -29,6 +29,8 @@ namespace Growl
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pauseGrowlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unpauseGrowlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem muteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unmuteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -73,6 +75,8 @@ namespace Growl
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseGrowlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unpauseGrowlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.muteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unmuteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,6 +98,8 @@ namespace Growl
             this.settingsToolStripMenuItem,
             this.pauseGrowlToolStripMenuItem,
             this.unpauseGrowlToolStripMenuItem,
+            this.muteToolStripMenuItem,
+            this.unmuteToolStripMenuItem,
             this.checkForUpdatesToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
@@ -123,6 +129,22 @@ namespace Growl
             this.unpauseGrowlToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Unpause;
             this.unpauseGrowlToolStripMenuItem.Visible = false;
             this.unpauseGrowlToolStripMenuItem.Click += new System.EventHandler(this.unpauseGrowlToolStripMenuItem_Click);
+            // 
+            // muteToolStripMenuItem
+            // 
+            this.muteToolStripMenuItem.Name = "muteToolStripMenuItem";
+            this.muteToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.muteToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Mute;
+            this.muteToolStripMenuItem.Visible = false;
+            this.muteToolStripMenuItem.Click += new System.EventHandler(this.muteToolStripMenuItem_Click);
+            // 
+            // unmuteToolStripMenuItem
+            // 
+            this.unmuteToolStripMenuItem.Name = "unmuteToolStripMenuItem";
+            this.unmuteToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.unmuteToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Unmute;
+            this.unmuteToolStripMenuItem.Visible = false;
+            this.unmuteToolStripMenuItem.Click += new System.EventHandler(this.unmuteToolStripMenuItem_Click);
             // 
             // checkForUpdatesToolStripMenuItem
             // 
@@ -231,6 +253,8 @@ namespace Growl
             this.mainForm.InitializePreferences();
             this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Starting, 90);
 
+            //this.mainForm.Mute(Properties.Settings.Default.MuteAllSounds);
+
             // start growl (and set button at the same time)
             this.mainForm.OnOffButton.Switched +=new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
             this.mainForm.OnOffButton.On = true;
@@ -316,6 +340,7 @@ namespace Growl
             if (started) Keyboard.SetHook();
 
             UpdateState(started, false);
+            Mute(Properties.Settings.Default.MuteAllSounds);
 
             return started;
         }
@@ -494,6 +519,16 @@ namespace Growl
 
         }
 
+        private void muteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.mainForm.Mute(true);
+        }
+
+        private void unmuteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.mainForm.Mute(false);
+        }
+
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.updater.CheckForUpdate(true);
@@ -502,6 +537,13 @@ namespace Growl
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitApp();
+        }
+
+        internal void Mute(bool mute)
+        {
+            this.muteToolStripMenuItem.Visible = !mute;
+            this.unmuteToolStripMenuItem.Visible = mute;
+            Properties.Settings.Default.MuteAllSounds = mute;
         }
 
         #region ISynchronizeInvoke Members

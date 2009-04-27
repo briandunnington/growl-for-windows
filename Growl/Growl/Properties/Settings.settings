@@ -69,7 +69,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CultureCode" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
-      <Value Profile="(Default)"> </Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MuteAllSounds" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

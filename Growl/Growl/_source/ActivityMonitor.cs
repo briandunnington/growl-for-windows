@@ -32,7 +32,14 @@ namespace Growl
             this.timer.AutoReset = true;
             this.timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
 
-            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            try
+            {
+                SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            }
+            catch
+            {
+                // Windows 2000 (W2K) doesn't support the SessionSwitch event, but it wont kill us to not have it
+            }
         }
 
         public int IdleAfterSeconds
@@ -157,8 +164,15 @@ namespace Growl
             {
                 if (disposing)
                 {
-                    SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
-                    if (this.timer != null) this.timer.Dispose();
+                    try
+                    {
+                        if (this.timer != null) this.timer.Dispose();
+                        SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+                    }
+                    catch
+                    {
+                        // suppress
+                    }
                 }
                 this.disposed = true;
             }

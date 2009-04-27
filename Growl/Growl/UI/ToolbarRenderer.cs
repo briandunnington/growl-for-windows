@@ -94,13 +94,19 @@ namespace Growl.UI
             }
             */
 
-            /* BORDER
+            /* SOLID BACKGROUND */
             ToolStripButton tsb = (ToolStripButton)e.Item;
             if (tsb.Checked)
             {
-                base.OnRenderButtonBackground(e);
+                Brush b = new SolidBrush(Color.FromArgb(194, 209, 238));
+                using (b)
+                {
+                    // move over 2 pixels to workaround a bug that causes some white pixels in the lower left corner of the first toolbar item
+                    Rectangle rect = new Rectangle(2, tsb.ContentRectangle.Y, tsb.ContentRectangle.Width, tsb.ContentRectangle.Height);
+                    e.Graphics.FillRectangle(b, rect);
+                }
             }
-             * */
+            
 
             //base.OnRenderButtonBackground(e);
         }
@@ -120,9 +126,17 @@ namespace Growl.UI
         {
             //private Color checkedHighlight = Color.FromArgb(249, 248, 247);
             //private Color checkedHighlight = Color.FromArgb(220, 219, 218);
+
+            /* light blue, no border */
+            private Color checkedHighlight = Color.FromArgb(194, 209, 238);
+            private Color pressedHighlight = Color.FromArgb(194, 209, 238);
+            private Color border = Color.FromArgb(194, 209, 238);
+
+            /* light grey box with border
             private Color checkedHighlight = Color.FromArgb(240, 240, 240);
             private Color pressedHighlight = Color.FromArgb(238, 237, 236);
             private Color border = Color.FromArgb(128, 128, 128);
+             */
 
             public override Color ButtonCheckedHighlight
             {
@@ -132,6 +146,15 @@ namespace Growl.UI
                 }
             }
 
+            public override Color ButtonCheckedHighlightBorder
+            {
+                get
+                {
+                    return checkedHighlight;
+                }
+            }
+
+            /*
             public override Color ButtonSelectedBorder
             {
                 get
@@ -139,6 +162,7 @@ namespace Growl.UI
                     return border;
                 }
             }
+             * */
 
             public override Color ButtonPressedHighlight
             {
@@ -148,6 +172,7 @@ namespace Growl.UI
                 }
             }
 
+            /*
             public override Color ButtonSelectedHighlight
             {
                 get
@@ -155,6 +180,7 @@ namespace Growl.UI
                     return pressedHighlight;
                 }
             }
+             * */
         }
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
