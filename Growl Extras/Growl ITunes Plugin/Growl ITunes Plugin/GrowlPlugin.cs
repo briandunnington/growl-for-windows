@@ -112,11 +112,10 @@ namespace GrowlExtras.ITunesPlugin
                 if (song.Artwork != null && song.Artwork.Count > 0)
                 {
                     string safeAlbumName = GetSafeFileName(song.Album);
-
-                    artworkFilePath = String.Format("{0}{1}.{2}", Properties.Settings.Default.TempArtworkPath, safeAlbumName, "jpg");
+                    string filename = String.Format("{0}.jpg", safeAlbumName);
+                    artworkFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
                     if (!System.IO.File.Exists(artworkFilePath))
                         song.Artwork[1].SaveArtworkToFile(artworkFilePath);
-
                     artworkData = System.IO.File.ReadAllBytes(artworkFilePath);
                 }
 

@@ -14,8 +14,5 @@
     <Setting Name="GrowlPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="TempArtworkPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\temp\</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
