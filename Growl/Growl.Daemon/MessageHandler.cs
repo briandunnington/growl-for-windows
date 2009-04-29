@@ -736,10 +736,6 @@ namespace Growl.Daemon
                             int length = this.pointers[this.currentPointer - 1].Length;
                             socket.Read(length, TIMEOUT_GNTP_BINARY, RESOURCE_TAG);
                         }
-                        else if (p.Identifier != null)
-                        {
-                            WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.INVALID_RESOURCE_LENGTH);
-                        }
                         else
                         {
                             socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
