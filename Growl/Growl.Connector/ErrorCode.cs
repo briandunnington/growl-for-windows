@@ -62,6 +62,11 @@ namespace Growl.Connector
         public const int UNKNOWN_NOTIFICATION = 402;
 
         /// <summary>
+        /// The original request was already processed by this receiver (Normally, a request was forwarded back to a machine that already forwarded it)
+        /// </summary>
+        public const int ALREADY_PROCESSED = 403;
+
+        /// <summary>
         /// An internal server error occurred while processing the request
         /// </summary>
         public const int INTERNAL_SERVER_ERROR = 500;

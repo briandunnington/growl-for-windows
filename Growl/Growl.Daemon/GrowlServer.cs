@@ -38,6 +38,11 @@ namespace Growl.Daemon
         public static readonly string BonjourServiceName = String.Format("Growl on {0}", Environment.MachineName);
 
         /// <summary>
+        /// A unique ID for this server. (This value may change across application restarts, but should not change while the app is running.)
+        /// </summary>
+        public static readonly string ServerID = System.Guid.NewGuid().ToString();
+
+        /// <summary>
         /// Represents the method that will handle the <see cref="RegisterReceived"/> event.
         /// </summary>
         /// <param name="application">The <see cref="Application"/> that is registering</param>

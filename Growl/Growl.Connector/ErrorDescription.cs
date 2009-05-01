@@ -77,6 +77,10 @@ namespace Growl.Connector
         /// This server does not allow subscriptions
         /// </summary>
         public const string SUBSCRIPTIONS_NOT_ALLOWED = "This server does not allow subscriptions";
+        /// <summary>
+        /// The request was already handled by this machine. (Normally, this means the message was forwarded back to a machine that had already forwarded it.)
+        /// </summary>
+        public const string ALREADY_PROCESSED = "The request was already handled by this machine. (Normally, this means the message was forwarded back to a machine that had already forwarded it.)";
 
         // ------------------------------------------------------------------------------------------
         // The error descriptions below here are for pseudo errors; they are not derived from a 

@@ -1044,8 +1044,17 @@ namespace Growl.Daemon
             
             // handle request information
             this.requestInfo.ReceivedFrom = socket.RemoteAddress.ToString();
-            this.requestInfo.ReceivedBy = Environment.MachineName;
+            this.requestInfo.ReceivedBy = String.Format("{0} ({1})", Environment.MachineName, GrowlServer.ServerID);
             this.requestInfo.ReceivedWith = this.serverName;
+
+            // see if this machine has already processed this notification
+            // (this prevents endless loops caused by forwarding messages back to the original forwarder)
+            bool alreadyProcessed = CheckAlreadyProcessed();
+            if (alreadyProcessed)
+            {
+                WriteError(socket, ErrorCode.ALREADY_PROCESSED, ErrorDescription.ALREADY_PROCESSED);
+                return;
+            }
 
             // handle callback information
             if (this.callbackContext.IsValid)
@@ -1101,6 +1110,34 @@ namespace Growl.Daemon
             else
                 match = regExMessageHeader_Remote.Match(line);
             return match;
+        }
+
+        /// <summary>
+        /// Checks the 'Received' headers to see if this machine has already handled this request
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if this machine has already handled this request;
+        /// <c>false</c> otherwise
+        /// </returns>
+        /// <remarks>
+        /// This check is not 100% perfect. All we can check for is if the machine name is in the Received header value.
+        /// It could appear in the Received header even if it did not already process it (similarly name machine, etc), 
+        /// producing a false positive. Just be aware.
+        /// </remarks>
+        private bool CheckAlreadyProcessed()
+        {
+            if (this.requestInfo.PreviousReceivedHeaders != null && this.requestInfo.PreviousReceivedHeaders.Count > 0)
+            {
+                foreach (Header header in this.requestInfo.PreviousReceivedHeaders)
+                {
+                    if (header.Value.IndexOf(this.requestInfo.ReceivedBy) >= 0)
+                    {
+                        this.requestInfo.SaveHandlingInfo("NOT PROCESSED - NOTIFICATION WAS FORWARDED BACK TO THIS MACHINE");
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
