@@ -835,12 +835,12 @@ namespace Growl.Daemon
             foreach (Header header in this.headers.Pointers)
             {
                 Pointer pointer = new Pointer(this.headers);
-                pointer.Identifier = header.GrowlResourcePointerID;
                 this.pointers.Add(pointer);
 
                 if (ResourceCache.IsCached(this.applicationName, header.GrowlResourcePointerID))
                 {
                     BinaryData data = ResourceCache.Get(this.applicationName, header.GrowlResourcePointerID);
+                    pointer.Identifier = header.GrowlResourcePointerID;
                     pointer.ByteArray = data.Data;
                     c++;
                 }
@@ -850,12 +850,12 @@ namespace Growl.Daemon
                 foreach (Header header in notification.Pointers)
                 {
                     Pointer pointer = new Pointer(notification);
-                    pointer.Identifier = header.GrowlResourcePointerID;
                     this.pointers.Add(pointer);
 
                     if (ResourceCache.IsCached(this.applicationName, header.GrowlResourcePointerID))
                     {
                         BinaryData data = ResourceCache.Get(this.applicationName, header.GrowlResourcePointerID);
+                        pointer.Identifier = header.GrowlResourcePointerID;
                         pointer.ByteArray = data.Data;
                         c++;
                     }
@@ -863,7 +863,18 @@ namespace Growl.Daemon
             }
             int p = this.pointers.Count;
 
+            // check to see if all pointers were already cached
             if (p == c) p = 0;  // if #cached == total#, we dont need to read any
+            else
+            {
+                // not all of the items are cached, so we have to re-read all of them.
+                // to do so, we have to clear any pointer data we may have set
+                foreach (Pointer pointer in this.pointers)
+                {
+                    pointer.Clear();
+                }
+            }
+
             if (c > 0 && p == 0)
             {
                 requestInfo.SaveHandlingInfo("ALL BINARY RESOURCES ALREADY CACHED");

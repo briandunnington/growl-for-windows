@@ -109,5 +109,18 @@ namespace Growl.Daemon
                 this.HeaderCollection.AssociateBinaryData(new BinaryData(this.Identifier, value));
             }
         }
+
+        /// <summary>
+        /// Clears the pointer of any resource information.
+        /// </summary>
+        /// <remarks>
+        /// This is usually used if we read some data from the cache, but we need to read the data from the request instead.
+        /// </remarks>
+        internal void Clear()
+        {
+            this.identifier = null;
+            this.byteArray = null;
+            this.length = 0;
+        }
     }
 }
