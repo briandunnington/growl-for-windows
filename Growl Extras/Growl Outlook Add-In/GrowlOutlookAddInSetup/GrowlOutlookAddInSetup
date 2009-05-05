@@ -589,7 +589,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl Outlook Add-In"
         "ProductCode" = "8:{B68E9306-8D4C-4E96-8F11-C83310526EBC}"
-        "PackageCode" = "8:{BE1BBF16-05BD-4BBA-867B-1CDAAB903E5A}"
+        "PackageCode" = "8:{E9E34BF1-C844-4242-BE9F-91DF31CD040B}"
         "UpgradeCode" = "8:{49A7FB61-9235-4718-B57C-A8C2DB8C84C8}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"

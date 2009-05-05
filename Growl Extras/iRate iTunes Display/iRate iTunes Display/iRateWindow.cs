@@ -46,6 +46,8 @@ namespace iRate
         {
             base.SetNotification(n);
 
+            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+
             Image image = n.Image;
             if (image != null)
             {

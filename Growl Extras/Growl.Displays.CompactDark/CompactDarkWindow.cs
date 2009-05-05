@@ -51,6 +51,7 @@ namespace Growl.Displays.CompactDark
         {
             base.SetNotification(n);
 
+            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
 
             this.applicationNameLabel.Text = n.ApplicationName;
             this.titleLabel.Text = n.Title;
