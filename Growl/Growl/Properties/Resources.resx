@@ -755,4 +755,12 @@ If another version of Growl is already running, please close that version and tr
     <value>Display Name</value>
     <comment>Displays tab: Header text for displays list box</comment>
   </data>
+  <data name="LiteralString_Seconds" xml:space="preserve">
+    <value>seconds</value>
+    <comment>The string 'seconds' (Used in Duration preference)</comment>
+  </data>
+  <data name="Applications_Preferences_DurationLabel" xml:space="preserve">
+    <value>Duration:</value>
+    <comment>Applications tab: duration preference label</comment>
+  </data>
 </root>

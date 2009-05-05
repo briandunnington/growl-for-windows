@@ -9,6 +9,7 @@ namespace Growl
     {
         private PrefEnabled prefEnabled = PrefEnabled.True;
         private Display prefDisplay = Display.Default;
+        private PrefDuration prefDuration = PrefDuration.Default;
         private PrefSticky prefSticky = PrefSticky.Default;
         private PrefForward prefForward = PrefForward.Default;
         private List<string> prefForwardCustomList = new List<string>();
@@ -44,6 +45,19 @@ namespace Growl
             set
             {
                 this.prefDisplay = value;
+            }
+        }
+
+        public virtual PrefDuration PrefDuration
+        {
+            get
+            {
+                if (this.prefDuration == null) this.prefDuration = PrefDuration.Default;
+                return this.prefDuration;
+            }
+            set
+            {
+                this.prefDuration = value;
             }
         }
 

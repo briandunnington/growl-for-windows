@@ -83,6 +83,8 @@ namespace Growl.Displays.Toast
         {
             base.SetNotification(n);
 
+            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+
             //Image image = n.GetImage();
             Image image = n.Image;
             if (image != null)

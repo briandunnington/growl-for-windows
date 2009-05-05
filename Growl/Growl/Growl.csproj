@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="_source\AutoUpdate\UpdateException.cs" />
     <Compile Include="_source\GrowlException.cs" />
+    <Compile Include="_source\PrefDuration.cs" />
     <Compile Include="_source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddComputer.resx">

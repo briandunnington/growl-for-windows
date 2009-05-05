@@ -109,6 +109,17 @@ namespace Growl
             }
         }
 
+        public virtual int Duration
+        {
+            get
+            {
+                if (this.preferences.PrefDuration.IsDefault)
+                    return this.ra.Duration;
+                else
+                    return this.preferences.PrefDuration.Duration;
+            }
+        }
+
         public virtual Growl.Connector.Priority Priority(Growl.Connector.Priority requestedPriority)
         {
             if (this.preferences.PrefPriority.IsDefault)

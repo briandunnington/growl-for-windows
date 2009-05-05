@@ -251,6 +251,15 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duration:.
+        /// </summary>
+        internal static string Applications_Preferences_DurationLabel {
+            get {
+                return ResourceManager.GetString("Applications_Preferences_DurationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled:.
         /// </summary>
         internal static string Applications_Preferences_EnabledLabel {
@@ -772,6 +781,15 @@ namespace Growl.Properties {
         internal static string LiteralString_ReceivedFrom {
             get {
                 return ResourceManager.GetString("LiteralString_ReceivedFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to seconds.
+        /// </summary>
+        internal static string LiteralString_Seconds {
+            get {
+                return ResourceManager.GetString("LiteralString_Seconds", resourceCulture);
             }
         }
         

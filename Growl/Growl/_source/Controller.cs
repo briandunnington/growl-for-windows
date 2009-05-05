@@ -770,6 +770,7 @@ namespace Growl
                         n.Priority = (int)rn.Priority(notification.Priority);
                         n.Sticky = sticky;
                         n.Title = notification.Title;
+                        n.Duration = rn.Duration;
 
                         if (notification.Icon != null && notification.Icon.IsSet)
                         {

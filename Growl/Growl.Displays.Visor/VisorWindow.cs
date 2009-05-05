@@ -16,6 +16,7 @@ namespace Growl.Displays.Visor
         private Timer slideOutTimer;
         private int startY = 0;
         private int endY = 0;
+        private int duration = 2500;
 
         public VisorWindow()
         {
@@ -65,7 +66,7 @@ namespace Growl.Displays.Visor
                 // set the window to hide in a few seconds unless we are sticky
                 if (!this.Sticky)
                 {
-                    this.displayTimer.Interval = 2500;
+                    this.displayTimer.Interval = this.duration;
                     this.displayTimer.Start();
                 }
             }
@@ -84,6 +85,8 @@ namespace Growl.Displays.Visor
         public override void SetNotification(Notification n)
         {
             base.SetNotification(n);
+
+            if (n.Duration > 0) this.duration = n.Duration * 1000;
 
             //Image image = n.GetImage();
             Image image = n.Image;

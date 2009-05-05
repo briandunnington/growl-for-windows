@@ -68,6 +68,8 @@ namespace Growl.Displays.Plain
         {
             base.SetNotification(n);
 
+            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+
             // handle the image. if the image is not set, move the other controls over to compensate
             Image image = n.Image;
             if (image != null)

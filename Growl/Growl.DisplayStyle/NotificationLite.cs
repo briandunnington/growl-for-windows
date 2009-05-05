@@ -49,6 +49,12 @@ namespace Growl.DisplayStyle
         public bool Sticky;
 
         /// <summary>
+        /// The amount of time (in seconds) that the notification should be displayed (for visual displays).
+        /// Zero == default value
+        /// </summary>
+        public int Duration;
+
+        /// <summary>
         /// Creates a new <see cref="NotificationLite"/> instance, copying the property values
         /// of the <paramref name="original"/> <see cref="NotificationLite"/>.
         /// </summary>

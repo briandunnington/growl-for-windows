@@ -33,18 +33,18 @@ namespace Growl
             System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup15 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup16 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup17 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup18 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup19 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup20 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup21 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup17 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup18 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup19 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup20 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup21 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup22 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup23 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup24 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup25 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup26 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup27 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup28 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup24 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup25 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup26 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup27 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup28 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup29 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup30 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup31 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
@@ -117,18 +117,32 @@ namespace Growl
             System.Windows.Forms.ListViewGroup listViewGroup98 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup99 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup100 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup101 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup102 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup103 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup104 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup105 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup101 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup102 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup103 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup104 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup105 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup106 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup107 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup108 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup109 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup110 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup111 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup112 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup108 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup109 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup110 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup111 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup112 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup113 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup114 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup115 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup116 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup117 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup118 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup119 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup120 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup121 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup122 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup123 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup124 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup125 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup126 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "(No notifications for this date)",
             "",
@@ -577,8 +591,65 @@ namespace Growl
             "(No notifications for this date)",
             "",
             ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem113 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem114 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem115 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem116 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem117 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem118 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem119 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem120 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem121 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem122 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem123 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem124 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem125 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem126 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
             this.panelGeneral = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.onOffButton1 = new Growl.UI.OnOffButton();
             this.checkBoxAutoStart = new System.Windows.Forms.CheckBox();
             this.labelCurrentState = new System.Windows.Forms.Label();
             this.groupBoxIdleSettings = new System.Windows.Forms.GroupBox();
@@ -590,8 +661,12 @@ namespace Growl
             this.labelDefaultSound = new System.Windows.Forms.Label();
             this.comboBoxDefaultSound = new System.Windows.Forms.ComboBox();
             this.panelApplications = new System.Windows.Forms.Panel();
+            this.listControlApplications = new Growl.UI.ListControl();
             this.panelSelectedApplication = new System.Windows.Forms.Panel();
+            this.listControlApplicationNotifications = new Growl.UI.ListControl();
             this.panelPrefs = new System.Windows.Forms.Panel();
+            this.labelPrefDuration = new System.Windows.Forms.Label();
+            this.comboBoxPrefDuration = new System.Windows.Forms.ComboBox();
             this.labelPrefSound = new System.Windows.Forms.Label();
             this.comboBoxPrefSound = new System.Windows.Forms.ComboBox();
             this.comboBoxPrefSticky = new System.Windows.Forms.ComboBox();
@@ -612,10 +687,13 @@ namespace Growl
             this.labelNoAppsDesc = new System.Windows.Forms.Label();
             this.labelNoApps = new System.Windows.Forms.Label();
             this.panelDisplays = new System.Windows.Forms.Panel();
+            this.listControlDisplays = new Growl.UI.ListControl();
             this.panelDisplaySettings = new System.Windows.Forms.Panel();
+            this.buttonSetAsDefault = new Growl.UI.ButtonEx();
             this.displayStyleWebsiteLabel = new System.Windows.Forms.LinkLabel();
             this.displayStyleVersionLabel = new System.Windows.Forms.Label();
             this.displayStyleAuthorLabel = new System.Windows.Forms.Label();
+            this.buttonPreviewDisplay = new Growl.UI.ButtonEx();
             this.displayStyleDescriptionLabel = new System.Windows.Forms.Label();
             this.displayStyleNameLabel = new System.Windows.Forms.Label();
             this.panelDisplaySettingsContainer = new System.Windows.Forms.Panel();
@@ -633,22 +711,31 @@ namespace Growl
             this.labelAboutGrowlVersion = new System.Windows.Forms.Label();
             this.panelSecurity = new System.Windows.Forms.Panel();
             this.labelPasswordManager = new System.Windows.Forms.Label();
+            this.passwordManagerControl1 = new Growl.UI.PasswordManagerControl();
             this.checkBoxAllowSubscriptions = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowWebNotifications = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowNetworkNotifications = new System.Windows.Forms.CheckBox();
             this.checkBoxRequireLocalPassword = new System.Windows.Forms.CheckBox();
             this.panelHistory = new System.Windows.Forms.Panel();
+            this.buttonClearHistory = new Growl.UI.ButtonEx();
             this.historyDaysGroupBox = new System.Windows.Forms.GroupBox();
             this.historyDaysTrackBar = new Dotnetrix.Controls.TrackBar();
             this.historySortByGroupBox = new System.Windows.Forms.GroupBox();
             this.historySortByDateRadioButton = new System.Windows.Forms.RadioButton();
             this.historySortByApplicationRadioButton = new System.Windows.Forms.RadioButton();
+            this.historyListView = new Growl.UI.HistoryListView();
             this.panelInitializing = new System.Windows.Forms.Panel();
             this.labelInitializationStage = new System.Windows.Forms.Label();
             this.progressBarInitializing = new System.Windows.Forms.ProgressBar();
             this.labelInitializing = new System.Windows.Forms.Label();
             this.panelNetwork = new System.Windows.Forms.Panel();
             this.checkBoxEnableSubscriptions = new System.Windows.Forms.CheckBox();
+            this.buttonUnsubscribe = new Growl.UI.ImageButton();
+            this.buttonSubscribe = new Growl.UI.ImageButton();
+            this.subscribedListView = new Growl.UI.ForwardListView();
+            this.buttonRemoveComputer = new Growl.UI.ImageButton();
+            this.buttonAddComputer = new Growl.UI.ImageButton();
+            this.forwardListView = new Growl.UI.ForwardListView();
             this.checkBoxEnableForwarding = new System.Windows.Forms.CheckBox();
             this.contextMenuStripApplications = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -663,23 +750,9 @@ namespace Growl
             this.toolbarButtonSecurity = new System.Windows.Forms.ToolStripButton();
             this.toolbarButtonHistory = new System.Windows.Forms.ToolStripButton();
             this.toolbarButtonAbout = new System.Windows.Forms.ToolStripButton();
-            this.listControlApplications = new Growl.UI.ListControl();
-            this.listControlApplicationNotifications = new Growl.UI.ListControl();
-            this.buttonUnsubscribe = new Growl.UI.ImageButton();
-            this.buttonSubscribe = new Growl.UI.ImageButton();
-            this.subscribedListView = new Growl.UI.ForwardListView();
-            this.buttonRemoveComputer = new Growl.UI.ImageButton();
-            this.buttonAddComputer = new Growl.UI.ImageButton();
-            this.forwardListView = new Growl.UI.ForwardListView();
-            this.onOffButton1 = new Growl.UI.OnOffButton();
-            this.listControlDisplays = new Growl.UI.ListControl();
-            this.buttonSetAsDefault = new Growl.UI.ButtonEx();
-            this.buttonPreviewDisplay = new Growl.UI.ButtonEx();
-            this.passwordManagerControl1 = new Growl.UI.PasswordManagerControl();
-            this.buttonClearHistory = new Growl.UI.ButtonEx();
-            this.historyListView = new Growl.UI.HistoryListView();
             this.panelGeneral.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).BeginInit();
             this.groupBoxIdleSettings.SuspendLayout();
             this.groupBoxSoundSettings.SuspendLayout();
             this.panelApplications.SuspendLayout();
@@ -699,15 +772,14 @@ namespace Growl
             this.historySortByGroupBox.SuspendLayout();
             this.panelInitializing.SuspendLayout();
             this.panelNetwork.SuspendLayout();
-            this.contextMenuStripApplications.SuspendLayout();
-            this.contextMenuStripForwardComputers.SuspendLayout();
-            this.toolbarPanel.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonUnsubscribe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonSubscribe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonRemoveComputer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonAddComputer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).BeginInit();
+            this.contextMenuStripApplications.SuspendLayout();
+            this.contextMenuStripForwardComputers.SuspendLayout();
+            this.toolbarPanel.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGeneral
@@ -735,6 +807,16 @@ namespace Growl
             this.groupBox1.Size = new System.Drawing.Size(468, 89);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // onOffButton1
+            // 
+            this.onOffButton1.Image = ((System.Drawing.Image)(resources.GetObject("onOffButton1.Image")));
+            this.onOffButton1.Location = new System.Drawing.Point(22, 17);
+            this.onOffButton1.Name = "onOffButton1";
+            this.onOffButton1.On = false;
+            this.onOffButton1.Size = new System.Drawing.Size(94, 27);
+            this.onOffButton1.TabIndex = 0;
+            this.onOffButton1.TabStop = false;
             // 
             // checkBoxAutoStart
             // 
@@ -866,6 +948,25 @@ namespace Growl
             this.panelApplications.TabIndex = 3;
             this.panelApplications.Visible = false;
             // 
+            // listControlApplications
+            // 
+            this.listControlApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listControlApplications.BackColor = System.Drawing.Color.White;
+            this.listControlApplications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.listControlApplications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
+            this.listControlApplications.HeaderText = "Application Name";
+            this.listControlApplications.IsDefaultComparer = null;
+            this.listControlApplications.Location = new System.Drawing.Point(4, 4);
+            this.listControlApplications.Name = "listControlApplications";
+            this.listControlApplications.SelectedIndex = -1;
+            this.listControlApplications.SelectedItem = null;
+            this.listControlApplications.Size = new System.Drawing.Size(176, 286);
+            this.listControlApplications.TabIndex = 9;
+            this.listControlApplications.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listControlApplications_MouseDown);
+            this.listControlApplications.SelectedIndexChanged += new System.EventHandler(this.listControlApplications_SelectedIndexChanged);
+            // 
             // panelSelectedApplication
             // 
             this.panelSelectedApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -880,11 +981,30 @@ namespace Growl
             this.panelSelectedApplication.TabIndex = 3;
             this.panelSelectedApplication.Visible = false;
             // 
+            // listControlApplicationNotifications
+            // 
+            this.listControlApplicationNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.listControlApplicationNotifications.BackColor = System.Drawing.Color.White;
+            this.listControlApplicationNotifications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.listControlApplicationNotifications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listControlApplicationNotifications.HeaderText = "Notification Type";
+            this.listControlApplicationNotifications.IsDefaultComparer = null;
+            this.listControlApplicationNotifications.Location = new System.Drawing.Point(7, 57);
+            this.listControlApplicationNotifications.Name = "listControlApplicationNotifications";
+            this.listControlApplicationNotifications.SelectedIndex = -1;
+            this.listControlApplicationNotifications.SelectedItem = null;
+            this.listControlApplicationNotifications.Size = new System.Drawing.Size(176, 229);
+            this.listControlApplicationNotifications.TabIndex = 7;
+            this.listControlApplicationNotifications.SelectedIndexChanged += new System.EventHandler(this.listControlApplicationNotifications_SelectedIndexChanged);
+            // 
             // panelPrefs
             // 
             this.panelPrefs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
             this.panelPrefs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelPrefs.Controls.Add(this.labelPrefDuration);
+            this.panelPrefs.Controls.Add(this.comboBoxPrefDuration);
             this.panelPrefs.Controls.Add(this.labelPrefSound);
             this.panelPrefs.Controls.Add(this.comboBoxPrefSound);
             this.panelPrefs.Controls.Add(this.comboBoxPrefSticky);
@@ -904,11 +1024,31 @@ namespace Growl
             this.panelPrefs.Size = new System.Drawing.Size(273, 229);
             this.panelPrefs.TabIndex = 6;
             // 
+            // labelPrefDuration
+            // 
+            this.labelPrefDuration.AutoSize = true;
+            this.labelPrefDuration.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPrefDuration.Location = new System.Drawing.Point(14, 102);
+            this.labelPrefDuration.Name = "labelPrefDuration";
+            this.labelPrefDuration.Size = new System.Drawing.Size(63, 18);
+            this.labelPrefDuration.TabIndex = 19;
+            this.labelPrefDuration.Text = "Duration:";
+            // 
+            // comboBoxPrefDuration
+            // 
+            this.comboBoxPrefDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPrefDuration.FormattingEnabled = true;
+            this.comboBoxPrefDuration.Location = new System.Drawing.Point(106, 102);
+            this.comboBoxPrefDuration.Name = "comboBoxPrefDuration";
+            this.comboBoxPrefDuration.Size = new System.Drawing.Size(118, 21);
+            this.comboBoxPrefDuration.TabIndex = 18;
+            this.comboBoxPrefDuration.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPrefDuration_SelectionChangeCommitted);
+            // 
             // labelPrefSound
             // 
             this.labelPrefSound.AutoSize = true;
             this.labelPrefSound.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.labelPrefSound.Location = new System.Drawing.Point(14, 197);
+            this.labelPrefSound.Location = new System.Drawing.Point(14, 202);
             this.labelPrefSound.Name = "labelPrefSound";
             this.labelPrefSound.Size = new System.Drawing.Size(48, 18);
             this.labelPrefSound.TabIndex = 17;
@@ -918,7 +1058,7 @@ namespace Growl
             // 
             this.comboBoxPrefSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefSound.FormattingEnabled = true;
-            this.comboBoxPrefSound.Location = new System.Drawing.Point(106, 197);
+            this.comboBoxPrefSound.Location = new System.Drawing.Point(106, 202);
             this.comboBoxPrefSound.Name = "comboBoxPrefSound";
             this.comboBoxPrefSound.Size = new System.Drawing.Size(160, 21);
             this.comboBoxPrefSound.TabIndex = 16;
@@ -928,7 +1068,7 @@ namespace Growl
             // 
             this.comboBoxPrefSticky.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefSticky.FormattingEnabled = true;
-            this.comboBoxPrefSticky.Location = new System.Drawing.Point(106, 113);
+            this.comboBoxPrefSticky.Location = new System.Drawing.Point(106, 127);
             this.comboBoxPrefSticky.Name = "comboBoxPrefSticky";
             this.comboBoxPrefSticky.Size = new System.Drawing.Size(118, 21);
             this.comboBoxPrefSticky.TabIndex = 15;
@@ -938,7 +1078,7 @@ namespace Growl
             // 
             this.labelPrefPriority.AutoSize = true;
             this.labelPrefPriority.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.labelPrefPriority.Location = new System.Drawing.Point(14, 169);
+            this.labelPrefPriority.Location = new System.Drawing.Point(14, 177);
             this.labelPrefPriority.Name = "labelPrefPriority";
             this.labelPrefPriority.Size = new System.Drawing.Size(56, 18);
             this.labelPrefPriority.TabIndex = 14;
@@ -948,7 +1088,7 @@ namespace Growl
             // 
             this.comboBoxPrefPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefPriority.FormattingEnabled = true;
-            this.comboBoxPrefPriority.Location = new System.Drawing.Point(106, 169);
+            this.comboBoxPrefPriority.Location = new System.Drawing.Point(106, 177);
             this.comboBoxPrefPriority.Name = "comboBoxPrefPriority";
             this.comboBoxPrefPriority.Size = new System.Drawing.Size(118, 21);
             this.comboBoxPrefPriority.TabIndex = 13;
@@ -958,7 +1098,7 @@ namespace Growl
             // 
             this.labelPrefForward.AutoSize = true;
             this.labelPrefForward.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.labelPrefForward.Location = new System.Drawing.Point(14, 141);
+            this.labelPrefForward.Location = new System.Drawing.Point(14, 152);
             this.labelPrefForward.Name = "labelPrefForward";
             this.labelPrefForward.Size = new System.Drawing.Size(78, 18);
             this.labelPrefForward.TabIndex = 12;
@@ -968,7 +1108,7 @@ namespace Growl
             // 
             this.comboBoxPrefForward.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefForward.FormattingEnabled = true;
-            this.comboBoxPrefForward.Location = new System.Drawing.Point(106, 141);
+            this.comboBoxPrefForward.Location = new System.Drawing.Point(106, 152);
             this.comboBoxPrefForward.Name = "comboBoxPrefForward";
             this.comboBoxPrefForward.Size = new System.Drawing.Size(118, 21);
             this.comboBoxPrefForward.TabIndex = 11;
@@ -998,7 +1138,7 @@ namespace Growl
             // 
             this.labelPrefSticky.AutoSize = true;
             this.labelPrefSticky.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPrefSticky.Location = new System.Drawing.Point(14, 113);
+            this.labelPrefSticky.Location = new System.Drawing.Point(14, 127);
             this.labelPrefSticky.Name = "labelPrefSticky";
             this.labelPrefSticky.Size = new System.Drawing.Size(48, 18);
             this.labelPrefSticky.TabIndex = 8;
@@ -1009,7 +1149,7 @@ namespace Growl
             this.comboBoxPrefDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrefDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPrefDisplay.FormattingEnabled = true;
-            this.comboBoxPrefDisplay.Location = new System.Drawing.Point(106, 85);
+            this.comboBoxPrefDisplay.Location = new System.Drawing.Point(106, 77);
             this.comboBoxPrefDisplay.Name = "comboBoxPrefDisplay";
             this.comboBoxPrefDisplay.Size = new System.Drawing.Size(160, 21);
             this.comboBoxPrefDisplay.TabIndex = 7;
@@ -1019,7 +1159,7 @@ namespace Growl
             // 
             this.labelPrefDisplay.AutoSize = true;
             this.labelPrefDisplay.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPrefDisplay.Location = new System.Drawing.Point(14, 85);
+            this.labelPrefDisplay.Location = new System.Drawing.Point(14, 77);
             this.labelPrefDisplay.Name = "labelPrefDisplay";
             this.labelPrefDisplay.Size = new System.Drawing.Size(54, 18);
             this.labelPrefDisplay.TabIndex = 6;
@@ -1029,7 +1169,7 @@ namespace Growl
             // 
             this.labelPrefEnabled.AutoSize = true;
             this.labelPrefEnabled.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPrefEnabled.Location = new System.Drawing.Point(14, 57);
+            this.labelPrefEnabled.Location = new System.Drawing.Point(14, 52);
             this.labelPrefEnabled.Name = "labelPrefEnabled";
             this.labelPrefEnabled.Size = new System.Drawing.Size(58, 18);
             this.labelPrefEnabled.TabIndex = 4;
@@ -1041,7 +1181,7 @@ namespace Growl
             this.comboBoxPrefEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPrefEnabled.FormattingEnabled = true;
             this.comboBoxPrefEnabled.ItemHeight = 13;
-            this.comboBoxPrefEnabled.Location = new System.Drawing.Point(106, 57);
+            this.comboBoxPrefEnabled.Location = new System.Drawing.Point(106, 52);
             this.comboBoxPrefEnabled.Name = "comboBoxPrefEnabled";
             this.comboBoxPrefEnabled.Size = new System.Drawing.Size(69, 21);
             this.comboBoxPrefEnabled.TabIndex = 5;
@@ -1110,6 +1250,23 @@ namespace Growl
             this.panelDisplays.TabIndex = 2;
             this.panelDisplays.Visible = false;
             // 
+            // listControlDisplays
+            // 
+            this.listControlDisplays.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.listControlDisplays.BackColor = System.Drawing.Color.White;
+            this.listControlDisplays.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.listControlDisplays.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listControlDisplays.HeaderText = "Display Name";
+            this.listControlDisplays.IsDefaultComparer = null;
+            this.listControlDisplays.Location = new System.Drawing.Point(4, 4);
+            this.listControlDisplays.Name = "listControlDisplays";
+            this.listControlDisplays.SelectedIndex = -1;
+            this.listControlDisplays.SelectedItem = null;
+            this.listControlDisplays.Size = new System.Drawing.Size(176, 286);
+            this.listControlDisplays.TabIndex = 2;
+            this.listControlDisplays.SelectedIndexChanged += new System.EventHandler(this.listControlDisplays_SelectedIndexChanged);
+            // 
             // panelDisplaySettings
             // 
             this.panelDisplaySettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -1129,6 +1286,26 @@ namespace Growl
             this.panelDisplaySettings.Size = new System.Drawing.Size(470, 285);
             this.panelDisplaySettings.TabIndex = 1;
             this.panelDisplaySettings.Visible = false;
+            // 
+            // buttonSetAsDefault
+            // 
+            this.buttonSetAsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSetAsDefault.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonSetAsDefault.BackgroundImage")));
+            this.buttonSetAsDefault.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonSetAsDefault.FlatAppearance.BorderSize = 0;
+            this.buttonSetAsDefault.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonSetAsDefault.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonSetAsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSetAsDefault.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
+            this.buttonSetAsDefault.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonSetAsDefault.Location = new System.Drawing.Point(279, 241);
+            this.buttonSetAsDefault.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSetAsDefault.Name = "buttonSetAsDefault";
+            this.buttonSetAsDefault.Size = new System.Drawing.Size(106, 32);
+            this.buttonSetAsDefault.TabIndex = 3;
+            this.buttonSetAsDefault.Text = "Set as Default";
+            this.buttonSetAsDefault.UseVisualStyleBackColor = true;
+            this.buttonSetAsDefault.Click += new System.EventHandler(this.buttonSetAsDefault_Click);
             // 
             // displayStyleWebsiteLabel
             // 
@@ -1163,6 +1340,26 @@ namespace Growl
             this.displayStyleAuthorLabel.Size = new System.Drawing.Size(50, 16);
             this.displayStyleAuthorLabel.TabIndex = 4;
             this.displayStyleAuthorLabel.Text = "[author]";
+            // 
+            // buttonPreviewDisplay
+            // 
+            this.buttonPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPreviewDisplay.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonPreviewDisplay.BackgroundImage")));
+            this.buttonPreviewDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonPreviewDisplay.FlatAppearance.BorderSize = 0;
+            this.buttonPreviewDisplay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonPreviewDisplay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonPreviewDisplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPreviewDisplay.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
+            this.buttonPreviewDisplay.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonPreviewDisplay.Location = new System.Drawing.Point(391, 241);
+            this.buttonPreviewDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonPreviewDisplay.Name = "buttonPreviewDisplay";
+            this.buttonPreviewDisplay.Size = new System.Drawing.Size(73, 32);
+            this.buttonPreviewDisplay.TabIndex = 3;
+            this.buttonPreviewDisplay.Text = "Preview";
+            this.buttonPreviewDisplay.UseVisualStyleBackColor = true;
+            this.buttonPreviewDisplay.Click += new System.EventHandler(this.buttonPreviewDisplay_Click);
             // 
             // displayStyleDescriptionLabel
             // 
@@ -1363,6 +1560,16 @@ namespace Growl
             this.labelPasswordManager.TabIndex = 16;
             this.labelPasswordManager.Text = "Password Manager";
             // 
+            // passwordManagerControl1
+            // 
+            this.passwordManagerControl1.BackColor = System.Drawing.Color.Transparent;
+            this.passwordManagerControl1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordManagerControl1.Location = new System.Drawing.Point(399, 38);
+            this.passwordManagerControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.passwordManagerControl1.Name = "passwordManagerControl1";
+            this.passwordManagerControl1.Size = new System.Drawing.Size(199, 244);
+            this.passwordManagerControl1.TabIndex = 15;
+            // 
             // checkBoxAllowSubscriptions
             // 
             this.checkBoxAllowSubscriptions.AutoSize = true;
@@ -1428,6 +1635,25 @@ namespace Growl
             this.panelHistory.TabIndex = 3;
             this.panelHistory.Visible = false;
             // 
+            // buttonClearHistory
+            // 
+            this.buttonClearHistory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonClearHistory.BackgroundImage")));
+            this.buttonClearHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonClearHistory.FlatAppearance.BorderSize = 0;
+            this.buttonClearHistory.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonClearHistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonClearHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearHistory.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
+            this.buttonClearHistory.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonClearHistory.Location = new System.Drawing.Point(107, 209);
+            this.buttonClearHistory.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonClearHistory.Name = "buttonClearHistory";
+            this.buttonClearHistory.Size = new System.Drawing.Size(73, 32);
+            this.buttonClearHistory.TabIndex = 3;
+            this.buttonClearHistory.Text = "Clear";
+            this.buttonClearHistory.UseVisualStyleBackColor = true;
+            this.buttonClearHistory.Click += new System.EventHandler(this.buttonClearHistory_Click);
+            // 
             // historyDaysGroupBox
             // 
             this.historyDaysGroupBox.Controls.Add(this.historyDaysTrackBar);
@@ -1483,6 +1709,662 @@ namespace Growl
             this.historySortByApplicationRadioButton.Text = "Application";
             this.historySortByApplicationRadioButton.UseVisualStyleBackColor = true;
             this.historySortByApplicationRadioButton.CheckedChanged += new System.EventHandler(this.historySortByApplicationRadioButton_CheckedChanged);
+            // 
+            // historyListView
+            // 
+            this.historyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
+            this.historyListView.FullRowSelect = true;
+            this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
+            listViewGroup1.Header = "Today";
+            listViewGroup1.Name = "Today";
+            listViewGroup2.Header = "Yesterday";
+            listViewGroup2.Name = "Yesterday";
+            listViewGroup3.Header = "Saturday";
+            listViewGroup3.Name = "Saturday";
+            listViewGroup4.Header = "Friday";
+            listViewGroup4.Name = "Friday";
+            listViewGroup5.Header = "Thursday";
+            listViewGroup5.Name = "Thursday";
+            listViewGroup6.Header = "Wednesday";
+            listViewGroup6.Name = "Wednesday";
+            listViewGroup7.Header = "Tuesday";
+            listViewGroup7.Name = "Tuesday";
+            listViewGroup8.Header = "Today";
+            listViewGroup8.Name = "Today";
+            listViewGroup9.Header = "Yesterday";
+            listViewGroup9.Name = "Yesterday";
+            listViewGroup10.Header = "Saturday";
+            listViewGroup10.Name = "Saturday";
+            listViewGroup11.Header = "Friday";
+            listViewGroup11.Name = "Friday";
+            listViewGroup12.Header = "Thursday";
+            listViewGroup12.Name = "Thursday";
+            listViewGroup13.Header = "Wednesday";
+            listViewGroup13.Name = "Wednesday";
+            listViewGroup14.Header = "Tuesday";
+            listViewGroup14.Name = "Tuesday";
+            listViewGroup15.Header = "Today";
+            listViewGroup15.Name = "Today";
+            listViewGroup16.Header = "Yesterday";
+            listViewGroup16.Name = "Yesterday";
+            listViewGroup17.Header = "Saturday";
+            listViewGroup17.Name = "Saturday";
+            listViewGroup18.Header = "Friday";
+            listViewGroup18.Name = "Friday";
+            listViewGroup19.Header = "Thursday";
+            listViewGroup19.Name = "Thursday";
+            listViewGroup20.Header = "Wednesday";
+            listViewGroup20.Name = "Wednesday";
+            listViewGroup21.Header = "Tuesday";
+            listViewGroup21.Name = "Tuesday";
+            listViewGroup22.Header = "Today";
+            listViewGroup22.Name = "Today";
+            listViewGroup23.Header = "Yesterday";
+            listViewGroup23.Name = "Yesterday";
+            listViewGroup24.Header = "Saturday";
+            listViewGroup24.Name = "Saturday";
+            listViewGroup25.Header = "Friday";
+            listViewGroup25.Name = "Friday";
+            listViewGroup26.Header = "Thursday";
+            listViewGroup26.Name = "Thursday";
+            listViewGroup27.Header = "Wednesday";
+            listViewGroup27.Name = "Wednesday";
+            listViewGroup28.Header = "Tuesday";
+            listViewGroup28.Name = "Tuesday";
+            listViewGroup29.Header = "Today";
+            listViewGroup29.Name = "Today";
+            listViewGroup30.Header = "Yesterday";
+            listViewGroup30.Name = "Yesterday";
+            listViewGroup31.Header = "Wednesday";
+            listViewGroup31.Name = "Wednesday";
+            listViewGroup32.Header = "Tuesday";
+            listViewGroup32.Name = "Tuesday";
+            listViewGroup33.Header = "Monday";
+            listViewGroup33.Name = "Monday";
+            listViewGroup34.Header = "Sunday";
+            listViewGroup34.Name = "Sunday";
+            listViewGroup35.Header = "Saturday";
+            listViewGroup35.Name = "Saturday";
+            listViewGroup36.Header = "Today";
+            listViewGroup36.Name = "Today";
+            listViewGroup37.Header = "Yesterday";
+            listViewGroup37.Name = "Yesterday";
+            listViewGroup38.Header = "Wednesday";
+            listViewGroup38.Name = "Wednesday";
+            listViewGroup39.Header = "Tuesday";
+            listViewGroup39.Name = "Tuesday";
+            listViewGroup40.Header = "Monday";
+            listViewGroup40.Name = "Monday";
+            listViewGroup41.Header = "Sunday";
+            listViewGroup41.Name = "Sunday";
+            listViewGroup42.Header = "Saturday";
+            listViewGroup42.Name = "Saturday";
+            listViewGroup43.Header = "Today";
+            listViewGroup43.Name = "Today";
+            listViewGroup44.Header = "Yesterday";
+            listViewGroup44.Name = "Yesterday";
+            listViewGroup45.Header = "Wednesday";
+            listViewGroup45.Name = "Wednesday";
+            listViewGroup46.Header = "Tuesday";
+            listViewGroup46.Name = "Tuesday";
+            listViewGroup47.Header = "Monday";
+            listViewGroup47.Name = "Monday";
+            listViewGroup48.Header = "Sunday";
+            listViewGroup48.Name = "Sunday";
+            listViewGroup49.Header = "Saturday";
+            listViewGroup49.Name = "Saturday";
+            listViewGroup50.Header = "Today";
+            listViewGroup50.Name = "Today";
+            listViewGroup51.Header = "Yesterday";
+            listViewGroup51.Name = "Yesterday";
+            listViewGroup52.Header = "Wednesday";
+            listViewGroup52.Name = "Wednesday";
+            listViewGroup53.Header = "Tuesday";
+            listViewGroup53.Name = "Tuesday";
+            listViewGroup54.Header = "Monday";
+            listViewGroup54.Name = "Monday";
+            listViewGroup55.Header = "Sunday";
+            listViewGroup55.Name = "Sunday";
+            listViewGroup56.Header = "Saturday";
+            listViewGroup56.Name = "Saturday";
+            listViewGroup57.Header = "Today";
+            listViewGroup57.Name = "Today";
+            listViewGroup58.Header = "Yesterday";
+            listViewGroup58.Name = "Yesterday";
+            listViewGroup59.Header = "Wednesday";
+            listViewGroup59.Name = "Wednesday";
+            listViewGroup60.Header = "Tuesday";
+            listViewGroup60.Name = "Tuesday";
+            listViewGroup61.Header = "Monday";
+            listViewGroup61.Name = "Monday";
+            listViewGroup62.Header = "Sunday";
+            listViewGroup62.Name = "Sunday";
+            listViewGroup63.Header = "Saturday";
+            listViewGroup63.Name = "Saturday";
+            listViewGroup64.Header = "Today";
+            listViewGroup64.Name = "Today";
+            listViewGroup65.Header = "Yesterday";
+            listViewGroup65.Name = "Yesterday";
+            listViewGroup66.Header = "Wednesday";
+            listViewGroup66.Name = "Wednesday";
+            listViewGroup67.Header = "Tuesday";
+            listViewGroup67.Name = "Tuesday";
+            listViewGroup68.Header = "Monday";
+            listViewGroup68.Name = "Monday";
+            listViewGroup69.Header = "Sunday";
+            listViewGroup69.Name = "Sunday";
+            listViewGroup70.Header = "Saturday";
+            listViewGroup70.Name = "Saturday";
+            listViewGroup71.Header = "Today";
+            listViewGroup71.Name = "Today";
+            listViewGroup72.Header = "Yesterday";
+            listViewGroup72.Name = "Yesterday";
+            listViewGroup73.Header = "Wednesday";
+            listViewGroup73.Name = "Wednesday";
+            listViewGroup74.Header = "Tuesday";
+            listViewGroup74.Name = "Tuesday";
+            listViewGroup75.Header = "Monday";
+            listViewGroup75.Name = "Monday";
+            listViewGroup76.Header = "Sunday";
+            listViewGroup76.Name = "Sunday";
+            listViewGroup77.Header = "Saturday";
+            listViewGroup77.Name = "Saturday";
+            listViewGroup78.Header = "Today";
+            listViewGroup78.Name = "Today";
+            listViewGroup79.Header = "Yesterday";
+            listViewGroup79.Name = "Yesterday";
+            listViewGroup80.Header = "Wednesday";
+            listViewGroup80.Name = "Wednesday";
+            listViewGroup81.Header = "Tuesday";
+            listViewGroup81.Name = "Tuesday";
+            listViewGroup82.Header = "Monday";
+            listViewGroup82.Name = "Monday";
+            listViewGroup83.Header = "Sunday";
+            listViewGroup83.Name = "Sunday";
+            listViewGroup84.Header = "Saturday";
+            listViewGroup84.Name = "Saturday";
+            listViewGroup85.Header = "Today";
+            listViewGroup85.Name = "Today";
+            listViewGroup86.Header = "Yesterday";
+            listViewGroup86.Name = "Yesterday";
+            listViewGroup87.Header = "Wednesday";
+            listViewGroup87.Name = "Wednesday";
+            listViewGroup88.Header = "Tuesday";
+            listViewGroup88.Name = "Tuesday";
+            listViewGroup89.Header = "Monday";
+            listViewGroup89.Name = "Monday";
+            listViewGroup90.Header = "Sunday";
+            listViewGroup90.Name = "Sunday";
+            listViewGroup91.Header = "Saturday";
+            listViewGroup91.Name = "Saturday";
+            listViewGroup92.Header = "Today";
+            listViewGroup92.Name = "Today";
+            listViewGroup93.Header = "Yesterday";
+            listViewGroup93.Name = "Yesterday";
+            listViewGroup94.Header = "Wednesday";
+            listViewGroup94.Name = "Wednesday";
+            listViewGroup95.Header = "Tuesday";
+            listViewGroup95.Name = "Tuesday";
+            listViewGroup96.Header = "Monday";
+            listViewGroup96.Name = "Monday";
+            listViewGroup97.Header = "Sunday";
+            listViewGroup97.Name = "Sunday";
+            listViewGroup98.Header = "Saturday";
+            listViewGroup98.Name = "Saturday";
+            listViewGroup99.Header = "Today";
+            listViewGroup99.Name = "Today";
+            listViewGroup100.Header = "Yesterday";
+            listViewGroup100.Name = "Yesterday";
+            listViewGroup101.Header = "Wednesday";
+            listViewGroup101.Name = "Wednesday";
+            listViewGroup102.Header = "Tuesday";
+            listViewGroup102.Name = "Tuesday";
+            listViewGroup103.Header = "Monday";
+            listViewGroup103.Name = "Monday";
+            listViewGroup104.Header = "Sunday";
+            listViewGroup104.Name = "Sunday";
+            listViewGroup105.Header = "Saturday";
+            listViewGroup105.Name = "Saturday";
+            listViewGroup106.Header = "Today";
+            listViewGroup106.Name = "Today";
+            listViewGroup107.Header = "Yesterday";
+            listViewGroup107.Name = "Yesterday";
+            listViewGroup108.Header = "Wednesday";
+            listViewGroup108.Name = "Wednesday";
+            listViewGroup109.Header = "Tuesday";
+            listViewGroup109.Name = "Tuesday";
+            listViewGroup110.Header = "Monday";
+            listViewGroup110.Name = "Monday";
+            listViewGroup111.Header = "Sunday";
+            listViewGroup111.Name = "Sunday";
+            listViewGroup112.Header = "Saturday";
+            listViewGroup112.Name = "Saturday";
+            listViewGroup113.Header = "Today";
+            listViewGroup113.Name = "Today";
+            listViewGroup114.Header = "Yesterday";
+            listViewGroup114.Name = "Yesterday";
+            listViewGroup115.Header = "Sunday";
+            listViewGroup115.Name = "Sunday";
+            listViewGroup116.Header = "Saturday";
+            listViewGroup116.Name = "Saturday";
+            listViewGroup117.Header = "Friday";
+            listViewGroup117.Name = "Friday";
+            listViewGroup118.Header = "Thursday";
+            listViewGroup118.Name = "Thursday";
+            listViewGroup119.Header = "Wednesday";
+            listViewGroup119.Name = "Wednesday";
+            listViewGroup120.Header = "Today";
+            listViewGroup120.Name = "Today";
+            listViewGroup121.Header = "Yesterday";
+            listViewGroup121.Name = "Yesterday";
+            listViewGroup122.Header = "Sunday";
+            listViewGroup122.Name = "Sunday";
+            listViewGroup123.Header = "Saturday";
+            listViewGroup123.Name = "Saturday";
+            listViewGroup124.Header = "Friday";
+            listViewGroup124.Name = "Friday";
+            listViewGroup125.Header = "Thursday";
+            listViewGroup125.Name = "Thursday";
+            listViewGroup126.Header = "Wednesday";
+            listViewGroup126.Name = "Wednesday";
+            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6,
+            listViewGroup7,
+            listViewGroup8,
+            listViewGroup9,
+            listViewGroup10,
+            listViewGroup11,
+            listViewGroup12,
+            listViewGroup13,
+            listViewGroup14,
+            listViewGroup15,
+            listViewGroup16,
+            listViewGroup17,
+            listViewGroup18,
+            listViewGroup19,
+            listViewGroup20,
+            listViewGroup21,
+            listViewGroup22,
+            listViewGroup23,
+            listViewGroup24,
+            listViewGroup25,
+            listViewGroup26,
+            listViewGroup27,
+            listViewGroup28,
+            listViewGroup29,
+            listViewGroup30,
+            listViewGroup31,
+            listViewGroup32,
+            listViewGroup33,
+            listViewGroup34,
+            listViewGroup35,
+            listViewGroup36,
+            listViewGroup37,
+            listViewGroup38,
+            listViewGroup39,
+            listViewGroup40,
+            listViewGroup41,
+            listViewGroup42,
+            listViewGroup43,
+            listViewGroup44,
+            listViewGroup45,
+            listViewGroup46,
+            listViewGroup47,
+            listViewGroup48,
+            listViewGroup49,
+            listViewGroup50,
+            listViewGroup51,
+            listViewGroup52,
+            listViewGroup53,
+            listViewGroup54,
+            listViewGroup55,
+            listViewGroup56,
+            listViewGroup57,
+            listViewGroup58,
+            listViewGroup59,
+            listViewGroup60,
+            listViewGroup61,
+            listViewGroup62,
+            listViewGroup63,
+            listViewGroup64,
+            listViewGroup65,
+            listViewGroup66,
+            listViewGroup67,
+            listViewGroup68,
+            listViewGroup69,
+            listViewGroup70,
+            listViewGroup71,
+            listViewGroup72,
+            listViewGroup73,
+            listViewGroup74,
+            listViewGroup75,
+            listViewGroup76,
+            listViewGroup77,
+            listViewGroup78,
+            listViewGroup79,
+            listViewGroup80,
+            listViewGroup81,
+            listViewGroup82,
+            listViewGroup83,
+            listViewGroup84,
+            listViewGroup85,
+            listViewGroup86,
+            listViewGroup87,
+            listViewGroup88,
+            listViewGroup89,
+            listViewGroup90,
+            listViewGroup91,
+            listViewGroup92,
+            listViewGroup93,
+            listViewGroup94,
+            listViewGroup95,
+            listViewGroup96,
+            listViewGroup97,
+            listViewGroup98,
+            listViewGroup99,
+            listViewGroup100,
+            listViewGroup101,
+            listViewGroup102,
+            listViewGroup103,
+            listViewGroup104,
+            listViewGroup105,
+            listViewGroup106,
+            listViewGroup107,
+            listViewGroup108,
+            listViewGroup109,
+            listViewGroup110,
+            listViewGroup111,
+            listViewGroup112,
+            listViewGroup113,
+            listViewGroup114,
+            listViewGroup115,
+            listViewGroup116,
+            listViewGroup117,
+            listViewGroup118,
+            listViewGroup119,
+            listViewGroup120,
+            listViewGroup121,
+            listViewGroup122,
+            listViewGroup123,
+            listViewGroup124,
+            listViewGroup125,
+            listViewGroup126});
+            this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            listViewItem1.Group = listViewGroup1;
+            listViewItem2.Group = listViewGroup2;
+            listViewItem3.Group = listViewGroup3;
+            listViewItem4.Group = listViewGroup4;
+            listViewItem5.Group = listViewGroup5;
+            listViewItem6.Group = listViewGroup6;
+            listViewItem7.Group = listViewGroup7;
+            listViewItem8.Group = listViewGroup8;
+            listViewItem9.Group = listViewGroup9;
+            listViewItem10.Group = listViewGroup10;
+            listViewItem11.Group = listViewGroup11;
+            listViewItem12.Group = listViewGroup12;
+            listViewItem13.Group = listViewGroup13;
+            listViewItem14.Group = listViewGroup14;
+            listViewItem15.Group = listViewGroup15;
+            listViewItem16.Group = listViewGroup16;
+            listViewItem17.Group = listViewGroup17;
+            listViewItem18.Group = listViewGroup18;
+            listViewItem19.Group = listViewGroup19;
+            listViewItem20.Group = listViewGroup20;
+            listViewItem21.Group = listViewGroup21;
+            listViewItem22.Group = listViewGroup22;
+            listViewItem23.Group = listViewGroup23;
+            listViewItem24.Group = listViewGroup24;
+            listViewItem25.Group = listViewGroup25;
+            listViewItem26.Group = listViewGroup26;
+            listViewItem27.Group = listViewGroup27;
+            listViewItem28.Group = listViewGroup28;
+            listViewItem29.Group = listViewGroup29;
+            listViewItem30.Group = listViewGroup30;
+            listViewItem31.Group = listViewGroup31;
+            listViewItem32.Group = listViewGroup32;
+            listViewItem33.Group = listViewGroup33;
+            listViewItem34.Group = listViewGroup34;
+            listViewItem35.Group = listViewGroup35;
+            listViewItem36.Group = listViewGroup36;
+            listViewItem37.Group = listViewGroup37;
+            listViewItem38.Group = listViewGroup38;
+            listViewItem39.Group = listViewGroup39;
+            listViewItem40.Group = listViewGroup40;
+            listViewItem41.Group = listViewGroup41;
+            listViewItem42.Group = listViewGroup42;
+            listViewItem43.Group = listViewGroup43;
+            listViewItem44.Group = listViewGroup44;
+            listViewItem45.Group = listViewGroup45;
+            listViewItem46.Group = listViewGroup46;
+            listViewItem47.Group = listViewGroup47;
+            listViewItem48.Group = listViewGroup48;
+            listViewItem49.Group = listViewGroup49;
+            listViewItem50.Group = listViewGroup50;
+            listViewItem51.Group = listViewGroup51;
+            listViewItem52.Group = listViewGroup52;
+            listViewItem53.Group = listViewGroup53;
+            listViewItem54.Group = listViewGroup54;
+            listViewItem55.Group = listViewGroup55;
+            listViewItem56.Group = listViewGroup56;
+            listViewItem57.Group = listViewGroup57;
+            listViewItem58.Group = listViewGroup58;
+            listViewItem59.Group = listViewGroup59;
+            listViewItem60.Group = listViewGroup60;
+            listViewItem61.Group = listViewGroup61;
+            listViewItem62.Group = listViewGroup62;
+            listViewItem63.Group = listViewGroup63;
+            listViewItem64.Group = listViewGroup64;
+            listViewItem65.Group = listViewGroup65;
+            listViewItem66.Group = listViewGroup66;
+            listViewItem67.Group = listViewGroup67;
+            listViewItem68.Group = listViewGroup68;
+            listViewItem69.Group = listViewGroup69;
+            listViewItem70.Group = listViewGroup70;
+            listViewItem71.Group = listViewGroup71;
+            listViewItem72.Group = listViewGroup72;
+            listViewItem73.Group = listViewGroup73;
+            listViewItem74.Group = listViewGroup74;
+            listViewItem75.Group = listViewGroup75;
+            listViewItem76.Group = listViewGroup76;
+            listViewItem77.Group = listViewGroup77;
+            listViewItem78.Group = listViewGroup78;
+            listViewItem79.Group = listViewGroup79;
+            listViewItem80.Group = listViewGroup80;
+            listViewItem81.Group = listViewGroup81;
+            listViewItem82.Group = listViewGroup82;
+            listViewItem83.Group = listViewGroup83;
+            listViewItem84.Group = listViewGroup84;
+            listViewItem85.Group = listViewGroup85;
+            listViewItem86.Group = listViewGroup86;
+            listViewItem87.Group = listViewGroup87;
+            listViewItem88.Group = listViewGroup88;
+            listViewItem89.Group = listViewGroup89;
+            listViewItem90.Group = listViewGroup90;
+            listViewItem91.Group = listViewGroup91;
+            listViewItem92.Group = listViewGroup92;
+            listViewItem93.Group = listViewGroup93;
+            listViewItem94.Group = listViewGroup94;
+            listViewItem95.Group = listViewGroup95;
+            listViewItem96.Group = listViewGroup96;
+            listViewItem97.Group = listViewGroup97;
+            listViewItem98.Group = listViewGroup98;
+            listViewItem99.Group = listViewGroup99;
+            listViewItem100.Group = listViewGroup100;
+            listViewItem101.Group = listViewGroup101;
+            listViewItem102.Group = listViewGroup102;
+            listViewItem103.Group = listViewGroup103;
+            listViewItem104.Group = listViewGroup104;
+            listViewItem105.Group = listViewGroup105;
+            listViewItem106.Group = listViewGroup106;
+            listViewItem107.Group = listViewGroup107;
+            listViewItem108.Group = listViewGroup108;
+            listViewItem109.Group = listViewGroup109;
+            listViewItem110.Group = listViewGroup110;
+            listViewItem111.Group = listViewGroup111;
+            listViewItem112.Group = listViewGroup112;
+            listViewItem113.Group = listViewGroup113;
+            listViewItem114.Group = listViewGroup114;
+            listViewItem115.Group = listViewGroup115;
+            listViewItem116.Group = listViewGroup116;
+            listViewItem117.Group = listViewGroup117;
+            listViewItem118.Group = listViewGroup118;
+            listViewItem119.Group = listViewGroup119;
+            listViewItem120.Group = listViewGroup120;
+            listViewItem121.Group = listViewGroup121;
+            listViewItem122.Group = listViewGroup122;
+            listViewItem123.Group = listViewGroup123;
+            listViewItem124.Group = listViewGroup124;
+            listViewItem125.Group = listViewGroup125;
+            listViewItem126.Group = listViewGroup126;
+            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20,
+            listViewItem21,
+            listViewItem22,
+            listViewItem23,
+            listViewItem24,
+            listViewItem25,
+            listViewItem26,
+            listViewItem27,
+            listViewItem28,
+            listViewItem29,
+            listViewItem30,
+            listViewItem31,
+            listViewItem32,
+            listViewItem33,
+            listViewItem34,
+            listViewItem35,
+            listViewItem36,
+            listViewItem37,
+            listViewItem38,
+            listViewItem39,
+            listViewItem40,
+            listViewItem41,
+            listViewItem42,
+            listViewItem43,
+            listViewItem44,
+            listViewItem45,
+            listViewItem46,
+            listViewItem47,
+            listViewItem48,
+            listViewItem49,
+            listViewItem50,
+            listViewItem51,
+            listViewItem52,
+            listViewItem53,
+            listViewItem54,
+            listViewItem55,
+            listViewItem56,
+            listViewItem57,
+            listViewItem58,
+            listViewItem59,
+            listViewItem60,
+            listViewItem61,
+            listViewItem62,
+            listViewItem63,
+            listViewItem64,
+            listViewItem65,
+            listViewItem66,
+            listViewItem67,
+            listViewItem68,
+            listViewItem69,
+            listViewItem70,
+            listViewItem71,
+            listViewItem72,
+            listViewItem73,
+            listViewItem74,
+            listViewItem75,
+            listViewItem76,
+            listViewItem77,
+            listViewItem78,
+            listViewItem79,
+            listViewItem80,
+            listViewItem81,
+            listViewItem82,
+            listViewItem83,
+            listViewItem84,
+            listViewItem85,
+            listViewItem86,
+            listViewItem87,
+            listViewItem88,
+            listViewItem89,
+            listViewItem90,
+            listViewItem91,
+            listViewItem92,
+            listViewItem93,
+            listViewItem94,
+            listViewItem95,
+            listViewItem96,
+            listViewItem97,
+            listViewItem98,
+            listViewItem99,
+            listViewItem100,
+            listViewItem101,
+            listViewItem102,
+            listViewItem103,
+            listViewItem104,
+            listViewItem105,
+            listViewItem106,
+            listViewItem107,
+            listViewItem108,
+            listViewItem109,
+            listViewItem110,
+            listViewItem111,
+            listViewItem112,
+            listViewItem113,
+            listViewItem114,
+            listViewItem115,
+            listViewItem116,
+            listViewItem117,
+            listViewItem118,
+            listViewItem119,
+            listViewItem120,
+            listViewItem121,
+            listViewItem122,
+            listViewItem123,
+            listViewItem124,
+            listViewItem125,
+            listViewItem126});
+            this.historyListView.LabelWrap = false;
+            this.historyListView.Location = new System.Drawing.Point(196, 5);
+            this.historyListView.MultiSelect = false;
+            this.historyListView.Name = "historyListView";
+            this.historyListView.NumberOfDays = 7;
+            this.historyListView.OwnerDraw = true;
+            this.historyListView.PastNotifications = null;
+            this.historyListView.ShowItemToolTips = true;
+            this.historyListView.Size = new System.Drawing.Size(460, 284);
+            this.historyListView.TabIndex = 2;
+            this.historyListView.TileSize = new System.Drawing.Size(205, 56);
+            this.historyListView.UseCompatibleStateImageBehavior = false;
+            this.historyListView.UseCustomToolTips = false;
+            this.historyListView.View = System.Windows.Forms.View.Tile;
             // 
             // panelInitializing
             // 
@@ -1556,6 +2438,96 @@ namespace Growl
             this.checkBoxEnableSubscriptions.Text = "Subscribe to notifications from other computers";
             this.checkBoxEnableSubscriptions.UseVisualStyleBackColor = false;
             this.checkBoxEnableSubscriptions.CheckedChanged += new System.EventHandler(this.checkBoxEnableSubscriptions_CheckedChanged);
+            // 
+            // buttonUnsubscribe
+            // 
+            this.buttonUnsubscribe.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonUnsubscribe.Enabled = false;
+            this.buttonUnsubscribe.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonUnsubscribe.Location = new System.Drawing.Point(379, 225);
+            this.buttonUnsubscribe.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonUnsubscribe.Name = "buttonUnsubscribe";
+            this.buttonUnsubscribe.Size = new System.Drawing.Size(32, 32);
+            this.buttonUnsubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonUnsubscribe.TabIndex = 10;
+            this.buttonUnsubscribe.TabStop = false;
+            this.buttonUnsubscribe.Click += new System.EventHandler(this.buttonUnsubscribe_Click);
+            // 
+            // buttonSubscribe
+            // 
+            this.buttonSubscribe.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
+            this.buttonSubscribe.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonSubscribe.Location = new System.Drawing.Point(343, 225);
+            this.buttonSubscribe.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSubscribe.Name = "buttonSubscribe";
+            this.buttonSubscribe.Size = new System.Drawing.Size(32, 32);
+            this.buttonSubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonSubscribe.TabIndex = 9;
+            this.buttonSubscribe.TabStop = false;
+            this.buttonSubscribe.Click += new System.EventHandler(this.buttonSubscribe_Click);
+            // 
+            // subscribedListView
+            // 
+            this.subscribedListView.Computers = null;
+            this.subscribedListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.subscribedListView.LabelWrap = false;
+            this.subscribedListView.Location = new System.Drawing.Point(339, 38);
+            this.subscribedListView.MultiSelect = false;
+            this.subscribedListView.Name = "subscribedListView";
+            this.subscribedListView.OwnerDraw = true;
+            this.subscribedListView.ShowItemToolTips = true;
+            this.subscribedListView.Size = new System.Drawing.Size(307, 184);
+            this.subscribedListView.TabIndex = 8;
+            this.subscribedListView.TileSize = new System.Drawing.Size(281, 56);
+            this.subscribedListView.UseCompatibleStateImageBehavior = false;
+            this.subscribedListView.View = System.Windows.Forms.View.Tile;
+            this.subscribedListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.subscribedListView_ItemSelectionChanged);
+            // 
+            // buttonRemoveComputer
+            // 
+            this.buttonRemoveComputer.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonRemoveComputer.Enabled = false;
+            this.buttonRemoveComputer.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonRemoveComputer.Location = new System.Drawing.Point(59, 225);
+            this.buttonRemoveComputer.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonRemoveComputer.Name = "buttonRemoveComputer";
+            this.buttonRemoveComputer.Size = new System.Drawing.Size(32, 32);
+            this.buttonRemoveComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonRemoveComputer.TabIndex = 3;
+            this.buttonRemoveComputer.TabStop = false;
+            this.buttonRemoveComputer.Click += new System.EventHandler(this.buttonRemoveComputer_Click);
+            // 
+            // buttonAddComputer
+            // 
+            this.buttonAddComputer.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
+            this.buttonAddComputer.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonAddComputer.Location = new System.Drawing.Point(23, 225);
+            this.buttonAddComputer.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonAddComputer.Name = "buttonAddComputer";
+            this.buttonAddComputer.Size = new System.Drawing.Size(32, 32);
+            this.buttonAddComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonAddComputer.TabIndex = 2;
+            this.buttonAddComputer.TabStop = false;
+            this.buttonAddComputer.Click += new System.EventHandler(this.buttonAddComputer_Click);
+            // 
+            // forwardListView
+            // 
+            this.forwardListView.Computers = null;
+            this.forwardListView.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.forwardListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.forwardListView.LabelWrap = false;
+            this.forwardListView.Location = new System.Drawing.Point(16, 38);
+            this.forwardListView.MultiSelect = false;
+            this.forwardListView.Name = "forwardListView";
+            this.forwardListView.OwnerDraw = true;
+            this.forwardListView.ShowItemToolTips = true;
+            this.forwardListView.Size = new System.Drawing.Size(307, 184);
+            this.forwardListView.TabIndex = 1;
+            this.forwardListView.TileSize = new System.Drawing.Size(281, 56);
+            this.forwardListView.UseCompatibleStateImageBehavior = false;
+            this.forwardListView.View = System.Windows.Forms.View.Tile;
+            this.forwardListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.forwardListView_MouseDown);
+            this.forwardListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.forwardListView_ItemSelectionChanged);
             // 
             // checkBoxEnableForwarding
             // 
@@ -1715,814 +2687,6 @@ namespace Growl
             this.toolbarButtonAbout.Text = "About";
             this.toolbarButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // listControlApplications
-            // 
-            this.listControlApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.listControlApplications.BackColor = System.Drawing.Color.White;
-            this.listControlApplications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.listControlApplications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.listControlApplications.HeaderText = "Application Name";
-            this.listControlApplications.IsDefaultComparer = null;
-            this.listControlApplications.Location = new System.Drawing.Point(4, 4);
-            this.listControlApplications.Name = "listControlApplications";
-            this.listControlApplications.SelectedIndex = -1;
-            this.listControlApplications.SelectedItem = null;
-            this.listControlApplications.Size = new System.Drawing.Size(176, 286);
-            this.listControlApplications.TabIndex = 9;
-            this.listControlApplications.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listControlApplications_MouseDown);
-            this.listControlApplications.SelectedIndexChanged += new System.EventHandler(this.listControlApplications_SelectedIndexChanged);
-            // 
-            // listControlApplicationNotifications
-            // 
-            this.listControlApplicationNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.listControlApplicationNotifications.BackColor = System.Drawing.Color.White;
-            this.listControlApplicationNotifications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.listControlApplicationNotifications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listControlApplicationNotifications.HeaderText = "Notification Type";
-            this.listControlApplicationNotifications.IsDefaultComparer = null;
-            this.listControlApplicationNotifications.Location = new System.Drawing.Point(7, 57);
-            this.listControlApplicationNotifications.Name = "listControlApplicationNotifications";
-            this.listControlApplicationNotifications.SelectedIndex = -1;
-            this.listControlApplicationNotifications.SelectedItem = null;
-            this.listControlApplicationNotifications.Size = new System.Drawing.Size(176, 229);
-            this.listControlApplicationNotifications.TabIndex = 7;
-            this.listControlApplicationNotifications.SelectedIndexChanged += new System.EventHandler(this.listControlApplicationNotifications_SelectedIndexChanged);
-            // 
-            // buttonUnsubscribe
-            // 
-            this.buttonUnsubscribe.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
-            this.buttonUnsubscribe.Enabled = false;
-            this.buttonUnsubscribe.Image = global::Growl.Properties.Resources.button_remove;
-            this.buttonUnsubscribe.Location = new System.Drawing.Point(379, 225);
-            this.buttonUnsubscribe.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonUnsubscribe.Name = "buttonUnsubscribe";
-            this.buttonUnsubscribe.Size = new System.Drawing.Size(32, 32);
-            this.buttonUnsubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonUnsubscribe.TabIndex = 10;
-            this.buttonUnsubscribe.TabStop = false;
-            this.buttonUnsubscribe.Click += new System.EventHandler(this.buttonUnsubscribe_Click);
-            // 
-            // buttonSubscribe
-            // 
-            this.buttonSubscribe.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonSubscribe.Image = global::Growl.Properties.Resources.button_add;
-            this.buttonSubscribe.Location = new System.Drawing.Point(343, 225);
-            this.buttonSubscribe.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonSubscribe.Name = "buttonSubscribe";
-            this.buttonSubscribe.Size = new System.Drawing.Size(32, 32);
-            this.buttonSubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonSubscribe.TabIndex = 9;
-            this.buttonSubscribe.TabStop = false;
-            this.buttonSubscribe.Click += new System.EventHandler(this.buttonSubscribe_Click);
-            // 
-            // subscribedListView
-            // 
-            this.subscribedListView.Computers = null;
-            this.subscribedListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.subscribedListView.LabelWrap = false;
-            this.subscribedListView.Location = new System.Drawing.Point(339, 38);
-            this.subscribedListView.MultiSelect = false;
-            this.subscribedListView.Name = "subscribedListView";
-            this.subscribedListView.OwnerDraw = true;
-            this.subscribedListView.ShowItemToolTips = true;
-            this.subscribedListView.Size = new System.Drawing.Size(307, 184);
-            this.subscribedListView.TabIndex = 8;
-            this.subscribedListView.TileSize = new System.Drawing.Size(281, 56);
-            this.subscribedListView.UseCompatibleStateImageBehavior = false;
-            this.subscribedListView.View = System.Windows.Forms.View.Tile;
-            this.subscribedListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.subscribedListView_ItemSelectionChanged);
-            // 
-            // buttonRemoveComputer
-            // 
-            this.buttonRemoveComputer.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
-            this.buttonRemoveComputer.Enabled = false;
-            this.buttonRemoveComputer.Image = global::Growl.Properties.Resources.button_remove;
-            this.buttonRemoveComputer.Location = new System.Drawing.Point(59, 225);
-            this.buttonRemoveComputer.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonRemoveComputer.Name = "buttonRemoveComputer";
-            this.buttonRemoveComputer.Size = new System.Drawing.Size(32, 32);
-            this.buttonRemoveComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonRemoveComputer.TabIndex = 3;
-            this.buttonRemoveComputer.TabStop = false;
-            this.buttonRemoveComputer.Click += new System.EventHandler(this.buttonRemoveComputer_Click);
-            // 
-            // buttonAddComputer
-            // 
-            this.buttonAddComputer.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonAddComputer.Image = global::Growl.Properties.Resources.button_add;
-            this.buttonAddComputer.Location = new System.Drawing.Point(23, 225);
-            this.buttonAddComputer.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonAddComputer.Name = "buttonAddComputer";
-            this.buttonAddComputer.Size = new System.Drawing.Size(32, 32);
-            this.buttonAddComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonAddComputer.TabIndex = 2;
-            this.buttonAddComputer.TabStop = false;
-            this.buttonAddComputer.Click += new System.EventHandler(this.buttonAddComputer_Click);
-            // 
-            // forwardListView
-            // 
-            this.forwardListView.Computers = null;
-            this.forwardListView.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.forwardListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.forwardListView.LabelWrap = false;
-            this.forwardListView.Location = new System.Drawing.Point(16, 38);
-            this.forwardListView.MultiSelect = false;
-            this.forwardListView.Name = "forwardListView";
-            this.forwardListView.OwnerDraw = true;
-            this.forwardListView.ShowItemToolTips = true;
-            this.forwardListView.Size = new System.Drawing.Size(307, 184);
-            this.forwardListView.TabIndex = 1;
-            this.forwardListView.TileSize = new System.Drawing.Size(281, 56);
-            this.forwardListView.UseCompatibleStateImageBehavior = false;
-            this.forwardListView.View = System.Windows.Forms.View.Tile;
-            this.forwardListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.forwardListView_MouseDown);
-            this.forwardListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.forwardListView_ItemSelectionChanged);
-            // 
-            // onOffButton1
-            // 
-            this.onOffButton1.Image = ((System.Drawing.Image)(resources.GetObject("onOffButton1.Image")));
-            this.onOffButton1.Location = new System.Drawing.Point(22, 17);
-            this.onOffButton1.Name = "onOffButton1";
-            this.onOffButton1.On = false;
-            this.onOffButton1.Size = new System.Drawing.Size(94, 27);
-            this.onOffButton1.TabIndex = 0;
-            this.onOffButton1.TabStop = false;
-            // 
-            // listControlDisplays
-            // 
-            this.listControlDisplays.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.listControlDisplays.BackColor = System.Drawing.Color.White;
-            this.listControlDisplays.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.listControlDisplays.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listControlDisplays.HeaderText = "Display Name";
-            this.listControlDisplays.IsDefaultComparer = null;
-            this.listControlDisplays.Location = new System.Drawing.Point(4, 4);
-            this.listControlDisplays.Name = "listControlDisplays";
-            this.listControlDisplays.SelectedIndex = -1;
-            this.listControlDisplays.SelectedItem = null;
-            this.listControlDisplays.Size = new System.Drawing.Size(176, 286);
-            this.listControlDisplays.TabIndex = 2;
-            this.listControlDisplays.SelectedIndexChanged += new System.EventHandler(this.listControlDisplays_SelectedIndexChanged);
-            // 
-            // buttonSetAsDefault
-            // 
-            this.buttonSetAsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetAsDefault.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonSetAsDefault.BackgroundImage")));
-            this.buttonSetAsDefault.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonSetAsDefault.FlatAppearance.BorderSize = 0;
-            this.buttonSetAsDefault.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonSetAsDefault.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonSetAsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSetAsDefault.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
-            this.buttonSetAsDefault.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonSetAsDefault.Location = new System.Drawing.Point(279, 241);
-            this.buttonSetAsDefault.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonSetAsDefault.Name = "buttonSetAsDefault";
-            this.buttonSetAsDefault.Size = new System.Drawing.Size(106, 32);
-            this.buttonSetAsDefault.TabIndex = 3;
-            this.buttonSetAsDefault.Text = "Set as Default";
-            this.buttonSetAsDefault.UseVisualStyleBackColor = true;
-            this.buttonSetAsDefault.Click += new System.EventHandler(this.buttonSetAsDefault_Click);
-            // 
-            // buttonPreviewDisplay
-            // 
-            this.buttonPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPreviewDisplay.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonPreviewDisplay.BackgroundImage")));
-            this.buttonPreviewDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonPreviewDisplay.FlatAppearance.BorderSize = 0;
-            this.buttonPreviewDisplay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonPreviewDisplay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonPreviewDisplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPreviewDisplay.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
-            this.buttonPreviewDisplay.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonPreviewDisplay.Location = new System.Drawing.Point(391, 241);
-            this.buttonPreviewDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonPreviewDisplay.Name = "buttonPreviewDisplay";
-            this.buttonPreviewDisplay.Size = new System.Drawing.Size(73, 32);
-            this.buttonPreviewDisplay.TabIndex = 3;
-            this.buttonPreviewDisplay.Text = "Preview";
-            this.buttonPreviewDisplay.UseVisualStyleBackColor = true;
-            this.buttonPreviewDisplay.Click += new System.EventHandler(this.buttonPreviewDisplay_Click);
-            // 
-            // passwordManagerControl1
-            // 
-            this.passwordManagerControl1.BackColor = System.Drawing.Color.Transparent;
-            this.passwordManagerControl1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordManagerControl1.Location = new System.Drawing.Point(399, 38);
-            this.passwordManagerControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.passwordManagerControl1.Name = "passwordManagerControl1";
-            this.passwordManagerControl1.Size = new System.Drawing.Size(199, 244);
-            this.passwordManagerControl1.TabIndex = 15;
-            // 
-            // buttonClearHistory
-            // 
-            this.buttonClearHistory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonClearHistory.BackgroundImage")));
-            this.buttonClearHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonClearHistory.FlatAppearance.BorderSize = 0;
-            this.buttonClearHistory.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonClearHistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonClearHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonClearHistory.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
-            this.buttonClearHistory.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonClearHistory.Location = new System.Drawing.Point(107, 209);
-            this.buttonClearHistory.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonClearHistory.Name = "buttonClearHistory";
-            this.buttonClearHistory.Size = new System.Drawing.Size(73, 32);
-            this.buttonClearHistory.TabIndex = 3;
-            this.buttonClearHistory.Text = "Clear";
-            this.buttonClearHistory.UseVisualStyleBackColor = true;
-            this.buttonClearHistory.Click += new System.EventHandler(this.buttonClearHistory_Click);
-            // 
-            // historyListView
-            // 
-            this.historyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
-            this.historyListView.FullRowSelect = true;
-            this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
-            listViewGroup1.Header = "Today";
-            listViewGroup1.Name = "Today";
-            listViewGroup2.Header = "Yesterday";
-            listViewGroup2.Name = "Yesterday";
-            listViewGroup3.Header = "Saturday";
-            listViewGroup3.Name = "Saturday";
-            listViewGroup4.Header = "Friday";
-            listViewGroup4.Name = "Friday";
-            listViewGroup5.Header = "Thursday";
-            listViewGroup5.Name = "Thursday";
-            listViewGroup6.Header = "Wednesday";
-            listViewGroup6.Name = "Wednesday";
-            listViewGroup7.Header = "Tuesday";
-            listViewGroup7.Name = "Tuesday";
-            listViewGroup8.Header = "Today";
-            listViewGroup8.Name = "Today";
-            listViewGroup9.Header = "Yesterday";
-            listViewGroup9.Name = "Yesterday";
-            listViewGroup10.Header = "Saturday";
-            listViewGroup10.Name = "Saturday";
-            listViewGroup11.Header = "Friday";
-            listViewGroup11.Name = "Friday";
-            listViewGroup12.Header = "Thursday";
-            listViewGroup12.Name = "Thursday";
-            listViewGroup13.Header = "Wednesday";
-            listViewGroup13.Name = "Wednesday";
-            listViewGroup14.Header = "Tuesday";
-            listViewGroup14.Name = "Tuesday";
-            listViewGroup15.Header = "Today";
-            listViewGroup15.Name = "Today";
-            listViewGroup16.Header = "Yesterday";
-            listViewGroup16.Name = "Yesterday";
-            listViewGroup17.Header = "Wednesday";
-            listViewGroup17.Name = "Wednesday";
-            listViewGroup18.Header = "Tuesday";
-            listViewGroup18.Name = "Tuesday";
-            listViewGroup19.Header = "Monday";
-            listViewGroup19.Name = "Monday";
-            listViewGroup20.Header = "Sunday";
-            listViewGroup20.Name = "Sunday";
-            listViewGroup21.Header = "Saturday";
-            listViewGroup21.Name = "Saturday";
-            listViewGroup22.Header = "Today";
-            listViewGroup22.Name = "Today";
-            listViewGroup23.Header = "Yesterday";
-            listViewGroup23.Name = "Yesterday";
-            listViewGroup24.Header = "Wednesday";
-            listViewGroup24.Name = "Wednesday";
-            listViewGroup25.Header = "Tuesday";
-            listViewGroup25.Name = "Tuesday";
-            listViewGroup26.Header = "Monday";
-            listViewGroup26.Name = "Monday";
-            listViewGroup27.Header = "Sunday";
-            listViewGroup27.Name = "Sunday";
-            listViewGroup28.Header = "Saturday";
-            listViewGroup28.Name = "Saturday";
-            listViewGroup29.Header = "Today";
-            listViewGroup29.Name = "Today";
-            listViewGroup30.Header = "Yesterday";
-            listViewGroup30.Name = "Yesterday";
-            listViewGroup31.Header = "Wednesday";
-            listViewGroup31.Name = "Wednesday";
-            listViewGroup32.Header = "Tuesday";
-            listViewGroup32.Name = "Tuesday";
-            listViewGroup33.Header = "Monday";
-            listViewGroup33.Name = "Monday";
-            listViewGroup34.Header = "Sunday";
-            listViewGroup34.Name = "Sunday";
-            listViewGroup35.Header = "Saturday";
-            listViewGroup35.Name = "Saturday";
-            listViewGroup36.Header = "Today";
-            listViewGroup36.Name = "Today";
-            listViewGroup37.Header = "Yesterday";
-            listViewGroup37.Name = "Yesterday";
-            listViewGroup38.Header = "Wednesday";
-            listViewGroup38.Name = "Wednesday";
-            listViewGroup39.Header = "Tuesday";
-            listViewGroup39.Name = "Tuesday";
-            listViewGroup40.Header = "Monday";
-            listViewGroup40.Name = "Monday";
-            listViewGroup41.Header = "Sunday";
-            listViewGroup41.Name = "Sunday";
-            listViewGroup42.Header = "Saturday";
-            listViewGroup42.Name = "Saturday";
-            listViewGroup43.Header = "Today";
-            listViewGroup43.Name = "Today";
-            listViewGroup44.Header = "Yesterday";
-            listViewGroup44.Name = "Yesterday";
-            listViewGroup45.Header = "Wednesday";
-            listViewGroup45.Name = "Wednesday";
-            listViewGroup46.Header = "Tuesday";
-            listViewGroup46.Name = "Tuesday";
-            listViewGroup47.Header = "Monday";
-            listViewGroup47.Name = "Monday";
-            listViewGroup48.Header = "Sunday";
-            listViewGroup48.Name = "Sunday";
-            listViewGroup49.Header = "Saturday";
-            listViewGroup49.Name = "Saturday";
-            listViewGroup50.Header = "Today";
-            listViewGroup50.Name = "Today";
-            listViewGroup51.Header = "Yesterday";
-            listViewGroup51.Name = "Yesterday";
-            listViewGroup52.Header = "Wednesday";
-            listViewGroup52.Name = "Wednesday";
-            listViewGroup53.Header = "Tuesday";
-            listViewGroup53.Name = "Tuesday";
-            listViewGroup54.Header = "Monday";
-            listViewGroup54.Name = "Monday";
-            listViewGroup55.Header = "Sunday";
-            listViewGroup55.Name = "Sunday";
-            listViewGroup56.Header = "Saturday";
-            listViewGroup56.Name = "Saturday";
-            listViewGroup57.Header = "Today";
-            listViewGroup57.Name = "Today";
-            listViewGroup58.Header = "Yesterday";
-            listViewGroup58.Name = "Yesterday";
-            listViewGroup59.Header = "Wednesday";
-            listViewGroup59.Name = "Wednesday";
-            listViewGroup60.Header = "Tuesday";
-            listViewGroup60.Name = "Tuesday";
-            listViewGroup61.Header = "Monday";
-            listViewGroup61.Name = "Monday";
-            listViewGroup62.Header = "Sunday";
-            listViewGroup62.Name = "Sunday";
-            listViewGroup63.Header = "Saturday";
-            listViewGroup63.Name = "Saturday";
-            listViewGroup64.Header = "Today";
-            listViewGroup64.Name = "Today";
-            listViewGroup65.Header = "Yesterday";
-            listViewGroup65.Name = "Yesterday";
-            listViewGroup66.Header = "Wednesday";
-            listViewGroup66.Name = "Wednesday";
-            listViewGroup67.Header = "Tuesday";
-            listViewGroup67.Name = "Tuesday";
-            listViewGroup68.Header = "Monday";
-            listViewGroup68.Name = "Monday";
-            listViewGroup69.Header = "Sunday";
-            listViewGroup69.Name = "Sunday";
-            listViewGroup70.Header = "Saturday";
-            listViewGroup70.Name = "Saturday";
-            listViewGroup71.Header = "Today";
-            listViewGroup71.Name = "Today";
-            listViewGroup72.Header = "Yesterday";
-            listViewGroup72.Name = "Yesterday";
-            listViewGroup73.Header = "Wednesday";
-            listViewGroup73.Name = "Wednesday";
-            listViewGroup74.Header = "Tuesday";
-            listViewGroup74.Name = "Tuesday";
-            listViewGroup75.Header = "Monday";
-            listViewGroup75.Name = "Monday";
-            listViewGroup76.Header = "Sunday";
-            listViewGroup76.Name = "Sunday";
-            listViewGroup77.Header = "Saturday";
-            listViewGroup77.Name = "Saturday";
-            listViewGroup78.Header = "Today";
-            listViewGroup78.Name = "Today";
-            listViewGroup79.Header = "Yesterday";
-            listViewGroup79.Name = "Yesterday";
-            listViewGroup80.Header = "Wednesday";
-            listViewGroup80.Name = "Wednesday";
-            listViewGroup81.Header = "Tuesday";
-            listViewGroup81.Name = "Tuesday";
-            listViewGroup82.Header = "Monday";
-            listViewGroup82.Name = "Monday";
-            listViewGroup83.Header = "Sunday";
-            listViewGroup83.Name = "Sunday";
-            listViewGroup84.Header = "Saturday";
-            listViewGroup84.Name = "Saturday";
-            listViewGroup85.Header = "Today";
-            listViewGroup85.Name = "Today";
-            listViewGroup86.Header = "Yesterday";
-            listViewGroup86.Name = "Yesterday";
-            listViewGroup87.Header = "Wednesday";
-            listViewGroup87.Name = "Wednesday";
-            listViewGroup88.Header = "Tuesday";
-            listViewGroup88.Name = "Tuesday";
-            listViewGroup89.Header = "Monday";
-            listViewGroup89.Name = "Monday";
-            listViewGroup90.Header = "Sunday";
-            listViewGroup90.Name = "Sunday";
-            listViewGroup91.Header = "Saturday";
-            listViewGroup91.Name = "Saturday";
-            listViewGroup92.Header = "Today";
-            listViewGroup92.Name = "Today";
-            listViewGroup93.Header = "Yesterday";
-            listViewGroup93.Name = "Yesterday";
-            listViewGroup94.Header = "Wednesday";
-            listViewGroup94.Name = "Wednesday";
-            listViewGroup95.Header = "Tuesday";
-            listViewGroup95.Name = "Tuesday";
-            listViewGroup96.Header = "Monday";
-            listViewGroup96.Name = "Monday";
-            listViewGroup97.Header = "Sunday";
-            listViewGroup97.Name = "Sunday";
-            listViewGroup98.Header = "Saturday";
-            listViewGroup98.Name = "Saturday";
-            listViewGroup99.Header = "Today";
-            listViewGroup99.Name = "Today";
-            listViewGroup100.Header = "Yesterday";
-            listViewGroup100.Name = "Yesterday";
-            listViewGroup101.Header = "Sunday";
-            listViewGroup101.Name = "Sunday";
-            listViewGroup102.Header = "Saturday";
-            listViewGroup102.Name = "Saturday";
-            listViewGroup103.Header = "Friday";
-            listViewGroup103.Name = "Friday";
-            listViewGroup104.Header = "Thursday";
-            listViewGroup104.Name = "Thursday";
-            listViewGroup105.Header = "Wednesday";
-            listViewGroup105.Name = "Wednesday";
-            listViewGroup106.Header = "Today";
-            listViewGroup106.Name = "Today";
-            listViewGroup107.Header = "Yesterday";
-            listViewGroup107.Name = "Yesterday";
-            listViewGroup108.Header = "Sunday";
-            listViewGroup108.Name = "Sunday";
-            listViewGroup109.Header = "Saturday";
-            listViewGroup109.Name = "Saturday";
-            listViewGroup110.Header = "Friday";
-            listViewGroup110.Name = "Friday";
-            listViewGroup111.Header = "Thursday";
-            listViewGroup111.Name = "Thursday";
-            listViewGroup112.Header = "Wednesday";
-            listViewGroup112.Name = "Wednesday";
-            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3,
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6,
-            listViewGroup7,
-            listViewGroup8,
-            listViewGroup9,
-            listViewGroup10,
-            listViewGroup11,
-            listViewGroup12,
-            listViewGroup13,
-            listViewGroup14,
-            listViewGroup15,
-            listViewGroup16,
-            listViewGroup17,
-            listViewGroup18,
-            listViewGroup19,
-            listViewGroup20,
-            listViewGroup21,
-            listViewGroup22,
-            listViewGroup23,
-            listViewGroup24,
-            listViewGroup25,
-            listViewGroup26,
-            listViewGroup27,
-            listViewGroup28,
-            listViewGroup29,
-            listViewGroup30,
-            listViewGroup31,
-            listViewGroup32,
-            listViewGroup33,
-            listViewGroup34,
-            listViewGroup35,
-            listViewGroup36,
-            listViewGroup37,
-            listViewGroup38,
-            listViewGroup39,
-            listViewGroup40,
-            listViewGroup41,
-            listViewGroup42,
-            listViewGroup43,
-            listViewGroup44,
-            listViewGroup45,
-            listViewGroup46,
-            listViewGroup47,
-            listViewGroup48,
-            listViewGroup49,
-            listViewGroup50,
-            listViewGroup51,
-            listViewGroup52,
-            listViewGroup53,
-            listViewGroup54,
-            listViewGroup55,
-            listViewGroup56,
-            listViewGroup57,
-            listViewGroup58,
-            listViewGroup59,
-            listViewGroup60,
-            listViewGroup61,
-            listViewGroup62,
-            listViewGroup63,
-            listViewGroup64,
-            listViewGroup65,
-            listViewGroup66,
-            listViewGroup67,
-            listViewGroup68,
-            listViewGroup69,
-            listViewGroup70,
-            listViewGroup71,
-            listViewGroup72,
-            listViewGroup73,
-            listViewGroup74,
-            listViewGroup75,
-            listViewGroup76,
-            listViewGroup77,
-            listViewGroup78,
-            listViewGroup79,
-            listViewGroup80,
-            listViewGroup81,
-            listViewGroup82,
-            listViewGroup83,
-            listViewGroup84,
-            listViewGroup85,
-            listViewGroup86,
-            listViewGroup87,
-            listViewGroup88,
-            listViewGroup89,
-            listViewGroup90,
-            listViewGroup91,
-            listViewGroup92,
-            listViewGroup93,
-            listViewGroup94,
-            listViewGroup95,
-            listViewGroup96,
-            listViewGroup97,
-            listViewGroup98,
-            listViewGroup99,
-            listViewGroup100,
-            listViewGroup101,
-            listViewGroup102,
-            listViewGroup103,
-            listViewGroup104,
-            listViewGroup105,
-            listViewGroup106,
-            listViewGroup107,
-            listViewGroup108,
-            listViewGroup109,
-            listViewGroup110,
-            listViewGroup111,
-            listViewGroup112});
-            this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem1.Group = listViewGroup1;
-            listViewItem2.Group = listViewGroup2;
-            listViewItem3.Group = listViewGroup3;
-            listViewItem4.Group = listViewGroup4;
-            listViewItem5.Group = listViewGroup5;
-            listViewItem6.Group = listViewGroup6;
-            listViewItem7.Group = listViewGroup7;
-            listViewItem8.Group = listViewGroup8;
-            listViewItem9.Group = listViewGroup9;
-            listViewItem10.Group = listViewGroup10;
-            listViewItem11.Group = listViewGroup11;
-            listViewItem12.Group = listViewGroup12;
-            listViewItem13.Group = listViewGroup13;
-            listViewItem14.Group = listViewGroup14;
-            listViewItem15.Group = listViewGroup15;
-            listViewItem16.Group = listViewGroup16;
-            listViewItem17.Group = listViewGroup17;
-            listViewItem18.Group = listViewGroup18;
-            listViewItem19.Group = listViewGroup19;
-            listViewItem20.Group = listViewGroup20;
-            listViewItem21.Group = listViewGroup21;
-            listViewItem22.Group = listViewGroup22;
-            listViewItem23.Group = listViewGroup23;
-            listViewItem24.Group = listViewGroup24;
-            listViewItem25.Group = listViewGroup25;
-            listViewItem26.Group = listViewGroup26;
-            listViewItem27.Group = listViewGroup27;
-            listViewItem28.Group = listViewGroup28;
-            listViewItem29.Group = listViewGroup29;
-            listViewItem30.Group = listViewGroup30;
-            listViewItem31.Group = listViewGroup31;
-            listViewItem32.Group = listViewGroup32;
-            listViewItem33.Group = listViewGroup33;
-            listViewItem34.Group = listViewGroup34;
-            listViewItem35.Group = listViewGroup35;
-            listViewItem36.Group = listViewGroup36;
-            listViewItem37.Group = listViewGroup37;
-            listViewItem38.Group = listViewGroup38;
-            listViewItem39.Group = listViewGroup39;
-            listViewItem40.Group = listViewGroup40;
-            listViewItem41.Group = listViewGroup41;
-            listViewItem42.Group = listViewGroup42;
-            listViewItem43.Group = listViewGroup43;
-            listViewItem44.Group = listViewGroup44;
-            listViewItem45.Group = listViewGroup45;
-            listViewItem46.Group = listViewGroup46;
-            listViewItem47.Group = listViewGroup47;
-            listViewItem48.Group = listViewGroup48;
-            listViewItem49.Group = listViewGroup49;
-            listViewItem50.Group = listViewGroup50;
-            listViewItem51.Group = listViewGroup51;
-            listViewItem52.Group = listViewGroup52;
-            listViewItem53.Group = listViewGroup53;
-            listViewItem54.Group = listViewGroup54;
-            listViewItem55.Group = listViewGroup55;
-            listViewItem56.Group = listViewGroup56;
-            listViewItem57.Group = listViewGroup57;
-            listViewItem58.Group = listViewGroup58;
-            listViewItem59.Group = listViewGroup59;
-            listViewItem60.Group = listViewGroup60;
-            listViewItem61.Group = listViewGroup61;
-            listViewItem62.Group = listViewGroup62;
-            listViewItem63.Group = listViewGroup63;
-            listViewItem64.Group = listViewGroup64;
-            listViewItem65.Group = listViewGroup65;
-            listViewItem66.Group = listViewGroup66;
-            listViewItem67.Group = listViewGroup67;
-            listViewItem68.Group = listViewGroup68;
-            listViewItem69.Group = listViewGroup69;
-            listViewItem70.Group = listViewGroup70;
-            listViewItem71.Group = listViewGroup71;
-            listViewItem72.Group = listViewGroup72;
-            listViewItem73.Group = listViewGroup73;
-            listViewItem74.Group = listViewGroup74;
-            listViewItem75.Group = listViewGroup75;
-            listViewItem76.Group = listViewGroup76;
-            listViewItem77.Group = listViewGroup77;
-            listViewItem78.Group = listViewGroup78;
-            listViewItem79.Group = listViewGroup79;
-            listViewItem80.Group = listViewGroup80;
-            listViewItem81.Group = listViewGroup81;
-            listViewItem82.Group = listViewGroup82;
-            listViewItem83.Group = listViewGroup83;
-            listViewItem84.Group = listViewGroup84;
-            listViewItem85.Group = listViewGroup85;
-            listViewItem86.Group = listViewGroup86;
-            listViewItem87.Group = listViewGroup87;
-            listViewItem88.Group = listViewGroup88;
-            listViewItem89.Group = listViewGroup89;
-            listViewItem90.Group = listViewGroup90;
-            listViewItem91.Group = listViewGroup91;
-            listViewItem92.Group = listViewGroup92;
-            listViewItem93.Group = listViewGroup93;
-            listViewItem94.Group = listViewGroup94;
-            listViewItem95.Group = listViewGroup95;
-            listViewItem96.Group = listViewGroup96;
-            listViewItem97.Group = listViewGroup97;
-            listViewItem98.Group = listViewGroup98;
-            listViewItem99.Group = listViewGroup99;
-            listViewItem100.Group = listViewGroup100;
-            listViewItem101.Group = listViewGroup101;
-            listViewItem102.Group = listViewGroup102;
-            listViewItem103.Group = listViewGroup103;
-            listViewItem104.Group = listViewGroup104;
-            listViewItem105.Group = listViewGroup105;
-            listViewItem106.Group = listViewGroup106;
-            listViewItem107.Group = listViewGroup107;
-            listViewItem108.Group = listViewGroup108;
-            listViewItem109.Group = listViewGroup109;
-            listViewItem110.Group = listViewGroup110;
-            listViewItem111.Group = listViewGroup111;
-            listViewItem112.Group = listViewGroup112;
-            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16,
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20,
-            listViewItem21,
-            listViewItem22,
-            listViewItem23,
-            listViewItem24,
-            listViewItem25,
-            listViewItem26,
-            listViewItem27,
-            listViewItem28,
-            listViewItem29,
-            listViewItem30,
-            listViewItem31,
-            listViewItem32,
-            listViewItem33,
-            listViewItem34,
-            listViewItem35,
-            listViewItem36,
-            listViewItem37,
-            listViewItem38,
-            listViewItem39,
-            listViewItem40,
-            listViewItem41,
-            listViewItem42,
-            listViewItem43,
-            listViewItem44,
-            listViewItem45,
-            listViewItem46,
-            listViewItem47,
-            listViewItem48,
-            listViewItem49,
-            listViewItem50,
-            listViewItem51,
-            listViewItem52,
-            listViewItem53,
-            listViewItem54,
-            listViewItem55,
-            listViewItem56,
-            listViewItem57,
-            listViewItem58,
-            listViewItem59,
-            listViewItem60,
-            listViewItem61,
-            listViewItem62,
-            listViewItem63,
-            listViewItem64,
-            listViewItem65,
-            listViewItem66,
-            listViewItem67,
-            listViewItem68,
-            listViewItem69,
-            listViewItem70,
-            listViewItem71,
-            listViewItem72,
-            listViewItem73,
-            listViewItem74,
-            listViewItem75,
-            listViewItem76,
-            listViewItem77,
-            listViewItem78,
-            listViewItem79,
-            listViewItem80,
-            listViewItem81,
-            listViewItem82,
-            listViewItem83,
-            listViewItem84,
-            listViewItem85,
-            listViewItem86,
-            listViewItem87,
-            listViewItem88,
-            listViewItem89,
-            listViewItem90,
-            listViewItem91,
-            listViewItem92,
-            listViewItem93,
-            listViewItem94,
-            listViewItem95,
-            listViewItem96,
-            listViewItem97,
-            listViewItem98,
-            listViewItem99,
-            listViewItem100,
-            listViewItem101,
-            listViewItem102,
-            listViewItem103,
-            listViewItem104,
-            listViewItem105,
-            listViewItem106,
-            listViewItem107,
-            listViewItem108,
-            listViewItem109,
-            listViewItem110,
-            listViewItem111,
-            listViewItem112});
-            this.historyListView.LabelWrap = false;
-            this.historyListView.Location = new System.Drawing.Point(196, 5);
-            this.historyListView.MultiSelect = false;
-            this.historyListView.Name = "historyListView";
-            this.historyListView.NumberOfDays = 7;
-            this.historyListView.OwnerDraw = true;
-            this.historyListView.PastNotifications = null;
-            this.historyListView.ShowItemToolTips = true;
-            this.historyListView.Size = new System.Drawing.Size(460, 284);
-            this.historyListView.TabIndex = 2;
-            this.historyListView.TileSize = new System.Drawing.Size(205, 56);
-            this.historyListView.UseCompatibleStateImageBehavior = false;
-            this.historyListView.UseCustomToolTips = false;
-            this.historyListView.View = System.Windows.Forms.View.Tile;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2549,6 +2713,7 @@ namespace Growl
             this.panelGeneral.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).EndInit();
             this.groupBoxIdleSettings.ResumeLayout(false);
             this.groupBoxIdleSettings.PerformLayout();
             this.groupBoxSoundSettings.ResumeLayout(false);
@@ -2578,16 +2743,15 @@ namespace Growl
             this.panelInitializing.PerformLayout();
             this.panelNetwork.ResumeLayout(false);
             this.panelNetwork.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.buttonUnsubscribe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.buttonSubscribe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.buttonRemoveComputer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.buttonAddComputer)).EndInit();
             this.contextMenuStripApplications.ResumeLayout(false);
             this.contextMenuStripForwardComputers.ResumeLayout(false);
             this.toolbarPanel.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonUnsubscribe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonSubscribe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonRemoveComputer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonAddComputer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2695,5 +2859,7 @@ namespace Growl
         private Growl.UI.ButtonEx buttonSetAsDefault;
         private System.Windows.Forms.CheckBox checkBoxMuteAllSounds;
         private System.Windows.Forms.Label labelNoAppsDesc;
+        private System.Windows.Forms.Label labelPrefDuration;
+        private System.Windows.Forms.ComboBox comboBoxPrefDuration;
     }
 }

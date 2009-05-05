@@ -84,6 +84,8 @@ namespace Growl.Displays.Smokestack
         {
             base.SetNotification(n);
 
+            if(n.Duration > 0) this.AutoClose(n.Duration * 1000);
+
             //this.image = n.GetImage();
             this.image = n.Image;
 

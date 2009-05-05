@@ -45,6 +45,7 @@ namespace Growl
             this.labelPrefPriority.Text = Properties.Resources.Applications_Preferences_PriorityLabel;
             this.labelPrefForward.Text = Properties.Resources.Applications_Preferences_ForwardingLabel;
             this.labelPrefDisplay.Text = Properties.Resources.Applications_Preferences_DisplayLabel;
+            this.labelPrefDuration.Text = Properties.Resources.Applications_Preferences_DurationLabel;
             this.labelPrefEnabled.Text = Properties.Resources.Applications_Preferences_EnabledLabel;
             this.labelNoApps.Text = Properties.Resources.Applications_NoAppsRegistered_Title;
             this.labelNoAppsDesc.Text = Properties.Resources.Applications_NoAppsRegistered_Description;
@@ -613,6 +614,10 @@ namespace Growl
             this.comboBoxPrefDisplay.SelectedItem = prefs.PrefDisplay;
             this.comboBoxPrefDisplay.Tag = prefs;
 
+            this.comboBoxPrefDuration.DataSource = PrefDuration.GetList(true);
+            this.comboBoxPrefDuration.SelectedItem = prefs.PrefDuration;
+            this.comboBoxPrefDuration.Tag = prefs;
+
             this.comboBoxPrefSticky.DataSource = PrefSticky.GetList(true);
             this.comboBoxPrefSticky.SelectedItem = prefs.PrefSticky;
             this.comboBoxPrefSticky.Tag = prefs;
@@ -1050,6 +1055,16 @@ namespace Growl
         private void checkBoxMuteAllSounds_CheckedChanged(object sender, EventArgs e)
         {
             ApplicationMain.Program.Mute(this.checkBoxMuteAllSounds.Checked);
+        }
+
+        private void comboBoxPrefDuration_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            NotificationPreferences prefs = (NotificationPreferences)this.comboBoxPrefDuration.Tag;
+            if (prefs != null)
+            {
+                PrefDuration prefDuration = (PrefDuration)this.comboBoxPrefDuration.SelectedItem;
+                prefs.PrefDuration = prefDuration;
+            }
         }
     }
 }
