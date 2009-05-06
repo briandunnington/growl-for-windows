@@ -45,6 +45,7 @@
     <Compile Include="CallbackInfo.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="FlashPolicy.cs" />
+    <Compile Include="GNTPStreamReader.cs" />
     <Compile Include="GrowlServer.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="Pointer.cs" />

@@ -1193,10 +1193,9 @@ namespace Growl.Daemon
             System.IO.MemoryStream stream = new System.IO.MemoryStream(decryptedBytes);
             using (stream)
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader(stream);
+                GNTPStreamReader reader = new GNTPStreamReader(stream);
                 using (reader)
                 {
-
                     // main headers
                     while (!reader.EndOfStream)
                     {

@@ -1535,9 +1535,16 @@ namespace Growl.Daemon
 		{
 			if (socket != null && socket.Connected)
 			{
-				IPEndPoint ep = (IPEndPoint)socket.RemoteEndPoint;
-				if (ep != null)
-					return ep.Address;
+                try
+                {
+                    IPEndPoint ep = (IPEndPoint)socket.RemoteEndPoint;
+                    if (ep != null)
+                        return ep.Address;
+                }
+                catch
+                {
+                    // we might encounter a WSAEWOULDBLOCK exception, but we dont care
+                }
 			}
 			return null;
 		}
@@ -1546,9 +1553,16 @@ namespace Growl.Daemon
 		{
 			if (socket != null && socket.Connected)
 			{
-				IPEndPoint ep = (IPEndPoint)socket.RemoteEndPoint;
-				if (ep != null)
-					return (UInt16)ep.Port;
+                try
+                {
+				    IPEndPoint ep = (IPEndPoint)socket.RemoteEndPoint;
+				    if (ep != null)
+                        return (UInt16)ep.Port;
+                }
+                catch
+                {
+                    // we might encounter a WSAEWOULDBLOCK exception, but we dont care
+                }
 			}
 			return 0;
 		}
@@ -1557,9 +1571,16 @@ namespace Growl.Daemon
 		{
 			if (socket != null)
 			{
-				IPEndPoint ep = (IPEndPoint)socket.LocalEndPoint;
-				if (ep != null)
-					return ep.Address;
+                try
+                {
+                    IPEndPoint ep = (IPEndPoint)socket.LocalEndPoint;
+                    if (ep != null)
+                        return ep.Address;
+                }
+                catch
+                {
+                    // we might encounter a WSAEWOULDBLOCK exception, but we dont care
+                }
 			}
 			return null;
 		}
@@ -1568,9 +1589,16 @@ namespace Growl.Daemon
 		{
 			if (socket != null)
 			{
-				IPEndPoint ep = (IPEndPoint)socket.LocalEndPoint;
-				if (ep != null)
-					return (UInt16)ep.Port;
+                try
+                {
+                    IPEndPoint ep = (IPEndPoint)socket.LocalEndPoint;
+                    if (ep != null)
+                        return (UInt16)ep.Port;
+                }
+                catch
+                {
+                    // we might encounter a WSAEWOULDBLOCK exception, but we dont care
+                }
 			}
 			return 0;
 		}
