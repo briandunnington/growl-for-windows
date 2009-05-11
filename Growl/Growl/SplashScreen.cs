@@ -13,8 +13,19 @@ namespace Growl
 {
     public partial class SplashScreen : Form
     {
+        bool appContextLoaded = false;
+        bool showSplashScreen = false;
         int borderWidth = 1;
         int radius = 16;
+
+        public event EventHandler ApplicationContextLoaded;
+
+        [PermissionSet(SecurityAction.LinkDemand, Unrestricted = true)]
+        public SplashScreen(bool showSplashScreen) :
+            this()
+        {
+            this.showSplashScreen = showSplashScreen;
+        }
 
         [PermissionSet(SecurityAction.LinkDemand, Unrestricted = true)]
         public SplashScreen()
@@ -39,6 +50,23 @@ namespace Growl
 
             Region r = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, radius, radius));
             this.Region = r;
+        }
+
+        protected override void SetVisibleCore(bool value)
+        {
+            if (!this.appContextLoaded)
+            {
+                this.appContextLoaded = true;
+                if (this.showSplashScreen) base.SetVisibleCore(value);
+                if (this.ApplicationContextLoaded != null)
+                {
+                    this.ApplicationContextLoaded(this, EventArgs.Empty);
+                }
+            }
+            else
+            {
+                base.SetVisibleCore(value);
+            }
         }
 
         void SplashScreen_Shown(object sender, EventArgs e)

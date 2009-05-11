@@ -8,14 +8,17 @@ namespace Growl
 {
     public class UserSettingsProvider : SettingsProvider
     {
+        public const string FriendlyName = "UserSettingsProvider";
+
         private const string USER_SETTINGS_SECTION_NAME = "userSettings";
         string path = SettingSaver.GetPath("user.config");
+        string pathBackup = SettingSaver.GetPath("user.config.bak");
         string pathAlt = SettingSaver.GetPathAlt("user.config");
         XmlEscaper escaper;
 
         public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
         {
-            if (String.IsNullOrEmpty(name)) name = "UserSettingsProvider";
+            if (String.IsNullOrEmpty(name)) name = FriendlyName;
             base.Initialize(name, config);
         }
 
@@ -27,6 +30,22 @@ namespace Growl
             }
             set
             {
+            }
+        }
+
+        public string FileName
+        {
+            get
+            {
+                return this.path;
+            }
+        }
+
+        public string BackupFileName
+        {
+            get
+            {
+                return this.pathBackup;
             }
         }
 
@@ -82,27 +101,61 @@ namespace Growl
             }
         }
 
-        private ClientSettingsSection GetUserSettings(out Configuration config, bool allowAltPath)
+        private void MakeBackup()
         {
-            string p = this.path;
-            if (!System.IO.File.Exists(p) && allowAltPath) p = this.pathAlt;
+            System.IO.File.Copy(this.FileName, this.BackupFileName, true);
+        }
 
-            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
-            fileMap.ExeConfigFilename = p;
-            config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-            ConfigurationSection configSection = config.GetSection(USER_SETTINGS_SECTION_NAME);
-            ClientSettingsSection clientSettings = null;
-            if (configSection != null)
-            {
-                clientSettings = (ClientSettingsSection)configSection;
-            }
+        private ClientSettingsSection GetUserSettings(out Configuration config, bool tryAlternates)
+        {
+            config = null;
+            string[] files;
+            if (tryAlternates)
+                files = new string[] { this.FileName, this.BackupFileName, this.pathAlt };
             else
-            {
-                clientSettings = new ClientSettingsSection();
-                config.Sections.Add(USER_SETTINGS_SECTION_NAME, clientSettings);
-            }
+                files = new string[] { this.FileName };
 
-            return clientSettings;
+            for (int i = 0; i < files.Length; i++)
+            {
+                string p = files[i];
+                if(tryAlternates)
+                    if (!System.IO.File.Exists(p)) continue;
+
+                try
+                {
+                    ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                    fileMap.ExeConfigFilename = p;
+                    config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+                    ConfigurationSection configSection = config.GetSection(USER_SETTINGS_SECTION_NAME);
+                    ClientSettingsSection clientSettings = null;
+                    if (configSection != null)
+                    {
+                        clientSettings = (ClientSettingsSection)configSection;
+                    }
+                    else
+                    {
+                        clientSettings = new ClientSettingsSection();
+                        config.Sections.Add(USER_SETTINGS_SECTION_NAME, clientSettings);
+                    }
+
+                    // make a backup copy just in case
+                    MakeBackup();
+
+                    return clientSettings;
+                }
+                catch
+                {
+                    // file is corrupt
+                    if (!tryAlternates)
+                    {
+                        System.IO.File.Delete(p);
+                        return GetUserSettings(out config, tryAlternates);
+                    }
+                    else
+                        continue;
+                }
+            }
+            return null;
         }
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]

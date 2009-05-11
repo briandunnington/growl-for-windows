@@ -314,6 +314,7 @@ namespace Growl
                 registryKey.SetValue(APPLICATION_AUTORUN_KEY, this.appPath);
             }
             Properties.Settings.Default.AutoStart = true;
+            Properties.Settings.Default.Save();
         }
 
         public void DisableAutoStart()
@@ -326,6 +327,7 @@ namespace Growl
                 registryKey.DeleteValue(APPLICATION_AUTORUN_KEY);
             }
             Properties.Settings.Default.AutoStart = false;
+            Properties.Settings.Default.Save();
         }
 
         private void SendSystemNotification(string title, string text)
@@ -449,6 +451,7 @@ namespace Growl
                         }
                          * */
 
+                        /*
                         // TODO:
                         System.Net.WebClient webclient = new System.Net.WebClient();
                         using (webclient)
@@ -458,9 +461,36 @@ namespace Growl
                             Uri uri = new Uri(target.Url);
                             webclient.UploadStringAsync(uri, target.Method, data);
                         }
+                         * */
+
+                        // TODO: for now, this will only fire on CLICK since that is the more expected behavior
+                        // TODO: temporary - for now, we just launch the url that was specified
+                        // NOTE: there is probably a huge security risk by doing this (for now, I am relying on UriBuilder to protect us from from other types of commands)
+                        if (result == Growl.CoreLibrary.CallbackResult.CLICK)
+                        {
+                            System.UriBuilder ub = new UriBuilder(target.Url);
+                            if (ub.Query != null && ub.Query.Length > 1)
+                                ub.Query = ub.Query.Substring(1) + "&" + data;
+                            else
+                                ub.Query = data;
+
+                            // do this in another thread so the Process.Start doesnt block
+                            System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ub.Uri.AbsoluteUri);
+                            ThreadPool.QueueUserWorkItem(new WaitCallback(OpenUrl), ub.Uri.AbsoluteUri);
+                        }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Opens a url in the default browser.
+        /// </summary>
+        /// <param name="state">The url to open</param>
+        private void OpenUrl(object state)
+        {
+            string url = (string)state;
+            System.Diagnostics.Process.Start(url);
         }
 
         private void LoadForwardedComputers()
@@ -515,10 +545,30 @@ namespace Growl
 
         private void SaveAppState()
         {
+            SaveApplicationPrefs();
+            SavePasswordPrefs();
+            SaveForwardPrefs();
+            SaveSubsriptionPrefs();
+        }
+
+        public void SaveApplicationPrefs()
+        {
             if (this.raSettingSaver != null) this.raSettingSaver.Save(this.applications);
+        }
+
+        public void SaveForwardPrefs()
+        {
             if (this.fcSettingSaver != null) this.fcSettingSaver.Save(this.forwards);
-            if (this.pmSettingSaver != null) this.pmSettingSaver.Save(this.passwordManager);
+        }
+
+        public void SaveSubsriptionPrefs()
+        {
             if (this.sbSettingSaver != null) this.sbSettingSaver.Save(this.subscriptions);
+        }
+
+        public void SavePasswordPrefs()
+        {
+            if (this.pmSettingSaver != null) this.pmSettingSaver.Save(this.passwordManager);
         }
 
         public Growl.Connector.PasswordManager PasswordManager
@@ -601,6 +651,7 @@ namespace Growl
                 this.growlDefaultDisplay = value;
                 Display.Default.Update(value);
                 Properties.Settings.Default.DefaultDisplay = Display.Default.ActualName;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -614,6 +665,7 @@ namespace Growl
             {
                 this.growlDefaultSound = value;
                 Properties.Settings.Default.DefaultSound = this.growlDefaultSound.SoundFile;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -626,6 +678,7 @@ namespace Growl
             set
             {
                 Properties.Settings.Default.CheckForIdle = value;
+                Properties.Settings.Default.Save();
                 this.activityMonitor.CheckForIdle = value;
             }
         }
@@ -639,6 +692,7 @@ namespace Growl
             set
             {
                 Properties.Settings.Default.IdleAfterSeconds = value;
+                Properties.Settings.Default.Save();
                 this.activityMonitor.IdleAfterSeconds = value;
             }
         }
@@ -649,6 +703,7 @@ namespace Growl
             {
                 this.ApplicationRegistered(ra);
             }
+            SaveAppState();
         }
 
         private void InvokeShowNotification(Growl.DisplayStyle.Notification notification, Display display, Growl.Daemon.CallbackInfo cbInfo, bool recordInMissedNotifications, Growl.Daemon.RequestInfo requestInfo)
@@ -1382,6 +1437,7 @@ namespace Growl
             set
             {
                 Properties.Settings.Default.RequireLocalPassword = value;
+                Properties.Settings.Default.Save();
                 if (this.gntpListener != null) this.gntpListener.RequireLocalPassword = value;
                 if (this.udpListener != null) this.udpListener.RequireLocalPassword = value;
                 if (this.udpListenerLocal != null) this.udpListenerLocal.RequireLocalPassword = value;
@@ -1397,6 +1453,7 @@ namespace Growl
             set
             {
                 Properties.Settings.Default.AllowNetworkNotifications = value;
+                Properties.Settings.Default.Save();
                 if (this.gntpListener != null) this.gntpListener.AllowNetworkNotifications = value;
                 if (this.udpListener != null) this.udpListener.AllowNetworkNotifications = value;
                 // udpListenerLocal never allows network notifications
@@ -1412,6 +1469,7 @@ namespace Growl
             set
             {
                 Properties.Settings.Default.AllowWebNotifications = value;
+                Properties.Settings.Default.Save();
                 if (this.gntpListener != null) this.gntpListener.AllowFlash = value;
             }
         }
@@ -1425,6 +1483,7 @@ namespace Growl
             set
             {
                 Properties.Settings.Default.AllowSubscriptions = value;
+                Properties.Settings.Default.Save();
                 if (this.gntpListener != null) this.gntpListener.AllowSubscriptions = value;
             }
         }

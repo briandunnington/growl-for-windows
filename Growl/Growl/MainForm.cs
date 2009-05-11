@@ -385,7 +385,6 @@ namespace Growl
                 // remember some form information for next time
                 Properties.Settings.Default.FormSize = this.Size;
                 Properties.Settings.Default.FormLocation = this.Location;
-
                 Properties.Settings.Default.Save();
             }
         }
@@ -441,6 +440,7 @@ namespace Growl
             ListControlItem lci = new ListControlItem(ra.Name, ra);
             this.listControlApplications.AddItem(lci);
             this.panelNoApps.Visible = false;
+            this.controller.SaveApplicationPrefs();
         }
 
         internal void OnNotificationReceived(Growl.DisplayStyle.Notification n)
@@ -456,6 +456,7 @@ namespace Growl
         internal void OnForwardComputersUpdated()
         {
             this.BindForwardList();
+            this.controller.SaveForwardPrefs();
         }
 
         internal void OnBonjourServiceUpdated(BonjourForwardComputer bfc)
@@ -467,7 +468,10 @@ namespace Growl
         internal void OnSubscriptionsUpdated(bool countChanged)
         {
             if (countChanged)
+            {
                 BindSubscriptionList();
+                this.controller.SaveSubsriptionPrefs();
+            }
             else
                 this.subscribedListView.Refresh();
         }
@@ -503,6 +507,7 @@ namespace Growl
                 this.historyListView.GroupBy = HistoryGroupItemsBy.Date;
                 this.historyListView.Draw();
                 Properties.Settings.Default.HistorySortBy = this.historyListView.GroupBy;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -513,6 +518,7 @@ namespace Growl
                 this.historyListView.GroupBy = HistoryGroupItemsBy.Application;
                 this.historyListView.Draw();
                 Properties.Settings.Default.HistorySortBy = this.historyListView.GroupBy;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -540,6 +546,7 @@ namespace Growl
                 this.historyListView.Draw();
 
                 Properties.Settings.Default.HistoryDays = val;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -642,6 +649,7 @@ namespace Growl
             {
                 PrefEnabled prefEnabled = (PrefEnabled) this.comboBoxPrefEnabled.SelectedItem;
                 prefs.PrefEnabled = prefEnabled;
+                this.controller.SaveApplicationPrefs();
             }
         }
 
@@ -652,6 +660,7 @@ namespace Growl
             {
                 Display prefDisplay = (Display)this.comboBoxPrefDisplay.SelectedItem;
                 prefs.PrefDisplay = prefDisplay;
+                this.controller.SaveApplicationPrefs();
             }
         }
 
@@ -764,6 +773,7 @@ namespace Growl
         private void checkBoxEnableForwarding_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.AllowForwarding = this.checkBoxEnableForwarding.Checked;
+            Properties.Settings.Default.Save();
             this.forwardListView.SelectedIndices.Clear();
             this.forwardListView.Enabled = this.checkBoxEnableForwarding.Checked;
             this.buttonAddComputer.Enabled = this.checkBoxEnableForwarding.Checked;
@@ -815,6 +825,8 @@ namespace Growl
 
                 // save their preference
                 prefs.PrefForward = prefForward;
+
+                this.controller.SaveApplicationPrefs();
             }
         }
 
@@ -825,6 +837,7 @@ namespace Growl
             {
                 PrefPriority prefPriority = (PrefPriority)this.comboBoxPrefPriority.SelectedItem;
                 prefs.PrefPriority = prefPriority;
+                this.controller.SaveApplicationPrefs();
             }
         }
 
@@ -835,6 +848,7 @@ namespace Growl
             {
                 PrefSticky prefSticky = (PrefSticky)this.comboBoxPrefSticky.SelectedItem;
                 prefs.PrefSticky = prefSticky;
+                this.controller.SaveApplicationPrefs();
             }
         }
 
@@ -845,6 +859,7 @@ namespace Growl
             {
                 PrefSound prefSound = (PrefSound)this.comboBoxPrefSound.SelectedItem;
                 prefs.PrefSound = prefSound;
+                this.controller.SaveApplicationPrefs();
             }
         }
 
@@ -869,6 +884,7 @@ namespace Growl
             {
                 ListControlItem lci = (ListControlItem)this.contextMenuStripApplications.Tag;
                 this.controller.RegisteredApplications.Remove(lci.RegisteredObject.Name);
+                this.controller.SaveApplicationPrefs();
             }
             this.contextMenuStripApplications.Tag = null;
             this.contextMenuStripApplications.Hide();
@@ -1004,6 +1020,7 @@ namespace Growl
         private void checkBoxEnableSubscriptions_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.EnableSubscriptions = this.checkBoxEnableSubscriptions.Checked;
+            Properties.Settings.Default.Save();
             this.subscribedListView.SelectedIndices.Clear();
             this.subscribedListView.Enabled = this.checkBoxEnableSubscriptions.Checked;
             this.buttonSubscribe.Enabled = this.checkBoxEnableSubscriptions.Checked;
@@ -1064,6 +1081,7 @@ namespace Growl
             {
                 PrefDuration prefDuration = (PrefDuration)this.comboBoxPrefDuration.SelectedItem;
                 prefs.PrefDuration = prefDuration;
+                this.controller.SaveApplicationPrefs();
             }
         }
     }

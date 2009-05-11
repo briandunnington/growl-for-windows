@@ -10,6 +10,8 @@ namespace Growl.UI
 {
     public partial class PasswordManagerControl : UserControl
     {
+        public event EventHandler Updated;
+
         private const int NONE = -1;
         private ToolTip tooltip;
         private int currentTooltipItem = NONE;
@@ -91,6 +93,7 @@ namespace Growl.UI
                 this.pm.Remove(pi.Password.ActualPassword);
                 this.passwordListBox.Items.RemoveAt(this.passwordListBox.SelectedIndex);
                 this.passwordListBox.ClearSelected();
+                this.OnUpdated();
             }
         }
 
@@ -176,6 +179,7 @@ namespace Growl.UI
             }
             this.editPanel.Tag = null;
             this.editPanel.Visible = false;
+            this.OnUpdated();
         }
 
         private void ValidateInputs()
@@ -217,6 +221,17 @@ namespace Growl.UI
             ValidateInputs();
             this.editPanel.Tag = null;
             this.editPanel.Visible = true;
+        }
+
+        /// <summary>
+        /// Fires the Updated event.
+        /// </summary>
+        protected void OnUpdated()
+        {
+            if (this.Updated != null)
+            {
+                this.Updated(this, EventArgs.Empty);
+            }
         }
     }
 }

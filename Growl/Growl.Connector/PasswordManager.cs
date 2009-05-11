@@ -43,7 +43,7 @@ namespace Growl.Connector
         public void Add(string password)
         {
             if(!String.IsNullOrEmpty(password) && !this.passwords.ContainsKey(password))
-                this.passwords.Add(password, new Password(password));
+                Add(new Password(password));
         }
 
         /// <summary>

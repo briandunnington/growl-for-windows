@@ -54,12 +54,27 @@ namespace Growl
             }
             Properties.Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
-            this.splash = new SplashScreen();
-            this.splash.Shown += new EventHandler(splash_Shown);
+            // NOTE: There is a bug/feature/developerissue in Windows/.NET that causes the socket events to not fire
+            // if they are initialized on a thread that does not have a visible form. I have tried creating the form
+            // handle and all kinds of other stuff, but it results in erratic behavior. The only way I can guarantee
+            // that the listeners will fire is to load a form that is made visible in the Run loop. (It is immediately
+            // hidden again, so I am hoping it doesnt flash up on the screen in the interim).
+
+            this.splash = new SplashScreen(true);
+            this.splash.ApplicationContextLoaded += new EventHandler(splash_ApplicationContextLoaded);
             base.MainForm = this.splash;
         }
 
-        void splash_Shown(object sender, EventArgs e)
+        void splash_ApplicationContextLoaded(object sender, EventArgs e)
+        {
+            // we want to do all of this here to ensure the the messageloop is already created
+            // and we are in the UI thread.
+            this.splash.Hide(); // just in case
+            IntPtr handle = this.splash.Handle;   // this forces the creation of the handle even when the form is not shown
+            RunProgram();
+        }
+
+        private void RunProgram()
         {
             InitializeComponent();
 
@@ -264,7 +279,7 @@ namespace Growl
             this.mainForm.DoneInitializing();
             this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Ready, 100);
 
-            base.MainForm.Hide();
+            //base.MainForm.Hide();
         }
 
         protected override void OnMainFormClosed(object sender, EventArgs e)
@@ -544,6 +559,7 @@ namespace Growl
             this.muteToolStripMenuItem.Visible = !mute;
             this.unmuteToolStripMenuItem.Visible = mute;
             Properties.Settings.Default.MuteAllSounds = mute;
+            Properties.Settings.Default.Save();
         }
 
         #region ISynchronizeInvoke Members
