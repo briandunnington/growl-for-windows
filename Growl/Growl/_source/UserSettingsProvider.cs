@@ -103,7 +103,15 @@ namespace Growl
 
         private void MakeBackup()
         {
-            System.IO.File.Copy(this.FileName, this.BackupFileName, true);
+            try
+            {
+                if (System.IO.File.Exists(this.FileName))
+                    System.IO.File.Copy(this.FileName, this.BackupFileName, true);
+            }
+            catch
+            {
+                // dont fail if we couldnt make the backup
+            }
         }
 
         private ClientSettingsSection GetUserSettings(out Configuration config, bool tryAlternates)
@@ -219,10 +227,6 @@ namespace Growl
                 {
                     spv.PropertyValue = null;
                 }
-            }
-            else
-            {
-                spv.PropertyValue = null;
             }
         }
 
