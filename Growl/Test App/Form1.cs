@@ -277,6 +277,32 @@ namespace Test_App
 
         }
 
+        private void PasswordTest()
+        {
+            string password = "Password";
+            byte[] saltBytes = new byte[] {1, 2, 3, 4};
+
+            byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
+            Console.WriteLine(passwordBytes);
+
+            byte[] keyBasisBytes = new byte[passwordBytes.Length + saltBytes.Length];
+            Array.Copy(passwordBytes, 0, keyBasisBytes, 0, passwordBytes.Length);
+            Array.Copy(saltBytes, 0, keyBasisBytes, passwordBytes.Length, saltBytes.Length);
+            Console.WriteLine(keyBasisBytes);
+
+            byte[] keyBytes = Cryptography.ComputeHash(keyBasisBytes, Cryptography.HashAlgorithmType.MD5);
+            Console.WriteLine(keyBytes);
+
+            byte[] keyHashBytes = Cryptography.ComputeHash(keyBytes, Cryptography.HashAlgorithmType.MD5);
+            string keyHash = Cryptography.HexEncode(keyHashBytes);
+            Console.WriteLine(keyHash);
+
+            string saltHash = Cryptography.HexEncode(saltBytes);
+            Console.WriteLine(saltHash);
+
+            Console.WriteLine(String.Format("MD5:{0}.{1}", keyHash, saltHash));
+        }
+
         private void Test_Register(string testName, Growl.Connector.Application app, List<NotificationType> types, Cryptography.SymmetricAlgorithmType ea, Cryptography.HashAlgorithmType ha)
         {
             GrowlConnector g = new GrowlConnector(this.textBox2.Text);

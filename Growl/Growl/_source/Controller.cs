@@ -468,15 +468,22 @@ namespace Growl
                         // NOTE: there is probably a huge security risk by doing this (for now, I am relying on UriBuilder to protect us from from other types of commands)
                         if (result == Growl.CoreLibrary.CallbackResult.CLICK)
                         {
-                            System.UriBuilder ub = new UriBuilder(target.Url);
-                            if (ub.Query != null && ub.Query.Length > 1)
-                                ub.Query = ub.Query.Substring(1) + "&" + data;
-                            else
-                                ub.Query = data;
+                            try
+                            {
+                                System.UriBuilder ub = new UriBuilder(target.Url);
+                                if (ub.Query != null && ub.Query.Length > 1)
+                                    ub.Query = ub.Query.Substring(1) + "&" + data;
+                                else
+                                    ub.Query = data;
 
-                            // do this in another thread so the Process.Start doesnt block
-                            System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ub.Uri.AbsoluteUri);
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(OpenUrl), ub.Uri.AbsoluteUri);
+                                // do this in another thread so the Process.Start doesnt block
+                                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ub.Uri.AbsoluteUri);
+                                ThreadPool.QueueUserWorkItem(new WaitCallback(OpenUrl), ub.Uri.AbsoluteUri);
+                            }
+                            catch
+                            {
+                                SendSystemNotification("Callback failure", "An application requested a callback via url, but the url was invalid.");
+                            }
                         }
                     }
                 }
@@ -703,7 +710,6 @@ namespace Growl
             {
                 this.ApplicationRegistered(ra);
             }
-            SaveAppState();
         }
 
         private void InvokeShowNotification(Growl.DisplayStyle.Notification notification, Display display, Growl.Daemon.CallbackInfo cbInfo, bool recordInMissedNotifications, Growl.Daemon.RequestInfo requestInfo)

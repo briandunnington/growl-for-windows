@@ -13,6 +13,8 @@ namespace Growl.DisplayStyle
     {
         private static char[] BREAK_CHARS = new char[] { ' ', ';' };
 
+        private System.Drawing.Text.TextRenderingHint textRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
         /// <summary>
         /// Creates a new instance of this class
         /// </summary>
@@ -21,6 +23,33 @@ namespace Growl.DisplayStyle
             InitializeComponent();
 
             this.AutoSize = false;
+            this.UseMnemonic = false;
+        }
+
+        /// <summary>
+        /// Gets or sets the text rendering hint.
+        /// </summary>
+        /// <value><see cref="System.Drawing.Text.TextRenderingHint"/></value>
+        public System.Drawing.Text.TextRenderingHint TextRenderingHint
+        {
+            get
+            {
+                return this.textRenderingHint;
+            }
+            set
+            {
+                this.textRenderingHint = value;
+            }
+        }
+
+        /// <summary>
+        /// Fires the Paint event
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains the event data.</param>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.TextRenderingHint = this.textRenderingHint;
+            base.OnPaint(e);
         }
 
         /// <summary>

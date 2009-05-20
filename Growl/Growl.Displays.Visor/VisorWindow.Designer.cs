@@ -37,12 +37,11 @@ namespace Growl.Displays.Visor
             // 
             // titleLabel
             // 
-            this.titleLabel.AutoSize = true;
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
             this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.Location = new System.Drawing.Point(107, 6);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(65, 25);
+            this.titleLabel.Size = new System.Drawing.Size(493, 25);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "[title]";
             // 
@@ -76,6 +75,7 @@ namespace Growl.Displays.Visor
             this.descriptionLabel.Size = new System.Drawing.Size(511, 19);
             this.descriptionLabel.TabIndex = 4;
             this.descriptionLabel.Text = "desc";
+            this.descriptionLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             this.descriptionLabel.UseMnemonic = false;
             this.descriptionLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.descriptionLabel_LabelHeightChanged);
             // 
@@ -90,16 +90,13 @@ namespace Growl.Displays.Visor
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.applicationNameLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "VisorWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Visor";
             this.Click += new System.EventHandler(this.VisorWindow_Click);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

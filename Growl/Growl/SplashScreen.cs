@@ -71,7 +71,7 @@ namespace Growl
 
         void SplashScreen_Shown(object sender, EventArgs e)
         {
-            this.timer.Start();
+            //this.timer.Start();
         }
 
         void SplashScreen_VisibleChanged(object sender, EventArgs e)

@@ -604,7 +604,7 @@ namespace Growl
 
         private void ShowPreferences(IRegisteredObject iro, NotificationPreferences prefs, string text)
         {
-            this.pictureBoxApplicationNotification.Image = iro.Icon;
+            this.pictureBoxApplicationNotification.Image = new Bitmap(iro.Icon);
             this.labelApplicationNotification.Text = text;
 
             this.comboBoxPrefEnabled.DataSource = PrefEnabled.GetList();
@@ -675,7 +675,7 @@ namespace Growl
             {
                 RegisteredApplication app = (RegisteredApplication)selectedLCI.RegisteredObject;
 
-                this.pictureBoxApplication.Image = app.Icon;
+                this.pictureBoxApplication.Image = new Bitmap(app.Icon);
                 this.labelApplication.Text = app.Name;
 
                 // add a default item to the list

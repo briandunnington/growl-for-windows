@@ -41,7 +41,17 @@ namespace Growl
 				AppDomain appDomain = AppDomain.CreateDomain(setup.ApplicationName, null, setup);
 				string assemblyName = Assembly.GetAssembly(typeof(RemoteLoader)).FullName;
 				string typeName = typeof(RemoteLoader).FullName;
-				RemoteLoader remoteLoader = (RemoteLoader)appDomain.CreateInstanceAndUnwrap(assemblyName, typeName);
+
+                RemoteLoader remoteLoader = null;
+                try
+                {
+                    remoteLoader = (RemoteLoader)appDomain.CreateInstanceAndUnwrap(assemblyName, typeName);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Display '{0}' could not be loaded - {1}", directory.Name, ex.Message);
+                    continue;
+                }
                 if (remoteLoader.ContainsValidModule)
                 {
                     LoadedDisplayStyle displayStyle = new LoadedDisplayStyle(appDomain, remoteLoader);

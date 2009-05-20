@@ -9,8 +9,6 @@ namespace Growl
 {
     public class Program : ApplicationContext, System.ComponentModel.ISynchronizeInvoke
     {
-        //public event EventHandler ProgramInitialized;
-
         private SplashScreen splash;
         private Controller controller;
         private MainForm mainForm;

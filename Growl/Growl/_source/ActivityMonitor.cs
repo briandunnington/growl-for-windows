@@ -20,7 +20,7 @@ namespace Growl
         private bool isPaused;
         private bool checkForIdle;
         private int idleAfterSeconds = 180;
-        private int timerIntervalNormal = 90;
+        private int timerIntervalNormal = 5;
         private int timerIntervalIdle = 2;
         private long lastInputTime;
         private System.Timers.Timer timer;
@@ -51,9 +51,6 @@ namespace Growl
             set
             {
                 this.idleAfterSeconds = value;
-                this.timerIntervalIdle = idleAfterSeconds / 2;
-                if (this.timerIntervalIdle <= 0) this.timerIntervalIdle = 1;
-                if (!this.IsIdle) this.timer.Interval = this.timerIntervalIdle * 1000;
                 MaybeStartTimer();
             }
         }
