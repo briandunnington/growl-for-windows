@@ -220,9 +220,12 @@ namespace Growl.UI
             this.Items.Clear();
 
             // add items
-            foreach (ForwardComputer fc in this.computers.Values)
+            lock (this.computers)   // this isnt ideal, but it prevents the edge case where a subscriber comes online while we are trying  to Draw
             {
-                AddItem(fc);
+                foreach (ForwardComputer fc in this.computers.Values)
+                {
+                    AddItem(fc);
+                }
             }
 
             this.ResumeLayout();

@@ -100,13 +100,17 @@ namespace Growl.AutoUpdate
                 if (Directory.Exists(this.updateTempFolder))
                     Directory.Delete(updateTempFolder, true);
                 Directory.CreateDirectory(this.updateTempFolder);
-                string installerFileName = Path.Combine(updateTempFolder, "update.msi");
+
+                InstallInfo info = new InstallInfo();
+                info.ZipFile = Path.Combine(updateTempFolder, "update.zip");
+                info.SetupFile = Path.Combine(updateTempFolder, "setup.exe");
+                info.Folder = updateTempFolder;
 
                 WebClient downloader = new WebClient();
                 downloader.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
                 downloader.DownloadProgressChanged += new DownloadProgressChangedEventHandler(downloader_DownloadProgressChanged);
                 downloader.DownloadFileCompleted += new AsyncCompletedEventHandler(downloader_DownloadFileCompleted);
-                downloader.DownloadFileAsync(new Uri(this.updatedManifest.InstallerLocation), installerFileName, installerFileName);
+                downloader.DownloadFileAsync(new Uri(this.updatedManifest.InstallerLocation), info.ZipFile, info);
             }
         }
 
@@ -133,10 +137,13 @@ namespace Growl.AutoUpdate
             {
                 this.OnDownloadComplete(EventArgs.Empty);
 
+                // unzip files
+                InstallInfo info = (InstallInfo) e.UserState;
+                Installation.Unzipper.UnZipFiles(info.ZipFile, info.Folder, false);
+
                 // start the update installer
-                string msiFile = (string)e.UserState;
-                //string appUpdaterFile = this.updater.AppUpdaterEXE;
-                System.Diagnostics.ProcessStartInfo si = new System.Diagnostics.ProcessStartInfo(msiFile);
+                string setupFile = info.SetupFile;
+                System.Diagnostics.ProcessStartInfo si = new System.Diagnostics.ProcessStartInfo(setupFile);
                 System.Diagnostics.Process.Start(si);
 
                 // exit this application
@@ -186,6 +193,13 @@ namespace Growl.AutoUpdate
                 this.currentVersion = manifest.Version;
                 this.updateLocation = manifest.UpdateLocation;
             }
+        }
+
+        private class InstallInfo
+        {
+            public string ZipFile;
+            public string Folder;
+            public string SetupFile;
         }
     }
 }

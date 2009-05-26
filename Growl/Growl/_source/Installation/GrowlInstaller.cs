@@ -19,35 +19,42 @@ namespace Growl.Installation
             // Call the base implementation.
             base.Install(stateSaver);
 
-            string targetDir = this.Context.Parameters["targetDir"];
-            string exePath = String.Format("{0}Growl.exe", targetDir);
-            string command = String.Format("\"{0}\" \"%1\"", exePath);
-
-            RegistryKey growlProtocolHandlerKey = Registry.ClassesRoot.CreateSubKey("growl");
-            using (growlProtocolHandlerKey)
+            try
             {
-                growlProtocolHandlerKey.SetValue("", "URL:Growl protocol");
-                growlProtocolHandlerKey.SetValue("URL Protocol", "");
-
-                RegistryKey defaultIconKey = growlProtocolHandlerKey.CreateSubKey("DefaultIcon");
-                using (defaultIconKey)
+                // 1. configure protocol handler
+                string targetDir = this.Context.Parameters["targetDir"];
+                string exePath = String.Format("{0}Growl.exe", targetDir);
+                string command = String.Format("\"{0}\" \"%1\"", exePath);
+                RegistryKey growlProtocolHandlerKey = Registry.ClassesRoot.CreateSubKey("growl");
+                using (growlProtocolHandlerKey)
                 {
-                    defaultIconKey.SetValue("", exePath);
+                    growlProtocolHandlerKey.SetValue("", "URL:Growl protocol");
+                    growlProtocolHandlerKey.SetValue("URL Protocol", "");
 
-                    RegistryKey shellKey = growlProtocolHandlerKey.CreateSubKey("shell");
-                    using (shellKey)
+                    RegistryKey defaultIconKey = growlProtocolHandlerKey.CreateSubKey("DefaultIcon");
+                    using (defaultIconKey)
                     {
-                        RegistryKey openKey = shellKey.CreateSubKey("open");
-                        using (openKey)
+                        defaultIconKey.SetValue("", exePath);
+
+                        RegistryKey shellKey = growlProtocolHandlerKey.CreateSubKey("shell");
+                        using (shellKey)
                         {
-                            RegistryKey commandKey = openKey.CreateSubKey("command");
-                            using (commandKey)
+                            RegistryKey openKey = shellKey.CreateSubKey("open");
+                            using (openKey)
                             {
-                                commandKey.SetValue("", command);
+                                RegistryKey commandKey = openKey.CreateSubKey("command");
+                                using (commandKey)
+                                {
+                                    commandKey.SetValue("", command);
+                                }
                             }
                         }
                     }
                 }
+            }
+            catch
+            {
+                // dont fail because of this (for now)
             }
         }
 
@@ -56,7 +63,14 @@ namespace Growl.Installation
             // Call the base implementation.
             base.Uninstall(savedState);
 
-            Registry.ClassesRoot.DeleteSubKeyTree("growl");
+            try
+            {
+                Registry.ClassesRoot.DeleteSubKeyTree("growl");
+            }
+            catch
+            {
+                // dont fail if we couldnt remove the registry key
+            }
         }
     }
 }

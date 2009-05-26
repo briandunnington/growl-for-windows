@@ -24,6 +24,7 @@ namespace Growl.Installation
                         if (!Directory.Exists(directoryName))
                         {
                             Directory.CreateDirectory(directoryName);
+                            Utility.WriteDebugInfo(String.Format("Unzipper created directory '{0}'.", directoryName));
                         }
 
                         string fileName = Path.GetFileName(theEntry.Name);

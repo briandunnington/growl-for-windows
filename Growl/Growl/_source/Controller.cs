@@ -598,7 +598,7 @@ namespace Growl
         {
             get
             {
-                return this.availableDisplays;
+                return DisplayStyleManager.GetAvailableDisplayStyles();
             }
         }
 

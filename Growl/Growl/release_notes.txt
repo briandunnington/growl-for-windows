@@ -10,10 +10,11 @@ v2.0 (current version)
  - new History feature that records all notifications 
  - new Missed Notifications summary 
  - added Bonjour support to enable automatic discovery of other Growl instances on your network (PC or Mac) 
- - new Smokestack display; improved Standard and Visor displays 
+ - new Smokestack and Plain displays; improved Standard and Visor displays 
  - added idle/away detection
  - support for playing sounds when notifications arrive
  - Password Manager allows multiple passwords (can be used for individual applications, etc)
+ - 'click-to-install' displays from the internet
  - fixed a bug in the UDP connector that incorrectly handled the length of 2-byte UTF-8 strings (thanks to snaka.gml for reporting)
  - fixed a bug where growl was not always properly shutdown when exiting
  - removed support for WebKit-based displays

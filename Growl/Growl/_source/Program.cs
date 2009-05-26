@@ -342,9 +342,17 @@ namespace Growl
             Application.Exit();
         }
 
-        internal void AlreadyRunning()
+        internal void AlreadyRunning(int signalFlag)
         {
             this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
+
+            switch (signalFlag)
+            {
+                case ApplicationMain.SIGNAL_RELOAD_DISPLAYS :
+                    DisplayStyleManager.Load();
+                    this.mainForm.BindDisplayList();
+                    break;
+            }
         }
 
         private bool StartGrowl()

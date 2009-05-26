@@ -9,7 +9,8 @@ namespace Growl
 {
     public class SingleInstanceApplication : IMessageFilter, IDisposable
     {
-        public event EventHandler AnotherInstanceStarted;
+        public delegate void AnotherInstanceStartedEventHandler(int signalFlag);
+        public event AnotherInstanceStartedEventHandler AnotherInstanceStarted;
 
         public static readonly int WM_SIGNALFIRSTINSTANCE = RegisterWindowMessage("WM_SIGNALFIRSTINSTANCE");
         private string uniqueName;
@@ -80,16 +81,16 @@ namespace Growl
             }
         }
 
-        public void SignalFirstInstance()
+        public void SignalFirstInstance(int signalFlag)
         {
-            PostMessage(HWND_BROADCAST, WM_SIGNALFIRSTINSTANCE, IntPtr.Zero, IntPtr.Zero);
+            PostMessage(HWND_BROADCAST, WM_SIGNALFIRSTINSTANCE, (IntPtr) signalFlag, IntPtr.Zero);
         }
 
-        protected void OnAnotherInstanceStarted()
+        protected void OnAnotherInstanceStarted(int signalFlag)
         {
             if (AnotherInstanceStarted != null)
             {
-                this.AnotherInstanceStarted(this, EventArgs.Empty);
+                this.AnotherInstanceStarted(signalFlag);
             }
         }
 
@@ -102,7 +103,7 @@ namespace Growl
             {
                 filter = false;
                 //Console.WriteLine(m.ToString());
-                this.OnAnotherInstanceStarted();
+                this.OnAnotherInstanceStarted((int) m.WParam);
                 this.filterTimer.Start();
             }
             return false;

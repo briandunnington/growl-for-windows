@@ -5,36 +5,18 @@ namespace Growl
 {
 	public class LoadedDisplayStyle
 	{
-		private AppDomain appDomain;
-		private RemoteLoader remoteLoaderProxy;
+		private DisplayLoader displayLoader;
 
-		public LoadedDisplayStyle(AppDomain appDomain, RemoteLoader remoteLoader)
+		public LoadedDisplayStyle(DisplayLoader displayLoader)
 		{
-			this.appDomain = appDomain;
-			this.remoteLoaderProxy = remoteLoader;
-		}
-
-		public AppDomain AppDomain
-		{
-			get
-			{
-				return this.appDomain;
-			}
-		}
-
-		private RemoteLoader RemoteLoader
-		{
-			get
-			{
-				return (RemoteLoader) this.remoteLoaderProxy;
-			}
+            this.displayLoader = displayLoader;
 		}
 
 		public string FriendlyName
 		{
 			get
 			{
-				return this.appDomain.FriendlyName;
+				return this.Display.Name;
 			}
 		}
 
@@ -62,7 +44,7 @@ namespace Growl
 		{
 			get
 			{
-				return this.RemoteLoader.Display;
+				return this.displayLoader.Display;
 			}
 		}
 	}

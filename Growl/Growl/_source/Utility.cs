@@ -13,6 +13,8 @@ namespace Growl
         private static string userSettingsFolder;
         private static string userSettingsFolderBeta;
         private static System.Diagnostics.FileVersionInfo fileVersionInfo;
+        private static bool debugMode = false;
+        private static object debugLock = new object();
 
         static Utility()
         {
@@ -80,6 +82,31 @@ namespace Growl
             string folder = Growl.CoreLibrary.PathUtility.Combine(UserSettingFolder, String.Format(@"Displays\{0}\", displayName));
             Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(folder);
             return folder;
+        }
+
+        public static bool DebugMode
+        {
+            get
+            {
+                return debugMode;
+            }
+            set
+            {
+                debugMode = value;
+            }
+        }
+
+        public static void WriteDebugInfo(string info)
+        {
+            string debugFile = System.IO.Path.Combine(UserSettingFolder, "debug.txt");
+            lock (debugLock)
+            {
+                System.IO.StreamWriter w = System.IO.File.AppendText(debugFile);
+                using (w)
+                {
+                    w.WriteLine("{0} {1}", DateTime.Now, info);
+                }
+            }
         }
     }
 }

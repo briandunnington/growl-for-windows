@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="_source\Installation\ProtocolHandler.cs" />
     <Compile Include="_source\Installation\Unzipper.cs" />
+    <Compile Include="_source\DisplayLoader.cs" />
     <Compile Include="_source\PrefDuration.cs" />
     <Compile Include="_source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -331,7 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="installer.jpg" />
-    <Content Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <None Include="lib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="license.txt" />
     <Content Include="release_notes.txt" />
     <None Include="Resources\growl_highlighted.png" />

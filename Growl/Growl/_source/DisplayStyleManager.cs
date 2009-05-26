@@ -14,7 +14,8 @@ namespace Growl
         internal delegate void DisplayLoadedEventHandler(string displayName);
         internal static event DisplayLoadedEventHandler DisplayLoaded;
 
-        private static string displayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Application.StartupPath, @"Displays\");
+        private static string appDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Application.StartupPath, @"Displays\");
+        private static string userDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Displays\");
         private static Dictionary<string, LoadedDisplayStyle> currentlyLoadedDisplayStyles = new Dictionary<string, LoadedDisplayStyle>();
         private static Dictionary<string, SettingsPanelBase> settingsPanels = new Dictionary<string, SettingsPanelBase>();
         private static Dictionary<string, Display> availableDisplays;
@@ -26,62 +27,54 @@ namespace Growl
             // always Unload first
             Unload();
 
-            string[] displayDirectories = Directory.GetDirectories(displayStyleDirectory);
+            availableDisplays = new Dictionary<string, Display>();
+            string[] displayDirectories = null;
+
+            // built-in displays
+            displayDirectories = Directory.GetDirectories(appDisplayStyleDirectory);
 			for(int d=0;d<displayDirectories.Length;d++)
 			{
-				DirectoryInfo directory = new DirectoryInfo(displayDirectories[d]);
-                AppDomain.CurrentDomain.AppendPrivatePath(@"Displays\" + directory.Name);
-
-				AppDomainSetup setup = new AppDomainSetup();
-				setup.ApplicationName = directory.Name;
-				setup.ApplicationBase = directory.FullName;
-                setup.PrivateBinPath = directory.FullName;
-				setup.ConfigurationFile = String.Format("{0}\\app.config", setup.ApplicationBase);
-
-				AppDomain appDomain = AppDomain.CreateDomain(setup.ApplicationName, null, setup);
-				string assemblyName = Assembly.GetAssembly(typeof(RemoteLoader)).FullName;
-				string typeName = typeof(RemoteLoader).FullName;
-
-                RemoteLoader remoteLoader = null;
-                try
-                {
-                    remoteLoader = (RemoteLoader)appDomain.CreateInstanceAndUnwrap(assemblyName, typeName);
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine("Display '{0}' could not be loaded - {1}", directory.Name, ex.Message);
-                    continue;
-                }
-                if (remoteLoader.ContainsValidModule)
-                {
-                    LoadedDisplayStyle displayStyle = new LoadedDisplayStyle(appDomain, remoteLoader);
-
-                    OnDisplayLoaded(displayStyle.FriendlyName);
-
-                    displayStyle.SetGrowlApplicationPath(Application.StartupPath);
-                    displayStyle.SetDisplayStylePath(directory.FullName);
-                    displayStyle.Load();
-                    currentlyLoadedDisplayStyles.Add(directory.FullName, displayStyle);
-
-                    object x = AppDomain.CurrentDomain.CreateInstanceAndUnwrap(remoteLoader.SettingsPanelAssemblyName, remoteLoader.SettingsPanelTypeName);
-                    SettingsPanelBase settingsPanel = x as SettingsPanelBase;
-                    if (settingsPanel != null)
-                    {
-                        settingsPanels.Add(directory.FullName, settingsPanel);
-                        settingsPanel.SetDirectories(directory.FullName, Utility.GetDisplayUserSettingsFolder(directory.Name));
-                        displayStyle.Display.SettingsCollection = settingsPanel.GetSettings();
-                    }
-                }
-                else
-                {
-                    AppDomain.Unload(appDomain);
-                }
+                string directory = displayDirectories[d];
+                Load(directory);
 			}
 
-            // now that all displays have been read, load up the wrapper objects
-            availableDisplays = new Dictionary<string, Display>();
-            foreach (LoadedDisplayStyle loadedDisplayStyle in currentlyLoadedDisplayStyles.Values)
+            // user-specific displays
+            displayDirectories = Directory.GetDirectories(userDisplayStyleDirectory);
+            for (int d = 0; d < displayDirectories.Length; d++)
             {
+                string directory = displayDirectories[d];
+                Load(directory);
+            }
+		}
+
+        public static void Load(string path)
+        {
+            DirectoryInfo directory = new DirectoryInfo(path);
+
+            DisplayLoader displayLoader = new DisplayLoader(directory.FullName);
+            if (displayLoader.ContainsValidModule)
+            {
+                LoadedDisplayStyle loadedDisplayStyle = new LoadedDisplayStyle(displayLoader);
+
+                OnDisplayLoaded(loadedDisplayStyle.FriendlyName);
+
+                loadedDisplayStyle.SetGrowlApplicationPath(Application.StartupPath);
+                loadedDisplayStyle.SetDisplayStylePath(directory.FullName);
+                loadedDisplayStyle.Load();
+                currentlyLoadedDisplayStyles.Add(directory.FullName, loadedDisplayStyle);
+
+                Assembly a = Assembly.LoadFrom(displayLoader.SettingsPanelAssemblyLocation);
+                object x = a.CreateInstance(displayLoader.SettingsPanelTypeName);
+
+                SettingsPanelBase settingsPanel = x as SettingsPanelBase;
+                if (settingsPanel != null)
+                {
+                    settingsPanels.Add(directory.FullName, settingsPanel);
+                    settingsPanel.SetDirectories(directory.FullName, Utility.GetDisplayUserSettingsFolder(directory.Name));
+                    loadedDisplayStyle.Display.SettingsCollection = settingsPanel.GetSettings();
+                }
+
+                // now that the display has been loaded, add it (and any subdisplays) the the list of available displays
                 string[] displays = loadedDisplayStyle.Display.GetListOfAvailableDisplays();
                 foreach (string name in displays)
                 {
@@ -89,16 +82,21 @@ namespace Growl
                     availableDisplays.Add(name, display);
                 }
             }
-		}
+            else
+            {
+                // display plugin was not valid
+            }
+        }
 
 		public static void Unload()
 		{
 			foreach(LoadedDisplayStyle loadedDisplayStyle in currentlyLoadedDisplayStyles.Values)
 			{
 				loadedDisplayStyle.Unload();
-				AppDomain.Unload(loadedDisplayStyle.AppDomain);
 			}
-			currentlyLoadedDisplayStyles.Clear();
+			if(currentlyLoadedDisplayStyles != null) currentlyLoadedDisplayStyles.Clear();
+            if(settingsPanels != null) settingsPanels.Clear();
+            if(availableDisplays != null) availableDisplays.Clear();
 		}
 
         public static Dictionary<string, Growl.Display> GetAvailableDisplayStyles()
@@ -127,6 +125,22 @@ namespace Growl
             if (DisplayLoaded != null)
             {
                 DisplayLoaded(displayName);
+            }
+        }
+
+        public static string AppDisplayStyleDirectory
+        {
+            get
+            {
+                return appDisplayStyleDirectory;
+            }
+        }
+
+        public static string UserDisplayStyleDirectory
+        {
+            get
+            {
+                return userDisplayStyleDirectory;
             }
         }
 	}

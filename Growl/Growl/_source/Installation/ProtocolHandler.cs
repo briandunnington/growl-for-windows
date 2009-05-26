@@ -16,10 +16,12 @@ namespace Growl.Installation
             this.appIsAlreadyRunning = appIsAlreadyRunning;
         }
 
-        public void Process(string uri)
+        public int Process(string uri)
         {
             // general format: growl://action*data1&data2&data3...etc
             // example: growl://display*http://www.somesite.org/display.xml
+
+            int result = 0;
 
             Regex regex = new Regex(@"growl://(?<Action>[^\*]*)\*(?<Data>[\s\S]*)");
             Match match = regex.Match(uri);
@@ -31,14 +33,15 @@ namespace Growl.Installation
                 {
                     case "display":
                         InstallDisplay form = new InstallDisplay();
-                        form.LaunchInstaller(data, this.appIsAlreadyRunning);
+                        bool newDisplayLoaded = form.LaunchInstaller(data, this.appIsAlreadyRunning);
+                        if (newDisplayLoaded) result = ApplicationMain.SIGNAL_RELOAD_DISPLAYS;
                         break;
                     case "extension":
                         // this isnt a real use case yet
                         break;
                 }
             }
-
+            return result;
         }
     }
 }

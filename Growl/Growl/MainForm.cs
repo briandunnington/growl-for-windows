@@ -321,7 +321,7 @@ namespace Growl
                 this.panelNoApps.Visible = false;
         }
 
-        private void BindDisplayList()
+        internal void BindDisplayList()
         {
             this.listControlDisplays.SuspendLayout();
             this.listControlDisplays.Items.Clear();

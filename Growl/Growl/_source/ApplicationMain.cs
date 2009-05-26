@@ -6,8 +6,9 @@ namespace Growl
 {
     static class ApplicationMain
     {
-        static Program program;
+        public const int SIGNAL_RELOAD_DISPLAYS = 1;
 
+        static Program program;
         static bool appIsAlreadyRunning;
 
         /// <summary>
@@ -20,6 +21,7 @@ namespace Growl
             SingleInstanceApplication app = new SingleInstanceApplication("GrowlForWindows");
             using (app)
             {
+                int signalFlag = 0;
                 appIsAlreadyRunning = app.IsAlreadyRunning;
 
                 // handle protocol-triggered operations
@@ -27,12 +29,12 @@ namespace Growl
                 {
                     string protocolArgument = args[0];
                     Installation.ProtocolHandler handler = new Growl.Installation.ProtocolHandler(appIsAlreadyRunning);
-                    handler.Process(protocolArgument);
+                    signalFlag = handler.Process(protocolArgument);
                 }
 
                 if (!appIsAlreadyRunning)
                 {
-                    app.AnotherInstanceStarted += new EventHandler(app_AnotherInstanceStarted);
+                    app.AnotherInstanceStarted += new SingleInstanceApplication.AnotherInstanceStartedEventHandler(app_AnotherInstanceStarted);
                     try
                     {
                         // handle command line options
@@ -52,6 +54,14 @@ namespace Growl
                             string log = parameters["/log"].Value.ToLower();
                             if (log == "true") enableLogging = true;
                             Properties.Settings.Default.EnableLogging = enableLogging;
+                        }
+                        bool debugMode = false;
+                        if (parameters.ContainsKey("/debug"))
+                        {
+                            string debug = parameters["/debug"].Value.ToLower();
+                            if (debug == "true") debugMode = true;
+                            Utility.DebugMode = debugMode;
+                            MessageBox.Show("growl is now in debug mode");
                         }
 
                         program = new Program();
@@ -75,17 +85,17 @@ namespace Growl
                 }
                 else
                 {
-                    app.SignalFirstInstance();
+                    app.SignalFirstInstance(signalFlag);
                 }
             }
         }
 
-        static void app_AnotherInstanceStarted(object sender, EventArgs e)
+        static void app_AnotherInstanceStarted(int signalFlag)
         {
             // show notification that growl is already running...
             Console.WriteLine("INSTANCE: growl is already running");
 
-            program.AlreadyRunning();
+            program.AlreadyRunning(signalFlag);
         }
 
         static public Program Program

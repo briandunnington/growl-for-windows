@@ -40,8 +40,9 @@ namespace Growl.Installation
             this.BackColor = Color.FromArgb(240, 240, 240);
         }
 
-        public void LaunchInstaller(string uri, bool appIsAlreadyRunning)
+        public bool LaunchInstaller(string uri, bool appIsAlreadyRunning)
         {
+            bool newDisplayLoaded = false;
             this.uri = uri;
             this.appIsAlreadyRunning = appIsAlreadyRunning;
             this.tempFolder = Path.Combine(Utility.UserSettingFolder, TEMP_FOLDER);
@@ -76,7 +77,6 @@ namespace Growl.Installation
                         string zipFileName = Path.Combine(this.tempFolder, String.Format("{0}.zip", System.Guid.NewGuid().ToString()));
                         info.LocalZipFileLocation = zipFileName;
 
-                        //this.ewh = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
                         wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
                         wc.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
 
@@ -84,8 +84,10 @@ namespace Growl.Installation
                         System.Threading.Thread t = new System.Threading.Thread(pts);
                         t.Start(info);
 
-                        System.Threading.WaitHandle[] handles = new System.Threading.WaitHandle[] { mre, are };
-                        while (System.Threading.WaitHandle.WaitAny(handles) != 0)
+                        Utility.WriteDebugInfo(String.Format("Downloading display '{0}' to {1}", info.Name, info.LocalZipFileLocation));
+
+                        System.Threading.WaitHandle[] handles = new System.Threading.WaitHandle[] { are, mre };
+                        while (System.Threading.WaitHandle.WaitAny(handles) == 0)
                         {
                             lock (this.progress_lock)
                             {
@@ -94,20 +96,22 @@ namespace Growl.Installation
                             }
                         }
 
+                        this.progressBar1.Value = 100;
+                        Application.DoEvents();
+
+                        Utility.WriteDebugInfo(String.Format("Finished downloading display '{0}' to {1}", info.Name, info.LocalZipFileLocation));
+
                         if (this.errorMessage == null)
                         {
                             // unzip files to the correct location
-                            Growl.CoreLibrary.Detector detector = new Growl.CoreLibrary.Detector();
-                            string newDisplayFolder = Path.Combine(detector.DisplaysFolder, Growl.CoreLibrary.PathUtility.GetSafeFolderName(info.Name));
+                            string newDisplayFolder = Path.Combine(DisplayStyleManager.UserDisplayStyleDirectory, Growl.CoreLibrary.PathUtility.GetSafeFolderName(info.Name));
                             if (!Directory.Exists(newDisplayFolder))
                             {
+                                Utility.WriteDebugInfo(String.Format("Display '{0}' downloaded - starting unzip.", info.Name));
                                 Unzipper.UnZipFiles(info.LocalZipFileLocation, newDisplayFolder, false);
 
-                                // DONE
-                                if (this.appIsAlreadyRunning)
-                                    ShowMessage(String.Format("The display '{0}' was installed successfully.\n\nThe display will be available the next time Growl restarts.", info.Name));
-                                else
-                                    ShowMessage(String.Format("The display '{0}' was installed successfully.", info.Name));
+                                ShowMessage(String.Format("The display '{0}' was installed successfully.", info.Name));
+                                newDisplayLoaded = true;
                             }
                             else
                             {
@@ -117,10 +121,12 @@ namespace Growl.Installation
                             }
 
                             // clean up
+                            Utility.WriteDebugInfo(String.Format("Deleteing '{0}' zip file at {1}", info.Name, info.LocalZipFileLocation));
                             if (File.Exists(info.LocalZipFileLocation)) File.Delete(info.LocalZipFileLocation);
                         }
                         else
                         {
+                            Utility.WriteDebugInfo(String.Format("Error downloading display '{0}'.", info.Name));
                             ShowMessage(errorMessage);
                         }
                     }
@@ -134,8 +140,10 @@ namespace Growl.Installation
             catch (Exception ex)
             {
                 // error downloading definition file
+                Utility.WriteDebugInfo(String.Format("Error downloading display. {0} - {1}", ex.Message, ex.StackTrace));
                 ShowMessage(String.Format("The definition file '{0}' does not exist.\n\nThe display could not be installed.", this.uri));
             }
+            return newDisplayLoaded;
         }
 
         private void StartDownload(object obj)
@@ -155,9 +163,31 @@ namespace Growl.Installation
             {
                 this.errorMessage = "The installation of the display was cancelled.\n\nThe display was not installed.";
             }
-            System.Threading.Thread.Sleep(500);
 
-            are.Set();
+            // sometimes the downloaded file is still being written to disk.
+            // this will wait until the file is readable before returning.
+            DisplayInfo info = (DisplayInfo)e.UserState;
+            bool fileAvailable = false;
+            int counter = 0;
+            while(!fileAvailable && counter < 10)
+            {
+                counter++;
+                try
+                {
+                    FileStream fs = File.OpenRead(info.LocalZipFileLocation);
+                    using (fs)
+                    {
+                        fileAvailable = true;
+                    }
+                }
+                catch
+                {
+                    // wait a bit to allow the disk I/O to complete
+                    System.Threading.Thread.Sleep(500);
+                }
+            }
+
+            mre.Set();
         }
 
         void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -165,7 +195,7 @@ namespace Growl.Installation
             lock (this.progress_lock)
             {
                 this.progress = e;
-                mre.Set();
+                are.Set();
             }
         }
 
