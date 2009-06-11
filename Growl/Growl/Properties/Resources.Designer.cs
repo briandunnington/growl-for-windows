@@ -991,7 +991,7 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Open Growl.
         /// </summary>
         internal static string NotifyIcon_ContextMenu_Settings {
             get {

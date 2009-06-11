@@ -114,7 +114,7 @@ namespace Growl.Displays.Visor
 
         protected override void OnShown(EventArgs e)
         {
-            User32DLL.SetWindowPos(this.Handle, User32DLL.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, User32DLL.SWP_NOACTIVATE);
+            Win32.SetWindowPos(this.Handle, Win32.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, Win32.SWP_NOACTIVATE);
             base.OnShown(e);
             SlideIn();
         }
@@ -180,6 +180,23 @@ namespace Growl.Displays.Visor
             {
                 this.Height = this.Height + args.HeightChange;
             }
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.displayTimer != null) this.displayTimer.Dispose();
+                if (this.slideInTimer != null) this.slideInTimer.Dispose();
+                if (this.slideOutTimer != null) this.slideOutTimer.Dispose();
+                if (this.pictureBox1 != null) this.pictureBox1.Dispose();
+                if (components != null) components.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

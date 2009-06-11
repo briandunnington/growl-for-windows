@@ -14,7 +14,7 @@ namespace Growl.Daemon
     /// order to keep the subscription alive.
     /// The renewal interval is determined by the subscribed-to server.
     /// </remarks>
-    public class SubscriptionConnector : ConnectorBase
+    public class SubscriptionConnector : ConnectorBase, IDisposable
     {
         /// <summary>
         /// Represents methods that handle responses to 'SUBSCRIBE' requests
@@ -220,5 +220,30 @@ namespace Growl.Daemon
         {
             RenewSubscription();
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.timer != null) this.timer.Close();
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

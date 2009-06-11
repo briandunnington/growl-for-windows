@@ -79,9 +79,21 @@ namespace Growl.DisplayStyle
         /// <returns><see cref="Size"/> of the rectangle required to render the text</returns>
         private Size MeasureStringExtended(string text, Font font, int desWidth, int minHeight)
         {
+            /* THIS ALMOST ALWAYS RESULTS IN A TOO-SMALL RECTANGLE
             Graphics g = this.CreateGraphics();
-            SizeF size = g.MeasureString(text, font, desWidth, StringFormat.GenericDefault);
+            g.TextRenderingHint = this.TextRenderingHint;
+            StringFormat format = StringFormat.GenericTypographic;
+            format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+            format.FormatFlags |= StringFormatFlags.NoClip;
+            format.FormatFlags |= StringFormatFlags.LineLimit;
+            format.Trimming = StringTrimming.None;
+            SizeF size = g.MeasureString(text, font, desWidth, format);
             Size returnSize = size.ToSize();
+             * */
+
+            Size size = new Size(desWidth, Int32.MaxValue);
+            TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.WordBreak;
+            Size returnSize = TextRenderer.MeasureText(text, font, size, flags);
 
             if (returnSize.Height < minHeight)
                 returnSize = new Size(returnSize.Width, minHeight);

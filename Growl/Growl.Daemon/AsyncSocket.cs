@@ -1458,8 +1458,15 @@ namespace Growl.Daemon
                     ////socket.NoDelay = true;
 					//socket.Send(tmp, 0, 0);
 
+                    //socket.Blocking = false;
+                    //int n = socket.Send(tmp, 0, 0);
+                    //if (n > 0) Console.WriteLine(String.Format("{0} - {1}", tmp[0], System.Text.Encoding.UTF8.GetString(tmp)));
+                    //else Console.WriteLine("Socket @ {0} has disconnected", socket.RemoteEndPoint.ToString());
+                    //if (n == 0) connected = false;
+
                     socket.Blocking = false;
                     int n = socket.Receive(tmp);
+                    if(n > 0) Console.WriteLine(String.Format("{0} - {1}", tmp[0], System.Text.Encoding.UTF8.GetString(tmp)));
                     if (n == 0) connected = false;
 				}
 				catch (SocketException e)
@@ -1486,6 +1493,43 @@ namespace Growl.Daemon
 			
 			return false;
 		}
+
+        /*
+        private bool GetIsSmartConnected(Socket socket)
+        {
+            if (socket != null && socket.Connected)
+            {
+                bool blockingState = socket.Blocking;
+                try
+                {
+                    byte[] tmp = new byte[1];
+
+                    socket.Blocking = false;
+                    socket.Send(tmp, 0, 0);
+                }
+                catch (SocketException e)
+                {
+                    // 10035 == WSAEWOULDBLOCK
+                    if (e.NativeErrorCode == 10035)
+                    {
+                        // Still Connected, but the Send would block
+                    }
+                    else
+                    {
+                        // Disconnected
+                    }
+                }
+                finally
+                {
+                    socket.Blocking = blockingState;
+                }
+
+                return socket.Connected;
+            }
+
+            return false;
+        }
+         * */
 
 		public IPAddress RemoteAddress
 		{

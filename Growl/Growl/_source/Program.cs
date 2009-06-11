@@ -125,6 +125,7 @@ namespace Growl
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.settingsToolStripMenuItem.Text = Properties.Resources.NotifyIcon_ContextMenu_Settings;
+            this.settingsToolStripMenuItem.Font = new System.Drawing.Font(this.settingsToolStripMenuItem.Font, FontStyle.Bold);
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // pauseGrowlToolStripMenuItem

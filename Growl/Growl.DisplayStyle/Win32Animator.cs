@@ -14,7 +14,7 @@ namespace Growl.DisplayStyle
     /// MDI child forms do not support the Blend method and only support other methods while 
     /// being displayed for the first time and when closing.
     /// </remarks>
-    public sealed class Win32Animator : IAnimator
+    public sealed class Win32Animator : IAnimator, IDisposable
     {
         #region Types
 
@@ -376,5 +376,23 @@ namespace Growl.DisplayStyle
         }
 
         #endregion // Event Handlers
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this._form != null) this._form.Dispose();
+            }
+        }
+
+        #endregion
     }
 }

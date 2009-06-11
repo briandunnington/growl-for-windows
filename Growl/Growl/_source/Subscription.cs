@@ -33,7 +33,6 @@ namespace Growl
         [NonSerialized]
         private bool disposed;
 
-
         public Subscription(string name, bool enabled, string ipAddress, int port, string password)
             : base(name, enabled, ipAddress, port, password, false)
         {
@@ -236,8 +235,8 @@ namespace Growl
             {
                 if (disposing)
                 {
-                    if (this.timer != null)
-                        this.timer.Dispose();
+                    if (this.timer != null) this.timer.Dispose();
+                    if (this.sc != null) this.sc.Dispose();
                 }
                 this.disposed = true;
             }

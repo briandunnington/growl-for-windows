@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Security;
+using System.Security.Permissions;
 
 namespace Growl
 {
@@ -18,49 +21,53 @@ namespace Growl
 
         public PastNotification(Growl.DisplayStyle.Notification notification, DateTime timestamp)
         {
+            Growl.DisplayStyle.NotificationLite notificationLite = Growl.DisplayStyle.NotificationLite.Clone(notification);
+
+            System.Drawing.Image image = null;
+            string imageKey = null;
             if (notification.Image != null && notification.Image.IsSet)
             {
-                this.hasImage = true;
                 if (notification.Image.IsRawData)
                 {
                     byte[] hash = Growl.Connector.Cryptography.ComputeHash(notification.Image.Data.Data, Growl.Connector.Cryptography.HashAlgorithmType.MD5);
-                    this.imageKey = Growl.Connector.Cryptography.HexEncode(hash);
+                    imageKey = Growl.Connector.Cryptography.HexEncode(hash);
                 }
                 else
                 {
-                    this.imageKey = Growl.Connector.Cryptography.ComputeHash(notification.Image.Url, Growl.Connector.Cryptography.HashAlgorithmType.MD5);
+                    imageKey = Growl.Connector.Cryptography.ComputeHash(notification.Image.Url, Growl.Connector.Cryptography.HashAlgorithmType.MD5);
                 }
 
-                if (!imageList.ContainsKey(this.imageKey))
+                if (!imageList.ContainsKey(imageKey))
                 {
                     lock (imageList)
                     {
-                        System.Drawing.Image image = (System.Drawing.Image)notification.Image;
-                        if (image != null)
+                        System.Drawing.Image originalImage = (System.Drawing.Image)notification.Image;
+                        if (originalImage != null)
                         {
-                            System.Drawing.Image thumb = GenerateThumbnail(image, 48, 48);
-                            if (!imageList.ContainsKey(this.imageKey))
-                                imageList.Add(this.imageKey, thumb);
+                            image = GenerateThumbnail(originalImage, 48, 48);
+                            imageList.Add(imageKey, image);
                         }
                     }
                 }
-
-                if(imageList.ContainsKey(this.imageKey))
-                    this.image = imageList[this.imageKey];
+                else
+                {
+                    image = imageList[imageKey];
+                }
             }
 
-            this.timestamp = timestamp;
             this.notification = Growl.DisplayStyle.NotificationLite.Clone(notification);
+            this.timestamp = timestamp;
+            this.imageKey = imageKey;
+            this.image = image;
         }
 
         private System.Drawing.Image GenerateThumbnail(System.Drawing.Image originalImage, int newWidth, int newHeight)
         {
-            // superior image quality
             System.Drawing.Bitmap bmpResized = new System.Drawing.Bitmap(newWidth, newHeight);
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmpResized);
             using (g)
             {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
                 g.DrawImage(
                     originalImage,
                     new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmpResized.Size),
@@ -90,7 +97,7 @@ namespace Growl
         {
             get
             {
-                return this.hasImage;
+                return (this.Image != null);
             }
         }
 

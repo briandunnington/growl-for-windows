@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<display>
+  <name>Notify</name>
+  <author>Brian Dunnington</author>
+  <version>1.0</version>
+  <packageurl>http://www.growlforwindows.com/gfw/d.ashx?f=displays/notify.zip</packageurl>
+  <description>
+    <![CDATA[
+    Displays notifications in any corner of the screen.
+    ]]>
+  </description>
+</display>

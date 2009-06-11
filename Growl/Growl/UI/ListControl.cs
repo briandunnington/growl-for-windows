@@ -115,7 +115,7 @@ namespace Growl.UI
                     TextFormatFlags flags = TextFormatFlags.EndEllipsis | TextFormatFlags.NoClipping;
                     TextRenderer.DrawText(e.Graphics, text, font, rect, this.foreColor, flags);
 
-                    Console.WriteLine("drawitem - " + text);
+                    //Console.WriteLine("drawitem - " + text);
                 }
             }
         }

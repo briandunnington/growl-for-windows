@@ -10,6 +10,11 @@ namespace Growl.Displays.Visor
     public class VisorDisplay : VisualDisplay
     {
         public const string SETTING_BGCOLOR = "BackgroundColor";
+        public const string SETTING_BG_EMERGENCY = "BG_Emergency";
+        public const string SETTING_BG_HIGH = "BG_High";
+        public const string SETTING_BG_NORMAL = "BG_Normal";
+        public const string SETTING_BG_LOW = "BG_Low";
+        public const string SETTING_BG_VERYLOW = "BG_VeryLow";
 
         public static Color BG_COLOR = Color.FromArgb(69, 69, 69);
 
@@ -71,7 +76,7 @@ namespace Growl.Displays.Visor
         protected override void HandleNotification(Notification notification, string displayName)
         {
             VisorWindow win = new VisorWindow();
-            win.BackColor = GetBgColor();
+            win.BackColor = GetBackgroundColorFromPriority(notification.Priority);
             win.SetNotification(notification);
 
             win.FormClosed += new FormClosedEventHandler(win_FormClosed);
@@ -80,24 +85,45 @@ namespace Growl.Displays.Visor
             WorkQueue();
         }
 
-        private Color GetBgColor()
+        private Color GetBackgroundColorFromPriority(int priority)
         {
-            Color bgColor = Color.Black;
-            if (this.SettingsCollection != null && this.SettingsCollection.ContainsKey(SETTING_BGCOLOR))
+            Color bgColor = GetColorFromSetting(SETTING_BG_NORMAL, BG_COLOR);
+            switch (priority)
+            {
+                case 2:
+                    bgColor = GetColorFromSetting(SETTING_BG_EMERGENCY, BG_COLOR);
+                    break;
+                case 1:
+                    bgColor = GetColorFromSetting(SETTING_BG_HIGH, BG_COLOR);
+                    break;
+                case -1:
+                    bgColor = GetColorFromSetting(SETTING_BG_LOW, BG_COLOR);
+                    break;
+                case -2:
+                    bgColor = GetColorFromSetting(SETTING_BG_VERYLOW, BG_COLOR);
+                    break;
+            }
+            return bgColor;
+        }
+
+        private Color GetColorFromSetting(string settingName, Color defaultColor)
+        {
+            Color color = defaultColor;
+            if (this.SettingsCollection != null && this.SettingsCollection.ContainsKey(settingName))
             {
                 try
                 {
-                    object val = this.SettingsCollection[SETTING_BGCOLOR];
+                    object val = this.SettingsCollection[settingName];
                     if (val is Color)
                     {
-                        bgColor = (Color)val;
+                        color = (Color)val;
                     }
                 }
                 catch
                 {
                 }
             }
-            return bgColor;
+            return color;
         }
 
         void WorkQueue()

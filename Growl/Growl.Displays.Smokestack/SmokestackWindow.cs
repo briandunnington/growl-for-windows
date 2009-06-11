@@ -180,12 +180,10 @@ namespace Growl.Displays.Smokestack
             }
 
             this.panel1.Top = borderTopOffset;
-            
-            Region r = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, borderTopOffset, width, height + borderTopOffset, radius, radius));
 
+            Region r = Growl.DisplayStyle.Utility.CreateRoundedRegion(0, borderTopOffset, width, height + borderTopOffset, radius, radius);
             GraphicsPath gp = new GraphicsPath();
             gp.AddPolygon(points);
-
             r.Union(gp);
             this.Region = r;
         }
@@ -197,7 +195,7 @@ namespace Growl.Displays.Smokestack
             g.FillRegion(borderBrush, this.Region);
             g.FillPolygon(borderBrush, points);
 
-            Region gradientRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderTopOffset + borderWidth, width - (1 * borderWidth), height + borderTopOffset - (1 * borderWidth), radius - borderWidth, radius - borderWidth));
+            Region gradientRegion = Growl.DisplayStyle.Utility.CreateRoundedRegion(borderWidth, borderTopOffset + borderWidth, width - (1 * borderWidth), height + borderTopOffset - (1 * borderWidth), radius - borderWidth, radius - borderWidth);
             using (gradientRegion)
             {
                 RectangleF rect = gradientRegion.GetBounds(e.Graphics);
@@ -221,16 +219,6 @@ namespace Growl.Displays.Smokestack
             if (this.image != null)
                 g.DrawImage(this.image, width - imageSize - imagePadding, imagePadding + borderTopOffset, imageSize, imageSize);
         }
-
-        [System.Runtime.InteropServices.DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect, // x-coordinate of upper-left corner
-            int nTopRect, // y-coordinate of upper-left corner
-            int nRightRect, // x-coordinate of lower-right corner
-            int nBottomRect, // y-coordinate of lower-right corner
-            int nWidthEllipse, // height of ellipse
-            int nHeightEllipse // width of ellipse
-            );
 
         private void applicationNameLabel_LabelHeightChanged(ExpandingLabel.LabelHeightChangedEventArgs args)
         {
@@ -256,6 +244,22 @@ namespace Growl.Displays.Smokestack
             {
                 this.Height += args.HeightChange;
             }
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.image != null) this.image.Dispose();
+                if (this.arrowBrush != null) this.arrowBrush.Dispose();
+                if (this.borderBrush != null) this.borderBrush.Dispose();
+                if (components != null) components.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

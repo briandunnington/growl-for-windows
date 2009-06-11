@@ -72,7 +72,7 @@ namespace Growl.Connector
         /// Creates a new instance of the class, using the default hostname and port,
         /// with no password.
         /// </summary>
-        public ConnectorBase()
+        protected ConnectorBase()
             : this(null)
         {
         }
@@ -82,7 +82,7 @@ namespace Growl.Connector
         /// using the supplied password.
         /// </summary>
         /// <param name="password">The password used for message authentication and/or encryption</param>
-        public ConnectorBase(string password)
+        protected ConnectorBase(string password)
         {
             this.Password = password;
         }
@@ -93,7 +93,7 @@ namespace Growl.Connector
         /// <param name="password">The password used for message authentication and/or encryption</param>
         /// <param name="hostname">The hostname of the Growl instance to connect to</param>
         /// <param name="port">The port of the Growl instance to connect to</param>
-        public ConnectorBase(string password, string hostname, int port)
+        protected ConnectorBase(string password, string hostname, int port)
             : this(password)
         {
             this.hostname = hostname;
@@ -361,13 +361,25 @@ namespace Growl.Connector
                     if (writing.ContainsKey(state.GUID)) writing.Remove(state.GUID);
                     if (reading.ContainsKey(state.GUID)) reading.Remove(state.GUID);
 
+                    if (state.Client != null && state.Client.Client != null)
+                    {
+                        state.Client.Client.Blocking = true;
+                        state.Client.Client.Shutdown(SocketShutdown.Both);
+                        state.Client.Client.Close();
+                        state.Client.Close();
+                    }
+
                     TcpState tcpState = state as TcpState;
                     if (tcpState != null)
                     {
-                        if (tcpState.Stream != null) tcpState.Stream.Close();
+                        if (tcpState.Stream != null)
+                        {
+                            tcpState.Stream.Close();
+                            tcpState.Stream.Dispose();
+                        }
                         tcpState.Stream = null;
                     }
-                    if (state.Client != null) state.Client.Close();
+                    
                     state.Client = null;
                 }
             }

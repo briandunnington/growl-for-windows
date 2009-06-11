@@ -136,9 +136,6 @@
   <data name="off_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\off_button.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="growl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="on_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\on_button.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -153,9 +150,6 @@
   </data>
   <data name="growl_dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\growl_dim.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="growl_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="growl_paused" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\growl_paused.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -508,8 +502,8 @@ If another version of Growl is already running, please close that version and tr
     <comment>Notify icon context menu: Pause</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Settings" xml:space="preserve">
-    <value>Settings</value>
-    <comment>Notify icon context menu: Settings</comment>
+    <value>Open Growl</value>
+    <comment>Notify icon context menu: Open Growl (formerly Settings)</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Unpause" xml:space="preserve">
     <value>Unpause Growl</value>
@@ -762,5 +756,11 @@ If another version of Growl is already running, please close that version and tr
   <data name="Applications_Preferences_DurationLabel" xml:space="preserve">
     <value>Duration:</value>
     <comment>Applications tab: duration preference label</comment>
+  </data>
+  <data name="growl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\growl.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="growl_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\growl.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

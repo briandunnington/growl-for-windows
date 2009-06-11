@@ -1529,6 +1529,9 @@ namespace Growl
                 {
                     if (this.activityMonitor != null)
                         this.activityMonitor.Dispose();
+
+                    if (this.mutex != null)
+                        this.mutex.Close();
                 }
                 this.disposed = true;
             }

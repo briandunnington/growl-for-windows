@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<display>
+  <name>Degree</name>
+  <author>Brian Dunnington (Artwork by panoramix-)</author>
+  <version>1.0</version>
+  <packageurl>http://www.growlforwindows.com/gfw/d.ashx?f=displays/degree.zip</packageurl>
+  <description>
+    <![CDATA[
+    Displays notifications in any corner of the screen.
+    ]]>
+  </description>
+</display>

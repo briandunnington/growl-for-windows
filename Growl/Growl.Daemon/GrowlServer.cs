@@ -20,7 +20,7 @@ namespace Growl.Daemon
     /// If Bonjour is available and running on the server machine, the server will also advertise itself with a 
     /// type of "_gntp._tcp" and the port configured with each instance.
     /// </remarks>
-    public class GrowlServer
+    public class GrowlServer : IDisposable
     {
         /// <summary>
         /// The type of service advertised via Bonjour
@@ -124,7 +124,7 @@ namespace Growl.Daemon
         /// <summary>
         /// A list of connected sockets currently being serviced
         /// </summary>
-        private List<AsyncSocket> connectedSockets;
+        private Dictionary<AsyncSocket, ConnectedSocket> connectedSockets;
 
         /// <summary>
         /// A list of MessageHandlers currently servicing requests
@@ -215,7 +215,7 @@ namespace Growl.Daemon
 
             // Initialize list to hold connected sockets
             // We support multiple concurrent connections
-            connectedSockets = new List<AsyncSocket>();
+            connectedSockets = new Dictionary<AsyncSocket, ConnectedSocket>();
             connectedHandlers = new Dictionary<AsyncSocket, MessageHandler>();
             socketCleanupTimer = new System.Timers.Timer(30 * 1000);
             socketCleanupTimer.Elapsed += new System.Timers.ElapsedEventHandler(socketCleanupTimer_Elapsed);
@@ -419,7 +419,15 @@ namespace Growl.Daemon
                     // Call Disconnect on the socket,
                     // which will invoke the DidDisconnect method,
                     // which will remove the socket and handler from the list.
-                    connectedSockets[0].Disconnect();
+
+                    // (we have to use some trickery to a single item from the list without knowing the key)
+                    AsyncSocket someSocket = null;
+                    foreach (AsyncSocket socket in connectedSockets.Keys)
+                    {
+                        someSocket = socket;
+                        break;
+                    }
+                    someSocket.Disconnect();
                 }
 
                 if(this.bonjour != null) this.bonjour.Stop();
@@ -469,8 +477,9 @@ namespace Growl.Daemon
             newSocket.DidWrite += new AsyncSocket.SocketDidWrite(mh.SocketDidWrite);
             mh.MessageParsed += new MessageHandler.MessageHandlerMessageParsedEventHandler(mh_MessageParsed);
             mh.Error += new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
+            mh.SocketUsageComplete += new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
 
-            connectedSockets.Add(newSocket);
+            connectedSockets.Add(newSocket, new ConnectedSocket(newSocket));
             connectedHandlers.Add(newSocket, mh);
 
             mh.InitialRead(newSocket);
@@ -724,8 +733,11 @@ namespace Growl.Daemon
                     this.connectedHandlers[sender] = null;
                     this.connectedHandlers.Remove(sender);
                 }
-                if(this.connectedSockets.Contains(sender))
+                if (this.connectedSockets.ContainsKey(sender))
+                {
+                    this.connectedSockets[sender] = null;
                     this.connectedSockets.Remove(sender);
+                }
 
                 sender = null;
             }
@@ -742,21 +754,33 @@ namespace Growl.Daemon
             int count = this.connectedSockets.Count;
             if (count > 0)
             {
-                Queue<AsyncSocket> queue = new Queue<AsyncSocket>(this.connectedSockets);
+                Queue<AsyncSocket> queue = new Queue<AsyncSocket>(this.connectedSockets.Keys);
                 while (queue.Count > 0)
                 {
                     AsyncSocket socket = queue.Dequeue();
                     if (socket != null)
                     {
-                        if (!socket.SmartConnected)
+                        if (this.connectedSockets.ContainsKey(socket))
                         {
-                            // socket is disconnected from the other end
-                            socket.Disconnect();
+                            bool safeToDisconnect = this.connectedSockets[socket].SafeToDisconnect;
+                            if (safeToDisconnect && !socket.SmartConnected)
+                            {
+                                // socket is disconnected from the other end
+                                socket.Disconnect();
+                            }
                         }
                     }
                 }
             }
             if(this.isStarted) this.socketCleanupTimer.Start();
+        }
+
+        void mh_SocketUsageComplete(AsyncSocket socket)
+        {
+            if (this.connectedSockets.ContainsKey(socket))
+            {
+                this.connectedSockets[socket].SafeToDisconnect = true;
+            }
         }
 
         // -------------------------------------------------------------------------------
@@ -795,5 +819,30 @@ namespace Growl.Daemon
             Data,
             Error
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.socketCleanupTimer != null) this.socketCleanupTimer.Close();
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

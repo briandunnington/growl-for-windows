@@ -8,7 +8,7 @@ namespace Growl.DisplayStyle
     /// <summary>
     /// Provides the behavior for fading a form window in and out
     /// </summary>
-    public class FadeAnimator : IAnimator
+    public class FadeAnimator : IAnimator, IDisposable
     {
         /// <summary>
         /// The default interval for the fade timer
@@ -193,5 +193,24 @@ namespace Growl.DisplayStyle
                 // let the close continue unobstructed
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.timer != null) this.timer.Dispose();
+                if (this.form != null) this.form.Dispose();
+            }
+        }
+
+        #endregion
     }
 }

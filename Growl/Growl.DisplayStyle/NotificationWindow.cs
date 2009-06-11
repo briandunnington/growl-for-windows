@@ -169,7 +169,7 @@ namespace Growl.DisplayStyle
             if (!this.allowFocus)
             {
                 // Activate the window that previously had the focus.
-                User32DLL.SetForegroundWindow(this.currentForegroundWindow);
+                Win32.SetForegroundWindow(this.currentForegroundWindow);
             }
         }
 
@@ -249,11 +249,9 @@ namespace Growl.DisplayStyle
         /// </summary>
         public new virtual void Show()
         {
-            //User32DLL.ShowWindow(this.Handle, User32DLL.SW_SHOWNOACTIVATE);
-
-            this.currentForegroundWindow = User32DLL.GetForegroundWindow();
+            this.currentForegroundWindow = Win32.GetForegroundWindow();
             base.Show();
-            User32DLL.SetForegroundWindow(this.currentForegroundWindow);
+            Win32.SetForegroundWindow(this.currentForegroundWindow);
             if (this.isAutoClose)
             {
                 this.displayTimer.Start();
@@ -488,6 +486,15 @@ namespace Growl.DisplayStyle
             this.Name = "NotificationWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.ResumeLayout(false);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.displayTimer != null) this.displayTimer.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

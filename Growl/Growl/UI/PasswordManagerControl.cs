@@ -36,7 +36,11 @@ namespace Growl.UI
         public void SetPasswordManager(Growl.Connector.PasswordManager passwordManager)
         {
             this.pm = passwordManager;
+            RefreshItems();
+        }
 
+        private void RefreshItems()
+        {
             this.passwordListBox.SuspendLayout();
             this.passwordListBox.Items.Clear();
             foreach (Growl.Connector.Password password in this.pm.Passwords.Values)
@@ -172,10 +176,11 @@ namespace Growl.UI
             }
             else
             {
+                this.pm.Remove(this.textBoxPassword.Text); // just in case the same password already exists
                 Growl.Connector.Password p = new Growl.Connector.Password(this.textBoxPassword.Text, this.textBoxDescription.Text);
                 this.pm.Add(p);
-                PasswordManagerControlListItem pi = new PasswordManagerControlListItem(p);
-                this.passwordListBox.Items.Add(pi);
+
+                RefreshItems();
             }
             this.editPanel.Tag = null;
             this.editPanel.Visible = false;
@@ -221,6 +226,7 @@ namespace Growl.UI
             ValidateInputs();
             this.editPanel.Tag = null;
             this.editPanel.Visible = true;
+            this.textBoxPassword.Focus();
         }
 
         /// <summary>

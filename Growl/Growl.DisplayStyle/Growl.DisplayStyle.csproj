@@ -53,6 +53,8 @@
     <Compile Include="ISettingsProvider.cs" />
     <Compile Include="NotificationLite.cs" />
     <Compile Include="PopupAnimator.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="Win32.cs" />
     <Compile Include="Win32Animator.cs" />
     <Compile Include="IDisplay.cs" />
     <Compile Include="ImageData.cs" />

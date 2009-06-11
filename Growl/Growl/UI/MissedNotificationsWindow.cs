@@ -36,7 +36,7 @@ namespace Growl.UI
             this.pictureBox1.Image = global::Growl.Properties.Resources.growl;
             this.pictureBoxClose.Image = normal;
 
-            Region r = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, radius, radius));
+            Region r = Growl.DisplayStyle.Utility.CreateRoundedRegion(0, 0, this.Width, this.Height, radius, radius);
             this.Region = r;
         }
 
@@ -69,7 +69,7 @@ namespace Growl.UI
             Brush borderBrush = Brushes.Black;
             e.Graphics.FillRegion(borderBrush, this.Region);
 
-            Region gradientRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderWidth, this.Width - (1 * borderWidth), this.Height - (1 * borderWidth), radius - borderWidth, radius - borderWidth));
+            Region gradientRegion = Growl.DisplayStyle.Utility.CreateRoundedRegion(borderWidth, borderWidth, this.Width - (1 * borderWidth), this.Height - (1 * borderWidth), radius - borderWidth, radius - borderWidth);
             using (gradientRegion)
             {
                 RectangleF rect = gradientRegion.GetBounds(e.Graphics);
@@ -86,17 +86,6 @@ namespace Growl.UI
                 }
             }
         }
-
-
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect, // x-coordinate of upper-left corner
-            int nTopRect, // y-coordinate of upper-left corner
-            int nRightRect, // x-coordinate of lower-right corner
-            int nBottomRect, // y-coordinate of lower-right corner
-            int nWidthEllipse, // height of ellipse
-            int nHeightEllipse // width of ellipse
-            );
 
         private void pictureBoxClose_MouseEnter(object sender, EventArgs e)
         {

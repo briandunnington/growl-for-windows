@@ -7,7 +7,7 @@ using System.Net;
 
 namespace Growl.AutoUpdate
 {
-    public class Updater
+    public class Updater : IDisposable
     {
         private const string UPDATE_FOLDER = "__update";
         private const string MANIFEST_FILE_NAME = "update.manifest";
@@ -25,6 +25,7 @@ namespace Growl.AutoUpdate
         private Manifest updatedManifest;
         private bool updateAvailable;
         private string updateTempFolder;
+        private bool disposed;
 
         public Updater(string appPath)
             : this(appPath, null, null)
@@ -107,10 +108,13 @@ namespace Growl.AutoUpdate
                 info.Folder = updateTempFolder;
 
                 WebClient downloader = new WebClient();
-                downloader.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
-                downloader.DownloadProgressChanged += new DownloadProgressChangedEventHandler(downloader_DownloadProgressChanged);
-                downloader.DownloadFileCompleted += new AsyncCompletedEventHandler(downloader_DownloadFileCompleted);
-                downloader.DownloadFileAsync(new Uri(this.updatedManifest.InstallerLocation), info.ZipFile, info);
+                using (downloader)
+                {
+                    downloader.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
+                    downloader.DownloadProgressChanged += new DownloadProgressChangedEventHandler(downloader_DownloadProgressChanged);
+                    downloader.DownloadFileCompleted += new AsyncCompletedEventHandler(downloader_DownloadFileCompleted);
+                    downloader.DownloadFileAsync(new Uri(this.updatedManifest.InstallerLocation), info.ZipFile, info);
+                }
             }
         }
 
@@ -201,5 +205,28 @@ namespace Growl.AutoUpdate
             public string Folder;
             public string SetupFile;
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    if (this.checker != null)
+                        this.checker.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+
+        #endregion
     }
 }

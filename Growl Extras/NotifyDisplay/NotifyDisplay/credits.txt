@@ -1,0 +1,2 @@
+Inspired by Daniel Bergey's NotifyOSX
+http://www.danielbergey.com/weblog/2006/08/22/growl-styles-notifyosx-and-notifyos9/

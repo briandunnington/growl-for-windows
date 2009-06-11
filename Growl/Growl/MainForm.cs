@@ -553,19 +553,37 @@ namespace Growl
         private void labelAboutUsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel ll = (LinkLabel)sender;
-            System.Diagnostics.Process.Start(ll.Text);
+            //System.Diagnostics.Process.Start(ll.Text);
+            OpenLink(ll.Text);
         }
 
         private void labelAboutOriginalLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel ll = (LinkLabel)sender;
-            System.Diagnostics.Process.Start(ll.Text);
+            //System.Diagnostics.Process.Start(ll.Text);
+            OpenLink(ll.Text);
         }
 
         private void labelAboutIconsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel ll = (LinkLabel)sender;
-            System.Diagnostics.Process.Start(ll.Text);
+            //System.Diagnostics.Process.Start(ll.Text);
+            OpenLink(ll.Text);
+        }
+
+        private void OpenLink(string link)
+        {
+            System.Threading.ParameterizedThreadStart pts = new System.Threading.ParameterizedThreadStart(OpenLinkAsync);
+            System.Threading.Thread t = new System.Threading.Thread(pts);
+            t.Start(link);
+        }
+
+        private void OpenLinkAsync(object state)
+        {
+            string link = (string)state;
+            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo(link);
+            info.UseShellExecute = true;
+            System.Diagnostics.Process.Start(info);
         }
 
         void panel_SettingsChanged(object sender, EventArgs e)
@@ -604,7 +622,8 @@ namespace Growl
 
         private void ShowPreferences(IRegisteredObject iro, NotificationPreferences prefs, string text)
         {
-            this.pictureBoxApplicationNotification.Image = new Bitmap(iro.Icon);
+            //this.pictureBoxApplicationNotification.Image = new Bitmap(iro.Icon);
+            this.pictureBoxApplicationNotification.Image = iro.Icon;
             this.labelApplicationNotification.Text = text;
 
             this.comboBoxPrefEnabled.DataSource = PrefEnabled.GetList();
@@ -675,7 +694,8 @@ namespace Growl
             {
                 RegisteredApplication app = (RegisteredApplication)selectedLCI.RegisteredObject;
 
-                this.pictureBoxApplication.Image = new Bitmap(app.Icon);
+                //this.pictureBoxApplication.Image = new Bitmap(app.Icon);
+                this.pictureBoxApplication.Image = app.Icon;
                 this.labelApplication.Text = app.Name;
 
                 // add a default item to the list
@@ -1084,5 +1104,33 @@ namespace Growl
                 this.controller.SaveApplicationPrefs();
             }
         }
+
+        /* THIS IS NOT READY FOR RELEASE YET
+        SystemBalloonIntercepter sbi = null;
+        private void StartInterceptingSystemBalloons()
+        {
+            StopInterceptingSystemBalloons();
+
+            this.sbi = new SystemBalloonIntercepter(this.Handle);
+            sbi.Start();
+        }
+
+        private void StopInterceptingSystemBalloons()
+        {
+            if (sbi != null)
+            {
+                this.sbi.Stop();
+                this.sbi = null;
+            }
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (this.sbi != null)
+                sbi.ProcessWindowMessage(ref m);
+
+            base.WndProc(ref m);
+        }
+         * */
     }
 }

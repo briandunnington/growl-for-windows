@@ -166,5 +166,19 @@ namespace Growl.Displays.Plain
                     break;
             }
         }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.pictureBox1 != null) this.pictureBox1.Dispose();
+                if(components != null) components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

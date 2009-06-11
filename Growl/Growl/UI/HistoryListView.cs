@@ -90,13 +90,15 @@ namespace Growl.UI
                 // draw icon
                 int newX = e.Bounds.Left;
                 System.Drawing.Image img = this.imageList.Images[e.Item.ImageKey];
-                if (img != null)
+                using (img)
                 {
-                    int x = e.Bounds.Left;
-                    int y = e.Bounds.Top;
-                    e.Graphics.DrawImage(img, x, y);
-                    newX = e.Bounds.Left + img.Width + this.Margin.Right;
-                    img.Dispose();
+                    if (img != null)
+                    {
+                        int x = e.Bounds.Left;
+                        int y = e.Bounds.Top;
+                        e.Graphics.DrawImage(img, x, y);
+                        newX = e.Bounds.Left + img.Width + this.Margin.Right;
+                    }
                 }
 
                 // draw main text
@@ -433,7 +435,7 @@ namespace Growl.UI
                 position.Offset(0, Cursor.Current.Size.Height - 10);
                 IntPtr handle = (IntPtr)typeof(ToolTip).GetProperty("Handle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(this.tooltip, null);
                 this.tooltip.Show(e.Item.ToolTipText, this, position, this.tooltip.AutoPopDelay);
-                Growl.DisplayStyle.User32DLL.SetWindowPos(handle, Growl.DisplayStyle.User32DLL.HWND_TOPMOST, 0, 0, 0, 0, Growl.DisplayStyle.User32DLL.SWP_NOACTIVATE | Growl.DisplayStyle.User32DLL.SWP_NOMOVE | Growl.DisplayStyle.User32DLL.SWP_NOSIZE);
+                Growl.DisplayStyle.Win32.SetWindowPos(handle, Growl.DisplayStyle.Win32.HWND_TOPMOST, 0, 0, 0, 0, Growl.DisplayStyle.Win32.SWP_NOACTIVATE | Growl.DisplayStyle.Win32.SWP_NOMOVE | Growl.DisplayStyle.Win32.SWP_NOSIZE);
             }
         }
 

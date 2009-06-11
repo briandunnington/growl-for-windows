@@ -98,7 +98,7 @@ namespace Growl.Displays.Standard
             Brush borderBrush = Brushes.Black;
             g.FillRegion(borderBrush, this.Region);
 
-            Region gradientRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderWidth, this.Width - (1 * borderWidth), Height - (1 * borderWidth), radius - borderWidth, radius - borderWidth));
+            Region gradientRegion = Growl.DisplayStyle.Utility.CreateRoundedRegion(borderWidth, borderWidth, this.Width - (1 * borderWidth), Height - (1 * borderWidth), radius - borderWidth, radius - borderWidth);
             using (gradientRegion)
             {
                 RectangleF rect = gradientRegion.GetBounds(e.Graphics);
@@ -114,7 +114,7 @@ namespace Growl.Displays.Standard
             }
 
             int glassHeight = 22;
-            Region glassRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(borderWidth, borderWidth, this.Width - (1 * borderWidth), glassHeight, radius - borderWidth, radius - borderWidth));
+            Region glassRegion = Growl.DisplayStyle.Utility.CreateRoundedRegion(borderWidth, borderWidth, this.Width - (1 * borderWidth), glassHeight, radius - borderWidth, radius - borderWidth);
             using (glassRegion)
             {
                 RectangleF glassRect = glassRegion.GetBounds(e.Graphics);
@@ -158,7 +158,7 @@ namespace Growl.Displays.Standard
             this.descriptionLabel.Text = n.Description.Replace("\n", "\r\n");
             this.Sticky = n.Sticky;
 
-            Region borderRegion = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, radius, radius));
+            Region borderRegion = Growl.DisplayStyle.Utility.CreateRoundedRegion(0, 0, this.Width, this.Height, radius, radius);
             this.Region = borderRegion;
         }
 
@@ -169,17 +169,6 @@ namespace Growl.Displays.Standard
             Color foreColor = (255 - bgDelta < nThreshold) ? Color.Black : Color.White;
             return foreColor;
         }
-
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect, // x-coordinate of upper-left corner
-            int nTopRect, // y-coordinate of upper-left corner
-            int nRightRect, // x-coordinate of lower-right corner
-            int nBottomRect, // y-coordinate of lower-right corner
-            int nWidthEllipse, // height of ellipse
-            int nHeightEllipse // width of ellipse
-            );
-
 
         private void titleLabel_LabelHeightChanged(ExpandingLabel.LabelHeightChangedEventArgs args)
         {

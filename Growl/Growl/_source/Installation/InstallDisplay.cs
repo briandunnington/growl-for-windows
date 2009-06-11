@@ -232,6 +232,21 @@ namespace Growl.Installation
 
         }
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.mre != null) mre.Close();
+                if (this.are != null) are.Close();
+                if (this.components != null) components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         public class DisplayInfo
         {
             private DisplayInfo() { }

@@ -198,7 +198,10 @@ namespace Growl.Connector
                     mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET, target.Url));
                     mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET_METHOD, target.Method));
                 }
-                waitForCallback = true;
+                else
+                {
+                    waitForCallback = true;
+                }
             }
 
             // handle any additional request data

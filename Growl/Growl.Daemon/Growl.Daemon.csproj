@@ -43,6 +43,7 @@
     <Compile Include="AsyncSocket.cs" />
     <Compile Include="BonjourService.cs" />
     <Compile Include="CallbackInfo.cs" />
+    <Compile Include="ConnectedSocket.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="FlashPolicy.cs" />
     <Compile Include="GNTPStreamReader.cs" />

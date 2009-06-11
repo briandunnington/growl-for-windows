@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Growl</RootNamespace>
     <AssemblyName>Growl</AssemblyName>
-    <ApplicationIcon>Resources\growl.ico</ApplicationIcon>
+    <ApplicationIcon>growl.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -263,6 +263,7 @@
     <Compile Include="_source\SingleInstanceApplication.cs" />
     <Compile Include="_source\SubscribedForwardComputer.cs" />
     <Compile Include="_source\Subscription.cs" />
+    <Compile Include="_source\SystemBalloonIntercepter.cs" />
     <Compile Include="_source\UserSettingsProvider.cs" />
     <Compile Include="_source\Utility.cs" />
   </ItemGroup>
@@ -271,9 +272,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Locker.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\growl.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Config-Tools.png" />
@@ -331,8 +329,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="growl.ico" />
+    <Content Include="icons\info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="installer.jpg" />
     <None Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <None Include="Resources\growl.png" />
+    <None Include="Resources\growl.ico" />
+    <Content Include="SystemBalloonIntercepter.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="license.txt" />
     <Content Include="release_notes.txt" />
     <None Include="Resources\growl_highlighted.png" />

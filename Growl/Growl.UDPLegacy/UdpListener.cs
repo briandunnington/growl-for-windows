@@ -10,7 +10,7 @@ namespace Growl.UDPLegacy
     /// A basic listener that listens for incoming UDP messages on the specified port
     /// and passes the event on to application code whenever a message is received.
     /// </summary>
-    public class UdpListener
+    public class UdpListener : IDisposable
     {
         /// <summary>
         /// The port to listen for messages on
@@ -118,5 +118,30 @@ namespace Growl.UDPLegacy
             public IPEndPoint Endpoint;
             public AsyncCallback Callback;
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.udp != null) this.udp.Close();
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

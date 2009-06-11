@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<display>
+  <name>Blue Flower</name>
+  <author>Rory O'Kelly</author>
+  <version>1.0</version>
+  <packageurl>http://www.growlforwindows.com/gfw/d.ashx?f=displays/blueflower.zip</packageurl>
+  <description>
+    <![CDATA[
+    Displays notifications with a soothing blue hue.
+    ]]>
+  </description>
+</display>

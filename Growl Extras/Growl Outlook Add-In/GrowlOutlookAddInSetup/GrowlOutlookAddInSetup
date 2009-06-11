@@ -541,7 +541,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_A4FA6ACE7DD7482289679FBBE6EADF29"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[LocalAppDataFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -589,12 +589,12 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl Outlook Add-In"
         "ProductCode" = "8:{B68E9306-8D4C-4E96-8F11-C83310526EBC}"
-        "PackageCode" = "8:{E9E34BF1-C844-4242-BE9F-91DF31CD040B}"
+        "PackageCode" = "8:{7869F59E-63A5-4F56-ABF2-6285F14DBAF3}"
         "UpgradeCode" = "8:{49A7FB61-9235-4718-B57C-A8C2DB8C84C8}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:TRUE"
+        "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Growl Extras"
         "ARPHELPTELEPHONE" = "8:"
@@ -620,27 +620,13 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_68BB4B25D73F4C70993870FE9745DB57"
-                    {
-                    "Name" = "8:Software"
-                    "Condition" = "8:"
-                    "AlwaysCreate" = "11:FALSE"
-                    "DeleteAtUninstall" = "11:FALSE"
-                    "Transitive" = "11:FALSE"
-                        "Keys"
-                        {
-                        }
-                        "Values"
-                        {
-                        }
-                    }
                 }
             }
             "HKCU"
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_F0E42BCF182A4E65A59EB3FA3642C6B0"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_CC045B42211E4CB08CC06B1E613486C2"
                     {
                     "Name" = "8:Software"
                     "Condition" = "8:"
@@ -1219,42 +1205,6 @@
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
                             "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_8A000A036ED945F295B4508FCF195321"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:2"
-                            "Value" = "8:_43C7177F756142C59EBB22C653F779F4"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                            "InstallAllUsersVisible"
-                            {
-                            "Name" = "8:InstallAllUsersVisible"
-                            "DisplayName" = "8:#1059"
-                            "Description" = "8:#1159"
-                            "Type" = "3:5"
-                            "ContextData" = "8:1;True=1;False=0"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:0"
-                            "Value" = "3:0"
-                            "DefaultValue" = "3:1"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }

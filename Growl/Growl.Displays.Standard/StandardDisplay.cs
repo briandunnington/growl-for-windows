@@ -14,7 +14,7 @@ namespace Growl.Displays.Standard
         public const string SETTING_COLOR2 = "Color2";
 
         public static Color COLOR1 = Color.FromArgb(28, 91, 149);
-        public static Color COLOR2 = Color.FromArgb(53, 152, 200);
+        public static Color COLOR2 = Color.FromArgb(36, 121, 198);
 
         //Sound sound = new Sound("SystemNotification");
 

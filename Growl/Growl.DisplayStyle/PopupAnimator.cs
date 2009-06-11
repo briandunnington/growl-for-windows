@@ -9,7 +9,7 @@ namespace Growl.DisplayStyle
     /// <summary>
     /// Provides the behavior for popping up a notification (like toast)
     /// </summary>
-    public class PopupAnimator : IAnimator
+    public class PopupAnimator : IAnimator, IDisposable
     {
         /// <summary>
         /// The default interval for the fade timer
@@ -267,5 +267,24 @@ namespace Growl.DisplayStyle
             Right,
             Left */
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.timer != null) this.timer.Dispose();
+                if (this.form != null) this.form.Dispose();
+            }
+        }
+
+        #endregion
     }
 }

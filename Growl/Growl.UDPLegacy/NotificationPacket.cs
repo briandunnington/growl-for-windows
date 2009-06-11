@@ -214,7 +214,7 @@ namespace Growl.UDPLegacy
                     string applicationName = Encoding.UTF8.GetString(bytes, index, applicationNameLength);
 
                     NotificationType nt = NotificationType.GetByName(notificationName); //TODO: 
-                    np = new NotificationPacket(protocolVersion, applicationName, password, nt, title, description, Priority.Normal, sticky);
+                    np = new NotificationPacket(protocolVersion, applicationName, password, nt, title, description, priority, sticky);
                 }
             }
 
