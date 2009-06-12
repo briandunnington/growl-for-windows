@@ -14,7 +14,7 @@ namespace StickyNote
     public partial class StickyNoteWindow : NotificationWindow
     {
         Timer fadeOutTimer;
-        int opacity = 255;
+        int opacity = 240;
         Bitmap bitmap;
         StickyNoteDisplay.Location location = StickyNoteDisplay.Location.TopRight;
         private int leftXLocation = 0;
@@ -80,6 +80,7 @@ namespace StickyNote
             this.Sticky = n.Sticky;
 
             Bitmap template = global::StickyNote.Properties.Resources.sticky;
+            //Bitmap template = global::StickyNote.Properties.Resources.normal;
             this.bitmap = SizeImage(template, this.Width, this.Height);
         }
 

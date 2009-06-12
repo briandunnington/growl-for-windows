@@ -60,6 +60,23 @@ namespace Growl.DisplayStyle
                                 PictureBox pb = (PictureBox)ctrl;
                                 g.DrawImage(pb.Image, ctrl.Bounds);
                             }
+                            else if (ctrl is Label)
+                            {
+                                // text looks crappy if we use the DrawControlToBitmap method, so we have to do it manually
+                                Label el = (Label)ctrl;
+                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                                //g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                                //g.CompositingQuality = CompositingQuality.HighQuality;
+                                //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                                if (el is ExpandingLabel)
+                                    g.TextRenderingHint = ((ExpandingLabel)el).TextRenderingHint;
+                                SolidBrush brush = new SolidBrush(el.ForeColor);
+                                using (brush)
+                                {
+                                    g.DrawString(el.Text, el.Font, brush, new RectangleF(el.Bounds.X, el.Bounds.Y, el.Bounds.Width, el.Bounds.Height), System.Drawing.StringFormat.GenericTypographic);
+                                }
+                            }
                             else
                             {
                                 DrawControlToBitmap(ctrl, bitmap, ctrl.Bounds); //ctrl.DrawToBitmap leaks memory, so we use our own version

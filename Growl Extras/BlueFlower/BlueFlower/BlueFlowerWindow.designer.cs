@@ -25,28 +25,28 @@ namespace BlueFlower
             // textLabel
             // 
             this.textLabel.BackColor = System.Drawing.Color.Transparent;
-            this.textLabel.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textLabel.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textLabel.ForeColor = System.Drawing.Color.White;
             this.textLabel.Location = new System.Drawing.Point(28, 67);
             this.textLabel.Name = "textLabel";
             this.textLabel.Size = new System.Drawing.Size(224, 18);
             this.textLabel.TabIndex = 0;
             this.textLabel.Text = "[text]";
-            this.textLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.textLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             this.textLabel.UseMnemonic = false;
             this.textLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.textLabel_LabelHeightChanged);
             // 
             // titleLabel
             // 
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
-            this.titleLabel.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titleLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.ForeColor = System.Drawing.Color.White;
             this.titleLabel.Location = new System.Drawing.Point(69, 27);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(239, 18);
             this.titleLabel.TabIndex = 1;
             this.titleLabel.Text = "[title]";
-            this.titleLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.titleLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             this.titleLabel.UseMnemonic = false;
             this.titleLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.titleLabel_LabelHeightChanged);
             // 

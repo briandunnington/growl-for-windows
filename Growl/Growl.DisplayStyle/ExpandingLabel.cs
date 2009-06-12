@@ -11,8 +11,7 @@ namespace Growl.DisplayStyle
     /// </summary> 
     public class ExpandingLabel : System.Windows.Forms.Label
     {
-        private static char[] BREAK_CHARS = new char[] { ' ', ';' };
-
+        private bool dontExpand = false;
         private System.Drawing.Text.TextRenderingHint textRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
         /// <summary>
@@ -41,6 +40,24 @@ namespace Growl.DisplayStyle
                 this.textRenderingHint = value;
             }
         }
+        
+        /* dont include this until a later release
+        /// <summary>
+        /// Gets or sets a value that tells the control to not automatically expand
+        /// </summary>
+        /// <value><see cref="bool"/></value>
+        public bool DontExpand
+        {
+            get
+            {
+                return this.dontExpand;
+            }
+            set
+            {
+                this.dontExpand = value;
+            }
+        }
+         * */
 
         /// <summary>
         /// Fires the Paint event
@@ -115,7 +132,7 @@ namespace Growl.DisplayStyle
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data</param>
         protected override void OnTextChanged(EventArgs e)
         {
-            if (!bChanging)
+            if (!dontExpand && !bChanging)
             {
                 bChanging = true;
                 int originalHeight = this.Height;
@@ -134,6 +151,10 @@ namespace Growl.DisplayStyle
                 base.OnTextChanged(e);
 
                 bChanging = false;
+            }
+            else
+            {
+                base.OnTextChanged(e);
             }
         }
 

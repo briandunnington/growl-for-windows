@@ -24,10 +24,13 @@ namespace MiniVisor
         int y = 0;
         int moveBy = 5;
         bool closed = true;
+        int originalHeight;
 
         public MiniVisorWindow()
         {
             InitializeComponent();
+
+            this.originalHeight = this.Height;
 
             this.AfterLoad += new EventHandler(MiniVisorWindow_AfterLoad);
             this.Click +=new EventHandler(MiniVisorWindow_Click);
@@ -202,6 +205,11 @@ namespace MiniVisor
             {
                 this.Height += args.HeightChange;
             }
+        }
+
+        private void textLabel_LabelHeightChanged_1(ExpandingLabel.LabelHeightChangedEventArgs args)
+        {
+            this.Height = this.originalHeight;
         }
     }
 }

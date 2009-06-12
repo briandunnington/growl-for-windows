@@ -28,7 +28,7 @@ namespace MiniVisor
         /// </summary>
         private void InitializeComponent()
         {
-            this.textLabel = new System.Windows.Forms.Label();
+            this.textLabel = new Growl.DisplayStyle.ExpandingLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -43,7 +43,9 @@ namespace MiniVisor
             this.textLabel.Size = new System.Drawing.Size(776, 18);
             this.textLabel.TabIndex = 0;
             this.textLabel.Text = "[appname]: [title] - [text] ";
+            this.textLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             this.textLabel.UseMnemonic = false;
+            this.textLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.textLabel_LabelHeightChanged_1);
             // 
             // pictureBox1
             // 
@@ -76,7 +78,7 @@ namespace MiniVisor
 
         #endregion
 
-        private System.Windows.Forms.Label textLabel;
+        private Growl.DisplayStyle.ExpandingLabel textLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
