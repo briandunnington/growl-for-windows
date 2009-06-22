@@ -1,4 +1,135 @@
-v2.0 (current version)
+v2.0 Beta 15 changes
+------------------------------
+- fixed a bug when loading displays that didnt filter out abstract classes
+- now plays the selected sound when selecting the default notification sound
+- updated UI when installing new displays - now shows a notification using the new display upon successful install
+- application list and display list are now alphabetized
+- updated Firefox extension to replace eval() with JSON.parse()
+- updated Visual Studio add-in to add preference to only be notified of the result of the entire solution
+
+v2.0 Beta 14 changes
+------------------------------
+- fixed a bug that caused the links on the About tab to lock up the app
+- updated Visor display to change colors based on Priority
+- fixed a bug that didnt properly handle Priority settings in UDP notifications
+- fixed a bug that crashed Growl if a duplicate password was added
+- fixed a bug that sometimes left sockets open in a FIN_WAIT state
+- lots of memory clean-up
+- updated Firefox, Thunderbird, and Songbird extensions to support UTF-8 characters properly
+- updated Firefox extension to allow Greasemonkey and page-level scripts to send notifications
+- released Pandora and Last.fm Greasemonkey scripts
+
+new displays:
+ - Degree
+ - Notify
+ - Blue Flower
+ - Risor
+ - MiniVisor
+ - Sticky Note
+ - Bubbles
+ - Translucent Dark
+
+v2.0 Beta 13 changes
+------------------------------
+- much faster startup time (displays no longer loaded into seperate AppDomains)
+- seperated out user-installed displays from built-in displays
+- fixed click-to-install display functionality on Vista
+- fixed auto-update bug when updating on Vista (intaller error 2689)
+- fixed a bug that caused GFW to crash if a Subscriber came online while the list of Forward Computers was being rendered
+
+v2.0 Beta 12 changes
+------------------------------
+- added growl:// protocol handler & experimental support for click-to-install displays
+- fixed a bug that crashed Growl when a removed application tried to re-register
+- added a fix so Growl won't crash if an invalid url callback is specified
+- better idle checking
+- ExpandingLabel control now allows setting of TextRenderingHint (anti-aliasing)
+- new iPhone Style display released
+- first release of Gnarly (Growl-Snarl bridge)
+
+v2.0 Beta 11 changes
+------------------------------
+- fixed bug in UserSettingsProvider that caused new installations to crash (cannot find default display)
+
+v2.0 Beta 10 changes
+------------------------------
+- removed splash screen on startup
+- fixed a bug that caused newlines in encrypted requests to be lost/mangled
+- fixed a bug that prevented Growl from starting on some systems (WSAEWOULDBLOCK exception)
+- made a change to save application prefs (and other prefs) as changes are made, not just on app close
+- added some insurance against corrupt user.config files (make backup before save & read from backup on load)
+- added the ability to send line breaks in titles and messages from growlnotify
+- added the ability to pass URL callback from growlnotify
+- changed growlnotify from targeting 'Any CPU' to 'x86' processors (for 64-bit compatibility)
+- changes to growlnotify to make it work better from the command line
+- System Monitor now starts minimized to the system tray
+- released first version of Thunderbird extension
+
+v2.0 Beta 9 changes
+------------------------------
+- added 'Duration' preference to control how long notifications stay on screen
+- fixed a bug with iTunes plugin where it wouldnt show notifications for songs with artwork on Vista
+- fixed a bug that caused requests with multiple binary resources to fail (caused by change in Beta7)
+- added logic to prevent indefinite forwarding loops
+- added new Plain style to the default installation
+
+v2.0 Beta 8 changes
+------------------------------
+- fixed a bug that caused unsaved applications and settings to be lost if an auto-update was performed
+- fixed a bug that showed some notifications as missed even they were not
+- fixed an issue with the auto-updater on Vista failing
+- added ability to mute all sounds
+- ui improvements
+- removed SessionSwitch event monitoring for W2K compatibility
+- growlnotify improvements (deployed as a single file, no command window when called from other apps)
+- updated iTunes plugin to target x86 CPUs (to fix 64-bit issues)
+
+v2.0 Beta 7 changes
+------------------------------
+- fixed notification layout issues when Start bar was in non-standard locations
+- fixed a bug that caused notification icons to be overwritten if an application re-registered
+- fixed Outlook add-in installer to ensure VSTO prerequisite (aka: works better with Office 2007 now)
+
+v2.0 Beta 6 changes
+------------------------------
+- added IsGrowlRunning() method to GrowlConnector class
+- fixed a threading issue in PastNotification class
+- modified 'Check for Updates' code to make sure only one check could occur at a time
+
+v2.0 Beta 5 changes
+------------------------------
+- fixed newlines in localized strings
+- fixed a bug where notifcation priorities were not handled properly
+- fixed a bug in Triple DES decryption (key size was wrong)
+- fixed a bug in the AIR/Flash/Javascript connector when using Triple DES encryption
+- added SHA256 to the available hashing options in the AIR/Flash/Javascript connector
+- fixed a bug the could cause the auto-updater to run too often
+
+v2.0 Beta 4 changes
+------------------------------
+- added support for localization; Dutch and Japanese translations available
+- fixed a bug that caused all encrypted requests to fail
+- fixed a bug that cause the AIR/Flash connector to fail when used with Flash 10
+- should work on 64-bit systems now (changed compiler settings to target x86 instead of AnyCPU)
+- changed default encryption padding scheme to PKCS#7 (PKCS#5)
+- updated AIR and Javascript connectors to the current security implementation
+
+v2.0 Beta 3 changes
+------------------------------
+- fixed bug in ExpandingLabel class that sometimes added newlines in the wrong place
+- fixed a bug that caused notifications received while screen was locked to render as a black spot
+- made Notification-Display-Name header optional (as per GNTP spec)
+- updated GrowlConnector.Notify method interface (Application is no longer required)
+- updated Growl so that it starts minimized to the system tray
+- changed the user-settings folder naming convention for incremental releases
+- improvements to the code that prevents multiple instances from starting
+- various FxCop-suggested modifications
+
+Due to the changes regarding where user settings are stored, all application, notification, forwarding, and password-related settings 
+should be properly retained with the upgrade, but any display preferences from the Beta2 version will be reset with the Beta3 version.
+Going forward, all settings will be retained across upgrades.
+
+v2.0 Beta 1
 ------------------------------
  - entirely new UI
  - added support for new GNTP (Growl Notification Protocol) for cross-platform compatibility 

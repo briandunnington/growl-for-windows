@@ -9,6 +9,8 @@ namespace Growl
 {
     public class Program : ApplicationContext, System.ComponentModel.ISynchronizeInvoke
     {
+        public event EventHandler ProgramRunning;
+
         private SplashScreen splash;
         private Controller controller;
         private MainForm mainForm;
@@ -279,6 +281,16 @@ namespace Growl
             this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Ready, 100);
 
             //base.MainForm.Hide();
+
+            OnProgramRunning(this, EventArgs.Empty);
+        }
+
+        private void OnProgramRunning(object sender, EventArgs e)
+        {
+            if (this.ProgramRunning != null)
+            {
+                this.ProgramRunning(sender, e);
+            }
         }
 
         protected override void OnMainFormClosed(object sender, EventArgs e)
@@ -399,6 +411,14 @@ namespace Growl
                 this.notifyIcon.Text = Properties.Resources.NotifyIcon_Running;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_on;
                 this.controller.Unpause();
+            }
+        }
+
+        internal void SendSystemNotification(string title, string text, Display display)
+        {
+            if (this.controller != null)
+            {
+                this.controller.SendSystemNotification(title, text, display);
             }
         }
 

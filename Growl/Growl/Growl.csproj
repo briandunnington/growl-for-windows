@@ -130,6 +130,7 @@
     <Compile Include="_source\Installation\ProtocolHandler.cs" />
     <Compile Include="_source\Installation\Unzipper.cs" />
     <Compile Include="_source\DisplayLoader.cs" />
+    <Compile Include="_source\InternalNotification.cs" />
     <Compile Include="_source\PrefDuration.cs" />
     <Compile Include="_source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

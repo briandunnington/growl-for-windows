@@ -10,6 +10,7 @@ namespace Growl
 
         static Program program;
         static bool appIsAlreadyRunning;
+        static List<InternalNotification> queuedNotifications = new List<InternalNotification>();
 
         /// <summary>
         /// The main entry point for the application.
@@ -29,7 +30,7 @@ namespace Growl
                 {
                     string protocolArgument = args[0];
                     Installation.ProtocolHandler handler = new Growl.Installation.ProtocolHandler(appIsAlreadyRunning);
-                    signalFlag = handler.Process(protocolArgument);
+                    signalFlag = handler.Process(protocolArgument, ref queuedNotifications);
                 }
 
                 if (!appIsAlreadyRunning)
@@ -65,6 +66,7 @@ namespace Growl
                         }
 
                         program = new Program();
+                        program.ProgramRunning += new EventHandler(program_ProgramRunning);
                         app.Run(program);
                     }
                     catch (Exception ex)
@@ -85,9 +87,15 @@ namespace Growl
                 }
                 else
                 {
+                    InternalNotification.SaveToDisk(ref queuedNotifications);
                     app.SignalFirstInstance(signalFlag);
                 }
             }
+        }
+
+        static void program_ProgramRunning(object sender, EventArgs e)
+        {
+            HandleSystemNotifications();
         }
 
         static void app_AnotherInstanceStarted(int signalFlag)
@@ -96,6 +104,24 @@ namespace Growl
             Console.WriteLine("INSTANCE: growl is already running");
 
             program.AlreadyRunning(signalFlag);
+
+            HandleSystemNotifications();
+        }
+
+        static void HandleSystemNotifications()
+        {
+            InternalNotification.ReadFromDisk(ref queuedNotifications);
+            if (queuedNotifications != null)
+            {
+                foreach (InternalNotification n in queuedNotifications)
+                {
+                    Display display = (n.Display != null ? DisplayStyleManager.FindDisplayStyle(n.Display) : null);
+                    program.SendSystemNotification(n.Title, n.Text, display);
+                }
+
+                queuedNotifications.Clear();
+            }
+            queuedNotifications = null;
         }
 
         static public Program Program

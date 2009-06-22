@@ -32,6 +32,8 @@ namespace GrowlExtras.VisualStudioAddIn
             this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.labelPassword = new System.Windows.Forms.Label();
+            this.radioButtonSolutionOnly = new System.Windows.Forms.RadioButton();
+            this.radioButtonEachProject = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,11 +75,35 @@ namespace GrowlExtras.VisualStudioAddIn
             this.labelPassword.TabIndex = 8;
             this.labelPassword.Text = "Password:";
             // 
+            // radioButtonSolutionOnly
+            // 
+            this.radioButtonSolutionOnly.AutoSize = true;
+            this.radioButtonSolutionOnly.Location = new System.Drawing.Point(12, 103);
+            this.radioButtonSolutionOnly.Name = "radioButtonSolutionOnly";
+            this.radioButtonSolutionOnly.Size = new System.Drawing.Size(162, 17);
+            this.radioButtonSolutionOnly.TabIndex = 10;
+            this.radioButtonSolutionOnly.Text = "Notify once for entire solution";
+            this.radioButtonSolutionOnly.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonEachProject
+            // 
+            this.radioButtonEachProject.AutoSize = true;
+            this.radioButtonEachProject.Checked = true;
+            this.radioButtonEachProject.Location = new System.Drawing.Point(12, 80);
+            this.radioButtonEachProject.Name = "radioButtonEachProject";
+            this.radioButtonEachProject.Size = new System.Drawing.Size(176, 17);
+            this.radioButtonEachProject.TabIndex = 11;
+            this.radioButtonEachProject.TabStop = true;
+            this.radioButtonEachProject.Text = "Notify for each individual project";
+            this.radioButtonEachProject.UseVisualStyleBackColor = true;
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(222, 80);
+            this.ClientSize = new System.Drawing.Size(222, 129);
+            this.Controls.Add(this.radioButtonEachProject);
+            this.Controls.Add(this.radioButtonSolutionOnly);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.checkBoxEnabled);
@@ -104,5 +130,7 @@ namespace GrowlExtras.VisualStudioAddIn
         private System.Windows.Forms.CheckBox checkBoxEnabled;
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Label labelPassword;
+        private System.Windows.Forms.RadioButton radioButtonSolutionOnly;
+        private System.Windows.Forms.RadioButton radioButtonEachProject;
     }
 }

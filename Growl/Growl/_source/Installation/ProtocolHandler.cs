@@ -16,7 +16,7 @@ namespace Growl.Installation
             this.appIsAlreadyRunning = appIsAlreadyRunning;
         }
 
-        public int Process(string uri)
+        public int Process(string uri, ref List<InternalNotification> queuedNotifications)
         {
             // general format: growl://action*data1&data2&data3...etc
             // example: growl://display*http://www.somesite.org/display.xml
@@ -33,7 +33,7 @@ namespace Growl.Installation
                 {
                     case "display":
                         InstallDisplay form = new InstallDisplay();
-                        bool newDisplayLoaded = form.LaunchInstaller(data, this.appIsAlreadyRunning);
+                        bool newDisplayLoaded = form.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications);
                         if (newDisplayLoaded) result = ApplicationMain.SIGNAL_RELOAD_DISPLAYS;
                         break;
                     case "extension":

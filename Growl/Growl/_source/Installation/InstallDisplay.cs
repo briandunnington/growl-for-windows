@@ -40,7 +40,7 @@ namespace Growl.Installation
             this.BackColor = Color.FromArgb(240, 240, 240);
         }
 
-        public bool LaunchInstaller(string uri, bool appIsAlreadyRunning)
+        public bool LaunchInstaller(string uri, bool appIsAlreadyRunning, ref List<InternalNotification> queuedNotifications)
         {
             bool newDisplayLoaded = false;
             this.uri = uri;
@@ -110,8 +110,14 @@ namespace Growl.Installation
                                 Utility.WriteDebugInfo(String.Format("Display '{0}' downloaded - starting unzip.", info.Name));
                                 Unzipper.UnZipFiles(info.LocalZipFileLocation, newDisplayFolder, false);
 
-                                ShowMessage(String.Format("The display '{0}' was installed successfully.", info.Name));
+                                //ShowMessage(String.Format("The display '{0}' was installed successfully.", info.Name));
+
+                                InternalNotification n = new InternalNotification("New Display Installed", String.Format("The display '{0}' was installed successfully.", info.Name), info.Name);
+                                queuedNotifications.Add(n);
+
                                 newDisplayLoaded = true;
+
+                                this.Close();
                             }
                             else
                             {

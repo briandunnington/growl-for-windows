@@ -25,6 +25,10 @@ namespace GrowlExtras.VisualStudioAddIn
             this.pictureBox1.Image = Properties.Resources.growl.ToBitmap();
             this.textBoxPassword.Text = Properties.Settings.Default.Password;
             this.checkBoxEnabled.Checked = Properties.Settings.Default.EnableNotifications;
+            if (Properties.Settings.Default.SolutionOnly)
+                this.radioButtonSolutionOnly.Checked = true;
+            else
+                this.radioButtonEachProject.Checked = true;
 
             this.timer = new Timer();
             this.timer.Interval = 1 * 750;
@@ -33,6 +37,8 @@ namespace GrowlExtras.VisualStudioAddIn
             // place these here (as opposed to in the .Designer) so that they dont fire when we initialize the form
             this.checkBoxEnabled.CheckedChanged += new System.EventHandler(this.checkBoxEnabled_CheckedChanged);
             this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
+            this.radioButtonSolutionOnly.CheckedChanged += new System.EventHandler(this.radioButtonSolutionOnly_CheckedChanged);
+            this.radioButtonEachProject.CheckedChanged += new System.EventHandler(this.radioButtonEachProject_CheckedChanged);
         }
 
         private void checkBoxEnabled_CheckedChanged(object sender, EventArgs e)
@@ -73,6 +79,18 @@ namespace GrowlExtras.VisualStudioAddIn
                 this.Hide();
                 e.Cancel = true;
             }
+        }
+
+        private void radioButtonEachProject_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SolutionOnly = this.radioButtonSolutionOnly.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void radioButtonSolutionOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SolutionOnly = this.radioButtonSolutionOnly.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

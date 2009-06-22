@@ -305,10 +305,11 @@ namespace Growl
 
         private void BindApplicationList()
         {
+            SortedDictionary<string, RegisteredApplication> list = new SortedDictionary<string, RegisteredApplication>(controller.RegisteredApplications);
+
             this.listControlApplications.SuspendLayout();
             this.listControlApplications.Items.Clear();
-            Queue<RegisteredApplication> queue = new Queue<RegisteredApplication>(controller.RegisteredApplications.Values);
-            foreach (RegisteredApplication app in queue)
+            foreach (RegisteredApplication app in list.Values)
             {
                 ListControlItem lci = new ListControlItem(app.Name, app);
                 this.listControlApplications.AddItem(lci);
@@ -323,10 +324,11 @@ namespace Growl
 
         internal void BindDisplayList()
         {
+            SortedDictionary<string, Display> list = new SortedDictionary<string, Display>(controller.AvailableDisplays);
+
             this.listControlDisplays.SuspendLayout();
             this.listControlDisplays.Items.Clear();
-            Queue<Display> queue = new Queue<Display>(controller.AvailableDisplays.Values);
-            foreach (Display display in queue)
+            foreach (Display display in list.Values)
             {
                 this.listControlDisplays.Items.Add(display);
             }
@@ -437,9 +439,7 @@ namespace Growl
 
         internal void OnApplicationRegistered(RegisteredApplication ra)
         {
-            ListControlItem lci = new ListControlItem(ra.Name, ra);
-            this.listControlApplications.AddItem(lci);
-            this.panelNoApps.Visible = false;
+            BindApplicationList();
             this.controller.SaveApplicationPrefs();
         }
 
@@ -936,6 +936,21 @@ namespace Growl
         {
             PrefSound ps = (PrefSound)this.comboBoxDefaultSound.SelectedItem;
             this.controller.DefaultSound = ps;
+            try
+            {
+                if (ps.PlaySound.HasValue && ps.PlaySound.Value)
+                {
+                    System.Media.SoundPlayer sp = new System.Media.SoundPlayer(ps.SoundFile);
+                    using (sp)
+                    {
+                        sp.Play();
+                    }
+                }
+            }
+            catch
+            {
+                // suppress - dont fail just because the sound could not play
+            }
         }
 
         private void radioButtonIdleAfter_CheckedChanged(object sender, EventArgs e)

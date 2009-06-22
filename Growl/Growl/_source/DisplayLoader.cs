@@ -25,11 +25,11 @@ namespace Growl
                 Assembly assembly = Assembly.LoadFile(assemblies[a]);   // LoadFile means we use the exact .dlls in this folder. LoadFrom could redirect and use previously loaded .dlls (like Growl.CoreLibrary.dll, etc)
                 foreach (Type type in assembly.GetTypes())
                 {
-                    if (type != typeof(IDisplay) && type != typeof(Display) && type != typeof(VisualDisplay) && typeof(IDisplay).IsAssignableFrom(type))
+                    if (type != typeof(IDisplay) && type != typeof(Display) && type != typeof(VisualDisplay) && !type.IsAbstract && typeof(IDisplay).IsAssignableFrom(type))
                     {
                         if (this.containsValidModule)
                         {
-                            throw new FileLoadException(String.Format("The display '{0}' could not be loaded because it contains more than one IDisplay entry point."), AppDomain.CurrentDomain.FriendlyName);
+                            throw new FileLoadException(String.Format("The display '{0}' could not be loaded because it contains more than one IDisplay entry point.", AppDomain.CurrentDomain.FriendlyName));
                         }
                         else
                         {
