@@ -34,9 +34,9 @@ namespace Growl.Connector
         private string password;
 
         /// <summary>
-        /// The hostname of the Growl instance to connect to [defaults to "localhost"]
+        /// The hostname of the Growl instance to connect to [defaults to "127.0.0.1"]
         /// </summary>
-        private string hostname = "localhost";
+        private string hostname = "127.0.0.1";
 
         /// <summary>
         /// The port of the Growl instance to connect to [defaults to the GNTP standard]

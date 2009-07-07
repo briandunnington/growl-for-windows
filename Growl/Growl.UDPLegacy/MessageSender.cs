@@ -10,7 +10,7 @@ namespace Growl.UDPLegacy
         /// <summary>
         /// The default host (the local machine)
         /// </summary>
-        public const string LOCALHOST = "localhost";
+        public const string LOCALHOST = "127.0.0.1";
 
         /// <summary>
         /// The default port used by Growl to receive network notifications

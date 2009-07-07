@@ -334,5 +334,17 @@ namespace Growl.Properties {
                 this["MuteAllSounds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableBonjour {
+            get {
+                return ((bool)(this["DisableBonjour"]));
+            }
+            set {
+                this["DisableBonjour"] = value;
+            }
+        }
     }
 }

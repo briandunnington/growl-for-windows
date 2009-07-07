@@ -40,6 +40,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TrackBar, Version=1.0.2486.37933, Culture=neutral, PublicKeyToken=503bf28f63ad27b4" />
@@ -67,13 +68,27 @@
     <Compile Include="SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\BonjourListBox.cs">
+    <Compile Include="UI\ProwlForwardInputs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ProwlForwardInputs.Designer.cs">
+      <DependentUpon>ProwlForwardInputs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ForwardComputerInputs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ForwardComputerInputs.Designer.cs">
+      <DependentUpon>ForwardComputerInputs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ForwardListBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\BonjourListItem.cs" />
     <Compile Include="UI\ButtonEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\ForwardListItem.cs" />
+    <Compile Include="UI\IForwardInputs.cs" />
     <Compile Include="UI\ListControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -113,7 +128,9 @@
     <Compile Include="UI\OnOffButton.Designer.cs">
       <DependentUpon>OnOffButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ProwlListItem.cs" />
     <Compile Include="_source\AutoUpdate\UpdateException.cs" />
+    <Compile Include="_source\GNTPForwardComputer.cs" />
     <Compile Include="_source\GrowlException.cs" />
     <Compile Include="_source\Installation\GrowlInstaller.cs">
       <SubType>Component</SubType>
@@ -150,9 +167,17 @@
       <SubType>Designer</SubType>
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\BonjourListBox.resx">
+    <EmbeddedResource Include="UI\ProwlForwardInputs.resx">
+      <DependentUpon>ProwlForwardInputs.cs</DependentUpon>
       <SubType>Designer</SubType>
-      <DependentUpon>BonjourListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ForwardComputerInputs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ForwardComputerInputs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ForwardListBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ForwardListBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ForwardListView.resx">
       <SubType>Designer</SubType>
@@ -253,6 +278,7 @@
     <Compile Include="_source\PrefPriority.cs" />
     <Compile Include="_source\PrefSound.cs" />
     <Compile Include="_source\PrefSticky.cs" />
+    <Compile Include="_source\ProwlForwardComputer.cs" />
     <Compile Include="_source\RegisteredApplication.cs" />
     <Compile Include="_source\RegisteredNotification.cs" />
     <Compile Include="_source\IRegisteredObject.cs" />
@@ -265,6 +291,7 @@
     <Compile Include="_source\SubscribedForwardComputer.cs" />
     <Compile Include="_source\Subscription.cs" />
     <Compile Include="_source\SystemBalloonIntercepter.cs" />
+    <Compile Include="_source\UDPForwardComputer.cs" />
     <Compile Include="_source\UserSettingsProvider.cs" />
     <Compile Include="_source\Utility.cs" />
   </ItemGroup>
@@ -338,6 +365,8 @@
     <None Include="lib\ICSharpCode.SharpZipLib.dll" />
     <None Include="Resources\growl.png" />
     <None Include="Resources\growl.ico" />
+    <None Include="Resources\Envelope.png" />
+    <None Include="Resources\twitter.png" />
     <Content Include="SystemBalloonIntercepter.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

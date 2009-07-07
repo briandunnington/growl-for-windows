@@ -9,13 +9,13 @@ using ZeroconfService;
 namespace Growl
 {
     [Serializable]
-    public class BonjourForwardComputer : ForwardComputer, ISerializable
+    public class BonjourForwardComputer : GNTPForwardComputer, ISerializable
     {
         bool available;
         bool resolved;
         string serviceName;
 
-        public BonjourForwardComputer(string serviceName, bool enabled, string password) : base(serviceName, enabled, null, 0, password, false)
+        public BonjourForwardComputer(string serviceName, bool enabled, string password) : base(serviceName, enabled, null, 0, password)
         {
             this.serviceName = serviceName;
             //Resolve();

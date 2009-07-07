@@ -7,8 +7,6 @@ namespace Growl.UI
 {
     public class CustomPanel : Panel
     {
-        public event PaintEventHandler PaintBackground;
-
         public CustomPanel()
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);

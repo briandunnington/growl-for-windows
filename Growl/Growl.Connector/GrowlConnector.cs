@@ -80,10 +80,7 @@ namespace Growl.Connector
         /// </returns>
         public bool IsGrowlRunning()
         {
-            bool createdNew = true;
-            Mutex mutex = new Mutex(true, String.Format(@"Global\{0}", Growl.CoreLibrary.Detector.MUTEX_NAME), out createdNew);
-            mutex.Close();
-            return !createdNew;
+            return Growl.CoreLibrary.Detector.DetectIfGrowlIsRunning();
         }
 
         /// <summary>

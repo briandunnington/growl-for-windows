@@ -6,7 +6,7 @@ using System.Text;
 namespace Growl
 {
     [Serializable]
-    public class Subscription : ForwardComputer, IDeserializationCallback, IDisposable
+    public class Subscription : GNTPForwardComputer, IDeserializationCallback, IDisposable
     {
         private const int RETRY_INTERVAL = 30;
 
@@ -34,7 +34,7 @@ namespace Growl
         private bool disposed;
 
         public Subscription(string name, bool enabled, string ipAddress, int port, string password)
-            : base(name, enabled, ipAddress, port, password, false)
+            : base(name, enabled, ipAddress, port, password)
         {
             Subscribe();
         }

@@ -43,20 +43,10 @@ namespace Growl
 			this.Stop();
 		}
 
-        public void Start()
-        {
-            OnStart();
-
-            this.growl.Register(this.app, new NotificationType[] { this.ntBalloon });
-        }
-
-        public void Stop()
-        {
-            OnStop();
-        }
-
         protected override void OnStart()
         {
+            this.growl.Register(this.app, new NotificationType[] { this.ntBalloon });
+
             // Retreive the message IDs that we'll look for in WndProc
             MSG_REPLACED = RegisterWindowMessage(MSG_NAME_SYSNOT);
             MSG_SYSNOT = RegisterWindowMessage(MSG_NAME_SYSNOT);

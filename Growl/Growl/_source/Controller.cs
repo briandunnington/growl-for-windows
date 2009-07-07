@@ -482,6 +482,7 @@ namespace Growl
                             }
                             catch
                             {
+                                // TODO: this is temporary (and thus not localized either) // LOCALIZE:
                                 SendSystemNotification("Callback failure", "An application requested a callback via url, but the url was invalid.");
                             }
                         }
@@ -528,23 +529,31 @@ namespace Growl
             if (this.pastNotifications == null) this.pastNotifications = new List<PastNotification>();
             this.pastNotifications.Clear();
 
+            DateTime cutoffTime = DateTime.Now.Date.AddDays(-8); // this needs to change at some point to it is not hard-coded in case the HistoryListView control changes
             System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(this.historyFolder);
             System.IO.FileInfo[] files = d.GetFiles("*.notification", System.IO.SearchOption.AllDirectories);
 
             foreach (System.IO.FileInfo file in files)
             {
-                string data = System.IO.File.ReadAllText(file.FullName);
-                object obj = Serialization.DeserializeObject(data);
-                if (obj != null)
+                if (file.CreationTime < cutoffTime)
                 {
-                    try
+                    file.Delete();
+                }
+                else
+                {
+                    string data = System.IO.File.ReadAllText(file.FullName);
+                    object obj = Serialization.DeserializeObject(data);
+                    if (obj != null)
                     {
-                        PastNotification pn = (PastNotification)obj;
-                        pn.LinkImage();
-                        this.pastNotifications.Add(pn);
-                    }
-                    catch
-                    {
+                        try
+                        {
+                            PastNotification pn = (PastNotification)obj;
+                            pn.LinkImage();
+                            this.pastNotifications.Add(pn);
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
             }
@@ -1241,28 +1250,9 @@ namespace Growl
                 {
                     try
                     {
-                        if (fc.UseUDP)
-                        {
-                            Growl.UDPLegacy.NotificationType[] types = new Growl.UDPLegacy.NotificationType[notificationTypes.Count];
-                            for (int i = 0; i < notificationTypes.Count; i++)
-                            {
-                                Growl.Connector.NotificationType notificationType = notificationTypes[i];
-                                Growl.UDPLegacy.NotificationType nt = new Growl.UDPLegacy.NotificationType(notificationType.Name, notificationType.Enabled);
-                                types[i] = nt;
-                            }
+                        fc.ForwardRegistration(application, notificationTypes, requestInfo);
 
-                            Growl.UDPLegacy.MessageSender netgrowl = new Growl.UDPLegacy.MessageSender(fc.IPAddress, fc.Port, application.Name, fc.Password);
-                            netgrowl.Register(ref types);
-                        }
-                        else
-                        {
-                            Forwarder growl = new Forwarder(fc.Password, fc.IPAddress, fc.Port, requestInfo);
-                            growl.KeyHashAlgorithm = fc.HashAlgorithm;
-                            growl.EncryptionAlgorithm = fc.EncryptionAlgorithm;
-                            growl.Register(application, notificationTypes.ToArray());
-                        }
-
-                        requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1}:{2}) using {3}", fc.Description, fc.IPAddress, fc.Port, (fc.UseUDP ? "UDP" : "GNTP")));
+                        requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1})", fc.Description, fc.AddressDisplay));
                     }
                     catch
                     {
@@ -1272,7 +1262,7 @@ namespace Growl
                 }
                 else
                 {
-                    requestInfo.SaveHandlingInfo(String.Format("Not forwarded to {0} ({1}) - ({2})", fc.Description, (fc.Available ? String.Format("{0}:{1}", fc.IPAddress, fc.Port) : "address not resolved"), (limit ? "disallowed by preferences" : (fc.Enabled ? "offline" : "disabled"))));
+                    requestInfo.SaveHandlingInfo(String.Format("Not forwarded to {0} ({1}) - ({2})", fc.Description, fc.AddressDisplay, (limit ? "disallowed by preferences" : (fc.Enabled ? "offline" : "disabled"))));
                 }
             }
         }
@@ -1286,22 +1276,9 @@ namespace Growl
                 {
                     try
                     {
-                        if (fc.UseUDP)
-                        {
-                            Growl.UDPLegacy.NotificationType nt = new Growl.UDPLegacy.NotificationType(notification.Name, true);
-                            Growl.UDPLegacy.MessageSender netgrowl = new Growl.UDPLegacy.MessageSender(fc.IPAddress, fc.Port, notification.ApplicationName, fc.Password);
-                            netgrowl.Notify(nt, notification.Title, notification.Text, notification.Priority, notification.Sticky);
-                        }
-                        else
-                        {
-                            Forwarder growl = new Forwarder(fc.Password, fc.IPAddress, fc.Port, requestInfo, callbackInfo);
-                            growl.KeyHashAlgorithm = fc.HashAlgorithm;
-                            growl.EncryptionAlgorithm = fc.EncryptionAlgorithm;
-                            growl.ForwardedNotificationCallback +=new Forwarder.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback);
-                            growl.Notify(notification, callbackInfo.Context);
-                        }
+                        fc.ForwardNotification(notification, callbackInfo, requestInfo, new Forwarder.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback));
 
-                        requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1}:{2}) using {3}", fc.Description, fc.IPAddress, fc.Port, (fc.UseUDP ? "UDP" : "GNTP"))); ;
+                        requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1})", fc.Description, fc.AddressDisplay));
                     }
                     catch
                     {
@@ -1311,7 +1288,7 @@ namespace Growl
                 }
                 else
                 {
-                    requestInfo.SaveHandlingInfo(String.Format("Not forwarded to {0} ({1}) - ({2})", fc.Description, (fc.Available ? String.Format("{0}:{1}", fc.IPAddress, fc.Port) : "address not resolved"), (limit ? "disallowed by preferences" : (fc.Enabled ? "offline" : "disabled"))));
+                    requestInfo.SaveHandlingInfo(String.Format("Not forwarded to {0} ({1}) - ({2})", fc.Description, fc.AddressDisplay, (limit ? "disallowed by preferences" : (fc.Enabled ? "offline" : "disabled"))));
                 }
             }
         }

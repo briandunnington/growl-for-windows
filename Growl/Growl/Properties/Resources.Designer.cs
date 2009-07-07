@@ -124,6 +124,16 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to forward notifications to
+        ///an iPhone.
+        /// </summary>
+        internal static string AddComputer_AddProwl {
+            get {
+                return ResourceManager.GetString("AddComputer_AddProwl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hostname:.
         /// </summary>
         internal static string AddComputer_AddressLabel {
@@ -160,8 +170,8 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Click here to manually add a computer
-        ///that is not in this list].
+        ///   Looks up a localized string similar to Click here to manually add a computer
+        ///that is not in this list.
         /// </summary>
         internal static string AddComputer_ManualAdd {
             get {
@@ -193,6 +203,51 @@ namespace Growl.Properties {
         internal static string AddComputer_PortLabel {
             get {
                 return ResourceManager.GetString("AddComputer_PortLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Any Priority].
+        /// </summary>
+        internal static string AddProwl_AnyPriority {
+            get {
+                return ResourceManager.GetString("AddProwl_AnyPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only forward when priority is at least:.
+        /// </summary>
+        internal static string AddProwl_MinimumPriorityLabel {
+            get {
+                return ResourceManager.GetString("AddProwl_MinimumPriorityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string AddProwl_NameLabel {
+            get {
+                return ResourceManager.GetString("AddProwl_NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        internal static string AddProwl_PasswordLabel {
+            get {
+                return ResourceManager.GetString("AddProwl_PasswordLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username:.
+        /// </summary>
+        internal static string AddProwl_UsernameLabel {
+            get {
+                return ResourceManager.GetString("AddProwl_UsernameLabel", resourceCulture);
             }
         }
         
@@ -497,6 +552,96 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display &apos;{0}&apos; is already installed..
+        /// </summary>
+        internal static string DisplayInstaller_AlreadyInstalled {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_AlreadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; is invalid.\n\nThe display could not be installed..
+        /// </summary>
+        internal static string DisplayInstaller_BadDefinitionFile {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_BadDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The installation of the display was cancelled.\n\nThe display was not installed..
+        /// </summary>
+        internal static string DisplayInstaller_DownloadCancelled {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_DownloadCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while downloading the display files.\n\nThe display was not installed..
+        /// </summary>
+        internal static string DisplayInstaller_DownloadError {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Display.
+        /// </summary>
+        internal static string DisplayInstaller_FormTitle {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_FormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing display....
+        /// </summary>
+        internal static string DisplayInstaller_Installing {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_Installing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The display &apos;{0}&apos; was installed successfully..
+        /// </summary>
+        internal static string DisplayInstaller_NewDisplayInstalledText {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_NewDisplayInstalledText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Display Installed.
+        /// </summary>
+        internal static string DisplayInstaller_NewDisplayInstalledTitle {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_NewDisplayInstalledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; does not exist.\n\nThe display could not be installed..
+        /// </summary>
+        internal static string DisplayInstaller_NonexistentDefinitionFile {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_NonexistentDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install the following display?\n\nName: {0}\nAuthor: {1}\nDescription: {2}.
+        /// </summary>
+        internal static string DisplayInstaller_Prompt {
+            get {
+                return ResourceManager.GetString("DisplayInstaller_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author:.
         /// </summary>
         internal static string Displays_CreatedBy {
@@ -511,6 +656,22 @@ namespace Growl.Properties {
         internal static string Displays_DisplayListHeader {
             get {
                 return ResourceManager.GetString("Displays_DisplayListHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find &amp; install additional displays.
+        /// </summary>
+        internal static string Displays_FindMore {
+            get {
+                return ResourceManager.GetString("Displays_FindMore", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Envelope {
+            get {
+                object obj = ResourceManager.GetObject("Envelope", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1458,6 +1619,13 @@ namespace Growl.Properties {
         internal static string Toolbar_Security {
             get {
                 return ResourceManager.GetString("Toolbar_Security", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap twitter {
+            get {
+                object obj = ResourceManager.GetObject("twitter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -221,7 +221,7 @@ namespace Growl
                 // while it may seem strange to call the Detector to see if we are installed, it is the best way
                 // to ensure that plugins/displays see the same values that we do
                 Growl.CoreLibrary.Detector detector = new Growl.CoreLibrary.Detector();
-                if (!detector.IsAvailable)
+                if (!detector.IsInstalled)
                 {
                     // something is not right with the registry setting, so lets fix it now
                     Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY, true);
@@ -357,13 +357,13 @@ namespace Growl
 
         internal void AlreadyRunning(int signalFlag)
         {
-            this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
+            if(this.controller != null) this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
 
             switch (signalFlag)
             {
                 case ApplicationMain.SIGNAL_RELOAD_DISPLAYS :
                     DisplayStyleManager.Load();
-                    this.mainForm.BindDisplayList();
+                    if(this.mainForm != null) this.mainForm.BindDisplayList();
                     break;
             }
         }
@@ -394,23 +394,23 @@ namespace Growl
 
             if (!isRunning)
             {
-                this.mainForm.UpdateState(Properties.Resources.General_ApplicationStopped, Color.Red);
+                if (this.mainForm != null) this.mainForm.UpdateState(Properties.Resources.General_ApplicationStopped, Color.Red);
                 this.notifyIcon.Text = Properties.Resources.NotifyIcon_NotRunning;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_stopped;
             }
             else if (isPaused)
             {
-                this.mainForm.UpdateState(Properties.Resources.General_ApplicationPaused, Color.FromArgb(SystemColors.GrayText.ToArgb()));  // avoid using SystemColors directly
+                if (this.mainForm != null) this.mainForm.UpdateState(Properties.Resources.General_ApplicationPaused, Color.FromArgb(SystemColors.GrayText.ToArgb()));  // avoid using SystemColors directly
                 this.notifyIcon.Text = Properties.Resources.NotifyIcon_Paused;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_dim;
-                this.controller.Pause();
+                if (this.controller != null) this.controller.Pause();
             }
             else
             {
-                this.mainForm.UpdateState(Properties.Resources.General_ApplicationRunning, Color.Green);
+                if (this.mainForm != null) this.mainForm.UpdateState(Properties.Resources.General_ApplicationRunning, Color.Green);
                 this.notifyIcon.Text = Properties.Resources.NotifyIcon_Running;
                 this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_on;
-                this.controller.Unpause();
+                if (this.controller != null) this.controller.Unpause();
             }
         }
 
@@ -513,8 +513,8 @@ namespace Growl
 
         void SystemEvents_TimeChanged(object sender, EventArgs e)
         {
-            this.controller.ReloadPastNotifications();
-            this.mainForm.OnSystemTimeChanged();
+            if (this.controller != null) this.controller.ReloadPastNotifications();
+            if (this.mainForm != null) this.mainForm.OnSystemTimeChanged();
         }
 
         void Keyboard_KeyIntercepted(Keyboard.KeyboardHookEventArgs args)
@@ -524,13 +524,13 @@ namespace Growl
                 if (args.KeyData == this.closeLastKeyCombo)
                 {
                     this.isResponsingToKeyIntercept = true;
-                    this.controller.CloseLastNotification();
+                    if (this.controller != null) this.controller.CloseLastNotification();
                     this.isResponsingToKeyIntercept = false;
                 }
                 else if (args.KeyData == this.closeAllKeyCombo)
                 {
                     this.isResponsingToKeyIntercept = true;
-                    this.controller.CloseAllOpenNotifications();
+                    if (this.controller != null) this.controller.CloseAllOpenNotifications();
                     this.isResponsingToKeyIntercept = false;
                 }
             }
@@ -538,12 +538,14 @@ namespace Growl
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            this.mainForm.ShowForm();
+            if(this.mainForm != null)
+                this.mainForm.ShowForm();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.mainForm.ShowForm();
+            if (this.mainForm != null)
+                this.mainForm.ShowForm();
         }
 
         private void pauseGrowlToolStripMenuItem_Click(object sender, EventArgs e)
@@ -563,12 +565,14 @@ namespace Growl
 
         private void muteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.mainForm.Mute(true);
+            if (this.mainForm != null)
+                this.mainForm.Mute(true);
         }
 
         private void unmuteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.mainForm.Mute(false);
+            if (this.mainForm != null)
+                this.mainForm.Mute(false);
         }
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)

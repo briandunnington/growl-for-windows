@@ -181,7 +181,7 @@ namespace Test_Server
         {
             this.subscriberID = Growl.Daemon.Subscriber.GenerateID();
             Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, "Superman", 24000);
-            Growl.Daemon.SubscriptionConnector sc = new Growl.Daemon.SubscriptionConnector(subscriber, password, "localhost");
+            Growl.Daemon.SubscriptionConnector sc = new Growl.Daemon.SubscriptionConnector(subscriber, password, "127.0.0.1");
             sc.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
             sc.OKResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_OKResponse);
             sc.ErrorResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_ErrorResponse);

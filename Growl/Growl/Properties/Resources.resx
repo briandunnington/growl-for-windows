@@ -257,8 +257,8 @@
     <comment>Add Computer form title - when subscribing</comment>
   </data>
   <data name="AddComputer_ManualAdd" xml:space="preserve">
-    <value>[Click here to manually add a computer
-that is not in this list]</value>
+    <value>Click here to manually add a computer
+that is not in this list</value>
     <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
   </data>
   <data name="AddComputer_NameLabel" xml:space="preserve">
@@ -762,5 +762,80 @@ If another version of Growl is already running, please close that version and tr
   </data>
   <data name="growl_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\growl.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DisplayInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Display '{0}' is already installed.</value>
+    <comment>Display installer: message shown if a display is already installed when attempting to install again</comment>
+  </data>
+  <data name="DisplayInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe display could not be installed.</value>
+    <comment>Display installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="DisplayInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the display was cancelled.\n\nThe display was not installed.</value>
+    <comment>Display installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="DisplayInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the display files.\n\nThe display was not installed.</value>
+    <comment>Display installer: message shown if the download of the display files fails for any reason</comment>
+  </data>
+  <data name="DisplayInstaller_FormTitle" xml:space="preserve">
+    <value>Install Display</value>
+    <comment>Display installer: form title</comment>
+  </data>
+  <data name="DisplayInstaller_Installing" xml:space="preserve">
+    <value>Installing display...</value>
+    <comment>Display installer: displayed while the display is being installed</comment>
+  </data>
+  <data name="DisplayInstaller_NewDisplayInstalledText" xml:space="preserve">
+    <value>The display '{0}' was installed successfully.</value>
+    <comment>Display installer: text of the notification shown when a new display is installed. {0} is the name of the installed display.</comment>
+  </data>
+  <data name="DisplayInstaller_NewDisplayInstalledTitle" xml:space="preserve">
+    <value>New Display Installed</value>
+    <comment>Display installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="DisplayInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe display could not be installed.</value>
+    <comment>Display installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="DisplayInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the following display?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <comment>Display installer: displayed when a click-to-install link is clicked. {0} is the name of the display, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="Displays_FindMore" xml:space="preserve">
+    <value>Find &amp; install additional displays</value>
+    <comment>Displays tab: text that links to the GFW website to find more displays</comment>
+  </data>
+  <data name="AddComputer_AddProwl" xml:space="preserve">
+    <value>Click here to forward notifications to
+an iPhone</value>
+    <comment>Add computer form: click to forward notification to iphone</comment>
+  </data>
+  <data name="AddProwl_AnyPriority" xml:space="preserve">
+    <value>[Any Priority]</value>
+    <comment>Configure iPhone Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddProwl_MinimumPriorityLabel" xml:space="preserve">
+    <value>Only forward when priority is at least:</value>
+    <comment>Configure iPhone Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddProwl_NameLabel" xml:space="preserve">
+    <value>Description:</value>
+    <comment>Configure iPhone Forwarding: 'Description' label</comment>
+  </data>
+  <data name="AddProwl_PasswordLabel" xml:space="preserve">
+    <value>Password:</value>
+    <comment>Configure iPhone Forwarding: 'Password' label</comment>
+  </data>
+  <data name="AddProwl_UsernameLabel" xml:space="preserve">
+    <value>Username:</value>
+    <comment>Configure iPhone Forwarding: 'Username' label</comment>
+  </data>
+  <data name="Envelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Envelope.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

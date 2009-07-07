@@ -25,7 +25,7 @@ namespace Growl
             this.uniqueName = uniqueName;
 
             bool firstInstance = false;
-            this.mutex = new Mutex(true, String.Format(@"Global\{0}", this.uniqueName), out firstInstance);
+            this.mutex = new Mutex(true, String.Format(@"Global\{0}", this.uniqueName), out firstInstance); // this is *not* the same mutex as used in Detector.IsGrowlRunning - this mutex only indicates that the program is open, not whether the program is actively listening for notifications
             if (!firstInstance)
             {
                 this.isAlreadyRunning = true;

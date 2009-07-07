@@ -16,7 +16,6 @@ namespace Growl
         private DateTime timestamp;
         private Growl.DisplayStyle.NotificationLite notification;
         private string imageKey;
-        private bool hasImage;
         private System.Drawing.Image image;
 
         public PastNotification(Growl.DisplayStyle.Notification notification, DateTime timestamp)

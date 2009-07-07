@@ -15,20 +15,14 @@ namespace Growl
         private Controller controller;
         private DetectedService selectedService;
         private bool isBonjour;
-        private bool doValidation;
-        private Color highlightColor = Color.FromArgb(254, 250, 184);
         private bool isSubscription;
+        private IForwardInputs inputs;
 
         public AddComputer()
         {
             InitializeComponent();
 
             // localize text
-            this.labelFormat.Text = Properties.Resources.AddComputer_FormatLabel;
-            this.labelPassword.Text = Properties.Resources.AddComputer_PasswordLabel;
-            this.labelPort.Text = Properties.Resources.AddComputer_PortLabel;
-            this.labelAddress.Text = Properties.Resources.AddComputer_AddressLabel;
-            this.labelDescription.Text = Properties.Resources.AddComputer_NameLabel;
             this.buttonSave.Text = Properties.Resources.Button_Save;
             this.buttonClose.Text = Properties.Resources.Button_Close;
             this.Text = Properties.Resources.AddComputer_FormTitle_Forward;
@@ -44,79 +38,72 @@ namespace Growl
         {
             this.BackColor = Color.FromArgb(240, 240, 240);
 
-            this.textBoxDescription.HighlightColor = highlightColor;
-            this.textBoxAddress.HighlightColor = highlightColor;
-            this.textBoxPort.HighlightColor = highlightColor;
-            this.textBoxPassword.HighlightColor = highlightColor;
-
-            this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_GNTP);
-            this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_UDP);
-
             if (this.controller != null)
             {
                 Dictionary<string, DetectedService> availableServices = controller.DetectedServices;
                 foreach (DetectedService ds in availableServices.Values)
                 {
                     BonjourListItem bli = new BonjourListItem(ds);
-                    bli.Selected += new BonjourListItemSelectedEventHandler(bli_Selected);
+                    bli.Selected += new EventHandler(bli_Selected);
                     this.bonjourListBox1.AddItem(bli);
                 }
             }
-            BonjourListItem manual = new BonjourListItem(Properties.Resources.AddComputer_ManualAdd, ForwardComputerPlatformType.Other.Icon);
-            manual.Selected += new BonjourListItemSelectedEventHandler(manual_Selected);
+
+            // add manual option
+            ForwardListItem manual = new ForwardListItem(Properties.Resources.AddComputer_ManualAdd, ForwardComputerPlatformType.Other.Icon);
+            manual.Selected += new EventHandler(manual_Selected);
             this.bonjourListBox1.AddItem(manual);
+
+            // add iphone/Prowl option
+            ProwlListItem prowl = new ProwlListItem();
+            prowl.Selected += new EventHandler(prowl_Selected);
+            this.bonjourListBox1.AddItem(prowl);
 
             if (this.isSubscription)
             {
                 this.Text = Properties.Resources.AddComputer_FormTitle_Subscriptions;
-                manual_Selected(null);
-                labelFormat.Visible = false;
-                comboBoxFormat.Visible = false;
+                ForwardListItem subscriptionInputs = new ForwardListItem(null, null);
+                ShowInputs(subscriptionInputs);
             }
         }
 
-        void manual_Selected(DetectedService ds)
+        private void ShowInputs(ForwardListItem fli)
         {
-            // set text box values
-            this.isBonjour = false;
-            this.textBoxDescription.Text = String.Empty;
-            this.textBoxDescription.Enabled = true;
-            this.textBoxAddress.Text = String.Empty;
-            this.textBoxAddress.Enabled = true;
-            this.textBoxPort.Text = Growl.Connector.GrowlConnector.TCP_PORT.ToString();
-            this.textBoxPort.Enabled = true;
-            this.comboBoxFormat.SelectedIndex = 0;
-            this.comboBoxFormat.Enabled = true;
-            this.buttonSave.Enabled = false;
-            this.buttonSave.Visible = true;
-            this.doValidation = true;
-            ValidateInputs();
+            this.inputs = fli.Inputs;
+            fli.Inputs.ValidChanged += new ValidChangedEventHandler(Inputs_ValidChanged);
+            fli.Inputs.Initialize(this.isSubscription, fli);
+            UserControl c = fli.Inputs.GetControl();
+            c.Visible = true;
+            this.panelDetails.Controls.Add(c);
 
             this.panelBonjour.Visible = false;
             this.panelDetails.Visible = true;
+            this.buttonSave.Visible = true;
         }
 
-        void bli_Selected(DetectedService ds)
+        void Inputs_ValidChanged(bool isValid)
         {
-            // set text box values
-            this.isBonjour = true;
-            this.selectedService = ds;
-            System.Net.IPEndPoint endpoint = (System.Net.IPEndPoint)ds.Service.Addresses[0];
-            this.textBoxDescription.Text = ds.Service.Name;
-            this.textBoxDescription.Enabled = false;
-            this.textBoxAddress.Text = endpoint.Address.ToString();
-            this.textBoxAddress.Enabled = false;
-            this.textBoxPort.Text = endpoint.Port.ToString();
-            this.textBoxPort.Enabled = false;
-            this.comboBoxFormat.SelectedIndex = 0;
-            this.comboBoxFormat.Enabled = false;
-            this.buttonSave.Enabled = true;
-            this.buttonSave.Visible = true;
-            this.doValidation = true;
-            ValidateInputs();
+            this.buttonSave.Enabled = isValid;
+        }
 
-            this.panelBonjour.Visible = false;
-            this.panelDetails.Visible = true;
+        void manual_Selected(object sender, EventArgs args)
+        {
+            ForwardListItem fli = (ForwardListItem)sender;
+            ShowInputs(fli);
+        }
+
+        void prowl_Selected(object sender, EventArgs args)
+        {
+            ProwlListItem pli = (ProwlListItem)sender;
+            ShowInputs(pli);
+        }
+
+        void bli_Selected(object sender, EventArgs args)
+        {
+            BonjourListItem bli = (BonjourListItem)sender;
+            this.isBonjour = true;
+            this.selectedService = bli.DetectedService;
+            ShowInputs(bli);
         }
 
         internal void SetController(Controller controller)
@@ -131,90 +118,18 @@ namespace Growl
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            ForwardComputer fc = this.inputs.Save();
+
             if (this.isSubscription)
             {
-                Subscription subscription = new Subscription(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
+                Subscription subscription = (Subscription)fc;
                 this.controller.AddSubscription(subscription);
             }
             else
             {
-                ForwardComputer fc = null;
-                if (this.isBonjour)
-                {
-                    BonjourForwardComputer bfc = new BonjourForwardComputer(textBoxDescription.Text, true, textBoxPassword.Text);
-                    bfc.Update(selectedService.Service, new GrowlBonjourEventArgs(selectedService.Platform));
-                    fc = bfc;
-                }
-                else
-                {
-                    bool useUDP = (comboBoxFormat.SelectedItem.ToString() == Properties.Resources.Protocol_Type_UDP ? true : false);
-                    fc = new ForwardComputer(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text, useUDP);
-                }
                 this.controller.AddForwardComputer(fc);
             }
             this.Close();
-        }
-
-        private void textBoxDescription_TextChanged(object sender, EventArgs e)
-        {
-            ValidateInputs();
-        }
-
-        private void textBoxAddress_TextChanged(object sender, EventArgs e)
-        {
-            ValidateInputs();
-        }
-
-        private void textBoxPort_TextChanged(object sender, EventArgs e)
-        {
-            ValidateInputs();
-        }
-
-        private void textBoxPassword_TextChanged(object sender, EventArgs e)
-        {
-            ValidateInputs();
-        }
-
-        private void ValidateInputs()
-        {
-            if (this.doValidation)
-            {
-                bool valid = true;
-
-                if (String.IsNullOrEmpty(this.textBoxDescription.Text))
-                {
-                    this.textBoxDescription.Highlight();
-                    valid = false;
-                }
-                else
-                {
-                    this.textBoxDescription.Unhighlight();
-                }
-
-                if (String.IsNullOrEmpty(this.textBoxAddress.Text))
-                {
-                    this.textBoxAddress.Highlight();
-                    valid = false;
-                }
-                else
-                {
-                    this.textBoxAddress.Unhighlight();
-                }
-
-                int port;
-                bool validPort = int.TryParse(this.textBoxPort.Text, out port);
-                if (String.IsNullOrEmpty(this.textBoxPort.Text) || !validPort)
-                {
-                    this.textBoxPort.Highlight();
-                    valid = false;
-                }
-                else
-                {
-                    this.textBoxPort.Unhighlight();
-                }
-
-                this.buttonSave.Enabled = valid;
-            }
         }
     }
 }

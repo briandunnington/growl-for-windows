@@ -9,7 +9,7 @@ using Growl.Connector;
 namespace Growl
 {
     [Serializable]
-    public class SubscribedForwardComputer : ForwardComputer, IDisposable
+    public class SubscribedForwardComputer : GNTPForwardComputer, IDisposable
     {
         public delegate void SubscribingComputerUnscubscribedEventHandler(SubscribedForwardComputer sfc);
 
@@ -42,7 +42,7 @@ namespace Growl
         }
 
         private SubscribedForwardComputer(string name, bool enabled, string ipAddress, int port, string password, ForwardComputerPlatformType platform, int ttl)
-            : base(name, enabled, ipAddress, port, password, false)
+            : base(name, enabled, ipAddress, port, password)
         {
             this.Platform = platform;
             this.available = true;

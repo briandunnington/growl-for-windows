@@ -31,8 +31,8 @@ namespace Growl.Installation
             InitializeComponent();
 
             // localize text
-            //this.Text = Properties.Resources.Updater_FormTitle;
-            //this.InfoLabel.Text = Properties.Resources.Updater_GrowlIsUpToDate;
+            this.Text = Properties.Resources.DisplayInstaller_FormTitle;
+            //this.InfoLabel.Text gets set below when displayed
             this.YesButton.Text = Properties.Resources.Button_Yes;
             this.NoButton.Text = Properties.Resources.Button_Later;
             this.OKButton.Text = Properties.Resources.Button_OK;
@@ -56,14 +56,14 @@ namespace Growl.Installation
                 DisplayInfo info = DisplayInfo.Parse(definition);
                 if (info != null)
                 {
-                    this.InfoLabel.Text = String.Format("Do you want to install the following display?\n\nName: {0}\nAuthor: {1}\nDescription: {2}", info.Name, info.Author, info.Description);
+                    this.InfoLabel.Text = String.Format(Properties.Resources.DisplayInstaller_Prompt, info.Name, info.Author, info.Description);
                     this.YesButton.Visible = true;
                     this.NoButton.Visible = true;
                     this.OKButton.Visible = false;
                     DialogResult result = this.ShowDialog();
                     if (result == DialogResult.Yes)
                     {
-                        this.InfoLabel.Text = "Installing display...";
+                        this.InfoLabel.Text = Properties.Resources.DisplayInstaller_Installing;
                         this.progressBar1.Value = 0;
                         this.progressBar1.Visible = true;
                         this.YesButton.Enabled = false;
@@ -112,7 +112,7 @@ namespace Growl.Installation
 
                                 //ShowMessage(String.Format("The display '{0}' was installed successfully.", info.Name));
 
-                                InternalNotification n = new InternalNotification("New Display Installed", String.Format("The display '{0}' was installed successfully.", info.Name), info.Name);
+                                InternalNotification n = new InternalNotification(Properties.Resources.DisplayInstaller_NewDisplayInstalledTitle, String.Format(Properties.Resources.DisplayInstaller_NewDisplayInstalledText, info.Name), info.Name);
                                 queuedNotifications.Add(n);
 
                                 newDisplayLoaded = true;
@@ -123,7 +123,7 @@ namespace Growl.Installation
                             {
                                 // display with the same name aleady exists...
                                 // TODO: ??
-                                ShowMessage(String.Format("Display '{0}' is already installed.", info.Name));
+                                ShowMessage(String.Format(Properties.Resources.DisplayInstaller_AlreadyInstalled, info.Name));
                             }
 
                             // clean up
@@ -140,14 +140,14 @@ namespace Growl.Installation
                 else
                 {
                     // definition file was malformed
-                    ShowMessage(String.Format("The definition file '{0}' is invalid.\n\nThe display could not be installed.", this.uri));
+                    ShowMessage(String.Format(Properties.Resources.DisplayInstaller_BadDefinitionFile, this.uri));
                 }
             }
             catch (Exception ex)
             {
                 // error downloading definition file
                 Utility.WriteDebugInfo(String.Format("Error downloading display. {0} - {1}", ex.Message, ex.StackTrace));
-                ShowMessage(String.Format("The definition file '{0}' does not exist.\n\nThe display could not be installed.", this.uri));
+                ShowMessage(String.Format(Properties.Resources.DisplayInstaller_NonexistentDefinitionFile, this.uri));
             }
             return newDisplayLoaded;
         }
@@ -163,11 +163,11 @@ namespace Growl.Installation
         {
             if (e.Error != null)
             {
-                this.errorMessage = "An error occurred while downloading the display files.\n\nThe display was not installed.";
+                this.errorMessage = Properties.Resources.DisplayInstaller_DownloadError;
             }
             else if (e.Cancelled)
             {
-                this.errorMessage = "The installation of the display was cancelled.\n\nThe display was not installed.";
+                this.errorMessage = Properties.Resources.DisplayInstaller_DownloadCancelled;
             }
 
             // sometimes the downloaded file is still being written to disk.

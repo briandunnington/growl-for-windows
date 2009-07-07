@@ -56,6 +56,7 @@ namespace Growl
             this.buttonPreviewDisplay.Text = Properties.Resources.Button_Preview;
             this.buttonSetAsDefault.Text = Properties.Resources.Button_SetAsDefault;
             this.listControlDisplays.HeaderText = Properties.Resources.Displays_DisplayListHeader;
+            this.getDisplaysLabel.Text = Properties.Resources.Displays_FindMore;
 
             this.labelPasswordManager.Text = Properties.Resources.Security_PasswordManager_Title;
             this.checkBoxAllowSubscriptions.Text = Properties.Resources.Security_AllowSubscriptions;
@@ -1118,6 +1119,13 @@ namespace Growl
                 prefs.PrefDuration = prefDuration;
                 this.controller.SaveApplicationPrefs();
             }
+        }
+
+        private void getDisplaysLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            LinkLabel ll = (LinkLabel)sender;
+            string url = (string) ll.Tag;
+            OpenLink(url);
         }
 
         /* THIS IS NOT READY FOR RELEASE YET

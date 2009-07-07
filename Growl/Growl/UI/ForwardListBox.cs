@@ -6,14 +6,14 @@ using System.Windows.Forms;
 
 namespace Growl.UI
 {
-    public class BonjourListBox : ListBox
+    public class ForwardListBox : ListBox
     {
         private const int IMAGE_SIZE = 48;
 
         private Color foreColor = Color.Black;
         private int previouslySelectedIndex = -1;
 
-        public BonjourListBox()
+        public ForwardListBox()
             : base()
         {
             InitializeComponent();
@@ -48,7 +48,7 @@ namespace Growl.UI
 
                 string text = obj.ToString();
                 int newX = e.Bounds.X;
-                BonjourListItem item = obj as BonjourListItem;
+                ForwardListItem item = obj as ForwardListItem;
                 if (item != null)
                 {
                     if(item.Image != null)
@@ -67,7 +67,7 @@ namespace Growl.UI
             }
         }
 
-        public void AddItem(BonjourListItem item)
+        public void AddItem(ForwardListItem item)
         {
             this.Items.Add(item);
         }
@@ -119,10 +119,10 @@ namespace Growl.UI
         {
             if (this.SelectedItem != null)
             {
-                if (this.SelectedItem is BonjourListItem)
+                if (this.SelectedItem is ForwardListItem)
                 {
-                    BonjourListItem bli = (BonjourListItem)this.SelectedItem;
-                    bli.Select();
+                    ForwardListItem fli = (ForwardListItem)this.SelectedItem;
+                    fli.Select();
                 }
             }
         }

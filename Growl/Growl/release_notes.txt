@@ -1,3 +1,9 @@
+v2.0 Beta 16 changes
+------------------------------
+- added ability to forward notifications to iphones via Prowl
+- fixed a bug that could cause a crash if the system tray icon was double clicked before Growl was done initializing
+- added link to Displays tab for finding and installing additional displays
+
 v2.0 Beta 15 changes
 ------------------------------
 - fixed a bug when loading displays that didnt filter out abstract classes

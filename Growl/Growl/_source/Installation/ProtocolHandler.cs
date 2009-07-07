@@ -39,6 +39,9 @@ namespace Growl.Installation
                     case "extension":
                         // this isnt a real use case yet
                         break;
+                    case "language":
+                        // this isnt a real use case yet
+                        break;
                 }
             }
             return result;
