@@ -827,17 +827,18 @@ namespace Growl
                 {
                     RegisteredNotification rn = ra.Notifications[notification.Name];
 
+                    bool sticky = rn.ShouldStayOnScreen(false, this.activityMonitor.IsIdle, notification.Sticky);
+                    Growl.Connector.Priority priority = rn.Priority(notification.Priority);
+
                     if (ra.Enabled && rn.Enabled)
                     {
-                        bool sticky = rn.ShouldStayOnScreen(false, this.activityMonitor.IsIdle, notification.Sticky);
-
                         DisplayStyle.Notification n = new Growl.DisplayStyle.Notification();
                         n.UUID = requestInfo.RequestID;
                         n.NotificationID = requestInfo.RequestID;
                         n.ApplicationName = notification.ApplicationName;
                         n.Description = notification.Text;
                         n.Name = notification.Name;
-                        n.Priority = (int)rn.Priority(notification.Priority);
+                        n.Priority = (int)priority;
                         n.Sticky = sticky;
                         n.Title = notification.Title;
                         n.Duration = rn.Duration;
@@ -889,6 +890,7 @@ namespace Growl
                             System.Drawing.Image icon = (Image)notification.Icon;
                             notification.Icon = icon;
                         }
+                        notification.Priority = priority;
 
                         HandleForwarding(notification, callbackInfo, requestInfo, limitToTheseComputers);
                     }
