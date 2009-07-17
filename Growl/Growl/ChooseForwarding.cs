@@ -33,14 +33,13 @@ namespace Growl
 
             if (this.controller != null && this.prefs != null)
             {
-                if (this.controller.ForwardComputers != null && this.controller.ForwardComputers.Count > 0)
+                if (this.controller.ForwardDestinations != null && this.controller.ForwardDestinations.Count > 0)
                 {
-                    Dictionary<string, ForwardComputer> computers = new Dictionary<string,ForwardComputer>();
-                    foreach (ForwardComputer fc in this.controller.ForwardComputers.Values)
+                    Dictionary<string, ForwardDestination> computers = new Dictionary<string,ForwardDestination>();
+                    foreach (ForwardDestination fc in this.controller.ForwardDestinations.Values)
                     {
                         bool enabled = this.prefs.PrefForwardCustomList.Contains(fc.Description);
-                        //ForwardComputer clone = new ForwardComputer(fc.Description, enabled, fc.IPAddress, fc.Port, fc.Password, fc.UseUDP);
-                        ForwardComputer clone = fc.Clone();
+                        ForwardDestination clone = fc.Clone();
                         fc.Enabled = enabled;
                         computers.Add(clone.Description, clone);
                     }
@@ -79,7 +78,7 @@ namespace Growl
         private void buttonSave_Click(object sender, EventArgs e)
         {
             List<string> computers = new List<string>();
-            foreach (ForwardComputer fc in this.forwardListView1.Computers.Values)
+            foreach (ForwardDestination fc in this.forwardListView1.Computers.Values)
             {
                 if (fc.Enabled) computers.Add(fc.Description);
             }

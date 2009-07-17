@@ -6,7 +6,7 @@ using System.Text;
 namespace Growl
 {
     [Serializable]
-    public class Subscription : GNTPForwardComputer, IDeserializationCallback, IDisposable
+    public class Subscription : GNTPForwardDestination, IDeserializationCallback, IDisposable
     {
         private const int RETRY_INTERVAL = 30;
 
@@ -84,19 +84,24 @@ namespace Growl
             set
             {
                 this.allowed = value;
-                if (value && this.Enabled)
-                {
-                    this.AdditionalOfflineDisplayInfo = null;
-                    this.AdditionalOnlineDisplayInfo = null;
-                    Subscribe();
-                }
-                else
-                {
-                    EnsureTimer();
-                    StopRetryTimer();
-                }
-                this.OnStatusChanged();
+                Update();
             }
+        }
+
+        public void Update()
+        {
+            if (this.Enabled)
+            {
+                this.AdditionalOfflineDisplayInfo = null;
+                this.AdditionalOnlineDisplayInfo = null;
+                Subscribe();
+            }
+            else
+            {
+                EnsureTimer();
+                StopRetryTimer();
+            }
+            this.OnStatusChanged();
         }
 
         private void Subscribe()
@@ -128,7 +133,7 @@ namespace Growl
 
         void sc_OKResponse(Growl.Daemon.SubscriptionResponse response)
         {
-            this.Platform = ForwardComputerPlatformType.FromString(response.PlatformName);
+            this.Platform = ForwardDestinationPlatformType.FromString(response.PlatformName);
             this.AdditionalOfflineDisplayInfo = null;
             this.AdditionalOnlineDisplayInfo = String.Format("TTL: {0}", response.TTL);
             this.available = true;

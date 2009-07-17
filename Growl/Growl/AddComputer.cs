@@ -13,10 +13,10 @@ namespace Growl
     public partial class AddComputer : Form
     {
         private Controller controller;
-        private DetectedService selectedService;
-        private bool isBonjour;
         private bool isSubscription;
-        private IForwardInputs inputs;
+        private IForwardDestinationHandler handler;
+        private ForwardDestinationSettingsPanel settingsPanel;
+        private ForwardDestination fdEdit;
 
         public AddComputer()
         {
@@ -32,78 +32,72 @@ namespace Growl
             : this()
         {
             this.isSubscription = isSubscription;
+            if (this.isSubscription)
+            {
+                IForwardDestinationHandler handler = ForwardDestinationManager.GetHandler(typeof(Subscription));
+                ShowInputs(null, handler);
+            }
+        }
+
+        public AddComputer(ForwardDestination fd)
+            : this()
+        {
+            this.fdEdit = fd;
+            if (fd is Subscription) this.isSubscription = true;
+            IForwardDestinationHandler handler = ForwardDestinationManager.GetHandler(fd);
+            ShowInputs(null, handler);
         }
 
         private void AddComputer_Load(object sender, EventArgs e)
         {
             this.BackColor = Color.FromArgb(240, 240, 240);
 
-            if (this.controller != null)
+            List<ForwardDestinationListItem> list = ForwardDestinationManager.GetListItems();
+            foreach (ForwardDestinationListItem fdli in list)
             {
-                Dictionary<string, DetectedService> availableServices = controller.DetectedServices;
-                foreach (DetectedService ds in availableServices.Values)
-                {
-                    BonjourListItem bli = new BonjourListItem(ds);
-                    bli.Selected += new EventHandler(bli_Selected);
-                    this.bonjourListBox1.AddItem(bli);
-                }
+                fdli.Selected += new EventHandler(fdli_Selected);
+                this.bonjourListBox1.AddItem(fdli);
             }
 
-            // add manual option
-            ForwardListItem manual = new ForwardListItem(Properties.Resources.AddComputer_ManualAdd, ForwardComputerPlatformType.Other.Icon);
-            manual.Selected += new EventHandler(manual_Selected);
-            this.bonjourListBox1.AddItem(manual);
-
-            // add iphone/Prowl option
-            ProwlListItem prowl = new ProwlListItem();
-            prowl.Selected += new EventHandler(prowl_Selected);
-            this.bonjourListBox1.AddItem(prowl);
-
-            if (this.isSubscription)
-            {
-                this.Text = Properties.Resources.AddComputer_FormTitle_Subscriptions;
-                ForwardListItem subscriptionInputs = new ForwardListItem(null, null);
-                ShowInputs(subscriptionInputs);
-            }
+            if (this.isSubscription) this.Text = Properties.Resources.AddComputer_FormTitle_Subscriptions;
         }
 
-        private void ShowInputs(ForwardListItem fli)
+        void fdli_Selected(object sender, EventArgs e)
         {
-            this.inputs = fli.Inputs;
-            fli.Inputs.ValidChanged += new ValidChangedEventHandler(Inputs_ValidChanged);
-            fli.Inputs.Initialize(this.isSubscription, fli);
-            UserControl c = fli.Inputs.GetControl();
-            c.Visible = true;
-            this.panelDetails.Controls.Add(c);
+            ForwardDestinationListItem fdli = (ForwardDestinationListItem)sender;
+            ShowInputs(fdli);
+        }
 
+        private void ShowInputs(ForwardDestinationListItem fdli)
+        {
+            ShowInputs(fdli, fdli.Handler);
+        }
+
+        private void ShowInputs(ForwardDestinationListItem fdli, IForwardDestinationHandler handler)
+        {
             this.panelBonjour.Visible = false;
             this.panelDetails.Visible = true;
+
+            ForwardDestinationSettingsPanel panel = handler.GetSettingsPanel(this.fdEdit);
+            this.settingsPanel = panel;
+            panel.ValidChanged += new ForwardDestinationSettingsPanel.ValidChangedEventHandler(panel_ValidChanged);
+            panel.Initialize(this.isSubscription, fdli, this.fdEdit);
+            this.panelDetails.Controls.Add(panel);
+            panel.Visible = true;
+
             this.buttonSave.Visible = true;
         }
 
-        void Inputs_ValidChanged(bool isValid)
+        void panel_ValidChanged(bool isValid)
         {
             this.buttonSave.Enabled = isValid;
         }
 
-        void manual_Selected(object sender, EventArgs args)
+        internal void Initialize(Controller controller, ForwardDestination fdEdit, bool isSubscription)
         {
-            ForwardListItem fli = (ForwardListItem)sender;
-            ShowInputs(fli);
-        }
-
-        void prowl_Selected(object sender, EventArgs args)
-        {
-            ProwlListItem pli = (ProwlListItem)sender;
-            ShowInputs(pli);
-        }
-
-        void bli_Selected(object sender, EventArgs args)
-        {
-            BonjourListItem bli = (BonjourListItem)sender;
-            this.isBonjour = true;
-            this.selectedService = bli.DetectedService;
-            ShowInputs(bli);
+            this.controller = controller;
+            this.fdEdit = fdEdit;
+            this.isSubscription = isSubscription;
         }
 
         internal void SetController(Controller controller)
@@ -118,16 +112,22 @@ namespace Growl
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            ForwardComputer fc = this.inputs.Save();
-
-            if (this.isSubscription)
+            if (this.fdEdit != null)
             {
-                Subscription subscription = (Subscription)fc;
-                this.controller.AddSubscription(subscription);
+                this.settingsPanel.Update(this.fdEdit);
             }
             else
             {
-                this.controller.AddForwardComputer(fc);
+                ForwardDestination fd = this.settingsPanel.Create();
+                if (this.isSubscription)
+                {
+                    Subscription subscription = (Subscription)fd;
+                    this.controller.AddSubscription(subscription);
+                }
+                else
+                {
+                    this.controller.AddForwardDestination(fd);
+                }
             }
             this.Close();
         }

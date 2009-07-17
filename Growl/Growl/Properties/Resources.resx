@@ -208,6 +208,18 @@
   <data name="growl_highlighted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\growl_highlighted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="growl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\growl.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="growl_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\growl.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Envelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Envelope.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NotifyIcon_NotRunning" xml:space="preserve">
     <value>Growl (not running)</value>
     <comment>Tooltip for notify icon when Growl is not running</comment>
@@ -757,12 +769,6 @@ If another version of Growl is already running, please close that version and tr
     <value>Duration:</value>
     <comment>Applications tab: duration preference label</comment>
   </data>
-  <data name="growl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="growl_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="DisplayInstaller_AlreadyInstalled" xml:space="preserve">
     <value>Display '{0}' is already installed.</value>
     <comment>Display installer: message shown if a display is already installed when attempting to install again</comment>
@@ -812,6 +818,16 @@ If another version of Growl is already running, please close that version and tr
 an iPhone</value>
     <comment>Add computer form: click to forward notification to iphone</comment>
   </data>
+  <data name="AddComputer_AddEmail" xml:space="preserve">
+    <value>Click here to forward notifications to
+an email account</value>
+    <comment>Add computer form: click to add email forwarding</comment>
+  </data>
+  <data name="AddComputer_AddTwitter" xml:space="preserve">
+    <value>Click here to forward notifications
+to Twitter</value>
+    <comment>Add computer form: click to forward notifications to Twitter</comment>
+  </data>
   <data name="AddProwl_AnyPriority" xml:space="preserve">
     <value>[Any Priority]</value>
     <comment>Configure iPhone Forwarding: label for combobox choice for forwarding all notification priorities</comment>
@@ -824,18 +840,56 @@ an iPhone</value>
     <value>Description:</value>
     <comment>Configure iPhone Forwarding: 'Description' label</comment>
   </data>
-  <data name="AddProwl_PasswordLabel" xml:space="preserve">
+  <data name="AddProwl_APIKeyLabel" xml:space="preserve">
+    <value>API Key:</value>
+    <comment>Configure iPhone Forwarding: 'API Key' label</comment>
+  </data>
+  <data name="AddProwl_OnlyWhenIdle" xml:space="preserve">
+    <value>Only forward when idle or away</value>
+    <comment>Configure iphone forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="AddTwitter_AnyPriority" xml:space="preserve">
+    <value>[Any Priority]</value>
+    <comment>Configure Twitter Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddTwitter_MinimumPriorityLabel" xml:space="preserve">
+    <value>Only forward when priority is at least:</value>
+    <comment>Configure Twitter Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddTwitter_PasswordLabel" xml:space="preserve">
     <value>Password:</value>
-    <comment>Configure iPhone Forwarding: 'Password' label</comment>
+    <comment>Configure Twitter Forwarding: 'Password' label</comment>
   </data>
-  <data name="AddProwl_UsernameLabel" xml:space="preserve">
+  <data name="AddTwitter_UsernameLabel" xml:space="preserve">
     <value>Username:</value>
-    <comment>Configure iPhone Forwarding: 'Username' label</comment>
+    <comment>Configure Twitter Forwarding: 'Username' label</comment>
   </data>
-  <data name="Envelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Envelope.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AddTwitter_FormatLabel" xml:space="preserve">
+    <value>Format:</value>
+    <comment>Configure Twitter Forwarding: 'Format' label</comment>
   </data>
-  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AddTwitter_OnlyWhenIdle" xml:space="preserve">
+    <value>Only forward when idle or away</value>
+    <comment>Configure Twitter forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="LiteralString_Always" xml:space="preserve">
+    <value>Always</value>
+    <comment>The string 'Always'</comment>
+  </data>
+  <data name="LiteralString_IdleOnly" xml:space="preserve">
+    <value>Idle Only</value>
+    <comment>The string 'Idle Only'</comment>
+  </data>
+  <data name="Network_EditComputer" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Network tab: 'Edit' context menu item</comment>
+  </data>
+  <data name="ProwlConfirmation_Text" xml:space="preserve">
+    <value>You have successfully configured Growl to forward notifications to Prowl</value>
+    <comment>Text of Prowl confirmation notification sent to confirm successful configuration</comment>
+  </data>
+  <data name="ProwlConfirmation_Title" xml:space="preserve">
+    <value>Prowl Test</value>
+    <comment>Title of Prowl confirmation notification sent to confirm successful configuration</comment>
   </data>
 </root>

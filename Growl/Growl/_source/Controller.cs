@@ -12,7 +12,7 @@ namespace Growl
         public delegate void ApplicationRegisteredDelegate(RegisteredApplication ra);
         public delegate void NotificationReceivedDelegate(Growl.DisplayStyle.Notification n);
         public delegate void NotificationPastDelegate(PastNotification pn);
-        public delegate void BonjourServiceUpdateDelegate(BonjourForwardComputer bfc);
+        public delegate void BonjourServiceUpdateDelegate(BonjourForwardDestination bfc);
         public delegate void SubscriptionsUpdatedDelegate(bool countChanged);
         public delegate void FailedToStartEventHandler(object sender, PortConflictEventArgs args);
 
@@ -20,8 +20,8 @@ namespace Growl
         private delegate void ShowMissedNotificationsDelegate(List<PastNotification> missedNotifications);
         private delegate void RefreshActiveNotificationsDelegate();
         internal delegate void ItemLoadedEventHandler(string itemLoaded);
-        private delegate void OnBonjourServiceUpdateDelegate(BonjourForwardComputer bfc);
-        private delegate void OnForwardComputersUpdatedDelegate();
+        private delegate void OnBonjourServiceUpdateDelegate(BonjourForwardDestination bfc);
+        private delegate void OnForwardDestinationsUpdatedDelegate();
         private delegate void OnSubscriptionsUpdatedDelegate(bool countChanged);
 
         public event FailedToStartEventHandler FailedToStart;
@@ -31,7 +31,7 @@ namespace Growl
         public event NotificationReceivedDelegate NotificationReceived;
         public event NotificationPastDelegate NotificationPast;
         public event BonjourServiceUpdateDelegate BonjourServiceUpdate;
-        public event EventHandler ForwardComputersUpdated;
+        public event EventHandler ForwardDestinationsUpdated;
         public event SubscriptionsUpdatedDelegate SubscriptionsUpdated;
 
         private static Controller singleton;
@@ -68,8 +68,8 @@ namespace Growl
         private PrefSound growlDefaultSound = PrefSound.None;
 
         protected Dictionary<string, RegisteredApplication> applications;
-        protected Dictionary<string, ForwardComputer> forwards;
-        protected Dictionary<string, ForwardComputer> subscriptions;
+        protected Dictionary<string, ForwardDestination> forwards;
+        protected Dictionary<string, ForwardDestination> subscriptions;
         private SettingSaver raSettingSaver = new SettingSaver(REGISTERED_APPLICATIONS_SETTINGS_FILENAME);
         private SettingSaver fcSettingSaver = new SettingSaver(FORWARD_COMPUTERS_SETTINGS_FILENAME);
         private SettingSaver pmSettingSaver = new SettingSaver(PASSWORD_SETTINGS_FILENAME);
@@ -103,6 +103,8 @@ namespace Growl
             LoadForwardedComputers();
             LoadSubscriptions();
             LoadPastNotifications();
+
+            ForwardDestinationManager.Initialize();
 
             if (Bonjour.IsSupported)
             {
@@ -503,14 +505,38 @@ namespace Growl
 
         private void LoadForwardedComputers()
         {
-            this.forwards = (Dictionary<string, ForwardComputer>)fcSettingSaver.Load();
-            if (this.forwards == null) this.forwards = new Dictionary<string, ForwardComputer>();
+            this.forwards = (Dictionary<string, ForwardDestination>)fcSettingSaver.Load();
+            if (this.forwards == null) this.forwards = new Dictionary<string, ForwardDestination>();
+
+            // handle old serialized values that were stored by description instead of key
+            Dictionary<string, ForwardDestination> listToUpdate = new Dictionary<string,ForwardDestination>();
+            foreach (KeyValuePair<string, ForwardDestination> item in this.forwards)
+            {
+                if (item.Key != item.Value.Key) listToUpdate.Add(item.Key, item.Value);
+            }
+            foreach (KeyValuePair<string, ForwardDestination> item in listToUpdate)
+            {
+                this.forwards.Remove(item.Key);
+                this.forwards.Add(item.Value.Key, item.Value);
+            }
         }
 
         private void LoadSubscriptions()
         {
-            this.subscriptions = (Dictionary<string, ForwardComputer>)sbSettingSaver.Load();
-            if (this.subscriptions == null) this.subscriptions = new Dictionary<string, ForwardComputer>();
+            this.subscriptions = (Dictionary<string, ForwardDestination>)sbSettingSaver.Load();
+            if (this.subscriptions == null) this.subscriptions = new Dictionary<string, ForwardDestination>();
+
+            // handle old serialized values that were stored by description instead of key
+            Dictionary<string, ForwardDestination> listToUpdate = new Dictionary<string, ForwardDestination>();
+            foreach (KeyValuePair<string, ForwardDestination> item in this.subscriptions)
+            {
+                if (item.Key != item.Value.Key) listToUpdate.Add(item.Key, item.Value);
+            }
+            foreach (KeyValuePair<string, ForwardDestination> item in listToUpdate)
+            {
+                this.subscriptions.Remove(item.Key);
+                this.subscriptions.Add(item.Value.Key, item.Value);
+            }
 
             foreach (Subscription subscription in this.subscriptions.Values)
             {
@@ -611,7 +637,7 @@ namespace Growl
             }
         }
 
-        public Dictionary<string, ForwardComputer> ForwardComputers
+        public Dictionary<string, ForwardDestination> ForwardDestinations
         {
             get
             {
@@ -619,7 +645,7 @@ namespace Growl
             }
         }
 
-        public Dictionary<string, ForwardComputer> Subscriptions
+        public Dictionary<string, ForwardDestination> Subscriptions
         {
             get
             {
@@ -643,9 +669,9 @@ namespace Growl
                 if (this.bonjour != null)
                 {
                     List<string> filter = new List<string>();
-                    foreach (ForwardComputer fc in this.ForwardComputers.Values)
+                    foreach (ForwardDestination fc in this.ForwardDestinations.Values)
                     {
-                        if (fc is BonjourForwardComputer)
+                        if (fc is BonjourForwardDestination)
                         {
                             filter.Add(fc.Description);
                         }
@@ -997,11 +1023,7 @@ namespace Growl
                 n.Priority = (int)Growl.Connector.Priority.Normal;
                 n.Sticky = false;   // registration notifications are never sticky
                 n.Title = Properties.Resources.SystemNotification_AppRegistered_Title;
-
-                if (application.Icon != null && application.Icon.IsSet)
-                {
-                    n.Image = application.Icon;
-                }
+                n.Image = ra.Icon;
 
                 // handle custom attributes
                 n.AddCustomTextAttributes(application.CustomTextAttributes);
@@ -1048,19 +1070,19 @@ namespace Growl
         {
             bool alertUser = true;
             int ttl = Properties.Settings.Default.SubscriptionTTL;
-            SubscribedForwardComputer subscribedComputer = new SubscribedForwardComputer(subscriber, ttl);
-            subscribedComputer.Unsubscribed += new SubscribedForwardComputer.SubscribingComputerUnscubscribedEventHandler(sfc_Unsubscribed);
-            if (this.forwards.ContainsKey(subscribedComputer.Description))
+            SubscribedForwardDestination subscribedComputer = new SubscribedForwardDestination(subscriber, ttl);
+            subscribedComputer.Unsubscribed += new SubscribedForwardDestination.SubscribingComputerUnscubscribedEventHandler(sfc_Unsubscribed);
+            if (this.forwards.ContainsKey(subscribedComputer.Key))
             {
-                ForwardComputer fc = this.forwards[subscribedComputer.Description];
-                SubscribedForwardComputer sfc = fc as SubscribedForwardComputer;
+                ForwardDestination fc = this.forwards[subscribedComputer.Key];
+                SubscribedForwardDestination sfc = fc as SubscribedForwardDestination;
                 if (sfc != null)
                 {
                     subscribedComputer.Enabled = sfc.Enabled;
                     alertUser = false;
                 }
             }
-            AddForwardComputer(subscribedComputer);
+            AddForwardDestination(subscribedComputer);
 
             if (alertUser)
             {
@@ -1076,9 +1098,9 @@ namespace Growl
             return response;
         }
 
-        void sfc_Unsubscribed(SubscribedForwardComputer sfc)
+        void sfc_Unsubscribed(SubscribedForwardDestination sfc)
         {
-            InvokeOnForwardComputersUpdated();
+            InvokeOnForwardDestinationsUpdated();
         }
 
         private void OnNotificationReceived(Growl.DisplayStyle.Notification n)
@@ -1213,7 +1235,7 @@ namespace Growl
 
         void bonjour_ServiceFound(Bonjour sender, ZeroconfService.NetService service, GrowlBonjourEventArgs args)
         {
-            BonjourForwardComputer bfc = MatchBonjourServiceToForwardComputer(service);
+            BonjourForwardDestination bfc = MatchBonjourServiceToForwardDestination(service);
             if (bfc != null)
             {
                 bfc.Update(service, args);
@@ -1223,7 +1245,7 @@ namespace Growl
 
         void bonjour_ServiceRemoved(Bonjour sender, ZeroconfService.NetService service)
         {
-            BonjourForwardComputer bfc = MatchBonjourServiceToForwardComputer(service);
+            BonjourForwardDestination bfc = MatchBonjourServiceToForwardDestination(service);
             if (bfc != null)
             {
                 bfc.NotAvailable();
@@ -1231,12 +1253,12 @@ namespace Growl
             }
         }
 
-        private BonjourForwardComputer MatchBonjourServiceToForwardComputer(ZeroconfService.NetService service)
+        private BonjourForwardDestination MatchBonjourServiceToForwardDestination(ZeroconfService.NetService service)
         {
             if(this.forwards.ContainsKey(service.Name))
             {
-                ForwardComputer fc = this.forwards[service.Name];
-                BonjourForwardComputer bfc = fc as BonjourForwardComputer;
+                ForwardDestination fc = this.forwards[service.Name];
+                BonjourForwardDestination bfc = fc as BonjourForwardDestination;
                 if (bfc != null)
                     return bfc;
             }
@@ -1246,13 +1268,13 @@ namespace Growl
         protected void HandleForwarding(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, List<string> limitToTheseComputers)
         {
             bool limit = (limitToTheseComputers != null);
-            foreach (ForwardComputer fc in this.forwards.Values)
+            foreach (ForwardDestination fc in this.forwards.Values)
             {
                 if((!limit || limitToTheseComputers.Contains(fc.Description)) && (fc.EnabledAndAvailable))
                 {
                     try
                     {
-                        fc.ForwardRegistration(application, notificationTypes, requestInfo);
+                        fc.ForwardRegistration(application, notificationTypes, requestInfo, this.activityMonitor.IsIdle);
 
                         requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1})", fc.Description, fc.AddressDisplay));
                     }
@@ -1272,13 +1294,13 @@ namespace Growl
         protected void HandleForwarding(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, List<string> limitToTheseComputers)
         {
             bool limit = (limitToTheseComputers != null);
-            foreach (ForwardComputer fc in this.forwards.Values)
+            foreach (ForwardDestination fc in this.forwards.Values)
             {
                 if ((!limit || limitToTheseComputers.Contains(fc.Description)) && (fc.EnabledAndAvailable))
                 {
                     try
                     {
-                        fc.ForwardNotification(notification, callbackInfo, requestInfo, new Forwarder.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback));
+                        fc.ForwardNotification(notification, callbackInfo, requestInfo, this.activityMonitor.IsIdle, new Forwarder.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback));
 
                         requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1})", fc.Description, fc.AddressDisplay));
                     }
@@ -1304,7 +1326,7 @@ namespace Growl
             }
         }
 
-        private void InvokeOnBonjourServiceUpdate(BonjourForwardComputer bfc)
+        private void InvokeOnBonjourServiceUpdate(BonjourForwardDestination bfc)
         {
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
@@ -1317,7 +1339,7 @@ namespace Growl
             }
         }
 
-        protected void OnBonjourServiceUpdate(BonjourForwardComputer bfc)
+        protected void OnBonjourServiceUpdate(BonjourForwardDestination bfc)
         {
             if (this.BonjourServiceUpdate != null)
             {
@@ -1325,56 +1347,56 @@ namespace Growl
             }
         }
 
-        public void AddForwardComputer(ForwardComputer fc)
+        public void AddForwardDestination(ForwardDestination fc)
         {
-            if (this.forwards.ContainsKey(fc.Description))
-                this.forwards.Remove(fc.Description);
-            this.forwards.Add(fc.Description, fc);
-            InvokeOnForwardComputersUpdated();
+            if (this.forwards.ContainsKey(fc.Key))
+                this.forwards.Remove(fc.Key);
+            this.forwards.Add(fc.Key, fc);
+            InvokeOnForwardDestinationsUpdated();
         }
 
-        public void RemoveForwardComputer(ForwardComputer fc)
+        public void RemoveForwardDestination(ForwardDestination fc)
         {
-            if (this.forwards.ContainsKey(fc.Description))
-                this.forwards.Remove(fc.Description);
-            InvokeOnForwardComputersUpdated();
+            if (this.forwards.ContainsKey(fc.Key))
+                this.forwards.Remove(fc.Key);
+            InvokeOnForwardDestinationsUpdated();
         }
 
-        private void InvokeOnForwardComputersUpdated()
+        private void InvokeOnForwardDestinationsUpdated()
         {
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
-                OnForwardComputersUpdatedDelegate ofcud = new OnForwardComputersUpdatedDelegate(OnForwardComputersUpdated);
+                OnForwardDestinationsUpdatedDelegate ofcud = new OnForwardDestinationsUpdatedDelegate(OnForwardDestinationsUpdated);
                 this.synchronizingObject.BeginInvoke(ofcud, null);
             }
             else
             {
-                OnForwardComputersUpdated();
+                OnForwardDestinationsUpdated();
             }
         }
 
-        protected void OnForwardComputersUpdated()
+        protected void OnForwardDestinationsUpdated()
         {
-            if (this.ForwardComputersUpdated != null)
+            if (this.ForwardDestinationsUpdated != null)
             {
-                this.ForwardComputersUpdated(this, EventArgs.Empty);
+                this.ForwardDestinationsUpdated(this, EventArgs.Empty);
             }
         }
 
         public void AddSubscription(Subscription subscription)
         {
-            if (this.subscriptions.ContainsKey(subscription.Description))
-                this.subscriptions.Remove(subscription.Description);
+            if (this.subscriptions.ContainsKey(subscription.Key))
+                this.subscriptions.Remove(subscription.Key);
 
             subscription.StatusChanged += new Subscription.SubscriptionStatusChangedEventHandler(subscription_StatusChanged);
-            this.subscriptions.Add(subscription.Description, subscription);
+            this.subscriptions.Add(subscription.Key, subscription);
             InvokeOnSubscriptionsUpdated(true);
         }
 
         public void RemoveSubscription(Subscription subscription)
         {
-            if (this.subscriptions.ContainsKey(subscription.Description))
-                this.subscriptions.Remove(subscription.Description);
+            if (this.subscriptions.ContainsKey(subscription.Key))
+                this.subscriptions.Remove(subscription.Key);
             InvokeOnSubscriptionsUpdated(true);
         }
 

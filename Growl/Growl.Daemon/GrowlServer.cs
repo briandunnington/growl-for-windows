@@ -835,6 +835,7 @@ namespace Growl.Daemon
                 try
                 {
                     if (this.socketCleanupTimer != null) this.socketCleanupTimer.Close();
+                    if (this.bonjour != null) this.bonjour.Dispose();
                 }
                 catch
                 {

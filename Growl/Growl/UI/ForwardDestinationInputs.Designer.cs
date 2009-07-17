@@ -1,6 +1,6 @@
 namespace Growl.UI
 {
-    partial class ForwardComputerInputs
+    partial class ForwardDestinationInputs
     {
         /// <summary> 
         /// Required designer variable.
@@ -113,7 +113,7 @@ namespace Growl.UI
             this.panelDetails.Controls.Add(this.labelDescription);
             this.panelDetails.Location = new System.Drawing.Point(0, 0);
             this.panelDetails.Name = "panelDetails";
-            this.panelDetails.Size = new System.Drawing.Size(338, 137);
+            this.panelDetails.Size = new System.Drawing.Size(338, 168);
             this.panelDetails.TabIndex = 7;
             // 
             // textBoxPassword
@@ -155,14 +155,14 @@ namespace Growl.UI
             this.labelPort.TabIndex = 4;
             this.labelPort.Text = "Port:";
             // 
-            // ForwardComputerInputs
+            // ForwardDestinationInputs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.panelDetails);
-            this.Name = "ForwardComputerInputs";
-            this.Size = new System.Drawing.Size(338, 137);
+            this.Name = "ForwardDestinationInputs";
+            this.Controls.SetChildIndex(this.panelDetails, 0);
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
             this.ResumeLayout(false);

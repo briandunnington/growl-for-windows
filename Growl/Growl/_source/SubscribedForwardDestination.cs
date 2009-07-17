@@ -9,9 +9,9 @@ using Growl.Connector;
 namespace Growl
 {
     [Serializable]
-    public class SubscribedForwardComputer : GNTPForwardComputer, IDisposable
+    public class SubscribedForwardDestination : GNTPForwardDestination, IDisposable
     {
-        public delegate void SubscribingComputerUnscubscribedEventHandler(SubscribedForwardComputer sfc);
+        public delegate void SubscribingComputerUnscubscribedEventHandler(SubscribedForwardDestination sfc);
 
         [field:NonSerialized]
         public event SubscribingComputerUnscubscribedEventHandler Unsubscribed;
@@ -28,20 +28,20 @@ namespace Growl
         [NonSerialized]
         private System.Timers.Timer timer;
 
-        public SubscribedForwardComputer(Growl.Daemon.Subscriber subscriber, int ttl)
-            : this(subscriber.Name, true, subscriber.IPAddress, subscriber.Port, subscriber.Key.Password, ForwardComputerPlatformType.FromString(subscriber.PlatformName), ttl)
+        public SubscribedForwardDestination(Growl.Daemon.Subscriber subscriber, int ttl)
+            : this(subscriber.Name, true, subscriber.IPAddress, subscriber.Port, subscriber.Key.Password, ForwardDestinationPlatformType.FromString(subscriber.PlatformName), ttl)
         {
             this.hashAlgorithm = subscriber.Key.HashAlgorithm;
             this.encryptionAlgorithm = subscriber.Key.EncryptionAlgorithm;
         }
 
-        private SubscribedForwardComputer(string name, bool enabled, string ipAddress, int port, string password, ForwardComputerPlatformType platform, int ttl, bool available)
+        private SubscribedForwardDestination(string name, bool enabled, string ipAddress, int port, string password, ForwardDestinationPlatformType platform, int ttl, bool available)
             : this(name, enabled, ipAddress, port, password, platform, ttl)
         {
             // this is only used by the .Clone method to create an instance with no timer or key information
         }
 
-        private SubscribedForwardComputer(string name, bool enabled, string ipAddress, int port, string password, ForwardComputerPlatformType platform, int ttl)
+        private SubscribedForwardDestination(string name, bool enabled, string ipAddress, int port, string password, ForwardDestinationPlatformType platform, int ttl)
             : base(name, enabled, ipAddress, port, password)
         {
             this.Platform = platform;
@@ -117,9 +117,9 @@ namespace Growl
             }
         }
 
-        public override ForwardComputer Clone()
+        public override ForwardDestination Clone()
         {
-            SubscribedForwardComputer clone = new SubscribedForwardComputer(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password, this.Platform, this.TTL, this.Available);
+            SubscribedForwardDestination clone = new SubscribedForwardDestination(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password, this.Platform, this.TTL, this.Available);
             return clone;
         }
 

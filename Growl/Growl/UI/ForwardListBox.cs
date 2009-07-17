@@ -48,7 +48,7 @@ namespace Growl.UI
 
                 string text = obj.ToString();
                 int newX = e.Bounds.X;
-                ForwardListItem item = obj as ForwardListItem;
+                ForwardDestinationListItem item = obj as ForwardDestinationListItem;
                 if (item != null)
                 {
                     if(item.Image != null)
@@ -67,7 +67,7 @@ namespace Growl.UI
             }
         }
 
-        public void AddItem(ForwardListItem item)
+        public void AddItem(ForwardDestinationListItem item)
         {
             this.Items.Add(item);
         }
@@ -101,6 +101,7 @@ namespace Growl.UI
             if(e.Y > 0)
             {
                 i = e.Y / this.ItemHeight;
+                i += this.TopIndex;
                 if(this.SelectedIndex != i)
                 {
                     if (this.Items.Count > i)
@@ -119,9 +120,9 @@ namespace Growl.UI
         {
             if (this.SelectedItem != null)
             {
-                if (this.SelectedItem is ForwardListItem)
+                if (this.SelectedItem is ForwardDestinationListItem)
                 {
-                    ForwardListItem fli = (ForwardListItem)this.SelectedItem;
+                    ForwardDestinationListItem fli = (ForwardDestinationListItem)this.SelectedItem;
                     fli.Select();
                 }
             }

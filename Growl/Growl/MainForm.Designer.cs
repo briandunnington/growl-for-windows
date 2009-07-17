@@ -17,43 +17,9 @@ namespace Growl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
             this.panelGeneral = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.onOffButton1 = new Growl.UI.OnOffButton();
             this.checkBoxAutoStart = new System.Windows.Forms.CheckBox();
             this.labelCurrentState = new System.Windows.Forms.Label();
             this.groupBoxIdleSettings = new System.Windows.Forms.GroupBox();
@@ -65,7 +31,9 @@ namespace Growl
             this.labelDefaultSound = new System.Windows.Forms.Label();
             this.comboBoxDefaultSound = new System.Windows.Forms.ComboBox();
             this.panelApplications = new System.Windows.Forms.Panel();
+            this.listControlApplications = new Growl.UI.ListControl();
             this.panelSelectedApplication = new System.Windows.Forms.Panel();
+            this.listControlApplicationNotifications = new Growl.UI.ListControl();
             this.panelPrefs = new System.Windows.Forms.Panel();
             this.labelPrefDuration = new System.Windows.Forms.Label();
             this.comboBoxPrefDuration = new System.Windows.Forms.ComboBox();
@@ -89,10 +57,14 @@ namespace Growl
             this.labelNoAppsDesc = new System.Windows.Forms.Label();
             this.labelNoApps = new System.Windows.Forms.Label();
             this.panelDisplays = new System.Windows.Forms.Panel();
+            this.getDisplaysLabel = new System.Windows.Forms.LinkLabel();
+            this.listControlDisplays = new Growl.UI.ListControl();
             this.panelDisplaySettings = new System.Windows.Forms.Panel();
+            this.buttonSetAsDefault = new Growl.UI.ButtonEx();
             this.displayStyleWebsiteLabel = new System.Windows.Forms.LinkLabel();
             this.displayStyleVersionLabel = new System.Windows.Forms.Label();
             this.displayStyleAuthorLabel = new System.Windows.Forms.Label();
+            this.buttonPreviewDisplay = new Growl.UI.ButtonEx();
             this.displayStyleDescriptionLabel = new System.Windows.Forms.Label();
             this.displayStyleNameLabel = new System.Windows.Forms.Label();
             this.panelDisplaySettingsContainer = new System.Windows.Forms.Panel();
@@ -110,28 +82,37 @@ namespace Growl
             this.labelAboutGrowlVersion = new System.Windows.Forms.Label();
             this.panelSecurity = new System.Windows.Forms.Panel();
             this.labelPasswordManager = new System.Windows.Forms.Label();
+            this.passwordManagerControl1 = new Growl.UI.PasswordManagerControl();
             this.checkBoxAllowSubscriptions = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowWebNotifications = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowNetworkNotifications = new System.Windows.Forms.CheckBox();
             this.checkBoxRequireLocalPassword = new System.Windows.Forms.CheckBox();
             this.panelHistory = new System.Windows.Forms.Panel();
+            this.buttonClearHistory = new Growl.UI.ButtonEx();
             this.historyDaysGroupBox = new System.Windows.Forms.GroupBox();
             this.historyDaysTrackBar = new Dotnetrix.Controls.TrackBar();
             this.historySortByGroupBox = new System.Windows.Forms.GroupBox();
             this.historySortByDateRadioButton = new System.Windows.Forms.RadioButton();
             this.historySortByApplicationRadioButton = new System.Windows.Forms.RadioButton();
+            this.historyListView = new Growl.UI.HistoryListView();
             this.panelInitializing = new System.Windows.Forms.Panel();
             this.labelInitializationStage = new System.Windows.Forms.Label();
             this.progressBarInitializing = new System.Windows.Forms.ProgressBar();
             this.labelInitializing = new System.Windows.Forms.Label();
             this.panelNetwork = new System.Windows.Forms.Panel();
             this.checkBoxEnableSubscriptions = new System.Windows.Forms.CheckBox();
+            this.buttonUnsubscribe = new Growl.UI.ImageButton();
+            this.buttonSubscribe = new Growl.UI.ImageButton();
+            this.subscribedListView = new Growl.UI.ForwardListView();
+            this.buttonRemoveComputer = new Growl.UI.ImageButton();
+            this.buttonAddComputer = new Growl.UI.ImageButton();
+            this.forwardListView = new Growl.UI.ForwardListView();
             this.checkBoxEnableForwarding = new System.Windows.Forms.CheckBox();
             this.contextMenuStripApplications = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripForwardComputers = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStripForwardDestinations = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeComputerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.getDisplaysLabel = new System.Windows.Forms.LinkLabel();
             this.toolbarPanel = new Growl.UI.CustomPanel();
             this.toolStrip1 = new Growl.UI.Toolbar();
             this.toolbarButtonGeneral = new System.Windows.Forms.ToolStripButton();
@@ -141,23 +122,12 @@ namespace Growl
             this.toolbarButtonSecurity = new System.Windows.Forms.ToolStripButton();
             this.toolbarButtonHistory = new System.Windows.Forms.ToolStripButton();
             this.toolbarButtonAbout = new System.Windows.Forms.ToolStripButton();
-            this.listControlDisplays = new Growl.UI.ListControl();
-            this.buttonSetAsDefault = new Growl.UI.ButtonEx();
-            this.buttonPreviewDisplay = new Growl.UI.ButtonEx();
-            this.passwordManagerControl1 = new Growl.UI.PasswordManagerControl();
-            this.buttonClearHistory = new Growl.UI.ButtonEx();
-            this.historyListView = new Growl.UI.HistoryListView();
-            this.listControlApplications = new Growl.UI.ListControl();
-            this.listControlApplicationNotifications = new Growl.UI.ListControl();
-            this.buttonUnsubscribe = new Growl.UI.ImageButton();
-            this.buttonSubscribe = new Growl.UI.ImageButton();
-            this.subscribedListView = new Growl.UI.ForwardListView();
-            this.buttonRemoveComputer = new Growl.UI.ImageButton();
-            this.buttonAddComputer = new Growl.UI.ImageButton();
-            this.forwardListView = new Growl.UI.ForwardListView();
-            this.onOffButton1 = new Growl.UI.OnOffButton();
+            this.contextMenuStripSubscriptions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editSubscriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unsubscribeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelGeneral.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).BeginInit();
             this.groupBoxIdleSettings.SuspendLayout();
             this.groupBoxSoundSettings.SuspendLayout();
             this.panelApplications.SuspendLayout();
@@ -177,15 +147,15 @@ namespace Growl
             this.historySortByGroupBox.SuspendLayout();
             this.panelInitializing.SuspendLayout();
             this.panelNetwork.SuspendLayout();
-            this.contextMenuStripApplications.SuspendLayout();
-            this.contextMenuStripForwardComputers.SuspendLayout();
-            this.toolbarPanel.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonUnsubscribe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonSubscribe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonRemoveComputer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonAddComputer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).BeginInit();
+            this.contextMenuStripApplications.SuspendLayout();
+            this.contextMenuStripForwardDestinations.SuspendLayout();
+            this.toolbarPanel.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.contextMenuStripSubscriptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGeneral
@@ -213,6 +183,16 @@ namespace Growl
             this.groupBox1.Size = new System.Drawing.Size(468, 89);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // onOffButton1
+            // 
+            this.onOffButton1.Image = ((System.Drawing.Image)(resources.GetObject("onOffButton1.Image")));
+            this.onOffButton1.Location = new System.Drawing.Point(22, 17);
+            this.onOffButton1.Name = "onOffButton1";
+            this.onOffButton1.On = false;
+            this.onOffButton1.Size = new System.Drawing.Size(94, 27);
+            this.onOffButton1.TabIndex = 0;
+            this.onOffButton1.TabStop = false;
             // 
             // checkBoxAutoStart
             // 
@@ -344,6 +324,25 @@ namespace Growl
             this.panelApplications.TabIndex = 3;
             this.panelApplications.Visible = false;
             // 
+            // listControlApplications
+            // 
+            this.listControlApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listControlApplications.BackColor = System.Drawing.Color.White;
+            this.listControlApplications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.listControlApplications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
+            this.listControlApplications.HeaderText = "Application Name";
+            this.listControlApplications.IsDefaultComparer = null;
+            this.listControlApplications.Location = new System.Drawing.Point(4, 4);
+            this.listControlApplications.Name = "listControlApplications";
+            this.listControlApplications.SelectedIndex = -1;
+            this.listControlApplications.SelectedItem = null;
+            this.listControlApplications.Size = new System.Drawing.Size(176, 286);
+            this.listControlApplications.TabIndex = 9;
+            this.listControlApplications.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listControlApplications_MouseDown);
+            this.listControlApplications.SelectedIndexChanged += new System.EventHandler(this.listControlApplications_SelectedIndexChanged);
+            // 
             // panelSelectedApplication
             // 
             this.panelSelectedApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -357,6 +356,23 @@ namespace Growl
             this.panelSelectedApplication.Size = new System.Drawing.Size(474, 291);
             this.panelSelectedApplication.TabIndex = 3;
             this.panelSelectedApplication.Visible = false;
+            // 
+            // listControlApplicationNotifications
+            // 
+            this.listControlApplicationNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.listControlApplicationNotifications.BackColor = System.Drawing.Color.White;
+            this.listControlApplicationNotifications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.listControlApplicationNotifications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listControlApplicationNotifications.HeaderText = "Notification Type";
+            this.listControlApplicationNotifications.IsDefaultComparer = null;
+            this.listControlApplicationNotifications.Location = new System.Drawing.Point(7, 57);
+            this.listControlApplicationNotifications.Name = "listControlApplicationNotifications";
+            this.listControlApplicationNotifications.SelectedIndex = -1;
+            this.listControlApplicationNotifications.SelectedItem = null;
+            this.listControlApplicationNotifications.Size = new System.Drawing.Size(176, 229);
+            this.listControlApplicationNotifications.TabIndex = 7;
+            this.listControlApplicationNotifications.SelectedIndexChanged += new System.EventHandler(this.listControlApplicationNotifications_SelectedIndexChanged);
             // 
             // panelPrefs
             // 
@@ -611,6 +627,37 @@ namespace Growl
             this.panelDisplays.TabIndex = 2;
             this.panelDisplays.Visible = false;
             // 
+            // getDisplaysLabel
+            // 
+            this.getDisplaysLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.getDisplaysLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
+            this.getDisplaysLabel.Location = new System.Drawing.Point(3, 272);
+            this.getDisplaysLabel.Name = "getDisplaysLabel";
+            this.getDisplaysLabel.Size = new System.Drawing.Size(177, 16);
+            this.getDisplaysLabel.TabIndex = 7;
+            this.getDisplaysLabel.TabStop = true;
+            this.getDisplaysLabel.Tag = "http://www.growlforwindows.com/gfw/displays.aspx";
+            this.getDisplaysLabel.Text = "Find & install additional displays";
+            this.getDisplaysLabel.UseMnemonic = false;
+            this.getDisplaysLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.getDisplaysLabel_LinkClicked);
+            // 
+            // listControlDisplays
+            // 
+            this.listControlDisplays.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.listControlDisplays.BackColor = System.Drawing.Color.White;
+            this.listControlDisplays.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.listControlDisplays.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listControlDisplays.HeaderText = "Display Name";
+            this.listControlDisplays.IsDefaultComparer = null;
+            this.listControlDisplays.Location = new System.Drawing.Point(4, 4);
+            this.listControlDisplays.Name = "listControlDisplays";
+            this.listControlDisplays.SelectedIndex = -1;
+            this.listControlDisplays.SelectedItem = null;
+            this.listControlDisplays.Size = new System.Drawing.Size(176, 264);
+            this.listControlDisplays.TabIndex = 2;
+            this.listControlDisplays.SelectedIndexChanged += new System.EventHandler(this.listControlDisplays_SelectedIndexChanged);
+            // 
             // panelDisplaySettings
             // 
             this.panelDisplaySettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -630,6 +677,26 @@ namespace Growl
             this.panelDisplaySettings.Size = new System.Drawing.Size(470, 286);
             this.panelDisplaySettings.TabIndex = 1;
             this.panelDisplaySettings.Visible = false;
+            // 
+            // buttonSetAsDefault
+            // 
+            this.buttonSetAsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSetAsDefault.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonSetAsDefault.BackgroundImage")));
+            this.buttonSetAsDefault.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonSetAsDefault.FlatAppearance.BorderSize = 0;
+            this.buttonSetAsDefault.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonSetAsDefault.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonSetAsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSetAsDefault.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
+            this.buttonSetAsDefault.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonSetAsDefault.Location = new System.Drawing.Point(279, 251);
+            this.buttonSetAsDefault.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSetAsDefault.Name = "buttonSetAsDefault";
+            this.buttonSetAsDefault.Size = new System.Drawing.Size(106, 32);
+            this.buttonSetAsDefault.TabIndex = 3;
+            this.buttonSetAsDefault.Text = "Set as Default";
+            this.buttonSetAsDefault.UseVisualStyleBackColor = true;
+            this.buttonSetAsDefault.Click += new System.EventHandler(this.buttonSetAsDefault_Click);
             // 
             // displayStyleWebsiteLabel
             // 
@@ -664,6 +731,26 @@ namespace Growl
             this.displayStyleAuthorLabel.Size = new System.Drawing.Size(50, 16);
             this.displayStyleAuthorLabel.TabIndex = 4;
             this.displayStyleAuthorLabel.Text = "[author]";
+            // 
+            // buttonPreviewDisplay
+            // 
+            this.buttonPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPreviewDisplay.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonPreviewDisplay.BackgroundImage")));
+            this.buttonPreviewDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonPreviewDisplay.FlatAppearance.BorderSize = 0;
+            this.buttonPreviewDisplay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonPreviewDisplay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonPreviewDisplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPreviewDisplay.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
+            this.buttonPreviewDisplay.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonPreviewDisplay.Location = new System.Drawing.Point(391, 251);
+            this.buttonPreviewDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonPreviewDisplay.Name = "buttonPreviewDisplay";
+            this.buttonPreviewDisplay.Size = new System.Drawing.Size(73, 32);
+            this.buttonPreviewDisplay.TabIndex = 3;
+            this.buttonPreviewDisplay.Text = "Preview";
+            this.buttonPreviewDisplay.UseVisualStyleBackColor = true;
+            this.buttonPreviewDisplay.Click += new System.EventHandler(this.buttonPreviewDisplay_Click);
             // 
             // displayStyleDescriptionLabel
             // 
@@ -737,7 +824,6 @@ namespace Growl
             this.labelAboutUsLink.Size = new System.Drawing.Size(182, 16);
             this.labelAboutUsLink.TabIndex = 9;
             this.labelAboutUsLink.TabStop = true;
-            this.labelAboutUsLink.Tag = "";
             this.labelAboutUsLink.Text = "http://www.growlforwindows.com";
             this.labelAboutUsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelAboutUsLink_LinkClicked);
             // 
@@ -864,6 +950,16 @@ namespace Growl
             this.labelPasswordManager.TabIndex = 16;
             this.labelPasswordManager.Text = "Password Manager";
             // 
+            // passwordManagerControl1
+            // 
+            this.passwordManagerControl1.BackColor = System.Drawing.Color.Transparent;
+            this.passwordManagerControl1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordManagerControl1.Location = new System.Drawing.Point(399, 38);
+            this.passwordManagerControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.passwordManagerControl1.Name = "passwordManagerControl1";
+            this.passwordManagerControl1.Size = new System.Drawing.Size(199, 244);
+            this.passwordManagerControl1.TabIndex = 15;
+            // 
             // checkBoxAllowSubscriptions
             // 
             this.checkBoxAllowSubscriptions.AutoSize = true;
@@ -929,6 +1025,25 @@ namespace Growl
             this.panelHistory.TabIndex = 3;
             this.panelHistory.Visible = false;
             // 
+            // buttonClearHistory
+            // 
+            this.buttonClearHistory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonClearHistory.BackgroundImage")));
+            this.buttonClearHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonClearHistory.FlatAppearance.BorderSize = 0;
+            this.buttonClearHistory.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonClearHistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonClearHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearHistory.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
+            this.buttonClearHistory.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonClearHistory.Location = new System.Drawing.Point(107, 209);
+            this.buttonClearHistory.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonClearHistory.Name = "buttonClearHistory";
+            this.buttonClearHistory.Size = new System.Drawing.Size(73, 32);
+            this.buttonClearHistory.TabIndex = 3;
+            this.buttonClearHistory.Text = "Clear";
+            this.buttonClearHistory.UseVisualStyleBackColor = true;
+            this.buttonClearHistory.Click += new System.EventHandler(this.buttonClearHistory_Click);
+            // 
             // historyDaysGroupBox
             // 
             this.historyDaysGroupBox.Controls.Add(this.historyDaysTrackBar);
@@ -984,6 +1099,30 @@ namespace Growl
             this.historySortByApplicationRadioButton.Text = "Application";
             this.historySortByApplicationRadioButton.UseVisualStyleBackColor = true;
             this.historySortByApplicationRadioButton.CheckedChanged += new System.EventHandler(this.historySortByApplicationRadioButton_CheckedChanged);
+            // 
+            // historyListView
+            // 
+            this.historyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
+            this.historyListView.FullRowSelect = true;
+            this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
+            this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.historyListView.LabelWrap = false;
+            this.historyListView.Location = new System.Drawing.Point(196, 5);
+            this.historyListView.MultiSelect = false;
+            this.historyListView.Name = "historyListView";
+            this.historyListView.NumberOfDays = 7;
+            this.historyListView.OwnerDraw = true;
+            this.historyListView.PastNotifications = null;
+            this.historyListView.ShowItemToolTips = true;
+            this.historyListView.Size = new System.Drawing.Size(460, 284);
+            this.historyListView.TabIndex = 2;
+            this.historyListView.TileSize = new System.Drawing.Size(205, 56);
+            this.historyListView.UseCompatibleStateImageBehavior = false;
+            this.historyListView.UseCustomToolTips = false;
+            this.historyListView.View = System.Windows.Forms.View.Tile;
             // 
             // panelInitializing
             // 
@@ -1058,6 +1197,97 @@ namespace Growl
             this.checkBoxEnableSubscriptions.UseVisualStyleBackColor = false;
             this.checkBoxEnableSubscriptions.CheckedChanged += new System.EventHandler(this.checkBoxEnableSubscriptions_CheckedChanged);
             // 
+            // buttonUnsubscribe
+            // 
+            this.buttonUnsubscribe.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonUnsubscribe.Enabled = false;
+            this.buttonUnsubscribe.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonUnsubscribe.Location = new System.Drawing.Point(379, 225);
+            this.buttonUnsubscribe.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonUnsubscribe.Name = "buttonUnsubscribe";
+            this.buttonUnsubscribe.Size = new System.Drawing.Size(32, 32);
+            this.buttonUnsubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonUnsubscribe.TabIndex = 10;
+            this.buttonUnsubscribe.TabStop = false;
+            this.buttonUnsubscribe.Click += new System.EventHandler(this.buttonUnsubscribe_Click);
+            // 
+            // buttonSubscribe
+            // 
+            this.buttonSubscribe.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
+            this.buttonSubscribe.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonSubscribe.Location = new System.Drawing.Point(343, 225);
+            this.buttonSubscribe.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSubscribe.Name = "buttonSubscribe";
+            this.buttonSubscribe.Size = new System.Drawing.Size(32, 32);
+            this.buttonSubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonSubscribe.TabIndex = 9;
+            this.buttonSubscribe.TabStop = false;
+            this.buttonSubscribe.Click += new System.EventHandler(this.buttonSubscribe_Click);
+            // 
+            // subscribedListView
+            // 
+            this.subscribedListView.Computers = null;
+            this.subscribedListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.subscribedListView.LabelWrap = false;
+            this.subscribedListView.Location = new System.Drawing.Point(339, 38);
+            this.subscribedListView.MultiSelect = false;
+            this.subscribedListView.Name = "subscribedListView";
+            this.subscribedListView.OwnerDraw = true;
+            this.subscribedListView.ShowItemToolTips = true;
+            this.subscribedListView.Size = new System.Drawing.Size(307, 184);
+            this.subscribedListView.TabIndex = 8;
+            this.subscribedListView.TileSize = new System.Drawing.Size(281, 56);
+            this.subscribedListView.UseCompatibleStateImageBehavior = false;
+            this.subscribedListView.View = System.Windows.Forms.View.Tile;
+            this.subscribedListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.subscribedListView_MouseDown);
+            this.subscribedListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.subscribedListView_ItemSelectionChanged);
+            // 
+            // buttonRemoveComputer
+            // 
+            this.buttonRemoveComputer.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonRemoveComputer.Enabled = false;
+            this.buttonRemoveComputer.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonRemoveComputer.Location = new System.Drawing.Point(59, 225);
+            this.buttonRemoveComputer.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonRemoveComputer.Name = "buttonRemoveComputer";
+            this.buttonRemoveComputer.Size = new System.Drawing.Size(32, 32);
+            this.buttonRemoveComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonRemoveComputer.TabIndex = 3;
+            this.buttonRemoveComputer.TabStop = false;
+            this.buttonRemoveComputer.Click += new System.EventHandler(this.buttonRemoveComputer_Click);
+            // 
+            // buttonAddComputer
+            // 
+            this.buttonAddComputer.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
+            this.buttonAddComputer.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonAddComputer.Location = new System.Drawing.Point(23, 225);
+            this.buttonAddComputer.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonAddComputer.Name = "buttonAddComputer";
+            this.buttonAddComputer.Size = new System.Drawing.Size(32, 32);
+            this.buttonAddComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonAddComputer.TabIndex = 2;
+            this.buttonAddComputer.TabStop = false;
+            this.buttonAddComputer.Click += new System.EventHandler(this.buttonAddComputer_Click);
+            // 
+            // forwardListView
+            // 
+            this.forwardListView.Computers = null;
+            this.forwardListView.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.forwardListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.forwardListView.LabelWrap = false;
+            this.forwardListView.Location = new System.Drawing.Point(16, 38);
+            this.forwardListView.MultiSelect = false;
+            this.forwardListView.Name = "forwardListView";
+            this.forwardListView.OwnerDraw = true;
+            this.forwardListView.ShowItemToolTips = true;
+            this.forwardListView.Size = new System.Drawing.Size(307, 184);
+            this.forwardListView.TabIndex = 1;
+            this.forwardListView.TileSize = new System.Drawing.Size(281, 56);
+            this.forwardListView.UseCompatibleStateImageBehavior = false;
+            this.forwardListView.View = System.Windows.Forms.View.Tile;
+            this.forwardListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.forwardListView_MouseDown);
+            this.forwardListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.forwardListView_ItemSelectionChanged);
+            // 
             // checkBoxEnableForwarding
             // 
             this.checkBoxEnableForwarding.AutoSize = true;
@@ -1077,7 +1307,8 @@ namespace Growl
             this.removeApplicationToolStripMenuItem});
             this.contextMenuStripApplications.Name = "contextMenuStripApplications";
             this.contextMenuStripApplications.ShowImageMargin = false;
-            this.contextMenuStripApplications.Size = new System.Drawing.Size(144, 26);
+            this.contextMenuStripApplications.Size = new System.Drawing.Size(144, 48);
+            this.contextMenuStripApplications.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripApplications_Closed);
             // 
             // removeApplicationToolStripMenuItem
             // 
@@ -1086,13 +1317,21 @@ namespace Growl
             this.removeApplicationToolStripMenuItem.Text = "Remove Application";
             this.removeApplicationToolStripMenuItem.Click += new System.EventHandler(this.removeApplicationToolStripMenuItem_Click);
             // 
-            // contextMenuStripForwardComputers
+            // contextMenuStripForwardDestinations
             // 
-            this.contextMenuStripForwardComputers.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuStripForwardDestinations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem,
             this.removeComputerToolStripMenuItem});
-            this.contextMenuStripForwardComputers.Name = "contextMenuStripForwardComputers";
-            this.contextMenuStripForwardComputers.ShowImageMargin = false;
-            this.contextMenuStripForwardComputers.Size = new System.Drawing.Size(139, 26);
+            this.contextMenuStripForwardDestinations.Name = "contextMenuStripForwardDestinations";
+            this.contextMenuStripForwardDestinations.ShowImageMargin = false;
+            this.contextMenuStripForwardDestinations.Size = new System.Drawing.Size(139, 48);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // removeComputerToolStripMenuItem
             // 
@@ -1100,20 +1339,6 @@ namespace Growl
             this.removeComputerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.removeComputerToolStripMenuItem.Text = "Remove Computer";
             this.removeComputerToolStripMenuItem.Click += new System.EventHandler(this.removeComputerToolStripMenuItem_Click);
-            // 
-            // getDisplaysLabel
-            // 
-            this.getDisplaysLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.getDisplaysLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
-            this.getDisplaysLabel.Location = new System.Drawing.Point(3, 272);
-            this.getDisplaysLabel.Name = "getDisplaysLabel";
-            this.getDisplaysLabel.Size = new System.Drawing.Size(177, 16);
-            this.getDisplaysLabel.TabIndex = 7;
-            this.getDisplaysLabel.TabStop = true;
-            this.getDisplaysLabel.Tag = "http://www.growlforwindows.com/gfw/displays.aspx";
-            this.getDisplaysLabel.Text = "Find & install additional displays";
-            this.getDisplaysLabel.UseMnemonic = false;
-            this.getDisplaysLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.getDisplaysLabel_LinkClicked);
             // 
             // toolbarPanel
             // 
@@ -1230,288 +1455,28 @@ namespace Growl
             this.toolbarButtonAbout.Text = "About";
             this.toolbarButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // listControlDisplays
+            // contextMenuStripSubscriptions
             // 
-            this.listControlDisplays.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.listControlDisplays.BackColor = System.Drawing.Color.White;
-            this.listControlDisplays.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.listControlDisplays.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listControlDisplays.HeaderText = "Display Name";
-            this.listControlDisplays.IsDefaultComparer = null;
-            this.listControlDisplays.Location = new System.Drawing.Point(4, 4);
-            this.listControlDisplays.Name = "listControlDisplays";
-            this.listControlDisplays.SelectedIndex = -1;
-            this.listControlDisplays.SelectedItem = null;
-            this.listControlDisplays.Size = new System.Drawing.Size(176, 264);
-            this.listControlDisplays.TabIndex = 2;
-            this.listControlDisplays.SelectedIndexChanged += new System.EventHandler(this.listControlDisplays_SelectedIndexChanged);
+            this.contextMenuStripSubscriptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editSubscriptionToolStripMenuItem,
+            this.unsubscribeToolStripMenuItem});
+            this.contextMenuStripSubscriptions.Name = "contextMenuStripSubscriptions";
+            this.contextMenuStripSubscriptions.ShowImageMargin = false;
+            this.contextMenuStripSubscriptions.Size = new System.Drawing.Size(108, 48);
             // 
-            // buttonSetAsDefault
+            // editSubscriptionToolStripMenuItem
             // 
-            this.buttonSetAsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetAsDefault.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonSetAsDefault.BackgroundImage")));
-            this.buttonSetAsDefault.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonSetAsDefault.FlatAppearance.BorderSize = 0;
-            this.buttonSetAsDefault.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonSetAsDefault.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonSetAsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSetAsDefault.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
-            this.buttonSetAsDefault.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonSetAsDefault.Location = new System.Drawing.Point(279, 251);
-            this.buttonSetAsDefault.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonSetAsDefault.Name = "buttonSetAsDefault";
-            this.buttonSetAsDefault.Size = new System.Drawing.Size(106, 32);
-            this.buttonSetAsDefault.TabIndex = 3;
-            this.buttonSetAsDefault.Text = "Set as Default";
-            this.buttonSetAsDefault.UseVisualStyleBackColor = true;
-            this.buttonSetAsDefault.Click += new System.EventHandler(this.buttonSetAsDefault_Click);
+            this.editSubscriptionToolStripMenuItem.Name = "editSubscriptionToolStripMenuItem";
+            this.editSubscriptionToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.editSubscriptionToolStripMenuItem.Text = "Edit";
+            this.editSubscriptionToolStripMenuItem.Click += new System.EventHandler(this.editSubscriptionToolStripMenuItem_Click);
             // 
-            // buttonPreviewDisplay
+            // unsubscribeToolStripMenuItem
             // 
-            this.buttonPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPreviewDisplay.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonPreviewDisplay.BackgroundImage")));
-            this.buttonPreviewDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonPreviewDisplay.FlatAppearance.BorderSize = 0;
-            this.buttonPreviewDisplay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonPreviewDisplay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonPreviewDisplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPreviewDisplay.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
-            this.buttonPreviewDisplay.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonPreviewDisplay.Location = new System.Drawing.Point(391, 251);
-            this.buttonPreviewDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonPreviewDisplay.Name = "buttonPreviewDisplay";
-            this.buttonPreviewDisplay.Size = new System.Drawing.Size(73, 32);
-            this.buttonPreviewDisplay.TabIndex = 3;
-            this.buttonPreviewDisplay.Text = "Preview";
-            this.buttonPreviewDisplay.UseVisualStyleBackColor = true;
-            this.buttonPreviewDisplay.Click += new System.EventHandler(this.buttonPreviewDisplay_Click);
-            // 
-            // passwordManagerControl1
-            // 
-            this.passwordManagerControl1.BackColor = System.Drawing.Color.Transparent;
-            this.passwordManagerControl1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordManagerControl1.Location = new System.Drawing.Point(399, 38);
-            this.passwordManagerControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.passwordManagerControl1.Name = "passwordManagerControl1";
-            this.passwordManagerControl1.Size = new System.Drawing.Size(199, 244);
-            this.passwordManagerControl1.TabIndex = 15;
-            // 
-            // buttonClearHistory
-            // 
-            this.buttonClearHistory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonClearHistory.BackgroundImage")));
-            this.buttonClearHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonClearHistory.FlatAppearance.BorderSize = 0;
-            this.buttonClearHistory.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonClearHistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonClearHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonClearHistory.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
-            this.buttonClearHistory.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonClearHistory.Location = new System.Drawing.Point(107, 209);
-            this.buttonClearHistory.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonClearHistory.Name = "buttonClearHistory";
-            this.buttonClearHistory.Size = new System.Drawing.Size(73, 32);
-            this.buttonClearHistory.TabIndex = 3;
-            this.buttonClearHistory.Text = "Clear";
-            this.buttonClearHistory.UseVisualStyleBackColor = true;
-            this.buttonClearHistory.Click += new System.EventHandler(this.buttonClearHistory_Click);
-            // 
-            // historyListView
-            // 
-            this.historyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
-            this.historyListView.FullRowSelect = true;
-            this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
-            listViewGroup8.Header = "Today";
-            listViewGroup8.Name = "Today";
-            listViewGroup9.Header = "Yesterday";
-            listViewGroup9.Name = "Yesterday";
-            listViewGroup10.Header = "Wednesday";
-            listViewGroup10.Name = "Wednesday";
-            listViewGroup11.Header = "Tuesday";
-            listViewGroup11.Name = "Tuesday";
-            listViewGroup12.Header = "Monday";
-            listViewGroup12.Name = "Monday";
-            listViewGroup13.Header = "Sunday";
-            listViewGroup13.Name = "Sunday";
-            listViewGroup14.Header = "Saturday";
-            listViewGroup14.Name = "Saturday";
-            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup8,
-            listViewGroup9,
-            listViewGroup10,
-            listViewGroup11,
-            listViewGroup12,
-            listViewGroup13,
-            listViewGroup14});
-            this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem8.Group = listViewGroup8;
-            listViewItem9.Group = listViewGroup9;
-            listViewItem10.Group = listViewGroup10;
-            listViewItem11.Group = listViewGroup11;
-            listViewItem12.Group = listViewGroup12;
-            listViewItem13.Group = listViewGroup13;
-            listViewItem14.Group = listViewGroup14;
-            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14});
-            this.historyListView.LabelWrap = false;
-            this.historyListView.Location = new System.Drawing.Point(196, 5);
-            this.historyListView.MultiSelect = false;
-            this.historyListView.Name = "historyListView";
-            this.historyListView.NumberOfDays = 7;
-            this.historyListView.OwnerDraw = true;
-            this.historyListView.PastNotifications = null;
-            this.historyListView.ShowItemToolTips = true;
-            this.historyListView.Size = new System.Drawing.Size(460, 284);
-            this.historyListView.TabIndex = 2;
-            this.historyListView.TileSize = new System.Drawing.Size(205, 56);
-            this.historyListView.UseCompatibleStateImageBehavior = false;
-            this.historyListView.UseCustomToolTips = false;
-            this.historyListView.View = System.Windows.Forms.View.Tile;
-            // 
-            // listControlApplications
-            // 
-            this.listControlApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.listControlApplications.BackColor = System.Drawing.Color.White;
-            this.listControlApplications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.listControlApplications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.listControlApplications.HeaderText = "Application Name";
-            this.listControlApplications.IsDefaultComparer = null;
-            this.listControlApplications.Location = new System.Drawing.Point(4, 4);
-            this.listControlApplications.Name = "listControlApplications";
-            this.listControlApplications.SelectedIndex = -1;
-            this.listControlApplications.SelectedItem = null;
-            this.listControlApplications.Size = new System.Drawing.Size(176, 286);
-            this.listControlApplications.TabIndex = 9;
-            this.listControlApplications.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listControlApplications_MouseDown);
-            this.listControlApplications.SelectedIndexChanged += new System.EventHandler(this.listControlApplications_SelectedIndexChanged);
-            // 
-            // listControlApplicationNotifications
-            // 
-            this.listControlApplicationNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.listControlApplicationNotifications.BackColor = System.Drawing.Color.White;
-            this.listControlApplicationNotifications.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.listControlApplicationNotifications.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listControlApplicationNotifications.HeaderText = "Notification Type";
-            this.listControlApplicationNotifications.IsDefaultComparer = null;
-            this.listControlApplicationNotifications.Location = new System.Drawing.Point(7, 57);
-            this.listControlApplicationNotifications.Name = "listControlApplicationNotifications";
-            this.listControlApplicationNotifications.SelectedIndex = -1;
-            this.listControlApplicationNotifications.SelectedItem = null;
-            this.listControlApplicationNotifications.Size = new System.Drawing.Size(176, 229);
-            this.listControlApplicationNotifications.TabIndex = 7;
-            this.listControlApplicationNotifications.SelectedIndexChanged += new System.EventHandler(this.listControlApplicationNotifications_SelectedIndexChanged);
-            // 
-            // buttonUnsubscribe
-            // 
-            this.buttonUnsubscribe.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
-            this.buttonUnsubscribe.Enabled = false;
-            this.buttonUnsubscribe.Image = global::Growl.Properties.Resources.button_remove;
-            this.buttonUnsubscribe.Location = new System.Drawing.Point(379, 225);
-            this.buttonUnsubscribe.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonUnsubscribe.Name = "buttonUnsubscribe";
-            this.buttonUnsubscribe.Size = new System.Drawing.Size(32, 32);
-            this.buttonUnsubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonUnsubscribe.TabIndex = 10;
-            this.buttonUnsubscribe.TabStop = false;
-            this.buttonUnsubscribe.Click += new System.EventHandler(this.buttonUnsubscribe_Click);
-            // 
-            // buttonSubscribe
-            // 
-            this.buttonSubscribe.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonSubscribe.Image = global::Growl.Properties.Resources.button_add;
-            this.buttonSubscribe.Location = new System.Drawing.Point(343, 225);
-            this.buttonSubscribe.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonSubscribe.Name = "buttonSubscribe";
-            this.buttonSubscribe.Size = new System.Drawing.Size(32, 32);
-            this.buttonSubscribe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonSubscribe.TabIndex = 9;
-            this.buttonSubscribe.TabStop = false;
-            this.buttonSubscribe.Click += new System.EventHandler(this.buttonSubscribe_Click);
-            // 
-            // subscribedListView
-            // 
-            this.subscribedListView.Computers = null;
-            this.subscribedListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.subscribedListView.LabelWrap = false;
-            this.subscribedListView.Location = new System.Drawing.Point(339, 38);
-            this.subscribedListView.MultiSelect = false;
-            this.subscribedListView.Name = "subscribedListView";
-            this.subscribedListView.OwnerDraw = true;
-            this.subscribedListView.ShowItemToolTips = true;
-            this.subscribedListView.Size = new System.Drawing.Size(307, 184);
-            this.subscribedListView.TabIndex = 8;
-            this.subscribedListView.TileSize = new System.Drawing.Size(281, 56);
-            this.subscribedListView.UseCompatibleStateImageBehavior = false;
-            this.subscribedListView.View = System.Windows.Forms.View.Tile;
-            this.subscribedListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.subscribedListView_ItemSelectionChanged);
-            // 
-            // buttonRemoveComputer
-            // 
-            this.buttonRemoveComputer.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
-            this.buttonRemoveComputer.Enabled = false;
-            this.buttonRemoveComputer.Image = global::Growl.Properties.Resources.button_remove;
-            this.buttonRemoveComputer.Location = new System.Drawing.Point(59, 225);
-            this.buttonRemoveComputer.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonRemoveComputer.Name = "buttonRemoveComputer";
-            this.buttonRemoveComputer.Size = new System.Drawing.Size(32, 32);
-            this.buttonRemoveComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonRemoveComputer.TabIndex = 3;
-            this.buttonRemoveComputer.TabStop = false;
-            this.buttonRemoveComputer.Click += new System.EventHandler(this.buttonRemoveComputer_Click);
-            // 
-            // buttonAddComputer
-            // 
-            this.buttonAddComputer.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonAddComputer.Image = global::Growl.Properties.Resources.button_add;
-            this.buttonAddComputer.Location = new System.Drawing.Point(23, 225);
-            this.buttonAddComputer.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonAddComputer.Name = "buttonAddComputer";
-            this.buttonAddComputer.Size = new System.Drawing.Size(32, 32);
-            this.buttonAddComputer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonAddComputer.TabIndex = 2;
-            this.buttonAddComputer.TabStop = false;
-            this.buttonAddComputer.Click += new System.EventHandler(this.buttonAddComputer_Click);
-            // 
-            // forwardListView
-            // 
-            this.forwardListView.Computers = null;
-            this.forwardListView.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.forwardListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.forwardListView.LabelWrap = false;
-            this.forwardListView.Location = new System.Drawing.Point(16, 38);
-            this.forwardListView.MultiSelect = false;
-            this.forwardListView.Name = "forwardListView";
-            this.forwardListView.OwnerDraw = true;
-            this.forwardListView.ShowItemToolTips = true;
-            this.forwardListView.Size = new System.Drawing.Size(307, 184);
-            this.forwardListView.TabIndex = 1;
-            this.forwardListView.TileSize = new System.Drawing.Size(281, 56);
-            this.forwardListView.UseCompatibleStateImageBehavior = false;
-            this.forwardListView.View = System.Windows.Forms.View.Tile;
-            this.forwardListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.forwardListView_MouseDown);
-            this.forwardListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.forwardListView_ItemSelectionChanged);
-            // 
-            // onOffButton1
-            // 
-            this.onOffButton1.Image = ((System.Drawing.Image)(resources.GetObject("onOffButton1.Image")));
-            this.onOffButton1.Location = new System.Drawing.Point(22, 17);
-            this.onOffButton1.Name = "onOffButton1";
-            this.onOffButton1.On = false;
-            this.onOffButton1.Size = new System.Drawing.Size(94, 27);
-            this.onOffButton1.TabIndex = 0;
-            this.onOffButton1.TabStop = false;
+            this.unsubscribeToolStripMenuItem.Name = "unsubscribeToolStripMenuItem";
+            this.unsubscribeToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.unsubscribeToolStripMenuItem.Text = "Unsubscribe";
+            this.unsubscribeToolStripMenuItem.Click += new System.EventHandler(this.unsubscribeToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1539,6 +1504,7 @@ namespace Growl
             this.panelGeneral.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).EndInit();
             this.groupBoxIdleSettings.ResumeLayout(false);
             this.groupBoxIdleSettings.PerformLayout();
             this.groupBoxSoundSettings.ResumeLayout(false);
@@ -1568,16 +1534,16 @@ namespace Growl
             this.panelInitializing.PerformLayout();
             this.panelNetwork.ResumeLayout(false);
             this.panelNetwork.PerformLayout();
-            this.contextMenuStripApplications.ResumeLayout(false);
-            this.contextMenuStripForwardComputers.ResumeLayout(false);
-            this.toolbarPanel.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonUnsubscribe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonSubscribe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonRemoveComputer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonAddComputer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).EndInit();
+            this.contextMenuStripApplications.ResumeLayout(false);
+            this.contextMenuStripForwardDestinations.ResumeLayout(false);
+            this.toolbarPanel.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.contextMenuStripSubscriptions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1666,7 +1632,7 @@ namespace Growl
         private System.Windows.Forms.RadioButton radioButtonIdleAfter;
         private System.Windows.Forms.RadioButton radioButtonIdleNever;
         private System.Windows.Forms.TextBox textBoxIdleAfterSeconds;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripForwardComputers;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripForwardDestinations;
         private System.Windows.Forms.ToolStripMenuItem removeComputerToolStripMenuItem;
         private Growl.UI.ForwardListView subscribedListView;
         private Growl.UI.ImageButton buttonUnsubscribe;
@@ -1688,5 +1654,9 @@ namespace Growl
         private System.Windows.Forms.Label labelPrefDuration;
         private System.Windows.Forms.ComboBox comboBoxPrefDuration;
         private System.Windows.Forms.LinkLabel getDisplaysLabel;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripSubscriptions;
+        private System.Windows.Forms.ToolStripMenuItem editSubscriptionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unsubscribeToolStripMenuItem;
     }
 }

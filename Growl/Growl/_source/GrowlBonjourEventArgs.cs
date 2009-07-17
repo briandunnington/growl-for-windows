@@ -6,14 +6,14 @@ namespace Growl
 {
     public class GrowlBonjourEventArgs : EventArgs
     {
-        ForwardComputerPlatformType platform = ForwardComputerPlatformType.Other;
+        ForwardDestinationPlatformType platform = ForwardDestinationPlatformType.Other;
 
-        public GrowlBonjourEventArgs(ForwardComputerPlatformType platform)
+        public GrowlBonjourEventArgs(ForwardDestinationPlatformType platform)
         {
             this.platform = platform;
         }
 
-        public ForwardComputerPlatformType Platform
+        public ForwardDestinationPlatformType Platform
         {
             get
             {

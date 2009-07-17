@@ -245,7 +245,7 @@ namespace Growl
             this.controller.NotificationReceived += new Controller.NotificationReceivedDelegate(controller_NotificationReceived);
             this.controller.NotificationPast += new Controller.NotificationPastDelegate(controller_NotificationPast);
             this.controller.BonjourServiceUpdate += new Controller.BonjourServiceUpdateDelegate(controller_BonjourServiceUpdate);
-            this.controller.ForwardComputersUpdated += new EventHandler(controller_ForwardComputersUpdated);
+            this.controller.ForwardDestinationsUpdated += new EventHandler(controller_ForwardDestinationsUpdated);
             this.controller.SubscriptionsUpdated += new Controller.SubscriptionsUpdatedDelegate(controller_SubscriptionsUpdated);
             this.controller.Initialize(Application.ExecutablePath, this);
 
@@ -483,14 +483,14 @@ namespace Growl
             MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0, false);
         }
 
-        void controller_BonjourServiceUpdate(BonjourForwardComputer bfc)
+        void controller_BonjourServiceUpdate(BonjourForwardDestination bfc)
         {
             this.mainForm.OnBonjourServiceUpdated(bfc);
         }
 
-        void controller_ForwardComputersUpdated(object sender, EventArgs e)
+        void controller_ForwardDestinationsUpdated(object sender, EventArgs e)
         {
-            this.mainForm.OnForwardComputersUpdated();
+            this.mainForm.OnForwardDestinationsUpdated();
         }
 
         void controller_SubscriptionsUpdated(bool countChanged)

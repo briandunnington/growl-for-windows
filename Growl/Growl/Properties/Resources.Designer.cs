@@ -125,6 +125,16 @@ namespace Growl.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Click here to forward notifications to
+        ///an email account.
+        /// </summary>
+        internal static string AddComputer_AddEmail {
+            get {
+                return ResourceManager.GetString("AddComputer_AddEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to forward notifications to
         ///an iPhone.
         /// </summary>
         internal static string AddComputer_AddProwl {
@@ -139,6 +149,16 @@ namespace Growl.Properties {
         internal static string AddComputer_AddressLabel {
             get {
                 return ResourceManager.GetString("AddComputer_AddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to forward notifications
+        ///to Twitter.
+        /// </summary>
+        internal static string AddComputer_AddTwitter {
+            get {
+                return ResourceManager.GetString("AddComputer_AddTwitter", resourceCulture);
             }
         }
         
@@ -216,6 +236,15 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API Key:.
+        /// </summary>
+        internal static string AddProwl_APIKeyLabel {
+            get {
+                return ResourceManager.GetString("AddProwl_APIKeyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only forward when priority is at least:.
         /// </summary>
         internal static string AddProwl_MinimumPriorityLabel {
@@ -234,20 +263,65 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only forward when idle or away.
+        /// </summary>
+        internal static string AddProwl_OnlyWhenIdle {
+            get {
+                return ResourceManager.GetString("AddProwl_OnlyWhenIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Any Priority].
+        /// </summary>
+        internal static string AddTwitter_AnyPriority {
+            get {
+                return ResourceManager.GetString("AddTwitter_AnyPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format:.
+        /// </summary>
+        internal static string AddTwitter_FormatLabel {
+            get {
+                return ResourceManager.GetString("AddTwitter_FormatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only forward when priority is at least:.
+        /// </summary>
+        internal static string AddTwitter_MinimumPriorityLabel {
+            get {
+                return ResourceManager.GetString("AddTwitter_MinimumPriorityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only forward when idle or away.
+        /// </summary>
+        internal static string AddTwitter_OnlyWhenIdle {
+            get {
+                return ResourceManager.GetString("AddTwitter_OnlyWhenIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password:.
         /// </summary>
-        internal static string AddProwl_PasswordLabel {
+        internal static string AddTwitter_PasswordLabel {
             get {
-                return ResourceManager.GetString("AddProwl_PasswordLabel", resourceCulture);
+                return ResourceManager.GetString("AddTwitter_PasswordLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Username:.
         /// </summary>
-        internal static string AddProwl_UsernameLabel {
+        internal static string AddTwitter_UsernameLabel {
             get {
-                return ResourceManager.GetString("AddProwl_UsernameLabel", resourceCulture);
+                return ResourceManager.GetString("AddTwitter_UsernameLabel", resourceCulture);
             }
         }
         
@@ -919,11 +993,29 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Always.
+        /// </summary>
+        internal static string LiteralString_Always {
+            get {
+                return ResourceManager.GetString("LiteralString_Always", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to format.
         /// </summary>
         internal static string LiteralString_Format {
             get {
                 return ResourceManager.GetString("LiteralString_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Idle Only.
+        /// </summary>
+        internal static string LiteralString_IdleOnly {
+            get {
+                return ResourceManager.GetString("LiteralString_IdleOnly", resourceCulture);
             }
         }
         
@@ -1085,6 +1177,15 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("Network", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Network_EditComputer {
+            get {
+                return ResourceManager.GetString("Network_EditComputer", resourceCulture);
             }
         }
         
@@ -1358,6 +1459,24 @@ namespace Growl.Properties {
         internal static string Protocol_Type_UDP {
             get {
                 return ResourceManager.GetString("Protocol_Type_UDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have successfully configured Growl to forward notifications to Prowl.
+        /// </summary>
+        internal static string ProwlConfirmation_Text {
+            get {
+                return ResourceManager.GetString("ProwlConfirmation_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prowl Test.
+        /// </summary>
+        internal static string ProwlConfirmation_Title {
+            get {
+                return ResourceManager.GetString("ProwlConfirmation_Title", resourceCulture);
             }
         }
         

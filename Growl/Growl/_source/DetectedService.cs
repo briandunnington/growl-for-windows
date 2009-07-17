@@ -5,12 +5,12 @@ using ZeroconfService;
 
 namespace Growl
 {
-    public class DetectedService
+    public class DetectedService : IDisposable
     {
         private NetService service;
-        private ForwardComputerPlatformType platform;
+        private ForwardDestinationPlatformType platform;
 
-        public DetectedService(NetService service, ForwardComputerPlatformType platform)
+        public DetectedService(NetService service, ForwardDestinationPlatformType platform)
         {
             this.service = service;
             this.platform = platform;
@@ -24,12 +24,37 @@ namespace Growl
             }
         }
 
-        public ForwardComputerPlatformType Platform
+        public ForwardDestinationPlatformType Platform
         {
             get
             {
                 return this.platform;
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.service != null) this.service.Dispose();
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

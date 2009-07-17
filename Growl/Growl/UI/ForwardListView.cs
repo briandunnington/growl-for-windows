@@ -13,7 +13,7 @@ namespace Growl.UI
         private const int CHECKBOX_PADDING = 10;
 
         private ImageList imageList;
-        private Dictionary<string, ForwardComputer> computers;
+        private Dictionary<string, ForwardDestination> computers;
 
         public ForwardListView()
         {
@@ -24,13 +24,15 @@ namespace Growl.UI
             this.imageList.ImageSize = new System.Drawing.Size(48, 48);
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // add default platform type icons
-            this.imageList.Images.Add(ForwardComputerPlatformType.Windows.Name, ForwardComputerPlatformType.Windows.Icon);
-            this.imageList.Images.Add(ForwardComputerPlatformType.Mac.Name, ForwardComputerPlatformType.Mac.Icon);
-            this.imageList.Images.Add(ForwardComputerPlatformType.Linux.Name, ForwardComputerPlatformType.Linux.Icon);
-            this.imageList.Images.Add(ForwardComputerPlatformType.Internet.Name, ForwardComputerPlatformType.Internet.Icon);
-            this.imageList.Images.Add(ForwardComputerPlatformType.IPhone.Name, ForwardComputerPlatformType.IPhone.Icon);
-            this.imageList.Images.Add(ForwardComputerPlatformType.Mobile.Name, ForwardComputerPlatformType.Mobile.Icon);
-            this.imageList.Images.Add(ForwardComputerPlatformType.Other.Name, ForwardComputerPlatformType.Other.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Windows.Name, ForwardDestinationPlatformType.Windows.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Mac.Name, ForwardDestinationPlatformType.Mac.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Linux.Name, ForwardDestinationPlatformType.Linux.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Internet.Name, ForwardDestinationPlatformType.Internet.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.IPhone.Name, ForwardDestinationPlatformType.IPhone.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Mobile.Name, ForwardDestinationPlatformType.Mobile.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Email.Name, ForwardDestinationPlatformType.Email.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Twitter.Name, ForwardDestinationPlatformType.Twitter.Icon);
+            this.imageList.Images.Add(ForwardDestinationPlatformType.Other.Name, ForwardDestinationPlatformType.Other.Icon);
 
             this.OwnerDraw = true;
             this.DoubleBuffered = true;
@@ -65,7 +67,7 @@ namespace Growl.UI
                 if (e.X > CHECKBOX_PADDING && e.X < (CHECKBOX_PADDING + CHECKBOX_SIZE) && e.Y > y && e.Y < (y + CHECKBOX_SIZE))
                 {
                     info.Item.Checked = !info.Item.Checked;
-                    ForwardComputer fc = (ForwardComputer)info.Item.Tag;
+                    ForwardDestination fc = (ForwardDestination)info.Item.Tag;
                     fc.Enabled = info.Item.Checked;
                 }
             }
@@ -80,7 +82,7 @@ namespace Growl.UI
 
 
                 // update information
-                ForwardComputer fc = (ForwardComputer)e.Item.Tag;
+                ForwardDestination fc = (ForwardDestination)e.Item.Tag;
                 string display = Escape(fc.Display);
                 string address = Escape(fc.AddressDisplay);
                 string tooltip = String.Format("{0}\r\n{1}", fc.Display, fc.AddressDisplay);
@@ -186,7 +188,7 @@ namespace Growl.UI
             }
         }
 
-        public Dictionary<string, ForwardComputer> Computers
+        public Dictionary<string, ForwardDestination> Computers
         {
             get
             {
@@ -220,9 +222,9 @@ namespace Growl.UI
             this.Items.Clear();
 
             // add items
-            lock (this.computers)   // this isnt ideal, but it prevents the edge case where a subscriber comes online while we are trying  to Draw
+            lock (this.computers)   // this isnt ideal, but it prevents the edge case where a subscriber comes online while we are trying to Draw
             {
-                foreach (ForwardComputer fc in this.computers.Values)
+                foreach (ForwardDestination fc in this.computers.Values)
                 {
                     AddItem(fc);
                 }
@@ -231,7 +233,7 @@ namespace Growl.UI
             this.ResumeLayout();
         }
 
-        private void AddItem(ForwardComputer fc)
+        private void AddItem(ForwardDestination fc)
         {
             string display = Escape(fc.Display);
             string address = Escape(fc.AddressDisplay);

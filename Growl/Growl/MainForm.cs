@@ -63,6 +63,7 @@ namespace Growl
             this.checkBoxAllowWebNotifications.Text = Properties.Resources.Security_AllowWebNotifications;
             this.checkBoxAllowNetworkNotifications.Text = Properties.Resources.Security_AllowNetworkNotifications;
             this.checkBoxRequireLocalPassword.Text = Properties.Resources.Security_RequirePasswordLocalApps;
+            this.editToolStripMenuItem.Text = Properties.Resources.Network_EditComputer;
             this.removeComputerToolStripMenuItem.Text = Properties.Resources.Network_RemoveComputer;
 
             this.checkBoxEnableSubscriptions.Text = Properties.Resources.Network_SubscribeToNotifications;
@@ -195,12 +196,12 @@ namespace Growl
 
             // NETWORK
             this.checkBoxEnableForwarding.Checked = Properties.Settings.Default.AllowForwarding;
-            this.forwardListView.Enabled = this.checkBoxEnableForwarding.Checked;
-            this.buttonAddComputer.Enabled = this.checkBoxEnableForwarding.Checked;
-            LoadForwardComputers();
+            //this.forwardListView.Enabled = this.checkBoxEnableForwarding.Checked;
+            //this.buttonAddComputer.Enabled = this.checkBoxEnableForwarding.Checked;
+            LoadForwardDestinations();
             this.checkBoxEnableSubscriptions.Checked = Properties.Settings.Default.EnableSubscriptions;
-            this.subscribedListView.Enabled = this.checkBoxEnableSubscriptions.Checked;
-            this.buttonSubscribe.Enabled = this.checkBoxEnableSubscriptions.Checked;
+            //this.subscribedListView.Enabled = this.checkBoxEnableSubscriptions.Checked;
+            //this.buttonSubscribe.Enabled = this.checkBoxEnableSubscriptions.Checked;
             LoadSubscriptions();
 
             // HISTORY
@@ -294,7 +295,7 @@ namespace Growl
             BindDisplayList();
         }
 
-        private void LoadForwardComputers()
+        private void LoadForwardDestinations()
         {
             BindForwardList();
         }
@@ -341,7 +342,7 @@ namespace Growl
         private void BindForwardList()
         {
             this.forwardListView.SuspendLayout();
-            this.forwardListView.Computers = controller.ForwardComputers;
+            this.forwardListView.Computers = controller.ForwardDestinations;
             this.forwardListView.Draw();
             this.forwardListView.ResumeLayout();
             this.buttonRemoveComputer.Enabled = false;
@@ -454,13 +455,13 @@ namespace Growl
             this.historyListView.AddNotification(pn);
         }
 
-        internal void OnForwardComputersUpdated()
+        internal void OnForwardDestinationsUpdated()
         {
             this.BindForwardList();
             this.controller.SaveForwardPrefs();
         }
 
-        internal void OnBonjourServiceUpdated(BonjourForwardComputer bfc)
+        internal void OnBonjourServiceUpdated(BonjourForwardDestination bfc)
         {
             //BindForwardList();
             this.forwardListView.Refresh();
@@ -795,9 +796,9 @@ namespace Growl
         {
             Properties.Settings.Default.AllowForwarding = this.checkBoxEnableForwarding.Checked;
             Properties.Settings.Default.Save();
-            this.forwardListView.SelectedIndices.Clear();
-            this.forwardListView.Enabled = this.checkBoxEnableForwarding.Checked;
-            this.buttonAddComputer.Enabled = this.checkBoxEnableForwarding.Checked;
+            //this.forwardListView.SelectedIndices.Clear();
+            //this.forwardListView.Enabled = this.checkBoxEnableForwarding.Checked;
+            //this.buttonAddComputer.Enabled = this.checkBoxEnableForwarding.Checked;
         }
 
         private void buttonAddComputer_Click(object sender, EventArgs e)
@@ -812,10 +813,10 @@ namespace Growl
             if (this.forwardListView.SelectedItems.Count == 1)
             {
                 ListViewItem lvi = this.forwardListView.SelectedItems[0];
-                ForwardComputer fc = (ForwardComputer)lvi.Tag;
-                if (fc != null && this.controller.ForwardComputers.ContainsKey(fc.Description))
+                ForwardDestination fc = (ForwardDestination)lvi.Tag;
+                if (fc != null && this.controller.ForwardDestinations.ContainsKey(fc.Key))
                 {
-                    this.controller.ForwardComputers.Remove(fc.Description);
+                    this.controller.ForwardDestinations.Remove(fc.Key);
                     this.forwardListView.Items.Remove(lvi);
                 }
             }
@@ -919,7 +920,6 @@ namespace Growl
         private void listControlApplications_MouseDown(object sender, MouseEventArgs e)
         {
             this.contextMenuStripApplications.Hide();
-            this.listControlApplications.Refresh();
 
             if(e.Button == MouseButtons.Right)
             {
@@ -989,7 +989,7 @@ namespace Growl
         {
             if (this.textBoxIdleAfterSeconds.Enabled)
             {
-                if (String.IsNullOrEmpty(this.textBoxIdleAfterSeconds.Text))
+                if (!String.IsNullOrEmpty(this.textBoxIdleAfterSeconds.Text))
                 {
                     int idleAfterSeconds = Convert.ToInt32(this.textBoxIdleAfterSeconds.Text);
                     this.controller.IdleAfterSeconds = idleAfterSeconds;
@@ -999,18 +999,20 @@ namespace Growl
 
         private void forwardListView_MouseDown(object sender, MouseEventArgs e)
         {
-            this.contextMenuStripForwardComputers.Hide();
+            this.contextMenuStripForwardDestinations.Hide();
 
             if (e.Button == MouseButtons.Right)
             {
                 ListViewItem item = this.forwardListView.GetItemAt(e.X, e.Y);
                 if (item != null && item.Tag != null)
                 {
-                    ForwardComputer fc = item.Tag as ForwardComputer;
+                    ForwardDestination fc = item.Tag as ForwardDestination;
                     if (fc != null)
                     {
-                        this.contextMenuStripForwardComputers.Tag = fc;
-                        this.contextMenuStripForwardComputers.Show(this.forwardListView, e.Location);
+                        this.editToolStripMenuItem.Visible = !(fc is SubscribedForwardDestination);
+
+                        this.contextMenuStripForwardDestinations.Tag = fc;
+                        this.contextMenuStripForwardDestinations.Show(this.forwardListView, e.Location);
                     }
                 }
             }
@@ -1018,16 +1020,16 @@ namespace Growl
 
         private void removeComputerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.contextMenuStripForwardComputers.Tag != null)
+            if (this.contextMenuStripForwardDestinations.Tag != null)
             {
-                ForwardComputer fc = this.contextMenuStripForwardComputers.Tag as ForwardComputer;
+                ForwardDestination fc = this.contextMenuStripForwardDestinations.Tag as ForwardDestination;
                 if (fc != null)
                 {
-                    this.controller.RemoveForwardComputer(fc);
+                    this.controller.RemoveForwardDestination(fc);
                 }
             }
-            this.contextMenuStripForwardComputers.Tag = null;
-            this.contextMenuStripForwardComputers.Hide();
+            this.contextMenuStripForwardDestinations.Tag = null;
+            this.contextMenuStripForwardDestinations.Hide();
         }
 
         private void buttonSubscribe_Click(object sender, EventArgs e)
@@ -1043,10 +1045,10 @@ namespace Growl
             {
                 ListViewItem lvi = this.subscribedListView.SelectedItems[0];
                 Subscription sub = (Subscription)lvi.Tag;
-                if (sub != null && this.controller.Subscriptions.ContainsKey(sub.Description))
+                if (sub != null && this.controller.Subscriptions.ContainsKey(sub.Key))
                 {
                     sub.Kill();
-                    this.controller.Subscriptions.Remove(sub.Description);
+                    this.controller.Subscriptions.Remove(sub.Key);
                     this.subscribedListView.Items.Remove(lvi);
                     sub = null;
                 }
@@ -1057,9 +1059,9 @@ namespace Growl
         {
             Properties.Settings.Default.EnableSubscriptions = this.checkBoxEnableSubscriptions.Checked;
             Properties.Settings.Default.Save();
-            this.subscribedListView.SelectedIndices.Clear();
-            this.subscribedListView.Enabled = this.checkBoxEnableSubscriptions.Checked;
-            this.buttonSubscribe.Enabled = this.checkBoxEnableSubscriptions.Checked;
+            //this.subscribedListView.SelectedIndices.Clear();
+            //this.subscribedListView.Enabled = this.checkBoxEnableSubscriptions.Checked;
+            //this.buttonSubscribe.Enabled = this.checkBoxEnableSubscriptions.Checked;
             this.buttonUnsubscribe.Enabled = false;
             foreach (Subscription subscription in this.controller.Subscriptions.Values)
             {
@@ -1126,6 +1128,76 @@ namespace Growl
             LinkLabel ll = (LinkLabel)sender;
             string url = (string) ll.Tag;
             OpenLink(url);
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.contextMenuStripForwardDestinations.Tag != null)
+            {
+                ForwardDestination fc = this.contextMenuStripForwardDestinations.Tag as ForwardDestination;
+                if (fc != null)
+                {
+                    AddComputer f = new AddComputer(fc);
+                    f.SetController(this.controller);
+                    f.ShowDialog(this); 
+                }
+            }
+            this.contextMenuStripForwardDestinations.Tag = null;
+            this.contextMenuStripForwardDestinations.Hide();
+        }
+
+        private void editSubscriptionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.contextMenuStripSubscriptions.Tag != null)
+            {
+                Subscription sub = this.contextMenuStripSubscriptions.Tag as Subscription;
+                if (sub != null)
+                {
+                    AddComputer f = new AddComputer(sub);
+                    f.SetController(this.controller);
+                    f.ShowDialog(this);
+                }
+            }
+            this.contextMenuStripSubscriptions.Tag = null;
+            this.contextMenuStripSubscriptions.Hide();
+        }
+
+        private void unsubscribeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.contextMenuStripSubscriptions.Tag != null)
+            {
+                Subscription sub = this.contextMenuStripSubscriptions.Tag as Subscription;
+                if (sub != null)
+                {
+                    this.controller.RemoveSubscription(sub);
+                }
+            }
+            this.contextMenuStripSubscriptions.Tag = null;
+            this.contextMenuStripSubscriptions.Hide();
+        }
+
+        private void subscribedListView_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.contextMenuStripSubscriptions.Hide();
+
+            if (e.Button == MouseButtons.Right)
+            {
+                ListViewItem item = this.subscribedListView.GetItemAt(e.X, e.Y);
+                if (item != null && item.Tag != null)
+                {
+                    Subscription sub = item.Tag as Subscription;
+                    if (sub != null)
+                    {
+                        this.contextMenuStripSubscriptions.Tag = sub;
+                        this.contextMenuStripSubscriptions.Show(this.subscribedListView, e.Location);
+                    }
+                }
+            }
+        }
+
+        private void contextMenuStripApplications_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            this.listControlApplications.Refresh();
         }
 
         /* THIS IS NOT READY FOR RELEASE YET

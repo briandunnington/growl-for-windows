@@ -176,7 +176,7 @@ namespace Growl
 
             bool isSelf = IsOwnInstance(service);
 
-            ForwardComputerPlatformType fcPlatform = ForwardComputerPlatformType.Other;
+            ForwardDestinationPlatformType fcPlatform = ForwardDestinationPlatformType.Other;
             IDictionary dict = ConvertTXTRecordToDictionary(service);
             if (dict != null)
             {
@@ -184,7 +184,7 @@ namespace Growl
                 {
                     byte[] bytes = (byte[])dict["platform"];
                     string platform = Encoding.UTF8.GetString(bytes);
-                    fcPlatform = ForwardComputerPlatformType.FromString(platform);
+                    fcPlatform = ForwardDestinationPlatformType.FromString(platform);
                 }
             }
 

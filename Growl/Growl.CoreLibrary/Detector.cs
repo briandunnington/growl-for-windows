@@ -166,7 +166,7 @@ namespace Growl.CoreLibrary
             Mutex mutex = new Mutex(true, String.Format(@"Global\{0}", Growl.CoreLibrary.Detector.MUTEX_NAME), out createdNew);
             using (mutex)
             {
-                mutex.ReleaseMutex();
+                // do nothing (DONT call mutex.ReleaseMutex() - it can cause and exception
             }
             return !createdNew;
         }

@@ -8,15 +8,16 @@ using System.Windows.Forms;
 
 namespace Growl.UI
 {
-    public partial class ForwardComputerInputs : UserControl, IForwardInputs
+    public partial class ForwardDestinationInputs : ForwardDestinationSettingsPanel
     {
         private DetectedService selectedService;
         private bool isBonjour;
         private bool doValidation;
         private Color highlightColor = Color.FromArgb(254, 250, 184);
         private bool isSubscription;
+        private string g;
 
-        public ForwardComputerInputs()
+        public ForwardDestinationInputs()
         {
             InitializeComponent();
 
@@ -26,6 +27,8 @@ namespace Growl.UI
             this.labelPort.Text = Properties.Resources.AddComputer_PortLabel;
             this.labelAddress.Text = Properties.Resources.AddComputer_AddressLabel;
             this.labelDescription.Text = Properties.Resources.AddComputer_NameLabel;
+
+            this.g = System.Guid.NewGuid().ToString();
         }
 
         private void textBoxDescription_TextChanged(object sender, EventArgs e)
@@ -48,9 +51,7 @@ namespace Growl.UI
             ValidateInputs();
         }
 
-        #region IForwardInputs Members
-
-        public void Initialize(bool isSubscription, ForwardListItem fli)
+        public override void Initialize(bool isSubscription, ForwardDestinationListItem fdli, ForwardDestination fd)
         {
             this.doValidation = true;
             this.isSubscription = isSubscription;
@@ -64,7 +65,7 @@ namespace Growl.UI
             this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_UDP);
 
             // set text box values
-            BonjourListItem bli = fli as BonjourListItem;
+            BonjourListItem bli = fdli as BonjourListItem;
             if (bli != null)
             {
                 this.isBonjour = true;
@@ -92,6 +93,49 @@ namespace Growl.UI
                 this.comboBoxFormat.Enabled = true;
             }
 
+            // edits
+            if (fd != null)
+            {
+                this.textBoxDescription.Text = fd.Description;
+                this.comboBoxFormat.Enabled = false;
+                Subscription subscription = fd as Subscription;
+                if (subscription != null)
+                {
+                    this.textBoxAddress.Text = subscription.IPAddress;
+                    this.textBoxPort.Text = subscription.Port.ToString();
+                    this.textBoxPassword.Text = subscription.Password;
+                    this.comboBoxFormat.SelectedItem = Properties.Resources.Protocol_Type_GNTP;
+                    this.comboBoxFormat.Visible = false;
+                }
+                GNTPForwardDestination gntp = fd as GNTPForwardDestination;
+                if (gntp != null)
+                {
+                    this.textBoxAddress.Text = gntp.IPAddress;
+                    this.textBoxPort.Text = gntp.Port.ToString();
+                    this.textBoxPassword.Text = gntp.Password;
+                    this.comboBoxFormat.SelectedItem = Properties.Resources.Protocol_Type_GNTP;
+                }
+                BonjourForwardDestination bonjour = fd as BonjourForwardDestination;
+                if (bonjour != null)
+                {
+                    this.textBoxAddress.Text = bonjour.IPAddress;
+                    this.textBoxPort.Text = bonjour.Port.ToString();
+                    this.textBoxPassword.Text = bonjour.Password;
+                    this.comboBoxFormat.SelectedItem = Properties.Resources.Protocol_Type_GNTP;
+                    this.textBoxDescription.Enabled = false;
+                    this.textBoxAddress.Enabled = false;
+                    this.textBoxPort.Enabled = false;
+                }
+                UDPForwardDestination udp = fd as UDPForwardDestination;
+                if (udp != null)
+                {
+                    this.textBoxAddress.Text = udp.IPAddress;
+                    this.textBoxPort.Text = udp.Port.ToString();
+                    this.textBoxPassword.Text = udp.Password;
+                    this.comboBoxFormat.SelectedItem = Properties.Resources.Protocol_Type_UDP;
+                }
+            }
+
             if (isSubscription)
             {
                 this.labelFormat.Visible = false;
@@ -101,14 +145,9 @@ namespace Growl.UI
             ValidateInputs();
         }
 
-        public UserControl GetControl()
+        public override ForwardDestination Create()
         {
-            return this;
-        }
-
-        public ForwardComputer Save()
-        {
-            ForwardComputer fc = null;
+            ForwardDestination fc = null;
             if (this.isSubscription)
             {
                 Subscription subscription = new Subscription(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
@@ -118,7 +157,7 @@ namespace Growl.UI
             {
                 if (this.isBonjour)
                 {
-                    BonjourForwardComputer bfc = new BonjourForwardComputer(textBoxDescription.Text, true, textBoxPassword.Text);
+                    BonjourForwardDestination bfc = new BonjourForwardDestination(textBoxDescription.Text, true, textBoxPassword.Text);
                     bfc.Update(selectedService.Service, new GrowlBonjourEventArgs(selectedService.Platform));
                     fc = bfc;
                 }
@@ -126,17 +165,51 @@ namespace Growl.UI
                 {
                     bool useUDP = (comboBoxFormat.SelectedItem.ToString() == Properties.Resources.Protocol_Type_UDP ? true : false);
                     if (useUDP)
-                        fc = new UDPForwardComputer(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
+                        fc = new UDPForwardDestination(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
                     else
-                        fc = new GNTPForwardComputer(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
+                        fc = new GNTPForwardDestination(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
                 }
             }
             return fc;
         }
 
-        public event ValidChangedEventHandler ValidChanged;
-
-        #endregion
+        public override void Update(ForwardDestination fd)
+        {
+            if (this.isSubscription)
+            {
+                Subscription subscription = fd as Subscription;
+                subscription.Description = this.textBoxDescription.Text;
+                subscription.IPAddress = this.textBoxAddress.Text;
+                subscription.Port = Convert.ToInt32(this.textBoxPort.Text);
+                subscription.Password = this.textBoxPassword.Text;
+                subscription.Update();
+            }
+            else
+            {
+                GNTPForwardDestination gntp = fd as GNTPForwardDestination;
+                if (gntp != null)
+                {
+                    gntp.Description = this.textBoxDescription.Text;
+                    gntp.IPAddress = this.textBoxAddress.Text;
+                    gntp.Port = Convert.ToInt32(this.textBoxPort.Text);
+                    gntp.Password = this.textBoxPassword.Text;
+                }
+                BonjourForwardDestination bonjour = fd as BonjourForwardDestination;
+                if (bonjour != null)
+                {
+                    bonjour.Description = this.textBoxDescription.Text;
+                    bonjour.Password = this.textBoxPassword.Text;
+                }
+                UDPForwardDestination udp = fd as UDPForwardDestination;
+                if (udp != null)
+                {
+                    udp.Description = this.textBoxDescription.Text;
+                    udp.IPAddress = this.textBoxAddress.Text;
+                    udp.Port = Convert.ToInt32(this.textBoxPort.Text);
+                    udp.Password = this.textBoxPassword.Text;
+                }
+            }
+        }
 
         private void ValidateInputs()
         {
@@ -176,14 +249,6 @@ namespace Growl.UI
                 }
             }
             OnValidChanged(valid);
-        }
-
-        protected void OnValidChanged(bool isValid)
-        {
-            if (ValidChanged != null)
-            {
-                ValidChanged(isValid);
-            }
         }
     }
 }

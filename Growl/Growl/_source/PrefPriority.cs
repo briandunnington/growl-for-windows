@@ -73,7 +73,7 @@ namespace Growl
                 return base.Equals(obj);
         }
 
-        private static PrefPriority GetByValue(Priority? val)
+        public static PrefPriority GetByValue(Priority? val)
         {
             if (val == null)
                 return PrefPriority.Default;
@@ -93,6 +93,11 @@ namespace Growl
                 default:
                     return PrefPriority.Default;
             }
+        }
+
+        public static string GetFriendlyName(Priority priority)
+        {
+            return GetByValue(priority).Name;
         }
 
         #region ISerializable Members

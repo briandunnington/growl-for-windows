@@ -1,6 +1,6 @@
 namespace Growl.UI
 {
-    partial class ProwlForwardInputs
+    partial class EmailForwardInputs
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,12 +30,13 @@ namespace Growl.UI
         {
             this.comboBoxMinimumPriority = new System.Windows.Forms.ComboBox();
             this.labelMinimumPriority = new System.Windows.Forms.Label();
-            this.textBoxAPIKey = new Growl.UI.HighlightTextBox();
-            this.labelAPIKey = new System.Windows.Forms.Label();
+            this.textBoxUsername = new Growl.UI.HighlightTextBox();
+            this.labelEmail = new System.Windows.Forms.Label();
             this.textBoxDescription = new Growl.UI.HighlightTextBox();
             this.labelDescription = new System.Windows.Forms.Label();
             this.panelDetails = new System.Windows.Forms.Panel();
             this.checkBoxOnlyWhenIdle = new System.Windows.Forms.CheckBox();
+            this.labelSMTPSettings = new System.Windows.Forms.Label();
             this.panelDetails.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +44,7 @@ namespace Growl.UI
             // 
             this.comboBoxMinimumPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxMinimumPriority.FormattingEnabled = true;
-            this.comboBoxMinimumPriority.Location = new System.Drawing.Point(109, 86);
+            this.comboBoxMinimumPriority.Location = new System.Drawing.Point(109, 111);
             this.comboBoxMinimumPriority.Name = "comboBoxMinimumPriority";
             this.comboBoxMinimumPriority.Size = new System.Drawing.Size(109, 21);
             this.comboBoxMinimumPriority.TabIndex = 9;
@@ -52,30 +53,30 @@ namespace Growl.UI
             // 
             this.labelMinimumPriority.AutoSize = true;
             this.labelMinimumPriority.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMinimumPriority.Location = new System.Drawing.Point(19, 60);
+            this.labelMinimumPriority.Location = new System.Drawing.Point(19, 85);
             this.labelMinimumPriority.Name = "labelMinimumPriority";
             this.labelMinimumPriority.Size = new System.Drawing.Size(220, 18);
             this.labelMinimumPriority.TabIndex = 8;
             this.labelMinimumPriority.Text = "Only forward when priority is at least:";
             // 
-            // textBoxAPIKey
+            // textBoxUsername
             // 
-            this.textBoxAPIKey.HighlightColor = System.Drawing.Color.Red;
-            this.textBoxAPIKey.Location = new System.Drawing.Point(109, 33);
-            this.textBoxAPIKey.Name = "textBoxAPIKey";
-            this.textBoxAPIKey.Size = new System.Drawing.Size(199, 20);
-            this.textBoxAPIKey.TabIndex = 3;
-            this.textBoxAPIKey.TextChanged += new System.EventHandler(this.textBoxAPIKey_TextChanged);
+            this.textBoxUsername.HighlightColor = System.Drawing.Color.Red;
+            this.textBoxUsername.Location = new System.Drawing.Point(109, 33);
+            this.textBoxUsername.Name = "textBoxUsername";
+            this.textBoxUsername.Size = new System.Drawing.Size(199, 20);
+            this.textBoxUsername.TabIndex = 3;
+            this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             // 
-            // labelAPIKey
+            // labelEmail
             // 
-            this.labelAPIKey.AutoSize = true;
-            this.labelAPIKey.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAPIKey.Location = new System.Drawing.Point(19, 34);
-            this.labelAPIKey.Name = "labelAPIKey";
-            this.labelAPIKey.Size = new System.Drawing.Size(53, 18);
-            this.labelAPIKey.TabIndex = 2;
-            this.labelAPIKey.Text = "API Key:";
+            this.labelEmail.AutoSize = true;
+            this.labelEmail.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelEmail.Location = new System.Drawing.Point(19, 34);
+            this.labelEmail.Name = "labelEmail";
+            this.labelEmail.Size = new System.Drawing.Size(86, 18);
+            this.labelEmail.TabIndex = 2;
+            this.labelEmail.Text = "Email Address:";
             // 
             // textBoxDescription
             // 
@@ -101,8 +102,9 @@ namespace Growl.UI
             this.panelDetails.Controls.Add(this.checkBoxOnlyWhenIdle);
             this.panelDetails.Controls.Add(this.comboBoxMinimumPriority);
             this.panelDetails.Controls.Add(this.labelMinimumPriority);
-            this.panelDetails.Controls.Add(this.textBoxAPIKey);
-            this.panelDetails.Controls.Add(this.labelAPIKey);
+            this.panelDetails.Controls.Add(this.labelSMTPSettings);
+            this.panelDetails.Controls.Add(this.textBoxUsername);
+            this.panelDetails.Controls.Add(this.labelEmail);
             this.panelDetails.Controls.Add(this.textBoxDescription);
             this.panelDetails.Controls.Add(this.labelDescription);
             this.panelDetails.Location = new System.Drawing.Point(0, 0);
@@ -114,20 +116,30 @@ namespace Growl.UI
             // 
             this.checkBoxOnlyWhenIdle.AutoSize = true;
             this.checkBoxOnlyWhenIdle.Font = new System.Drawing.Font("Trebuchet MS", 9F);
-            this.checkBoxOnlyWhenIdle.Location = new System.Drawing.Point(22, 112);
+            this.checkBoxOnlyWhenIdle.Location = new System.Drawing.Point(22, 137);
             this.checkBoxOnlyWhenIdle.Name = "checkBoxOnlyWhenIdle";
             this.checkBoxOnlyWhenIdle.Size = new System.Drawing.Size(204, 22);
             this.checkBoxOnlyWhenIdle.TabIndex = 10;
             this.checkBoxOnlyWhenIdle.Text = "Only forward when idle or away";
             this.checkBoxOnlyWhenIdle.UseVisualStyleBackColor = true;
             // 
-            // ProwlForwardInputs
+            // labelSMTPSettings
+            // 
+            this.labelSMTPSettings.AutoSize = true;
+            this.labelSMTPSettings.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSMTPSettings.Location = new System.Drawing.Point(19, 60);
+            this.labelSMTPSettings.Name = "labelSMTPSettings";
+            this.labelSMTPSettings.Size = new System.Drawing.Size(90, 18);
+            this.labelSMTPSettings.TabIndex = 6;
+            this.labelSMTPSettings.Text = "SMTP Settings:";
+            // 
+            // EmailForwardInputs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.panelDetails);
-            this.Name = "ProwlForwardInputs";
+            this.Name = "EmailForwardInputs";
             this.Controls.SetChildIndex(this.panelDetails, 0);
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
@@ -139,11 +151,12 @@ namespace Growl.UI
 
         private System.Windows.Forms.ComboBox comboBoxMinimumPriority;
         private System.Windows.Forms.Label labelMinimumPriority;
-        private HighlightTextBox textBoxAPIKey;
-        private System.Windows.Forms.Label labelAPIKey;
+        private HighlightTextBox textBoxUsername;
+        private System.Windows.Forms.Label labelEmail;
         private HighlightTextBox textBoxDescription;
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.Panel panelDetails;
+        private System.Windows.Forms.Label labelSMTPSettings;
         private System.Windows.Forms.CheckBox checkBoxOnlyWhenIdle;
     }
 }

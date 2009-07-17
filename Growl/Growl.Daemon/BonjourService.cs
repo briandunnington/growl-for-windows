@@ -9,7 +9,7 @@ namespace Growl.Daemon
     /// <summary>
     /// Provides methods for advertising a service via Bonjour
     /// </summary>
-    public class BonjourService
+    public class BonjourService : IDisposable
     {
         private static bool isSupported;
 
@@ -173,5 +173,30 @@ namespace Growl.Daemon
             service.Publish();
             return service;
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.service != null) this.service.Dispose();
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

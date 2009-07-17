@@ -7,14 +7,15 @@ using Growl.UDPLegacy;
 namespace Growl
 {
     [Serializable]
-    public abstract class ForwardComputer
+    public abstract class ForwardDestination
     {
         [field: NonSerialized]
         public event EventHandler EnabledChanged;
 
+        private string key;
         private string description;
         private bool enabled = true;
-        private ForwardComputerPlatformType platform = ForwardComputerPlatformType.Other;
+        private ForwardDestinationPlatformType platform = ForwardDestinationPlatformType.Other;
 
         [NonSerialized]
         private string additionalOnlineDisplayInfo;
@@ -22,19 +23,28 @@ namespace Growl
         private string additionalOfflineDisplayInfo;
 
 
-        public ForwardComputer(string description, bool enabled)
+        public ForwardDestination(string description, bool enabled)
         {
             this.description = description;
             this.enabled = enabled;
         }
 
-        public string Description
+        public virtual string Key
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(this.key)) this.key = System.Guid.NewGuid().ToString();
+                return this.key;
+            }
+        }
+
+        public virtual string Description
         {
             get
             {
                 return this.description;
             }
-            protected set
+            set
             {
                 this.description = value;
             }
@@ -63,7 +73,7 @@ namespace Growl
             }
         }
 
-        public ForwardComputerPlatformType Platform
+        public ForwardDestinationPlatformType Platform
         {
             get
             {
@@ -125,7 +135,7 @@ namespace Growl
             }
         }
 
-        public abstract ForwardComputer Clone();
+        public abstract ForwardDestination Clone();
 
         protected virtual void OnEnabledChanged(object sender, EventArgs eventArgs)
         {
@@ -135,9 +145,9 @@ namespace Growl
             }
         }
 
-        internal abstract void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo);
+        internal abstract void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle);
 
-        internal abstract void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, Forwarder.ForwardedNotificationCallbackHandler callbackFunction);
+        internal abstract void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction);
     }
 }
 

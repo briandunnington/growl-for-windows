@@ -42,7 +42,7 @@ namespace Growl
             this.panelBonjour.Controls.Add(this.bonjourListBox1);
             this.panelBonjour.Location = new System.Drawing.Point(12, 12);
             this.panelBonjour.Name = "panelBonjour";
-            this.panelBonjour.Size = new System.Drawing.Size(338, 137);
+            this.panelBonjour.Size = new System.Drawing.Size(338, 168);
             this.panelBonjour.TabIndex = 5;
             // 
             // bonjourListBox1
@@ -54,14 +54,14 @@ namespace Growl
             this.bonjourListBox1.ItemHeight = 48;
             this.bonjourListBox1.Location = new System.Drawing.Point(0, 0);
             this.bonjourListBox1.Name = "bonjourListBox1";
-            this.bonjourListBox1.Size = new System.Drawing.Size(338, 137);
+            this.bonjourListBox1.Size = new System.Drawing.Size(338, 168);
             this.bonjourListBox1.TabIndex = 4;
             // 
             // panelDetails
             // 
             this.panelDetails.Location = new System.Drawing.Point(12, 12);
             this.panelDetails.Name = "panelDetails";
-            this.panelDetails.Size = new System.Drawing.Size(338, 137);
+            this.panelDetails.Size = new System.Drawing.Size(338, 168);
             this.panelDetails.TabIndex = 6;
             this.panelDetails.Visible = false;
             // 
@@ -77,7 +77,7 @@ namespace Growl
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonSave.Location = new System.Drawing.Point(277, 160);
+            this.buttonSave.Location = new System.Drawing.Point(277, 194);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(0);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(73, 32);
@@ -98,7 +98,7 @@ namespace Growl
             this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClose.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonClose.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonClose.Location = new System.Drawing.Point(12, 160);
+            this.buttonClose.Location = new System.Drawing.Point(12, 194);
             this.buttonClose.Margin = new System.Windows.Forms.Padding(0);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(73, 32);
@@ -111,11 +111,11 @@ namespace Growl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 201);
+            this.ClientSize = new System.Drawing.Size(362, 235);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonClose);
-            this.Controls.Add(this.panelDetails);
             this.Controls.Add(this.panelBonjour);
+            this.Controls.Add(this.panelDetails);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

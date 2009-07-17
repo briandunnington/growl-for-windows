@@ -1,3 +1,20 @@
+Beta 18 changes
+------------------------------
+- fixed a bug in Detector.DetectIfGrowlIsRunning() that could cause a crash
+- fixed a bug that caused the 'consider me idle after' value to not be updated when the user entered a new value
+- release Google Voice Greasemonkey script
+- updated Thunderbird extension to use message priorities
+- updated System Monitor with labels, sticky prefs, and origin machine name
+
+Beta 17 changes
+------------------------------
+- updated Prowl integration to use new API
+- added ability to only forward to Prowl when idle
+- added Twitter forwarding option
+- added ability to edit Forward and Subscription entries
+- fixed a bug when hovering over items in the 'Add Computer' windows
+- fixed a bug that could crash Growl if an application registered with no icon
+
 v2.0 Beta 16 changes
 ------------------------------
 - added ability to forward notifications to iphones via Prowl

@@ -6,13 +6,13 @@ using Growl.UDPLegacy;
 namespace Growl
 {
     [Serializable]
-    public class UDPForwardComputer : ForwardComputer
+    public class UDPForwardDestination : ForwardDestination
     {
         private string ipAddress;
         private int port;
         private string password;
 
-        public UDPForwardComputer(string description, bool enabled, string ipAddress, int port, string password)
+        public UDPForwardDestination(string description, bool enabled, string ipAddress, int port, string password)
             : base(description, enabled)
         {
             this.ipAddress = ipAddress;
@@ -38,7 +38,7 @@ namespace Growl
             {
                 return this.ipAddress;
             }
-            protected set
+            set
             {
                 this.ipAddress = value;
             }
@@ -50,7 +50,7 @@ namespace Growl
             {
                 return this.port;
             }
-            protected set
+            set
             {
                 this.port = value;
             }
@@ -62,7 +62,7 @@ namespace Growl
             {
                 return this.password;
             }
-            protected set
+            set
             {
                 this.password = value;
             }
@@ -79,13 +79,13 @@ namespace Growl
             }
         }
 
-        public override ForwardComputer Clone()
+        public override ForwardDestination Clone()
         {
-            UDPForwardComputer clone = new UDPForwardComputer(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password);
+            UDPForwardDestination clone = new UDPForwardDestination(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password);
             return clone;
         }
 
-        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo)
+        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
         {
             Growl.UDPLegacy.NotificationType[] types = new Growl.UDPLegacy.NotificationType[notificationTypes.Count];
             for (int i = 0; i < notificationTypes.Count; i++)
@@ -99,7 +99,7 @@ namespace Growl
             netgrowl.Register(ref types);
         }
 
-        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
+        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
         {
             Growl.UDPLegacy.NotificationType nt = new Growl.UDPLegacy.NotificationType(notification.Name, true);
             Growl.UDPLegacy.MessageSender netgrowl = new Growl.UDPLegacy.MessageSender(this.IPAddress, this.Port, notification.ApplicationName, this.Password);

@@ -4,13 +4,13 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Growl.UI
+namespace Growl
 {
-    public class BonjourListItem : ForwardListItem
+    public class BonjourListItem : ForwardDestinationListItem
     {
         private DetectedService ds;
 
-        public BonjourListItem(DetectedService ds) : base(ds.Service.Name, ds.Platform.Icon)
+        public BonjourListItem(DetectedService ds, IForwardDestinationHandler ifdh) : base(ds.Service.Name, ds.Platform.Icon, ifdh)
         {
             this.ds = ds;
         }
@@ -22,5 +22,7 @@ namespace Growl.UI
                 return this.ds;
             }
         }
+
+
     }
 }

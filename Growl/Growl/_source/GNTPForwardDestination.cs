@@ -6,13 +6,13 @@ using Growl.Connector;
 namespace Growl
 {
     [Serializable]
-    public class GNTPForwardComputer : ForwardComputer
+    public class GNTPForwardDestination : ForwardDestination
     {
         private string ipAddress;
         private int port;
         private string password;
 
-        public GNTPForwardComputer(string description, bool enabled, string ipAddress, int port, string password) 
+        public GNTPForwardDestination(string description, bool enabled, string ipAddress, int port, string password) 
             : base(description, enabled)
         {
             this.ipAddress = ipAddress;
@@ -38,7 +38,7 @@ namespace Growl
             {
                 return this.ipAddress;
             }
-            protected set
+            set
             {
                 this.ipAddress = value;
             }
@@ -50,7 +50,7 @@ namespace Growl
             {
                 return this.port;
             }
-            protected set
+            set
             {
                 this.port = value;
             }
@@ -62,7 +62,7 @@ namespace Growl
             {
                 return this.password;
             }
-            protected set
+            set
             {
                 this.password = value;
             }
@@ -79,13 +79,13 @@ namespace Growl
             }
         }
 
-        public override ForwardComputer Clone()
+        public override ForwardDestination Clone()
         {
-            GNTPForwardComputer clone = new GNTPForwardComputer(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password);
+            GNTPForwardDestination clone = new GNTPForwardDestination(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password);
             return clone;
         }
 
-        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo)
+        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
         {
             Forwarder growl = new Forwarder(this.Password, this.IPAddress, this.Port, requestInfo);
             growl.KeyHashAlgorithm = this.HashAlgorithm;
@@ -93,7 +93,7 @@ namespace Growl
             growl.Register(application, notificationTypes.ToArray());
         }
 
-        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
+        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
         {
             Forwarder growl = new Forwarder(this.Password, this.IPAddress, this.Port, requestInfo, callbackInfo);
             growl.KeyHashAlgorithm = this.HashAlgorithm;

@@ -68,27 +68,48 @@
     <Compile Include="SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ForwardDestinationSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ForwardDestinationSettingsPanel.Designer.cs">
+      <DependentUpon>ForwardDestinationSettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TwitterForwardInputs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\TwitterForwardInputs.Designer.cs">
+      <DependentUpon>TwitterForwardInputs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EmailForwardInputs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\EmailForwardInputs.Designer.cs">
+      <DependentUpon>EmailForwardInputs.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ProwlForwardInputs.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\ProwlForwardInputs.Designer.cs">
       <DependentUpon>ProwlForwardInputs.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ForwardComputerInputs.cs">
+    <Compile Include="UI\ForwardDestinationInputs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\ForwardComputerInputs.Designer.cs">
-      <DependentUpon>ForwardComputerInputs.cs</DependentUpon>
+    <Compile Include="UI\ForwardDestinationInputs.Designer.cs">
+      <DependentUpon>ForwardDestinationInputs.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ForwardListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\BonjourListItem.cs" />
+    <Compile Include="_source\BonjourForwardDestinationHandler.cs" />
+    <Compile Include="_source\BonjourListItem.cs" />
     <Compile Include="UI\ButtonEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\ForwardListItem.cs" />
-    <Compile Include="UI\IForwardInputs.cs" />
+    <Compile Include="_source\EmailForwardDestinationHandler.cs" />
+    <Compile Include="_source\ForwardDestinationListItem.cs" />
+    <Compile Include="_source\ManualForwardDestinationHandler.cs" />
+    <Compile Include="_source\IForwardDestinationHandler.cs" />
     <Compile Include="UI\ListControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,9 +149,10 @@
     <Compile Include="UI\OnOffButton.Designer.cs">
       <DependentUpon>OnOffButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ProwlListItem.cs" />
     <Compile Include="_source\AutoUpdate\UpdateException.cs" />
-    <Compile Include="_source\GNTPForwardComputer.cs" />
+    <Compile Include="_source\EmailForwardDestination.cs" />
+    <Compile Include="_source\ForwardDestinationManager.cs" />
+    <Compile Include="_source\GNTPForwardDestination.cs" />
     <Compile Include="_source\GrowlException.cs" />
     <Compile Include="_source\Installation\GrowlInstaller.cs">
       <SubType>Component</SubType>
@@ -167,13 +189,25 @@
       <SubType>Designer</SubType>
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\ForwardDestinationSettingsPanel.resx">
+      <DependentUpon>ForwardDestinationSettingsPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TwitterForwardInputs.resx">
+      <DependentUpon>TwitterForwardInputs.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EmailForwardInputs.resx">
+      <DependentUpon>EmailForwardInputs.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\ProwlForwardInputs.resx">
       <DependentUpon>ProwlForwardInputs.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ForwardComputerInputs.resx">
+    <EmbeddedResource Include="UI\ForwardDestinationInputs.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>ForwardComputerInputs.cs</DependentUpon>
+      <DependentUpon>ForwardDestinationInputs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ForwardListBox.resx">
       <SubType>Designer</SubType>
@@ -252,12 +286,12 @@
     <Compile Include="_source\AutoUpdate\UpdateErrorEventHandler.cs" />
     <Compile Include="_source\AutoUpdate\Updater.cs" />
     <Compile Include="_source\Bonjour.cs" />
-    <Compile Include="_source\BonjourForwardComputer.cs" />
+    <Compile Include="_source\BonjourForwardDestination.cs" />
     <Compile Include="_source\DetectedService.cs" />
     <Compile Include="_source\DisplayDefault.cs" />
     <Compile Include="_source\DisplayNone.cs" />
-    <Compile Include="_source\ForwardComputer.cs" />
-    <Compile Include="_source\ForwardComputerPlatformType.cs" />
+    <Compile Include="_source\ForwardDestination.cs" />
+    <Compile Include="_source\ForwardDestinationPlatformType.cs" />
     <Compile Include="_source\Forwarder.cs" />
     <Compile Include="_source\GrowlBonjourEventArgs.cs" />
     <Compile Include="_source\MissedNotificationsDisplay.cs" />
@@ -278,7 +312,8 @@
     <Compile Include="_source\PrefPriority.cs" />
     <Compile Include="_source\PrefSound.cs" />
     <Compile Include="_source\PrefSticky.cs" />
-    <Compile Include="_source\ProwlForwardComputer.cs" />
+    <Compile Include="_source\ProwlForwardDestination.cs" />
+    <Compile Include="_source\ProwlForwardDestinationHandler.cs" />
     <Compile Include="_source\RegisteredApplication.cs" />
     <Compile Include="_source\RegisteredNotification.cs" />
     <Compile Include="_source\IRegisteredObject.cs" />
@@ -288,10 +323,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="_source\SingleInstanceApplication.cs" />
-    <Compile Include="_source\SubscribedForwardComputer.cs" />
+    <Compile Include="_source\SubscribedForwardDestination.cs" />
     <Compile Include="_source\Subscription.cs" />
     <Compile Include="_source\SystemBalloonIntercepter.cs" />
-    <Compile Include="_source\UDPForwardComputer.cs" />
+    <Compile Include="_source\TwitterForwardDestination.cs" />
+    <Compile Include="_source\TwitterForwardDestinationHandler.cs" />
+    <Compile Include="_source\UDPForwardDestination.cs" />
+    <Compile Include="_source\UDPForwardDestinationHandler.cs" />
     <Compile Include="_source\UserSettingsProvider.cs" />
     <Compile Include="_source\Utility.cs" />
   </ItemGroup>
