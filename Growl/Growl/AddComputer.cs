@@ -14,7 +14,6 @@ namespace Growl
     {
         private Controller controller;
         private bool isSubscription;
-        private IForwardDestinationHandler handler;
         private ForwardDestinationSettingsPanel settingsPanel;
         private ForwardDestination fdEdit;
 
@@ -81,9 +80,9 @@ namespace Growl
             ForwardDestinationSettingsPanel panel = handler.GetSettingsPanel(this.fdEdit);
             this.settingsPanel = panel;
             panel.ValidChanged += new ForwardDestinationSettingsPanel.ValidChangedEventHandler(panel_ValidChanged);
-            panel.Initialize(this.isSubscription, fdli, this.fdEdit);
             this.panelDetails.Controls.Add(panel);
             panel.Visible = true;
+            panel.Initialize(this.isSubscription, fdli, this.fdEdit);
 
             this.buttonSave.Visible = true;
         }

@@ -25,17 +25,17 @@ namespace Growl.UI
             this.checkBoxOnlyWhenIdle.Text = Properties.Resources.AddTwitter_OnlyWhenIdle;
         }
 
-        private void textBoxDescription_TextChanged(object sender, EventArgs e)
-        {
-            ValidateInputs();
-        }
-
         private void textBoxUsername_TextChanged(object sender, EventArgs e)
         {
             ValidateInputs();
         }
 
         private void textBoxPassword_TextChanged(object sender, EventArgs e)
+        {
+            ValidateInputs();
+        }
+
+        private void textBoxFormat_TextChanged(object sender, EventArgs e)
         {
             ValidateInputs();
         }
@@ -78,6 +78,8 @@ namespace Growl.UI
             }
 
             ValidateInputs();
+
+            this.textBoxUsername.Focus();
         }
 
         public override ForwardDestination Create()

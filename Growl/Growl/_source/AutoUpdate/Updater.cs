@@ -17,7 +17,7 @@ namespace Growl.AutoUpdate
         public event EventHandler DownloadComplete;
         public event UpdateErrorEventHandler UpdateError;
 
-        private WebClient checker;
+        private WebClientEx checker;
         private string appPath;
         private string manifestFile;
         private string currentVersion;
@@ -41,7 +41,7 @@ namespace Growl.AutoUpdate
             this.updateLocation = updateLocation;
             this.updateTempFolder = Path.Combine(Utility.UserSettingFolder, UPDATE_FOLDER);
 
-            this.checker = new WebClient();
+            this.checker = new WebClientEx();
             checker.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
             checker.DownloadStringCompleted += new DownloadStringCompletedEventHandler(checker_DownloadStringCompleted);
         }
@@ -107,7 +107,7 @@ namespace Growl.AutoUpdate
                 info.SetupFile = Path.Combine(updateTempFolder, "setup.exe");
                 info.Folder = updateTempFolder;
 
-                WebClient downloader = new WebClient();
+                WebClientEx downloader = new WebClientEx();
                 using (downloader)
                 {
                     downloader.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");

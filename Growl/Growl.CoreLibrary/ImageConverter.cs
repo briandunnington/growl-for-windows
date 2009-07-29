@@ -90,7 +90,7 @@ namespace Growl.CoreLibrary
                     }
                     else
                     {
-                        System.Net.WebClient wc = new System.Net.WebClient();
+                        System.Net.WebClient wc = new System.Net.WebClient();   // TODO: consider changing this to WebClientEx
                         using (wc)
                         {
                             byte[] bytes = wc.DownloadData(uri);

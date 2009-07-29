@@ -16,7 +16,7 @@ namespace Growl.Installation
         private const string USER_AGENT = "Growl for Windows - Display AutoInstaller";
         private const string TEMP_FOLDER = "__temp";
 
-        private WebClient wc;
+        private WebClientEx wc;
         private string uri;
         private bool appIsAlreadyRunning;
         private string tempFolder;
@@ -49,7 +49,7 @@ namespace Growl.Installation
 
             try
             {
-                this.wc = new WebClient();
+                this.wc = new WebClientEx();
                 wc.Headers.Add("User-Agent", USER_AGENT);
 
                 string definition = wc.DownloadString(this.uri);

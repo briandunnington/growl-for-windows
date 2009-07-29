@@ -41,7 +41,7 @@ namespace Test_App
 
 
             Growl.CoreLibrary.Detector detector = new Detector();
-            if (detector.IsAvailable)
+            if (detector.IsInstalled)
             {
                 InvokeWrite(String.Format("Growl (v{0}; f{1}; a{2}) is installed at {3} ({4})", detector.FileVersion.ProductVersion, detector.FileVersion.FileVersion, detector.AssemblyVersion.ToString(), detector.InstallationFolder, detector.DisplaysFolder));
             }
@@ -128,10 +128,10 @@ namespace Test_App
             callback.Data = "context-data";
             callback.Type = "string";
             UrlCallbackTarget target = new UrlCallbackTarget();
-            target.Method = "POST";
+            target.Method = "GET";
             //target.Method = "APP";
-            target.Url = "http://localhost/growl-callback.aspx";
-            //target.Url = "itpc:http://www.npr.org/rss/podcast.php?id=35";
+            //target.Url = "http://localhost/growl-callback.aspx";
+            target.Url = "itpc:http://www.npr.org/rss/podcast.php?id=35";
             //target.Url = "mailto:brian@elementcodeproject.com";
             //target.Url = "itms:music fake";
             //target.Url = "delete";

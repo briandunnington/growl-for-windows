@@ -796,6 +796,10 @@ namespace Growl
         {
             Properties.Settings.Default.AllowForwarding = this.checkBoxEnableForwarding.Checked;
             Properties.Settings.Default.Save();
+
+            this.forwardListView.AllDisabled = !Properties.Settings.Default.AllowForwarding;
+            this.forwardListView.Refresh();
+
             //this.forwardListView.SelectedIndices.Clear();
             //this.forwardListView.Enabled = this.checkBoxEnableForwarding.Checked;
             //this.buttonAddComputer.Enabled = this.checkBoxEnableForwarding.Checked;
@@ -1059,13 +1063,20 @@ namespace Growl
         {
             Properties.Settings.Default.EnableSubscriptions = this.checkBoxEnableSubscriptions.Checked;
             Properties.Settings.Default.Save();
-            //this.subscribedListView.SelectedIndices.Clear();
-            //this.subscribedListView.Enabled = this.checkBoxEnableSubscriptions.Checked;
-            //this.buttonSubscribe.Enabled = this.checkBoxEnableSubscriptions.Checked;
-            this.buttonUnsubscribe.Enabled = false;
+
             foreach (Subscription subscription in this.controller.Subscriptions.Values)
             {
                 subscription.Allowed = this.checkBoxEnableSubscriptions.Checked;
+            }
+
+            this.subscribedListView.AllDisabled = !Properties.Settings.Default.EnableSubscriptions;
+            this.subscribedListView.Refresh();
+
+            if (!this.checkBoxEnableSubscriptions.Checked)
+                this.buttonUnsubscribe.Enabled = false;
+            else
+            {
+                if (this.subscribedListView.SelectedIndices != null && this.subscribedListView.SelectedIndices.Count > 0) this.buttonUnsubscribe.Enabled = true;
             }
         }
 

@@ -12,16 +12,26 @@ namespace Growl.UI
     {
         private bool doValidation;
         private Color highlightColor = Color.FromArgb(254, 250, 184);
+        private SMTPConfiguration smtp = SMTPConfiguration.Local;
 
         public EmailForwardInputs()
         {
             InitializeComponent();
 
             // localize text
-            this.labelDescription.Text = Properties.Resources.AddProwl_NameLabel;
-            this.labelEmail.Text = Properties.Resources.AddProwl_APIKeyLabel;
-            this.labelSMTPSettings.Text = Properties.Resources.AddProwl_APIKeyLabel;
-            this.labelMinimumPriority.Text = Properties.Resources.AddProwl_MinimumPriorityLabel;
+            this.labelDescription.Text = Properties.Resources.AddEmail_NameLabel;
+            this.labelEmail.Text = Properties.Resources.AddEmail_EmailAddressLabel;
+            this.labelSMTPSettings.Text = Properties.Resources.AddEmail_SMTPSettingsLabel;
+            this.labelMinimumPriority.Text = Properties.Resources.AddEmail_MinimumPriorityLabel;
+            this.checkBoxOnlyWhenIdle.Text = Properties.Resources.AddEmail_OnlyWhenIdle;
+            this.linkLabelEditSMTPValues.Text = Properties.Resources.AddEmail_EditSMTP;
+            this.labelSMTPServer.Text = Properties.Resources.AddEmail_SMTPServerLabel;
+            this.labelSMTPPort.Text = Properties.Resources.AddEmail_SMTPPortLabel;
+            this.checkBoxSMTPUseAuthentication.Text = Properties.Resources.AddEmail_SMTPUseAuthentication;
+            this.checkBoxSMTPUseSSL.Text = Properties.Resources.AddEmail_SMTPUseSSL;
+            this.labelSMTPUsername.Text = Properties.Resources.AddEmail_SMTPUsernameLabel;
+            this.labelSMTPPassword.Text = Properties.Resources.AddEmail_SMTPPasswordLabel;
+            this.linkLabelSMTPDone.Text = Properties.Resources.AddEmail_SMTPDone;
         }
 
         private void textBoxDescription_TextChanged(object sender, EventArgs e)
@@ -38,6 +48,7 @@ namespace Growl.UI
         {
             this.doValidation = true;
 
+            this.panelSMTPSettings.Visible = false;
             this.textBoxDescription.HighlightColor = highlightColor;
             this.textBoxUsername.HighlightColor = highlightColor;
 
@@ -65,10 +76,13 @@ namespace Growl.UI
                 if (efd.MinimumPriority != null && efd.MinimumPriority.HasValue)
                     this.comboBoxMinimumPriority.SelectedItem = PrefPriority.GetByValue(efd.MinimumPriority.Value);
                 this.checkBoxOnlyWhenIdle.Checked = efd.OnlyWhenIdle;
-                // TODO: SMTP settings
+                this.smtp = efd.SMTPConfiguration;
             }
+            this.labelSMTPValues.Text = String.Format("{0}", this.smtp.Host);
 
             ValidateInputs();
+
+            this.textBoxDescription.Focus();
         }
 
         public override ForwardDestination Create()
@@ -76,7 +90,8 @@ namespace Growl.UI
             Growl.Connector.Priority? priority = null;
             PrefPriority prefPriority = this.comboBoxMinimumPriority.SelectedItem as PrefPriority;
             if (prefPriority != null) priority = prefPriority.Priority.Value;
-            EmailForwardDestination efd = new EmailForwardDestination(this.textBoxDescription.Text, true, this.textBoxUsername.Text, null, priority, this.checkBoxOnlyWhenIdle.Checked);
+
+            EmailForwardDestination efd = new EmailForwardDestination(this.textBoxDescription.Text, true, this.textBoxUsername.Text, this.smtp, priority, this.checkBoxOnlyWhenIdle.Checked);
             return efd;
         }
 
@@ -90,17 +105,7 @@ namespace Growl.UI
                 efd.OnlyWhenIdle = this.checkBoxOnlyWhenIdle.Checked;
                 PrefPriority prefPriority = this.comboBoxMinimumPriority.SelectedItem as PrefPriority;
                 efd.MinimumPriority = (prefPriority != null ? prefPriority.Priority : null);
-
-                /* // TODO:
-                SMTPConfiguration smtpConfig = new SMTPConfiguration();
-                smtpConfig.Host;
-                smtpConfig.Port;
-                smtpConfig.Username;
-                smtpConfig.Password;
-                smtpConfig.UseAuthentication;
-                smtpConfig.UseSSL;
-                efd.SMTPConfiguration = smtpConfig;
-                 * */
+                efd.SMTPConfiguration = this.smtp;
             }
         }
 
@@ -130,6 +135,40 @@ namespace Growl.UI
                 }
             }
             OnValidChanged(valid);
+        }
+
+        private void linkLabelEditSMTPValues_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.textBoxSMTPServer.Text = this.smtp.Host;
+            this.textBoxSMTPPort.Text = this.smtp.Port.ToString();
+            this.checkBoxSMTPUseAuthentication.Checked = this.smtp.UseAuthentication;
+            this.checkBoxSMTPUseSSL.Checked = this.smtp.UseSSL;
+            this.textBoxSMTPUsername.Text = this.smtp.Username;
+            this.textBoxSMTPPassword.Text = this.smtp.Password;
+            this.textBoxSMTPUsername.Enabled = this.smtp.UseAuthentication;
+            this.textBoxSMTPPassword.Enabled = this.smtp.UseAuthentication;
+
+            this.panelSMTPSettings.Visible = true;
+        }
+
+        private void linkLabelSMTPDone_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.smtp.Host = this.textBoxSMTPServer.Text;
+            this.smtp.Port = Convert.ToInt32(this.textBoxSMTPPort.Text);
+            this.smtp.UseAuthentication = this.checkBoxSMTPUseAuthentication.Checked;
+            this.smtp.UseSSL = this.checkBoxSMTPUseSSL.Checked;
+            this.smtp.Username = this.textBoxSMTPUsername.Text;
+            this.smtp.Password = this.textBoxSMTPPassword.Text;
+
+            this.labelSMTPValues.Text = String.Format("{0}", this.smtp.Host);
+            this.panelSMTPSettings.Visible = false;
+        }
+
+        private void checkBoxSMTPUseAuthentication_CheckedChanged(object sender, EventArgs e)
+        {
+            this.smtp.UseAuthentication = this.checkBoxSMTPUseAuthentication.Checked;
+            this.textBoxSMTPUsername.Enabled = this.smtp.UseAuthentication;
+            this.textBoxSMTPPassword.Enabled = this.smtp.UseAuthentication;
         }
     }
 }

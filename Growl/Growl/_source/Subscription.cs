@@ -33,9 +33,10 @@ namespace Growl
         [NonSerialized]
         private bool disposed;
 
-        public Subscription(string name, bool enabled, string ipAddress, int port, string password)
+        public Subscription(string name, bool enabled, string ipAddress, int port, string password, bool allowed)
             : base(name, enabled, ipAddress, port, password)
         {
+            this.allowed = allowed;
             Subscribe();
         }
 
@@ -106,18 +107,21 @@ namespace Growl
 
         private void Subscribe()
         {
-            EnsureTimer();
-            StopRetryTimer();
+            if (this.Allowed)
+            {
+                EnsureTimer();
+                StopRetryTimer();
 
-            if (this.subscriberID == null) this.subscriberID = Growl.Daemon.Subscriber.GenerateID();
-            this.AdditionalOfflineDisplayInfo = "connecting...";
-            if (this.sc != null) this.sc = null;
-            Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, Environment.MachineName, Growl.Connector.GrowlConnector.TCP_PORT);
-            this.sc = new Growl.Daemon.SubscriptionConnector(subscriber, this.Password, this.IPAddress, this.Port);
-            this.sc.EncryptionAlgorithm = Growl.Connector.Cryptography.SymmetricAlgorithmType.PlainText;
-            this.sc.OKResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_OKResponse);
-            this.sc.ErrorResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_ErrorResponse);
-            this.sc.Subscribe();
+                if (this.subscriberID == null) this.subscriberID = Growl.Daemon.Subscriber.GenerateID();
+                this.AdditionalOfflineDisplayInfo = "connecting...";
+                if (this.sc != null) this.sc = null;
+                Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, Environment.MachineName, Growl.Connector.GrowlConnector.TCP_PORT);
+                this.sc = new Growl.Daemon.SubscriptionConnector(subscriber, this.Password, this.IPAddress, this.Port);
+                this.sc.EncryptionAlgorithm = Growl.Connector.Cryptography.SymmetricAlgorithmType.PlainText;
+                this.sc.OKResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_OKResponse);
+                this.sc.ErrorResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_ErrorResponse);
+                this.sc.Subscribe();
+            }
         }
 
         internal void Kill()
@@ -133,9 +137,12 @@ namespace Growl
 
         void sc_OKResponse(Growl.Daemon.SubscriptionResponse response)
         {
+            if (this.Enabled)
+            {
+                this.AdditionalOfflineDisplayInfo = null;
+                this.AdditionalOnlineDisplayInfo = String.Format("TTL: {0}", response.TTL);
+            }
             this.Platform = ForwardDestinationPlatformType.FromString(response.PlatformName);
-            this.AdditionalOfflineDisplayInfo = null;
-            this.AdditionalOnlineDisplayInfo = String.Format("TTL: {0}", response.TTL);
             this.available = true;
             OnStatusChanged();
 
@@ -144,8 +151,11 @@ namespace Growl
 
         void sc_ErrorResponse(Growl.Daemon.SubscriptionResponse response)
         {
-            this.AdditionalOfflineDisplayInfo = (response.ErrorCode == Growl.Connector.ErrorCode.NOT_AUTHORIZED ? "invalid password" : "server unavailable");
-            this.AdditionalOnlineDisplayInfo = null;
+            if (this.Enabled)
+            {
+                this.AdditionalOfflineDisplayInfo = (response.ErrorCode == Growl.Connector.ErrorCode.NOT_AUTHORIZED ? "invalid password" : "server unavailable");
+                this.AdditionalOnlineDisplayInfo = null;
+            }
             this.available = false;
             OnStatusChanged();
 

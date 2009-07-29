@@ -1,3 +1,17 @@
+Beta 19 changes
+------------------------------
+- added email forwarding option
+- updated url callback handling to be compatible with current GNTP spec (open url using GET, no notification data appeneded, on click only)
+- improved Prowl and Twitter forwarding mechanism to be more robust
+- fixed a bug that caused Growl to never consider you idle if your preference was set over 59 seconds
+- fixed a bug that caused disabled forwarding entries to sometimes show as enabled (but still act disabled)
+- fixed a bug that caused per-notification forwarding preferences to overwrite the default forwarding preferences
+- fixed a bug that caused Prowl notifications to infrequently be dropped
+- fixed a bug related to display SettingsPanel being instantiated twice
+- fixed some bugs related to disabled subscriptions
+- updated growlnotify to allow registering multiple notification types
+- added HTTP Monitoring to System Monitor
+
 Beta 18 changes
 ------------------------------
 - fixed a bug in Detector.DetectIfGrowlIsRunning() that could cause a crash

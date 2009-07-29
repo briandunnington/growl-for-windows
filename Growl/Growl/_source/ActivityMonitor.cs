@@ -202,7 +202,7 @@ namespace Growl
             int lastInputAt = GetIdleTime();
             int diff = Environment.TickCount - lastInputAt;
             TimeSpan idleFor = new TimeSpan(0, 0, 0, 0, diff);
-            int idleForSeconds = idleFor.Seconds;
+            int idleForSeconds = Convert.ToInt32(idleFor.TotalSeconds);
 
             if (this.IsIdle)
             {

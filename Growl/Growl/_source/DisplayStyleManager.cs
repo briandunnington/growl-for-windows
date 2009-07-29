@@ -49,42 +49,64 @@ namespace Growl
 
         public static void Load(string path)
         {
-            DirectoryInfo directory = new DirectoryInfo(path);
-
-            DisplayLoader displayLoader = new DisplayLoader(directory.FullName);
-            if (displayLoader.ContainsValidModule)
+            try
             {
-                LoadedDisplayStyle loadedDisplayStyle = new LoadedDisplayStyle(displayLoader);
+                DirectoryInfo directory = new DirectoryInfo(path);
 
-                OnDisplayLoaded(loadedDisplayStyle.FriendlyName);
-
-                loadedDisplayStyle.SetGrowlApplicationPath(Application.StartupPath);
-                loadedDisplayStyle.SetDisplayStylePath(directory.FullName);
-                loadedDisplayStyle.Load();
-                currentlyLoadedDisplayStyles.Add(directory.FullName, loadedDisplayStyle);
-
-                Assembly a = Assembly.LoadFrom(displayLoader.SettingsPanelAssemblyLocation);
-                object x = a.CreateInstance(displayLoader.SettingsPanelTypeName);
-
-                SettingsPanelBase settingsPanel = x as SettingsPanelBase;
-                if (settingsPanel != null)
+                DisplayLoader displayLoader = new DisplayLoader(directory.FullName);
+                if (displayLoader.ContainsValidModule)
                 {
-                    settingsPanels.Add(directory.FullName, settingsPanel);
-                    settingsPanel.SetDirectories(directory.FullName, Utility.GetDisplayUserSettingsFolder(directory.Name));
-                    loadedDisplayStyle.Display.SettingsCollection = settingsPanel.GetSettings();
+                    LoadedDisplayStyle loadedDisplayStyle = new LoadedDisplayStyle(displayLoader);
+
+                    OnDisplayLoaded(loadedDisplayStyle.FriendlyName);
+
+                    loadedDisplayStyle.SetGrowlApplicationPath(Application.StartupPath);
+                    loadedDisplayStyle.SetDisplayStylePath(directory.FullName);
+                    loadedDisplayStyle.Load();
+                    currentlyLoadedDisplayStyles.Add(directory.FullName, loadedDisplayStyle);
+
+                    if (loadedDisplayStyle.Display.SettingsPanel != null)
+                    {
+                        settingsPanels.Add(directory.FullName, loadedDisplayStyle.Display.SettingsPanel);
+                        loadedDisplayStyle.Display.SettingsPanel.SetDirectories(directory.FullName, Utility.GetDisplayUserSettingsFolder(directory.Name));
+                        loadedDisplayStyle.Display.SettingsCollection = loadedDisplayStyle.Display.SettingsPanel.GetSettings();
+                    }
+
+                    /* REMOVED 07.23.2009 - this was left over from when displays were loaded into separate AppDomains
+                    Assembly a = Assembly.LoadFrom(displayLoader.SettingsPanelAssemblyLocation);
+                    object x = a.CreateInstance(displayLoader.SettingsPanelTypeName);
+
+                    SettingsPanelBase settingsPanel = x as SettingsPanelBase;
+                    if (settingsPanel != null)
+                    {
+                        settingsPanels.Add(directory.FullName, settingsPanel);
+                        settingsPanel.SetDirectories(directory.FullName, Utility.GetDisplayUserSettingsFolder(directory.Name));
+                        loadedDisplayStyle.Display.SettingsCollection = settingsPanel.GetSettings();
+                    }
+                     * */
+
+                    Utility.WriteDebugInfo(String.Format("Display at '{0}' was loaded successfully", path));
+
+                    // now that the display has been loaded, add it (and any subdisplays) the the list of available displays
+                    string[] displays = loadedDisplayStyle.Display.GetListOfAvailableDisplays();
+                    foreach (string name in displays)
+                    {
+                        Growl.Display display = new Growl.Display(name, loadedDisplayStyle.Display);
+                        availableDisplays.Add(name, display);
+
+                        Utility.WriteDebugInfo(String.Format("Display at '{0}' handles the '{1}' display style", path, name));
+                    }
                 }
-
-                // now that the display has been loaded, add it (and any subdisplays) the the list of available displays
-                string[] displays = loadedDisplayStyle.Display.GetListOfAvailableDisplays();
-                foreach (string name in displays)
+                else
                 {
-                    Growl.Display display = new Growl.Display(name, loadedDisplayStyle.Display);
-                    availableDisplays.Add(name, display);
+                    // display plugin was not valid OR this was just a settings-only folder for a built-in display
+                    Utility.WriteDebugInfo(String.Format("Display not loaded: '{0}' - Does not implement IDisplay interface or the folder contains settings only", path));
                 }
             }
-            else
+            catch (Exception ex)
             {
-                // display plugin was not valid
+                // suppress any per-display loading exceptions
+                Utility.WriteDebugInfo(String.Format("Display failed to load: '{0}' - {1} - {2}", path, ex.Message, ex.StackTrace));
             }
         }
 

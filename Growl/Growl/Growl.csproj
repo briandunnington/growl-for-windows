@@ -332,6 +332,9 @@
     <Compile Include="_source\UDPForwardDestinationHandler.cs" />
     <Compile Include="_source\UserSettingsProvider.cs" />
     <Compile Include="_source\Utility.cs" />
+    <Compile Include="_source\WebClientEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Config.png" />

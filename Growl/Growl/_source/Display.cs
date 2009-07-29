@@ -85,9 +85,10 @@ namespace Growl
                     this.notificationsAwaitingCallback.Add(notification.UUID, cbInfo);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 // suppress any exceptions here (in case the display fails for some reason)
+                Utility.WriteDebugInfo(String.Format("Display failed to process notification: '{0}' - {1}", ex.Message, ex.StackTrace));
             }
         }
 

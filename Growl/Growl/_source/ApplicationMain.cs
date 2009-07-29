@@ -62,7 +62,7 @@ namespace Growl
                             string debug = parameters["/debug"].Value.ToLower();
                             if (debug == "true") debugMode = true;
                             Utility.DebugMode = debugMode;
-                            MessageBox.Show("growl is now in debug mode");
+                            if(debugMode) MessageBox.Show("growl is now in debug mode");
                         }
 
                         program = new Program();
@@ -136,11 +136,15 @@ namespace Growl
         {
             if (argument.StartsWith("/"))
             {
+                string val = "";
                 string[] parts = argument.Split(new char[] { ':' }, 2);
-                string val = parts[1];
-                if (val.StartsWith("\"") && val.EndsWith("\""))
+                if (parts.Length == 2)
                 {
-                    val = val.Substring(1, val.Length - 2);
+                    val = parts[1];
+                    if (val.StartsWith("\"") && val.EndsWith("\""))
+                    {
+                        val = val.Substring(1, val.Length - 2);
+                    }
                 }
                 return new Parameter(parts[0], val);
             }

@@ -31,6 +31,7 @@ namespace Growl
 
             this.BackColor = Color.FromArgb(240, 240, 240);
 
+            this.forwardListView1.AllDisabled = false;
             if (this.controller != null && this.prefs != null)
             {
                 if (this.controller.ForwardDestinations != null && this.controller.ForwardDestinations.Count > 0)
@@ -38,9 +39,10 @@ namespace Growl
                     Dictionary<string, ForwardDestination> computers = new Dictionary<string,ForwardDestination>();
                     foreach (ForwardDestination fc in this.controller.ForwardDestinations.Values)
                     {
-                        bool enabled = this.prefs.PrefForwardCustomList.Contains(fc.Description);
+                        bool enabled = this.prefs.PrefForwardCustomList.Contains(fc.Key);
                         ForwardDestination clone = fc.Clone();
-                        fc.Enabled = enabled;
+                        clone.Key = fc.Key;
+                        clone.Enabled = enabled;
                         computers.Add(clone.Description, clone);
                     }
                     this.forwardListView1.Computers = computers;
@@ -80,7 +82,7 @@ namespace Growl
             List<string> computers = new List<string>();
             foreach (ForwardDestination fc in this.forwardListView1.Computers.Values)
             {
-                if (fc.Enabled) computers.Add(fc.Description);
+                if (fc.Enabled) computers.Add(fc.Key);
             }
             this.prefs.PrefForwardCustomList = computers;
 

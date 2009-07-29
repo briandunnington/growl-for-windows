@@ -14,6 +14,7 @@ namespace Growl.UI
 
         private ImageList imageList;
         private Dictionary<string, ForwardDestination> computers;
+        private bool allDisabled = true;
 
         public ForwardListView()
         {
@@ -33,6 +34,8 @@ namespace Growl.UI
             this.imageList.Images.Add(ForwardDestinationPlatformType.Email.Name, ForwardDestinationPlatformType.Email.Icon);
             this.imageList.Images.Add(ForwardDestinationPlatformType.Twitter.Name, ForwardDestinationPlatformType.Twitter.Icon);
             this.imageList.Images.Add(ForwardDestinationPlatformType.Other.Name, ForwardDestinationPlatformType.Other.Icon);
+
+            this.HoverSelection = false;
 
             this.OwnerDraw = true;
             this.DoubleBuffered = true;
@@ -60,15 +63,18 @@ namespace Growl.UI
 
         void ForwardListView_MouseClick(object sender, MouseEventArgs e)
         {
-            ListViewHitTestInfo info = this.HitTest(e.Location);
-            if (info.Item != null)
+            if (e.Button == MouseButtons.Left)
             {
-                int y = info.Item.Bounds.Y + CHECKBOX_PADDING;
-                if (e.X > CHECKBOX_PADDING && e.X < (CHECKBOX_PADDING + CHECKBOX_SIZE) && e.Y > y && e.Y < (y + CHECKBOX_SIZE))
+                ListViewHitTestInfo info = this.HitTest(e.Location);
+                if (info.Item != null)
                 {
-                    info.Item.Checked = !info.Item.Checked;
-                    ForwardDestination fc = (ForwardDestination)info.Item.Tag;
-                    fc.Enabled = info.Item.Checked;
+                    int y = info.Item.Bounds.Y + CHECKBOX_PADDING;
+                    if (e.X > CHECKBOX_PADDING && e.X < (CHECKBOX_PADDING + CHECKBOX_SIZE) && e.Y > y && e.Y < (y + CHECKBOX_SIZE))
+                    {
+                        ForwardDestination fc = (ForwardDestination)info.Item.Tag;
+                        fc.Enabled = !fc.Enabled;
+                        this.Refresh();
+                    }
                 }
             }
         }
@@ -80,7 +86,6 @@ namespace Growl.UI
                 int checkBoxAreaWidth = CHECKBOX_PADDING + CHECKBOX_SIZE + CHECKBOX_PADDING;
                 System.Drawing.Rectangle bounds = new System.Drawing.Rectangle(e.Bounds.X + checkBoxAreaWidth, e.Bounds.Top, e.Bounds.Width - checkBoxAreaWidth, e.Bounds.Height);
 
-
                 // update information
                 ForwardDestination fc = (ForwardDestination)e.Item.Tag;
                 string display = Escape(fc.Display);
@@ -89,8 +94,10 @@ namespace Growl.UI
                 e.Item.ToolTipText = tooltip;
                 // NOTE: dont set the .Text or .SubItem properties here - it causes an erratic exception
 
-                // draw the background and focus rectangle for selected and non-selected states
-                if (this.Enabled)
+                bool drawEnabled = ShouldDrawEnabled(fc);
+
+                // draw the background for selected states
+                if(drawEnabled)
                 {
                     e.DrawBackground();
                     if ((e.State & ListViewItemStates.Selected) != 0)
@@ -105,13 +112,11 @@ namespace Growl.UI
                             e.Graphics.FillRectangle(backBrush, bounds);
                         }
                     }
-                    if (e.Item.Selected)
-                        ControlPaint.DrawFocusRectangle(e.Graphics, bounds);
                 }
-                else
-                {
 
-                }
+                // draw the focus rectangle
+                if (e.Item.Selected)
+                    ControlPaint.DrawFocusRectangle(e.Graphics, bounds);
 
                 // draw icon
                 int newX = bounds.X;
@@ -121,7 +126,7 @@ namespace Growl.UI
                 {
                     int x = bounds.X;
                     int y = bounds.Top;
-                    if (this.Enabled && e.Item.Checked)
+                    if(drawEnabled)
                         e.Graphics.DrawImage(img, x, y);
                     else
                         ControlPaint.DrawImageDisabled(e.Graphics, img, x, y, System.Drawing.Color.Transparent);
@@ -130,7 +135,7 @@ namespace Growl.UI
                 }
 
                 // draw main text
-                System.Drawing.Color textColor = (this.Enabled && e.Item.Checked ? e.Item.ForeColor : System.Drawing.Color.FromArgb(System.Drawing.SystemColors.GrayText.ToArgb()));
+                System.Drawing.Color textColor = (drawEnabled ? e.Item.ForeColor : System.Drawing.Color.FromArgb(System.Drawing.SystemColors.GrayText.ToArgb()));
                 System.Drawing.RectangleF rect = new System.Drawing.RectangleF(newX, bounds.Top, bounds.Right - newX, e.Item.Font.Height);
                 System.Drawing.StringFormat sf = new System.Drawing.StringFormat();
                 sf.Trimming = System.Drawing.StringTrimming.EllipsisCharacter;
@@ -166,25 +171,27 @@ namespace Growl.UI
 
                 // draw checkbox
                 System.Windows.Forms.VisualStyles.CheckBoxState state = System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedNormal;
-                if (this.Enabled)
-                {
-                    if (e.Item.Checked)
-                        state = System.Windows.Forms.VisualStyles.CheckBoxState.CheckedNormal;
-                    else
-                        state = System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedNormal;
-                }
+                if (fc.Enabled)
+                    state = System.Windows.Forms.VisualStyles.CheckBoxState.CheckedNormal;
                 else
-                {
-                    if (e.Item.Checked)
-                        state = System.Windows.Forms.VisualStyles.CheckBoxState.CheckedDisabled;
-                    else
-                        state = System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedDisabled;
-                }
+                    state = System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedNormal;
                 CheckBoxRenderer.DrawCheckBox(e.Graphics, new System.Drawing.Point(e.Bounds.Left + CHECKBOX_PADDING, e.Bounds.Top + CHECKBOX_PADDING), state);
             }
             else
             {
                 e.DrawDefault = true;
+            }
+        }
+
+        public bool AllDisabled
+        {
+            get
+            {
+                return this.allDisabled;
+            }
+            set
+            {
+                this.allDisabled = value;
             }
         }
 
@@ -242,9 +249,16 @@ namespace Growl.UI
             string[] items = new string[] { display, address };
             ListViewItem lvi = new ListViewItem(items, fc.Platform.Name);
             lvi.ToolTipText = tooltip;
-            lvi.Checked = fc.Enabled;
             lvi.Tag = fc;
             this.Items.Add(lvi);
+        }
+
+        private bool ShouldDrawEnabled(ForwardDestination fd)
+        {
+            if (!this.allDisabled && fd.Enabled)
+                return true;
+            else
+                return false;
         }
 
         private static string Escape(string input)

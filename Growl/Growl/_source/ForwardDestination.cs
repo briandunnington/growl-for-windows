@@ -36,6 +36,10 @@ namespace Growl
                 if (String.IsNullOrEmpty(this.key)) this.key = System.Guid.NewGuid().ToString();
                 return this.key;
             }
+            set
+            {
+                this.key = value;
+            }
         }
 
         public virtual string Description

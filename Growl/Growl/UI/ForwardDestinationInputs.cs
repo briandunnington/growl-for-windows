@@ -80,6 +80,7 @@ namespace Growl.UI
                 this.textBoxPort.Enabled = false;
                 this.comboBoxFormat.SelectedIndex = 0;
                 this.comboBoxFormat.Enabled = false;
+                this.textBoxPassword.Focus();
             }
             else
             {
@@ -91,6 +92,7 @@ namespace Growl.UI
                 this.textBoxPort.Enabled = true;
                 this.comboBoxFormat.SelectedIndex = 0;
                 this.comboBoxFormat.Enabled = true;
+                this.textBoxDescription.Focus();
             }
 
             // edits
@@ -125,6 +127,7 @@ namespace Growl.UI
                     this.textBoxDescription.Enabled = false;
                     this.textBoxAddress.Enabled = false;
                     this.textBoxPort.Enabled = false;
+                    this.textBoxPassword.Focus();
                 }
                 UDPForwardDestination udp = fd as UDPForwardDestination;
                 if (udp != null)
@@ -150,7 +153,7 @@ namespace Growl.UI
             ForwardDestination fc = null;
             if (this.isSubscription)
             {
-                Subscription subscription = new Subscription(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
+                Subscription subscription = new Subscription(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text, Properties.Settings.Default.EnableSubscriptions);
                 fc = subscription;
             }
             else

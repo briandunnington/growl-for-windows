@@ -98,13 +98,23 @@ namespace Growl
 
         public static void WriteDebugInfo(string info)
         {
-            string debugFile = System.IO.Path.Combine(UserSettingFolder, "debug.txt");
-            lock (debugLock)
+            bool ok = DebugMode;
+
+// always write debug info in debug builds
+#if (DEBUG)
+            ok = true;
+#endif
+
+            if (ok)
             {
-                System.IO.StreamWriter w = System.IO.File.AppendText(debugFile);
-                using (w)
+                string debugFile = System.IO.Path.Combine(UserSettingFolder, "debug.txt");
+                lock (debugLock)
                 {
-                    w.WriteLine("{0} {1}", DateTime.Now, info);
+                    System.IO.StreamWriter w = System.IO.File.AppendText(debugFile);
+                    using (w)
+                    {
+                        w.WriteLine("{0} {1}", DateTime.Now, info);
+                    }
                 }
             }
         }

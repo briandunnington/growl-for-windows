@@ -86,7 +86,7 @@ namespace Growl.UI
             this.textBoxFormat.Name = "textBoxFormat";
             this.textBoxFormat.Size = new System.Drawing.Size(199, 20);
             this.textBoxFormat.TabIndex = 1;
-            this.textBoxFormat.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
+            this.textBoxFormat.TextChanged += new System.EventHandler(this.textBoxFormat_TextChanged);
             // 
             // labelFormat
             // 

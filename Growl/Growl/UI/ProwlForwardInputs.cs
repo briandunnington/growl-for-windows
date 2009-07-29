@@ -68,6 +68,8 @@ namespace Growl.UI
             }
 
             ValidateInputs();
+
+            this.textBoxDescription.Focus();
         }
 
         public override ForwardDestination Create()

@@ -229,6 +229,132 @@ namespace Growl.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [Any Priority].
         /// </summary>
+        internal static string AddEmail_AnyPriority {
+            get {
+                return ResourceManager.GetString("AddEmail_AnyPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to edit.
+        /// </summary>
+        internal static string AddEmail_EditSMTP {
+            get {
+                return ResourceManager.GetString("AddEmail_EditSMTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Address:.
+        /// </summary>
+        internal static string AddEmail_EmailAddressLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_EmailAddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only forward when priority is at least:.
+        /// </summary>
+        internal static string AddEmail_MinimumPriorityLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_MinimumPriorityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string AddEmail_NameLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only forward when idle or away.
+        /// </summary>
+        internal static string AddEmail_OnlyWhenIdle {
+            get {
+                return ResourceManager.GetString("AddEmail_OnlyWhenIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to done.
+        /// </summary>
+        internal static string AddEmail_SMTPDone {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        internal static string AddEmail_SMTPPasswordLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPPasswordLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port:.
+        /// </summary>
+        internal static string AddEmail_SMTPPortLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPPortLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server:.
+        /// </summary>
+        internal static string AddEmail_SMTPServerLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPServerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMTP Settings:.
+        /// </summary>
+        internal static string AddEmail_SMTPSettingsLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPSettingsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Authentication.
+        /// </summary>
+        internal static string AddEmail_SMTPUseAuthentication {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPUseAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username:.
+        /// </summary>
+        internal static string AddEmail_SMTPUsernameLabel {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPUsernameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use SSL.
+        /// </summary>
+        internal static string AddEmail_SMTPUseSSL {
+            get {
+                return ResourceManager.GetString("AddEmail_SMTPUseSSL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Any Priority].
+        /// </summary>
         internal static string AddProwl_AnyPriority {
             get {
                 return ResourceManager.GetString("AddProwl_AnyPriority", resourceCulture);

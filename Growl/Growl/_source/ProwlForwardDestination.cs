@@ -10,9 +10,6 @@ namespace Growl
     {
         private const string URL = "https://prowl.weks.net/publicapi/add";
 
-        [NonSerialized]
-        private Dictionary<string, WebClient> busyWebClients;
-
         private string apiKey;
         private Growl.Connector.Priority? minimumPriority = null;
         private bool onlyWhenIdle;
@@ -95,6 +92,8 @@ namespace Growl
         {
             // IGNORE REGISTRATION NOTIFICATIONS (since we have no way of filtering out already-registered apps at this point)
             //Send(application.Name, Properties.Resources.SystemNotification_AppRegistered_Title, String.Format(Properties.Resources.SystemNotification_AppRegistered_Text, application.Name));
+
+            requestInfo.SaveHandlingInfo("Forwarding to Prowl cancelled - Application Registrations are not forwarded.");
         }
 
         internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
@@ -103,106 +102,104 @@ namespace Growl
 
             // if a minimum priority is set, check that
             if (this.MinimumPriority != null && this.MinimumPriority.HasValue && notification.Priority < this.MinimumPriority.Value)
+            {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarding to Prowl ({0}) cancelled - Notification priority must be at least '{1}' (was actually '{2}').", this.Description, this.MinimumPriority.Value.ToString(), notification.Priority.ToString()));
                 send = false;
+            }
 
             // if only sending when idle, check that
-            if (this.OnlyWhenIdle && !isIdle)
+            if (send && this.OnlyWhenIdle && !isIdle)
+            {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarding to Prowl ({0}) cancelled - Currently only configured to forward when idle", this.Description));
                 send = false;
+            }
 
             if (send)
             {
                 string text = notification.Text;
-                /* THIS IS NOT READY YET 
-                 * this appends the url from a url callback to the Prowl message (if specified)
-                 * this allows the user to click the url right from their Prowl app
-                 *
+
+                /* NOT YET
+                // this appends the url from a url callback to the Prowl message (if specified)
+                // this allows the user to click the url right from their Prowl app
                 if (callbackInfo != null && callbackInfo.Context != null)
                 {
                     Growl.Connector.UrlCallbackTarget target = callbackInfo.Context.GetUrlCallbackTarget();
-                    if (!String.IsNullOrEmpty(target.Url))
+                    if (target != null && !String.IsNullOrEmpty(target.Url))
                     {
-                        string data = callbackInfo.GetUrlCallbackData(Growl.CoreLibrary.CallbackResult.CLICK);
-                        System.UriBuilder ub = new UriBuilder(target.Url);
-                        if (ub.Query != null && ub.Query.Length > 1)
-                            ub.Query = ub.Query.Substring(1) + "&" + data;
-                        else
-                            ub.Query = data;
-                        text += String.Format(" - {0}", ub.Uri.AbsoluteUri);
+                        text += String.Format(" - {0}", target.Url);
                     }
                 }
                  * */
+
                 Send(notification.ApplicationName, notification.Title, text, notification.Priority);
             }
         }
 
         private void Send(string applicationName, string title, string text, Growl.Connector.Priority priority)
         {
+            // data
+            System.Collections.Specialized.NameValueCollection data = new System.Collections.Specialized.NameValueCollection();
+            data.Add("apikey", this.APIKey);
+            //data.Add("providerkey", "");
+            data.Add("priority", ((int)priority).ToString());
+            data.Add("application", applicationName);
+            data.Add("event", title);
+            data.Add("description", text);
+
+            // send async (using threads instead of async WebClient methods since they seem to have a bug with KeepAlives in infrequent cases)
+            System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(SendAsync), data);
+        }
+
+        private void SendAsync(object state)
+        {
             try
             {
                 // data
-                System.Collections.Specialized.NameValueCollection data = new System.Collections.Specialized.NameValueCollection();
-                data.Add("apikey", this.APIKey);
-                //data.Add("providerkey", "");
-                data.Add("priority", ((int) priority).ToString());
-                data.Add("application", applicationName);
-                data.Add("event", title);
-                data.Add("description", text);
+                System.Collections.Specialized.NameValueCollection data = (System.Collections.Specialized.NameValueCollection)state;
 
                 // prepare the WebClient
                 Uri uri = new Uri(URL);
-                System.Net.WebClient wc = new System.Net.WebClient();
-                wc.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
-                wc.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
-                wc.UploadValuesCompleted += new UploadValuesCompletedEventHandler(wc_UploadValuesCompleted);
+                WebClientEx wc = new WebClientEx();
+                using (wc)
+                {
+                    wc.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
+                    wc.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
 
-                /*
-                // no proxy
-                WebProxy proxy = null;
+                    /*
+                    // no proxy
+                    WebProxy proxy = null;
 
-                // auto-detect (use IE settings) - this is the default, so really not needed
-                WebProxy proxy = WebRequest.DefaultWebProxy;
+                    // auto-detect (use IE settings) - this is the default, so really not needed
+                    WebProxy proxy = WebRequest.DefaultWebProxy;
 
-                // custom proxy
-                WebProxy proxy = new WebProxy();
-                proxy.Address = "http://localhost:8080";
-                proxy.BypassProxyOnLocal = true;
-                proxy.Credentials = new NetworkCredential("username", "password");
+                    // custom proxy
+                    WebProxy proxy = new WebProxy();
+                    proxy.Address = "http://localhost:8080";
+                    proxy.BypassProxyOnLocal = true;
+                    proxy.Credentials = new NetworkCredential("username", "password");
 
-                wc.Proxy = proxy;
+                    wc.Proxy = proxy;
 
-                Console.WriteLine(wc.Proxy);
-                 * */
+                    Console.WriteLine(wc.Proxy);
+                     * */
 
-                // save the WebClient so we can dispose of it when it completes
-                if (this.busyWebClients == null) this.busyWebClients = new Dictionary<string, WebClient>();
-                string key = System.Guid.NewGuid().ToString();
-                this.busyWebClients.Add(key, wc);
 
-                // do it
-                wc.UploadValuesAsync(uri, "POST", data, key);
-
-                // not sure why, but either this code is bad or the Prowl servers are flakey
-                // but if this method exits immediately, then it will often result in a 'connection failed' exception
-                System.Threading.Thread.Sleep(100);
+                    // do it
+                    try
+                    {
+                        byte[] bytes = wc.UploadValues(uri, "POST", data);
+                        string response = System.Text.Encoding.ASCII.GetString(bytes);
+                        Utility.WriteDebugInfo(String.Format("Prowl forwarding response: {0}", response));
+                    }
+                    catch(Exception ex)
+                    {
+                        Utility.WriteDebugInfo(String.Format("Prowl forwarding failed: {0}", ex.Message));
+                    }
+                }
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
-            }
-        }
-
-        void wc_UploadValuesCompleted(object sender, UploadValuesCompletedEventArgs e)
-        {
-            string key = (string)e.UserState;
-            if (!String.IsNullOrEmpty(key))
-            {
-                if (this.busyWebClients.ContainsKey(key))
-                {
-                    WebClient wc = this.busyWebClients[key];
-                    wc.Dispose();
-                    wc = null;
-                    this.busyWebClients.Remove(key);
-                }
             }
         }
     }

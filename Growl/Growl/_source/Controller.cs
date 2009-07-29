@@ -423,60 +423,16 @@ namespace Growl
                 }
                 else
                 {
-                    string data = cbInfo.GetUrlCallbackData(result);
                     Growl.Connector.UrlCallbackTarget target = cbInfo.Context.GetUrlCallbackTarget();
-                    if (!String.IsNullOrEmpty(target.Url))
+                    if (target != null && !String.IsNullOrEmpty(target.Url))
                     {
-                        /*
-                        // if the method is APP, we want to use a custom application protocol handler,
-                        // otherwise, it is a web-based callback and we handle it behind the scenes
-                        if (target.Method == Growl.Connector.UrlCallbackTarget.APP)
-                        {
-                            System.UriBuilder ub = new UriBuilder(target.Url);
-                            if (ub.Query != null && ub.Query.Length > 1)
-                                ub.Query = ub.Query.Substring(1) + "&" + data;
-                            else
-                                ub.Query = data;
-
-                            System.Diagnostics.Process.Start(ub.Uri.AbsoluteUri);
-                        }
-                        else
-                        {
-                            System.Net.WebClient webclient = new System.Net.WebClient();
-                            using (webclient)
-                            {
-                                webclient.Encoding = Encoding.UTF8;
-                                webclient.Headers.Add("user-agent", String.Format("{0} - Notification Callback", this.gntpListener.ServerName));
-                                Uri uri = new Uri(target.Url);
-                                webclient.UploadStringAsync(uri, target.Method, data);
-                            }
-                        }
-                         * */
-
-                        /*
-                        // TODO:
-                        System.Net.WebClient webclient = new System.Net.WebClient();
-                        using (webclient)
-                        {
-                            webclient.Encoding = Encoding.UTF8;
-                            webclient.Headers.Add("user-agent", String.Format("{0} - Notification Callback", this.gntpListener.ServerName));
-                            Uri uri = new Uri(target.Url);
-                            webclient.UploadStringAsync(uri, target.Method, data);
-                        }
-                         * */
-
-                        // TODO: for now, this will only fire on CLICK since that is the more expected behavior
-                        // TODO: temporary - for now, we just launch the url that was specified
+                        // this will only fire on CLICK since that is the more expected behavior
                         // NOTE: there is probably a huge security risk by doing this (for now, I am relying on UriBuilder to protect us from from other types of commands)
                         if (result == Growl.CoreLibrary.CallbackResult.CLICK)
                         {
                             try
                             {
                                 System.UriBuilder ub = new UriBuilder(target.Url);
-                                if (ub.Query != null && ub.Query.Length > 1)
-                                    ub.Query = ub.Query.Substring(1) + "&" + data;
-                                else
-                                    ub.Query = data;
 
                                 // do this in another thread so the Process.Start doesnt block
                                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ub.Uri.AbsoluteUri);
@@ -485,7 +441,7 @@ namespace Growl
                             catch
                             {
                                 // TODO: this is temporary (and thus not localized either) // LOCALIZE:
-                                SendSystemNotification("Callback failure", "An application requested a callback via url, but the url was invalid.");
+                                SendSystemNotification("Callback failure", String.Format("An application requested a callback via url, but the url was invalid. The url was: {0}", target.Url));
                             }
                         }
                     }
@@ -1270,13 +1226,12 @@ namespace Growl
             bool limit = (limitToTheseComputers != null);
             foreach (ForwardDestination fc in this.forwards.Values)
             {
-                if((!limit || limitToTheseComputers.Contains(fc.Description)) && (fc.EnabledAndAvailable))
+                if((!limit || limitToTheseComputers.Contains(fc.Key)) && (fc.EnabledAndAvailable))
                 {
                     try
                     {
+                        requestInfo.SaveHandlingInfo(String.Format("Forwarding to {0} ({1})", fc.Description, fc.AddressDisplay));
                         fc.ForwardRegistration(application, notificationTypes, requestInfo, this.activityMonitor.IsIdle);
-
-                        requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1})", fc.Description, fc.AddressDisplay));
                     }
                     catch
                     {
@@ -1296,13 +1251,12 @@ namespace Growl
             bool limit = (limitToTheseComputers != null);
             foreach (ForwardDestination fc in this.forwards.Values)
             {
-                if ((!limit || limitToTheseComputers.Contains(fc.Description)) && (fc.EnabledAndAvailable))
+                if ((!limit || limitToTheseComputers.Contains(fc.Key)) && (fc.EnabledAndAvailable))
                 {
                     try
                     {
+                        requestInfo.SaveHandlingInfo(String.Format("Forwarding to {0} ({1})", fc.Description, fc.AddressDisplay));
                         fc.ForwardNotification(notification, callbackInfo, requestInfo, this.activityMonitor.IsIdle, new Forwarder.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback));
-
-                        requestInfo.SaveHandlingInfo(String.Format("Forwarded to {0} ({1})", fc.Description, fc.AddressDisplay));
                     }
                     catch
                     {

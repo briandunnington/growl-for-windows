@@ -14,8 +14,8 @@ namespace Growl
             Register(new BonjourForwardDestinationHandler());   // make sure this is the first item in the list
             Register(new ManualForwardDestinationHandler());
             Register(new ProwlForwardDestinationHandler());
-            //Register(new EmailForwardDestinationHandler());
             Register(new TwitterForwardDestinationHandler());
+            Register(new EmailForwardDestinationHandler());
         }
 
         private static void Register(IForwardDestinationHandler ifdh)

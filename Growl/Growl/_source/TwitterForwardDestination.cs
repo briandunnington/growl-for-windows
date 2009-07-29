@@ -136,6 +136,7 @@ namespace Growl
         internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
         {
             // IGNORE REGISTRATION NOTIFICATIONS
+            requestInfo.SaveHandlingInfo("Forwarding to Twitter cancelled - Application Registrations are not forwarded.");
         }
 
         internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
@@ -144,11 +145,17 @@ namespace Growl
 
             // if a minimum priority is set, check that
             if (this.MinimumPriority != null && this.MinimumPriority.HasValue && notification.Priority < this.MinimumPriority.Value)
+            {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarding to Twitter ({0}) cancelled - Notification priority must be at least '{1}' (was actually '{2}').", this.Username, this.MinimumPriority.Value.ToString(), notification.Priority.ToString()));
                 send = false;
+            }
 
             // if only sending when idle, check that
             if (this.OnlyWhenIdle && !isIdle)
+            {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarding to Twitter ({0}) cancelled - Currently only configured to forward when idle", this.Username));
                 send = false;
+            }
 
             if (send)
             {
@@ -159,17 +166,21 @@ namespace Growl
                 message = message.Replace(PLACEHOLDER_PRIORITY, PrefPriority.GetFriendlyName(notification.Priority));
                 message = message.Replace(PLACEHOLDER_SENDER, notification.MachineName);
                 //Console.WriteLine(message);
-                Send(message);
-            }
-        }
 
-        private void Send(string message)
-        {
-             try
-            {
                 // trim
                 if (message.Length > 140) message = message.Substring(0, 140);
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes("status=" + message);
+
+                // send async (using threads instead of async WebClient/HttpWebRequest methods since they seem to have a bug with KeepAlives in infrequent cases)
+                System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(SendAsync), bytes);
+            }
+        }
+
+        private void SendAsync(object state)
+        {
+             try
+            {
+                byte[] data = (byte[])state;
 
                 string url = "http://twitter.com/statuses/update.xml";
 
@@ -177,17 +188,53 @@ namespace Growl
                 string encodedCredentials = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(credentials));
                 string authorizationHeaderValue = String.Format("Basic {0}", encodedCredentials);
 
+                WebClientEx wex = new WebClientEx();
+                wex.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
+                wex.Headers.Add(System.Net.HttpRequestHeader.Authorization, authorizationHeaderValue);
+                wex.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
+
+                try
+                {
+                    byte[] bytes = wex.UploadData(url, "POST", data);
+                    string response = System.Text.Encoding.ASCII.GetString(bytes);
+                    Utility.WriteDebugInfo(String.Format("Twitter forwarding response: {0}", response));
+                }
+                catch (Exception ex)
+                {
+                    Utility.WriteDebugInfo(String.Format("Twitter forwarding failed: {0}", ex.Message));
+                }
+
+  
+
+                 /*
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
                 request.ServicePoint.Expect100Continue = false;
+                request.ServicePoint.MaxIdleTime = 1000;
+                request.KeepAlive = false;
+                request.ProtocolVersion = System.Net.HttpVersion.Version10;
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.UserAgent = "Growl for Windows/2.0";
                 request.Headers.Add("Authorization", authorizationHeaderValue);
                 request.ContentLength = bytes.Length;
 
+                System.IO.Stream requestStream = request.GetRequestStream();
+                using (requestStream)
+                {
+                    requestStream.Write(bytes, 0, bytes.Length);
+                }
+
+                System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                System.IO.Stream responseStream = response.GetResponseStream();
+                using (responseStream)
+                {
+                    byte[] responseBytes = responseStream.r
+                }
+
                 AsyncCallback requestCallback = new AsyncCallback(EndGetRequestStream);
                 State state = new State(request, bytes);
                 request.BeginGetRequestStream(requestCallback, state);
+                  * */
             }
             catch (Exception ex)
             {
@@ -195,6 +242,7 @@ namespace Growl
             }
         }
 
+        /*
         private void EndGetRequestStream(IAsyncResult iar)
         {
             try
@@ -240,5 +288,6 @@ namespace Growl
             public System.Net.HttpWebRequest Request;
             public byte[] Bytes;
         }
+         * */
     }
 }

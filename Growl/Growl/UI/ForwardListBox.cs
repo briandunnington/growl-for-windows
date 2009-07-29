@@ -11,7 +11,6 @@ namespace Growl.UI
         private const int IMAGE_SIZE = 48;
 
         private Color foreColor = Color.Black;
-        private int previouslySelectedIndex = -1;
 
         public ForwardListBox()
             : base()
@@ -19,6 +18,9 @@ namespace Growl.UI
             InitializeComponent();
 
             this.DrawMode = DrawMode.OwnerDrawFixed;
+
+            // we cant use SelectionMode.One because that forces an automatic 'scroll into view' behavior that we dont want
+            this.SelectionMode = SelectionMode.MultiSimple;
 
             this.DrawItem += new DrawItemEventHandler(BonjourListBox_DrawItem);
             this.ForeColorChanged += new EventHandler(BonjourListBox_ForeColorChanged);
@@ -72,16 +74,6 @@ namespace Growl.UI
             this.Items.Add(item);
         }
 
-        protected override void OnSelectedIndexChanged(EventArgs e)
-        {
-            int currentlySelectedIndex = this.SelectedIndex;
-            if (currentlySelectedIndex != previouslySelectedIndex)
-            {
-                previouslySelectedIndex = currentlySelectedIndex;
-                base.OnSelectedIndexChanged(e);
-            }
-        }
-
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -104,13 +96,10 @@ namespace Growl.UI
                 i += this.TopIndex;
                 if(this.SelectedIndex != i)
                 {
+                    this.SelectedIndices.Clear();
                     if (this.Items.Count > i)
                     {
-                        this.SelectedIndex = i;
-                    }
-                    else
-                    {
-                        this.SelectedIndices.Clear();
+                        this.SelectedIndices.Add(i);
                     }
                 }
             }
@@ -118,11 +107,18 @@ namespace Growl.UI
 
         private void BonjourListBox_MouseClick(object sender, MouseEventArgs e)
         {
-            if (this.SelectedItem != null)
+            /* we cant use any of the this.Selected* properites because we are using the MultiSimple selection mode
+             * instead, we have to determine which item was clicked on directly
+             * */
+
+            int i = 0;
+            if (e.Y > 0)
             {
-                if (this.SelectedItem is ForwardDestinationListItem)
+                i = e.Y / this.ItemHeight;
+                i += this.TopIndex;
+                if (this.Items.Count > i)
                 {
-                    ForwardDestinationListItem fli = (ForwardDestinationListItem)this.SelectedItem;
+                    ForwardDestinationListItem fli = (ForwardDestinationListItem)this.Items[i];
                     fli.Select();
                 }
             }

@@ -126,8 +126,6 @@ namespace Growl
 
         private void Send(string appName, string subject, Growl.Connector.Priority priority, string message)
         {
-            // send email
-
             System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage();
             m.To.Add(this.to);
             m.From = new System.Net.Mail.MailAddress("growl@growlforwindows.com", appName);
@@ -135,6 +133,14 @@ namespace Growl
             m.Body = message;
             m.Priority = GetMessagePriority(priority);
             m.Sender = new System.Net.Mail.MailAddress("growl@growlforwindows.com", "Growl for Windows");
+
+            // send the email using another thread (since the Smtp.SendAsync seems to be flakey)
+            System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(SendAsync), m);
+        }
+
+        private void SendAsync(object state)
+        {
+            System.Net.Mail.MailMessage m = (System.Net.Mail.MailMessage)state;
 
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
             smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
@@ -147,7 +153,22 @@ namespace Growl
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = credentials;
             }
-            smtp.SendAsync(m, null);
+
+            try
+            {
+                smtp.Send(m);
+                Utility.WriteDebugInfo(String.Format("Email successfully sent to {0}", m.To.ToString()));
+            }
+            catch(Exception ex)
+            {
+                string reason = "";
+                while (ex != null)
+                {
+                    reason += String.Format("{0} :: ", ex.Message);
+                    ex = ex.InnerException;
+                }
+                Utility.WriteDebugInfo(String.Format("Email failed: {0}", reason));
+            }
         }
 
         private System.Net.Mail.MailPriority GetMessagePriority(Growl.Connector.Priority priority)

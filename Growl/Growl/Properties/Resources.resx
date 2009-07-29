@@ -892,4 +892,60 @@ to Twitter</value>
     <value>Prowl Test</value>
     <comment>Title of Prowl confirmation notification sent to confirm successful configuration</comment>
   </data>
+  <data name="AddEmail_AnyPriority" xml:space="preserve">
+    <value>[Any Priority]</value>
+    <comment>Configure Email Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddEmail_MinimumPriorityLabel" xml:space="preserve">
+    <value>Only forward when priority is at least:</value>
+    <comment>Configure Email Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddEmail_NameLabel" xml:space="preserve">
+    <value>Description:</value>
+    <comment>Configure Email Forwarding: 'Description' label</comment>
+  </data>
+  <data name="AddEmail_EmailAddressLabel" xml:space="preserve">
+    <value>Email Address:</value>
+    <comment>Configure Email Forwarding: 'Email Address' label</comment>
+  </data>
+  <data name="AddEmail_SMTPSettingsLabel" xml:space="preserve">
+    <value>SMTP Settings:</value>
+    <comment>Configure Email Forwarding: 'SMTP Settings' label</comment>
+  </data>
+  <data name="AddEmail_EditSMTP" xml:space="preserve">
+    <value>edit</value>
+    <comment>Configure Email Forwarding: 'edit' link</comment>
+  </data>
+  <data name="AddEmail_OnlyWhenIdle" xml:space="preserve">
+    <value>Only forward when idle or away</value>
+    <comment>Configure Email forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPServerLabel" xml:space="preserve">
+    <value>Server:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Server' label</comment>
+  </data>
+  <data name="AddEmail_SMTPPortLabel" xml:space="preserve">
+    <value>Port:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Port' label</comment>
+  </data>
+  <data name="AddEmail_SMTPUseAuthentication" xml:space="preserve">
+    <value>Use Authentication</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Use Authentication' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPUseSSL" xml:space="preserve">
+    <value>Use SSL</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Use SSL' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPUsernameLabel" xml:space="preserve">
+    <value>Username:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Username' label</comment>
+  </data>
+  <data name="AddEmail_SMTPPasswordLabel" xml:space="preserve">
+    <value>Password:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Password' label</comment>
+  </data>
+  <data name="AddEmail_SMTPDone" xml:space="preserve">
+    <value>done</value>
+    <comment>Configure Email forwarding SMTP Settings: 'done' link</comment>
+  </data>
 </root>
