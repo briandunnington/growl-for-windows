@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <version>2.0.0.19</version>
+  <version>2.0.0.20</version>
   <required>True</required>
   <updateLocation>http://www.growlforwindows.com/gfw/updates/gfw2.manifest</updateLocation>
-  <installerLocation>http://www.growlforwindows.com/gfw/d.ashx?f=Growl_v2.0b19.msi</installerLocation>
+  <installerLocation>http://www.growlforwindows.com/gfw/d.ashx?f=Growl_v2.0b20.msi</installerLocation>
 </manifest>

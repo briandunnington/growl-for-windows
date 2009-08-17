@@ -21,6 +21,13 @@ namespace Growl.Connector
         /// </summary>
         private string notificationID;
 
+        public CallbackData(string data, string type, CallbackResult result, string notificationID)
+            : base(data, type)
+        {
+            this.result = result;
+            this.notificationID = notificationID;
+        }
+
         /// <summary>
         /// The callback result (clicked, closed, etc)
         /// </summary>
@@ -33,10 +40,6 @@ namespace Growl.Connector
             {
                 return this.result;
             }
-            set
-            {
-                this.result = value;
-            }
         }
 
         /// <summary>
@@ -47,10 +50,6 @@ namespace Growl.Connector
             get
             {
                 return this.notificationID;
-            }
-            set
-            {
-                this.notificationID = value;
             }
         }
 
@@ -72,11 +71,7 @@ namespace Growl.Connector
 
                 string notificationID = headers.GetHeaderStringValue(Header.NOTIFICATION_ID, false);
 
-                CallbackData context = new CallbackData();
-                context.Data = baseObj.Data;
-                context.Type = baseObj.Type;
-                context.Result = result;
-                context.NotificationID = notificationID;
+                CallbackData context = new CallbackData(baseObj.Data, baseObj.Type, result, notificationID);
 
                 return context;
             }

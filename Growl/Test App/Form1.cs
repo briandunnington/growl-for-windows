@@ -124,18 +124,10 @@ namespace Test_App
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");
             notification.CustomBinaryAttributes.Add("File", new BinaryData(new byte[] { 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78 }));
 
-            CallbackContext callback = new CallbackContext();
-            callback.Data = "context-data";
-            callback.Type = "string";
-            UrlCallbackTarget target = new UrlCallbackTarget();
-            target.Method = "GET";
-            //target.Method = "APP";
-            //target.Url = "http://localhost/growl-callback.aspx";
-            target.Url = "itpc:http://www.npr.org/rss/podcast.php?id=35";
-            //target.Url = "mailto:brian@elementcodeproject.com";
-            //target.Url = "itms:music fake";
-            //target.Url = "delete";
-            callback.SetUrlCallbackTarget(target);
+            //string url = "http://localhost/growl-callback.aspx";
+            //string url = "mailto:brian@elementcodeproject.com";
+            string url = "itpc:http://www.npr.org/rss/podcast.php?id=35";
+            CallbackContext callback = new CallbackContext(url);
 
             Growl.Connector.RequestData rd = new RequestData();
             rd.Add("Return-To-Me", "some text value");
@@ -219,9 +211,9 @@ namespace Test_App
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");
             notification.CustomBinaryAttributes.Add("File", new BinaryData(new byte[] { 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78 }));
 
-            CallbackContext context = new CallbackContext();
-            context.Data = "this is my context";
-            context.Type = typeof(string).ToString();
+            string data = "this is my context";
+            string type = typeof(string).ToString();
+            CallbackContext context = new CallbackContext(data, type);
 
             Growl.Connector.RequestData rd = new RequestData();
             rd.Add("Return-To-Me", "some text value");
@@ -256,7 +248,8 @@ namespace Test_App
                 string request = r.ReadToEnd();
                 byte[] b = System.Text.Encoding.UTF8.GetBytes(request);
 
-                System.Net.Sockets.TcpClient tcp = new System.Net.Sockets.TcpClient("127.0.0.1", Growl.Connector.GrowlConnector.TCP_PORT);
+                System.Net.Sockets.TcpClient tcp = new System.Net.Sockets.TcpClient("127.0.0.1", Growl.Connector.GrowlConnector.TCP_PORT);    //local
+                //System.Net.Sockets.TcpClient tcp = new System.Net.Sockets.TcpClient("superman", Growl.Connector.GrowlConnector.TCP_PORT);       //remote
                 System.Net.Sockets.NetworkStream ns = tcp.GetStream();
                 ns.Write(b, 0, b.Length);
 

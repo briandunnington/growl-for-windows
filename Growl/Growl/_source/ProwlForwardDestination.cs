@@ -123,10 +123,10 @@ namespace Growl
                 // this allows the user to click the url right from their Prowl app
                 if (callbackInfo != null && callbackInfo.Context != null)
                 {
-                    Growl.Connector.UrlCallbackTarget target = callbackInfo.Context.GetUrlCallbackTarget();
-                    if (target != null && !String.IsNullOrEmpty(target.Url))
+                    string url = callbackInfo.Context.CallbackUrl;
+                    if (!String.IsNullOrEmpty(url))
                     {
-                        text += String.Format(" - {0}", target.Url);
+                        text += String.Format(" - {0}", url);
                     }
                 }
                  * */
@@ -165,23 +165,7 @@ namespace Growl
                     wc.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
                     wc.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
 
-                    /*
-                    // no proxy
-                    WebProxy proxy = null;
 
-                    // auto-detect (use IE settings) - this is the default, so really not needed
-                    WebProxy proxy = WebRequest.DefaultWebProxy;
-
-                    // custom proxy
-                    WebProxy proxy = new WebProxy();
-                    proxy.Address = "http://localhost:8080";
-                    proxy.BypassProxyOnLocal = true;
-                    proxy.Credentials = new NetworkCredential("username", "password");
-
-                    wc.Proxy = proxy;
-
-                    Console.WriteLine(wc.Proxy);
-                     * */
 
 
                     // do it

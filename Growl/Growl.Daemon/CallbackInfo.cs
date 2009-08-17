@@ -70,6 +70,7 @@ namespace Growl.Daemon
                 return false;
         }
 
+        /*
         /// <summary>
         /// Gets the url-formatted callback data that is to be sent for url callbacks.
         /// </summary>
@@ -88,6 +89,7 @@ namespace Growl.Daemon
             }
             return data;
         }
+         * */
 
         /// <summary>
         /// Saves all extended information that should be returned with the callback response.

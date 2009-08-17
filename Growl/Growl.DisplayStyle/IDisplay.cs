@@ -98,7 +98,7 @@ namespace Growl.DisplayStyle
         /// </summary>
         /// <param name="notification">The <see cref="Notification"/> information</param>
         /// <param name="displayName">A string identifying the display name (used mainly by displays that provide multiple end-user selectable display styles)</param>
-        //void HandleNotification(Notification notification, string displayName);
+        /// <returns><c>true</c> if the handling of the message is 100% complete when this method finishes;<c>false</c> if the display may send a callback later (if you are creating a visual display that can be clicked, you should return false)</returns>
         bool ProcessNotification(Notification notification, string displayName);
 
         /// <summary>

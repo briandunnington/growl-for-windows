@@ -44,9 +44,7 @@ namespace GrowlNETConnector.Sample
 
         private void button2_Click(object sender, EventArgs e)
         {
-            CallbackContext callbackContext = new CallbackContext();
-            callbackContext.Data = "some fake information";
-            callbackContext.Type = "fake data";
+            CallbackContext callbackContext = new CallbackContext("some fake information", "fake data");
 
             Notification notification = new Notification(this.application.Name, this.notificationType.Name, DateTime.Now.Ticks.ToString(), this.textBox2.Text, this.textBox3.Text);
             this.growl.Notify(notification, callbackContext);

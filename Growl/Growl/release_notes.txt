@@ -1,3 +1,22 @@
+Beta 20 changes
+------------------------------
+- improved History tab: added detail view and filtering capability
+- added better proxy support, including support for custom authentication (though still manually configured)
+- changed the Growl.CoreLibrary and Growl.Connector assemblies to compile for AnyCPU instead of x86, so they should work in 64-bit apps now
+- updated the CallbackContext class' interface to be more intuitive and easier to use
+- added the ability to specify relative icon paths in growlnotify
+- added /silent switch to growlnotify to suppress all output
+- removed /cc switch from growlnotify (since it is not used)
+- fixed a bug that caused Notification-Callback-Target headers to be ignored
+- fixed a bug that incorrectly required setting Notification-Callback-Context and Notification-Callback-Context-Type for url callbacks
+- fixed a bug that caused Subscriptions to generate multiple entries in the origin machine's Forward list
+- fixed a bug that could cause subscription passwords to show up in the Password Manager
+- fixed a bug that could cause passwords to become 'stuck' in the Password Manager
+- fixed a bug that could crash Growl if a url-based image was not available
+- fixed a bug in the Outlook Add-in that wouldnt show a notification if the email subject was empty
+- fixed a bug in the Outlook Add-in that didnt notify on new meeting requests
+- updated Google Voice Greasemonkey script to show full SMS or Voicemail message text
+
 Beta 19 changes
 ------------------------------
 - added email forwarding option

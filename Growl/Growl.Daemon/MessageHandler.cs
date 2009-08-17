@@ -255,14 +255,19 @@ namespace Growl.Daemon
         private CallbackInfo callbackInfo;
 
         /// <summary>
-        /// The callback context associated with the request
+        /// The callback data associated with the request
         /// </summary>
-        private CallbackContext callbackContext;
+        private string callbackData;
 
         /// <summary>
-        /// The callback target associated with the request
+        /// The callback data type associated with the request
         /// </summary>
-        private UrlCallbackTarget callbackTarget;
+        private string callbackDataType;
+
+        /// <summary>
+        /// The callback url associated with the request
+        /// </summary>
+        private string callbackUrl;
 
         /// <summary>
         /// The request info associated with the request
@@ -451,8 +456,6 @@ namespace Growl.Daemon
             this.notificationsToBeRegistered = new List<HeaderCollection>();
             this.pointers = new List<Pointer>();
             this.callbackInfo = new CallbackInfo();
-            this.callbackContext = new CallbackContext();
-            this.callbackTarget = new UrlCallbackTarget();
             this.requestInfo = new RequestInfo();
 
             socket.DidReadTimeout += new AsyncSocket.SocketDidReadTimeout(socket_DidReadTimeout);
@@ -562,11 +565,16 @@ namespace Growl.Daemon
                                     //    3. the user's preferences require even local requests to supply a password
                                     // Additionally, even if a password is not required, it will be validated if the 
                                     // sending appplication includes one
+                                    string errorDescription = ErrorDescription.INVALID_KEY;
                                     if (!this.isLocal || this.directive == RequestType.SUBSCRIBE || this.requireLocalPassword || !String.IsNullOrEmpty(keyHash))
                                     {
-                                        string keyHashAlgorithmType = match.Groups["KeyHashAlgorithm"].Value;
-                                        if (!String.IsNullOrEmpty(keyHashAlgorithmType))
+                                        if (String.IsNullOrEmpty(keyHash))
                                         {
+                                            errorDescription = ErrorDescription.MISSING_KEY;
+                                        }
+                                        else
+                                        {
+                                            string keyHashAlgorithmType = match.Groups["KeyHashAlgorithm"].Value;
                                             this.keyHashAlgorithm = GetKeyHashType(keyHashAlgorithmType);
                                             string salt = match.Groups["Salt"].Value.ToUpper();
                                             authorized = this.passwordManager.IsValid(keyHash, salt, this.keyHashAlgorithm, this.encryptionAlgorithm, out this.key);
@@ -587,7 +595,7 @@ namespace Growl.Daemon
                                     }
                                     else
                                     {
-                                        WriteError(socket, ErrorCode.NOT_AUTHORIZED, ErrorDescription.INVALID_KEY);
+                                        WriteError(socket, ErrorCode.NOT_AUTHORIZED, errorDescription);
                                     }
                                 }
                             }
@@ -659,19 +667,15 @@ namespace Growl.Daemon
                             }
                             if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT)
                             {
-                                this.callbackContext.Data = header.Value;
+                                this.callbackData = header.Value;
                             }
                             if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE)
                             {
-                                this.callbackContext.Type = header.Value;
+                                this.callbackDataType = header.Value;
                             }
-                            if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET)
+                            if (header.Name == Header.NOTIFICATION_CALLBACK_TARGET || header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET)   // left in for compatibility
                             {
-                                this.callbackTarget.Url = header.Value;
-                            }
-                            if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET_METHOD)
-                            {
-                                this.callbackTarget.Method = header.Value;
+                                this.callbackUrl = header.Value;
                             }
                             if (header.Name == Header.RECEIVED)
                             {
@@ -1068,11 +1072,12 @@ namespace Growl.Daemon
             }
 
             // handle callback information
-            if (this.callbackContext.IsValid)
-            {
-                this.callbackContext.SetUrlCallbackTarget(this.callbackTarget);
-                this.callbackInfo.Context = this.callbackContext;
-            }
+            CallbackContext context = null;
+            if (!String.IsNullOrEmpty(this.callbackData) && !String.IsNullOrEmpty(this.callbackDataType) && String.IsNullOrEmpty(this.callbackUrl))
+                context = new CallbackContext(this.callbackData, this.callbackDataType);
+            else if(!String.IsNullOrEmpty(this.callbackUrl))
+                context = new CallbackContext(this.callbackUrl);
+            this.callbackInfo.Context = context;
             this.callbackInfo.MessageHandler = this;
             this.callbackInfo.RequestInfo = requestInfo;
 
@@ -1119,7 +1124,13 @@ namespace Growl.Daemon
                     match = regExMessageHeader_Remote.Match(line);
             }
             else
+            {
                 match = regExMessageHeader_Remote.Match(line);
+
+                // if there is no match, see if it is due to a missing password
+                if (!match.Success)
+                    match = regExMessageHeader_Local.Match(line);
+            }
             return match;
         }
 
@@ -1158,7 +1169,7 @@ namespace Growl.Daemon
         /// <returns></returns>
         private static Cryptography.HashAlgorithmType GetKeyHashType(string name)
         {
-            if (hashTypes.ContainsKey(name))
+            if (!String.IsNullOrEmpty(name) && hashTypes.ContainsKey(name))
                 return hashTypes[name];
             else
                 throw new GrowlException(ErrorCode.INVALID_REQUEST, ErrorDescription.UNSUPPORTED_HASH_ALGORITHM, name);
@@ -1243,19 +1254,15 @@ namespace Growl.Daemon
                                 }
                                 if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT)
                                 {
-                                    this.callbackContext.Data = header.Value;
+                                    this.callbackData = header.Value;
                                 }
                                 if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE)
                                 {
-                                    this.callbackContext.Type = header.Value;
+                                    this.callbackDataType = header.Value;
                                 }
-                                if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET)
+                                if (header.Name == Header.NOTIFICATION_CALLBACK_TARGET || header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET)   // left in for compatibility
                                 {
-                                    this.callbackTarget.Url = header.Value;
-                                }
-                                if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET_METHOD)
-                                {
-                                    this.callbackTarget.Method = header.Value;
+                                    this.callbackUrl = header.Value;
                                 }
                                 if (header.Name == Header.RECEIVED)
                                 {

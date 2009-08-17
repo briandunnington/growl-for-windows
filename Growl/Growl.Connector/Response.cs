@@ -130,11 +130,7 @@ namespace Growl.Connector
         {
             if (callbackContext != null)
             {
-                CallbackData cd = new CallbackData();
-                cd.Type = callbackContext.Type;
-                cd.Data = callbackContext.Data;
-                cd.Result = callbackResult;
-                cd.NotificationID = notificationID;
+                CallbackData cd = new CallbackData(callbackContext.Data, callbackContext.Type, callbackResult, notificationID);
                 this.callbackData = cd;
             }
         }

@@ -58,7 +58,7 @@ namespace Growl.DisplayStyle
                             if (ctrl is PictureBox)
                             {
                                 PictureBox pb = (PictureBox)ctrl;
-                                g.DrawImage(pb.Image, ctrl.Bounds);
+                                if(pb.Image != null) g.DrawImage(pb.Image, ctrl.Bounds);
                             }
                             else if (ctrl is Label)
                             {

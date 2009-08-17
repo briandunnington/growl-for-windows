@@ -141,7 +141,11 @@ namespace Growl.Connector
                 }
 
                 // hash it
-                byte[] hashedBytes = hash.ComputeHash(inputBytes);
+                byte[] hashedBytes = null;
+                using (hash)
+                {
+                    hashedBytes = hash.ComputeHash(inputBytes);
+                }
                 return hashedBytes;
             }
             catch (Exception ex)

@@ -889,11 +889,6 @@ namespace Growl
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            // TODO: set the password once we figure out the security stuff
-        }
-
         private void checkBoxRequireLocalPassword_CheckedChanged(object sender, EventArgs e)
         {
             this.controller.RequireLocalPassword = this.checkBoxRequireLocalPassword.Checked;
@@ -1209,6 +1204,11 @@ namespace Growl
         private void contextMenuStripApplications_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             this.listControlApplications.Refresh();
+        }
+
+        private void historyFilterTextBox_TextChanged(object sender, EventArgs e)
+        {
+            this.historyListView.Filter = this.historyFilterTextBox.Text;
         }
 
         /* THIS IS NOT READY FOR RELEASE YET

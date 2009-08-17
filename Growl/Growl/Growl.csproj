@@ -74,6 +74,7 @@
     <Compile Include="UI\ForwardDestinationSettingsPanel.Designer.cs">
       <DependentUpon>ForwardDestinationSettingsPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ListViewColumnSorter.cs" />
     <Compile Include="UI\TwitterForwardInputs.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -404,6 +405,9 @@
     </Content>
     <Content Include="installer.jpg" />
     <None Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <None Include="proxy.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\growl.png" />
     <None Include="Resources\growl.ico" />
     <None Include="Resources\Envelope.png" />

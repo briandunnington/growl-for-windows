@@ -461,13 +461,13 @@ namespace Growl.Connector
         /// </summary>
         public const string NOTIFICATION_CALLBACK_CONTEXT_TYPE = "Notification-Callback-Context-Type";
         /// <summary>
-        /// Notification-Callback-Context-Target header
+        /// Notification-Callback-Target header
+        /// </summary>
+        public const string NOTIFICATION_CALLBACK_TARGET = "Notification-Callback-Target";
+        /// <summary>
+        /// Notification-Callback-Context-Target header (this is not a valid header, but it is left in for compatibility with existing implementations)
         /// </summary>
         public const string NOTIFICATION_CALLBACK_CONTEXT_TARGET = "Notification-Callback-Context-Target";
-        /// <summary>
-        /// Notification-Callback-Context-Target-Method header
-        /// </summary>
-        public const string NOTIFICATION_CALLBACK_CONTEXT_TARGET_METHOD = "Notification-Callback-Context-Target-Method";
         /// <summary>
         /// Identifier header
         /// </summary>

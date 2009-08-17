@@ -40,10 +40,11 @@ namespace Growl.Connector
         /// Adds a password to the list of valid passwords
         /// </summary>
         /// <param name="password">The new password</param>
-        public void Add(string password)
+        /// <param name="permanent">Indicates if the password is permanent (user-specified) vs. temporary (automatically added by a subscription)</param>
+        public void Add(string password, bool permanent)
         {
             if(!String.IsNullOrEmpty(password) && !this.passwords.ContainsKey(password))
-                Add(new Password(password));
+                Add(new Password(password, null, permanent));
         }
 
         /// <summary>

@@ -80,6 +80,25 @@ namespace GrowlExtras.OutlookAddIn
                                 body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
 
                                 title = message.Subject;
+                                if (!String.IsNullOrEmpty(title)) title = title.Trim();
+                                title = (String.IsNullOrEmpty(title) ? "[No Subject]" : message.Subject);
+                                text = String.Format("From: {0}\n{1}", message.SenderName, body);
+
+                                Growl.Connector.Notification notification = new Growl.Connector.Notification(this.application.Name, newmail.Name, String.Empty, title, text);
+                                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext();
+                                callbackContext.Data = id;
+                                callbackContext.Type = "mailmessage";
+                                growl.Notify(notification, callbackContext);
+                            }
+                            else if (obj is Outlook.MeetingItem)
+                            {
+                                Outlook.MeetingItem message = (Outlook.MeetingItem)obj;
+                                string body = message.Body.Replace("\r\n", "\n");
+                                body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
+
+                                title = message.Subject;
+                                if (!String.IsNullOrEmpty(title)) title = title.Trim();
+                                title = (String.IsNullOrEmpty(title) ? "[No Subject]" : message.Subject);
                                 text = String.Format("From: {0}\n{1}", message.SenderName, body);
 
                                 Growl.Connector.Notification notification = new Growl.Connector.Notification(this.application.Name, newmail.Name, String.Empty, title, text);

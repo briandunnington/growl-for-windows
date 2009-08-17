@@ -1,18 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NET", "Sample App\NET.csproj", "{455C376A-D658-405D-922F-26F9DC530808}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp Example", "Sample App\Csharp Example.csproj", "{455C376A-D658-405D-922F-26F9DC530808}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{EB7CE495-2FB9-432B-B4E4-D061D61D50E9}"
 	ProjectSection(SolutionItems) = preProject
 		libraries\Growl.Connector.dll = libraries\Growl.Connector.dll
 		libraries\Growl.CoreLibrary.dll = libraries\Growl.CoreLibrary.dll
+		libraries\license.txt = libraries\license.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A8D53781-E9E8-45D1-AF7E-340C67509245}"
 	ProjectSection(SolutionItems) = preProject
 		Growl for Windows - Application Integration Guide.doc = Growl for Windows - Application Integration Guide.doc
 	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VB.NET Example", "VB.NET Example\VB.NET Example.vbproj", "{7D82D19D-231D-41FD-B3FE-FC0AAA2D7936}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +27,10 @@ Global
 		{455C376A-D658-405D-922F-26F9DC530808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{455C376A-D658-405D-922F-26F9DC530808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{455C376A-D658-405D-922F-26F9DC530808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D82D19D-231D-41FD-B3FE-FC0AAA2D7936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D82D19D-231D-41FD-B3FE-FC0AAA2D7936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D82D19D-231D-41FD-B3FE-FC0AAA2D7936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D82D19D-231D-41FD-B3FE-FC0AAA2D7936}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

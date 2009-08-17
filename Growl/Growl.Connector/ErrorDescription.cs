@@ -50,6 +50,10 @@ namespace Growl.Connector
         /// </summary>
         public const string INVALID_KEY = "Invalid key hash";
         /// <summary>
+        /// Missing key hash
+        /// </summary>
+        public const string MISSING_KEY = "Missing key hash";
+        /// <summary>
         /// Required header missing
         /// </summary>
         public const string REQUIRED_HEADER_MISSING = "Required header missing";

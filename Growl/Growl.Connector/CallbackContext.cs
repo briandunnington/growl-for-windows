@@ -9,38 +9,27 @@ namespace Growl.Connector
     /// </summary>
     public class CallbackContext : CallbackDataBase
     {
-        /// <summary>
-        /// The url target information
-        /// </summary>
-        private UrlCallbackTarget target;
+        private string url;
 
-        /// <summary>
-        /// Indicates if the callback context is properly set
-        /// </summary>
-        public bool IsValid
+        public CallbackContext(string data, string type) : base(data, type)
+        {
+        }
+
+        public CallbackContext(string url)
+        {
+            this.url = url;
+        }
+
+        private CallbackContext()
+        {
+        }
+
+        public string CallbackUrl
         {
             get
             {
-                return !(String.IsNullOrEmpty(this.Data) || String.IsNullOrEmpty(this.Type));
+                return this.url;
             }
-        }
-
-        /// <summary>
-        /// Sets the target information if the callback is a url callback
-        /// </summary>
-        /// <param name="target"><see cref="UrlCallbackTarget"/></param>
-        public void SetUrlCallbackTarget(UrlCallbackTarget target)
-        {
-            this.target = target;
-        }
-
-        /// <summary>
-        /// Gets the target information if the callback is a url callback
-        /// </summary>
-        /// <returns></returns>
-        public UrlCallbackTarget GetUrlCallbackTarget()
-        {
-            return this.target;
         }
 
         /// <summary>
@@ -53,7 +42,7 @@ namespace Growl.Connector
         public bool ShouldKeepConnectionOpen()
         {
             if (!String.IsNullOrEmpty(this.Data) && !String.IsNullOrEmpty(this.Type) && 
-                (target == null || String.IsNullOrEmpty(target.Url)))
+                (String.IsNullOrEmpty(this.CallbackUrl)))
             {
                 return true;
             }
@@ -69,9 +58,7 @@ namespace Growl.Connector
         {
             CallbackDataBase baseObj = CallbackDataBase.FromHeaders(headers);
 
-            CallbackContext context = new CallbackContext();
-            context.Data = baseObj.Data;
-            context.Type = baseObj.Type;
+            CallbackContext context = new CallbackContext(baseObj.Data, baseObj.Type);
 
             return context;
         }

@@ -42,7 +42,7 @@ namespace Test_Server
 
                 Growl.Connector.PasswordManager pm = new Growl.Connector.PasswordManager();
                 //pm.Add(password);
-                pm.Add(altPassword);
+                pm.Add(altPassword, true);
                 this.server = new Growl.Daemon.GrowlServer(24000, pm, historyFolder);
                 //this.server = new Growl.Daemon.GrowlServer(Growl.Connector.GrowlConnector.TCP_PORT, pm, historyFolder);
                 this.server.RegisterReceived += new Growl.Daemon.GrowlServer.RegisterReceivedEventHandler(server_RegisterReceived);
@@ -86,9 +86,7 @@ namespace Test_Server
                 }
                 else
                 {
-                    string data = callbackInfo.GetUrlCallbackData(Growl.CoreLibrary.CallbackResult.CLICK);
-                    UrlCallbackTarget target = callbackInfo.Context.GetUrlCallbackTarget();
-                    string url = String.Format("{0}?{1}", target.Url, data);
+                    string url = callbackInfo.Context.CallbackUrl;
                     server_ServerMessage(null, Growl.Daemon.GrowlServer.LogMessageType.Information, url);
                 }
             }
@@ -191,7 +189,7 @@ namespace Test_Server
         void sc_OKResponse(Growl.Daemon.SubscriptionResponse response)
         {
             Console.WriteLine("you were subscribed - TTL: " + response.TTL.ToString());
-            this.server.PasswordManager.Add(password + this.subscriberID);
+            this.server.PasswordManager.Add(password + this.subscriberID, true);
         }
 
         void sc_ErrorResponse(Growl.Daemon.SubscriptionResponse response)

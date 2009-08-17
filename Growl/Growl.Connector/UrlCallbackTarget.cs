@@ -1,3 +1,4 @@
+/*
 using System;
 
 namespace Growl.Connector
@@ -66,3 +67,4 @@ namespace Growl.Connector
         }
     }
 }
+*/

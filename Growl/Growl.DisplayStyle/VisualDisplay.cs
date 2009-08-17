@@ -165,7 +165,7 @@ namespace Growl.DisplayStyle
         /// </summary>
         /// <param name="notification">The <see cref="Notification"/> information</param>
         /// <param name="displayName">A string identifying the display name (used mainly by displays that provide multiple end-user selectable display styles)</param>
-        /// <returns></returns>
+        /// <returns>Should almost always return <c>false</c>, which indicates that the notification is still 'open' (visible) and may callback later</returns>
         public override bool ProcessNotification(Notification notification, string displayName)
         {
             HandleNotification(notification, displayName);

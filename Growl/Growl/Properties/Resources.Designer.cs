@@ -1053,6 +1053,51 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application.
+        /// </summary>
+        internal static string History_Columns_Application {
+            get {
+                return ResourceManager.GetString("History_Columns_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        internal static string History_Columns_Text {
+            get {
+                return ResourceManager.GetString("History_Columns_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timestamp.
+        /// </summary>
+        internal static string History_Columns_Timestamp {
+            get {
+                return ResourceManager.GetString("History_Columns_Timestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string History_Columns_Title {
+            get {
+                return ResourceManager.GetString("History_Columns_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details View.
+        /// </summary>
+        internal static string History_DetailsView {
+            get {
+                return ResourceManager.GetString("History_DetailsView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (No notifications for this date).
         /// </summary>
         internal static string History_NoNotificationsForDate {
@@ -1089,11 +1134,20 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sort By.
+        ///   Looks up a localized string similar to Group By.
         /// </summary>
         internal static string History_SortByTitle {
             get {
                 return ResourceManager.GetString("History_SortByTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tile View.
+        /// </summary>
+        internal static string History_TileView {
+            get {
+                return ResourceManager.GetString("History_TileView", resourceCulture);
             }
         }
         
@@ -1325,7 +1379,7 @@ namespace Growl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove Computer.
+        ///   Looks up a localized string similar to Remove.
         /// </summary>
         internal static string Network_RemoveComputer {
             get {

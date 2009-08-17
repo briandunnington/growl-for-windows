@@ -21,6 +21,25 @@ namespace Growl.Connector
         private string type;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CallbackDataBase"/> class with
+        /// empty Data and Type properties.
+        /// </summary>
+        protected CallbackDataBase()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CallbackDataBase"/> class.
+        /// </summary>
+        /// <param name="data">The callback data.</param>
+        /// <param name="type">The callback data type.</param>
+        public CallbackDataBase(string data, string type)
+        {
+            this.data = data;
+            this.type = type;
+        }
+
+        /// <summary>
         /// The application-specified data to provide in the callback
         /// </summary>
         /// <value>
@@ -31,10 +50,6 @@ namespace Growl.Connector
             get
             {
                 return this.data;
-            }
-            set
-            {
-                this.data = value;
             }
         }
 
@@ -50,10 +65,6 @@ namespace Growl.Connector
             {
                 return this.type;
             }
-            set
-            {
-                this.type = value;
-            }
         }
 
         /// <summary>
@@ -66,9 +77,7 @@ namespace Growl.Connector
             string data = headers.GetHeaderStringValue(Header.NOTIFICATION_CALLBACK_CONTEXT, true);
             string type = headers.GetHeaderResourceValue(Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE, true);
 
-            CallbackDataBase context = new CallbackDataBase();
-            context.Data = data;
-            context.Type = type;
+            CallbackDataBase context = new CallbackDataBase(data, type);
 
             return context;
         }

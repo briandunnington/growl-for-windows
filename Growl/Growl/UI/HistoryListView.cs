@@ -12,7 +12,10 @@ namespace Growl.UI
         public const int MIN_NUMBER_OF_DAYS = 1;
         public const int MAX_NUMBER_OF_DAYS = 7;
         private const int DEFAULT_TILE_HEIGHT = 56;
+        private const int SCROLLBAR_WIDTH = 26;
+        private const string DATETIME_COMPARISON_INDICATOR = "datetime";
 
+        private string filter = null;
         private HistoryGroupItemsBy groupBy = HistoryGroupItemsBy.Date;
         private int numberOfDays;
         private List<PastNotification> pastNotifications;
@@ -22,11 +25,19 @@ namespace Growl.UI
         private ToolTip tooltip = new ToolTip();
         private DateTime currentEndOfToday;
 
+        ContextMenuStrip contextMenu;
+        private int currentWidth = 0;
+        ListViewColumnSorter lvcs = new ListViewColumnSorter();
+        ColumnHeader[] tileColumns;
+        ColumnHeader[] detailColumns;
+
         public HistoryListView()
         {
             InitializeComponent();
 
             this.SuspendLayout();
+
+            this.View = View.Tile;
 
             this.imageList = new ImageList();
             this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
@@ -36,39 +47,85 @@ namespace Growl.UI
             this.OwnerDraw = true;
             this.DoubleBuffered = true;
 
-            // columns
-            ColumnHeader titleHeader = new ColumnHeader();
-            ColumnHeader textHeader = new ColumnHeader();
-            ColumnHeader appNameHeader = new ColumnHeader();
-            this.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-                titleHeader,
-                textHeader,
-                appNameHeader});
-
-            this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.LargeImageList = this.imageList;
             this.MultiSelect = false;
-            this.UseCompatibleStateImageBehavior = false;
-            this.View = System.Windows.Forms.View.Tile;
             this.Scrollable = true;
             this.ShowItemToolTips = true;
             this.LabelWrap = false;
-            //this.Sorting = SortOrder.None;
-            //this.ListViewItemSorter = PastNotification;
-
-            //this.TileSize = new System.Drawing.Size(this.TileSize.Width, DEFAULT_TILE_HEIGHT);
+            this.LargeImageList = this.imageList;
+            this.SmallImageList = this.imageList;
+            this.UseCompatibleStateImageBehavior = false;
 
             this.numberOfDays = DEFAULT_NUMBER_OF_DAYS;
 
             this.Resize += new EventHandler(HistoryListView_Resize);
             this.DrawItem += new DrawListViewItemEventHandler(HistoryListView_DrawItem);
+            this.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(HistoryListView_DrawColumnHeader);
+            this.ColumnClick += new ColumnClickEventHandler(HistoryListView_ColumnClick);
 
-            this.ItemMouseHover +=new ListViewItemMouseHoverEventHandler(HistoryListView_ItemMouseHover);
+            this.ItemMouseHover += new ListViewItemMouseHoverEventHandler(HistoryListView_ItemMouseHover);
             this.MouseLeave += new EventHandler(HistoryListView_MouseLeave);
+
+            // 
+            // contextMenu
+            // 
+            ToolStripMenuItem tileToolStripMenuItem = new ToolStripMenuItem();
+            tileToolStripMenuItem.Name = "tileToolStripMenuItem";
+            tileToolStripMenuItem.AutoSize = true;
+            tileToolStripMenuItem.Text = Properties.Resources.History_TileView;
+            tileToolStripMenuItem.Click += new EventHandler(tileToolStripMenuItem_Click);
+
+            ToolStripMenuItem detailsToolStripMenuItem = new ToolStripMenuItem();
+            detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
+            detailsToolStripMenuItem.AutoSize = true;
+            detailsToolStripMenuItem.Text = Properties.Resources.History_DetailsView;
+            detailsToolStripMenuItem.Click += new EventHandler(detailsToolStripMenuItem_Click);
+
+            this.contextMenu = new ContextMenuStrip();
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            tileToolStripMenuItem,
+            detailsToolStripMenuItem});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.ShowImageMargin = false;
+            this.contextMenu.AutoSize = true;
+
+            this.ContextMenuStrip = this.contextMenu;
 
             UpdateEndOfToday();
 
             this.ResumeLayout();
+        }
+
+        void HistoryListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column == this.lvcs.ColumnToSort)
+            {
+                // Reverse the current sort direction for this column.
+                if (this.lvcs.Order == SortOrder.Ascending)
+                    this.lvcs.Order = SortOrder.Descending;
+                else
+                    this.lvcs.Order = SortOrder.Ascending;
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                this.lvcs.ColumnToSort = e.Column;
+                this.lvcs.Order = SortOrder.Ascending;
+            }
+
+            string tag = this.Columns[e.Column].Tag as string;
+            if (!String.IsNullOrEmpty(tag) && tag == DATETIME_COMPARISON_INDICATOR)
+                this.lvcs.Type = ListViewColumnSorter.ComparisonType.Date;
+            else
+                this.lvcs.Type = ListViewColumnSorter.ComparisonType.String;
+
+
+            // redraw to show the sorted items
+            this.Draw();
+        }
+
+        void HistoryListView_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            e.DrawDefault = true;
         }
 
         void HistoryListView_DrawItem(object sender, DrawListViewItemEventArgs e)
@@ -155,6 +212,19 @@ namespace Growl.UI
             }
         }
 
+        public string Filter
+        {
+            get
+            {
+                return this.filter;
+            }
+            set
+            {
+                this.filter = value;
+                Draw();
+            }
+        }
+
         public HistoryGroupItemsBy GroupBy
         {
             get
@@ -203,6 +273,7 @@ namespace Growl.UI
             }
 
             this.pastNotifications.Add(pn);
+            /*
             ListViewGroup group = this.Groups[groupName];
             if (group != null && group.Items.Count > 1)
             {
@@ -214,13 +285,19 @@ namespace Growl.UI
                 // redraw the entire control
                 this.Draw();
             }
+             * */
+            this.Draw();
         }
 
         public void Draw()
         {
             this.SuspendLayout();
 
+            // apply any filtering
+            List<PastNotification> filteredList = ApplyFilter();
+
             // clear everything
+            this.Columns.Clear();
             this.Groups.Clear();
             this.Items.Clear();
             this.imageList.Images.Clear();
@@ -229,9 +306,9 @@ namespace Growl.UI
             List<string> groupNames = new List<string>();
             List<PastNotification> validNotifications = new List<PastNotification>();
             List<PastNotification> invalidNotifications = new List<PastNotification>();
-            if (this.pastNotifications != null)
+            if (filteredList != null)
             {
-                foreach (PastNotification pn in this.pastNotifications)
+                foreach (PastNotification pn in filteredList)
                 {
                     if (IsInDateRange(pn.Timestamp))
                     {
@@ -241,13 +318,15 @@ namespace Growl.UI
                                 groupNames.Add(pn.Notification.ApplicationName);
                         }
 
+                        /*
                         if (pn.HasImage && !this.imageList.Images.ContainsKey(pn.ImageKey))
                         {
                             //System.Drawing.Image image = pn.Notification.GetImage();
                             System.Drawing.Image image = pn.Image;
-                            if(image != null)
+                            if (image != null)
                                 this.imageList.Images.Add(pn.ImageKey, image);
                         }
+                         * */
 
                         validNotifications.Add(pn);
                     }
@@ -262,7 +341,7 @@ namespace Growl.UI
             DateTime cutoff = DateTime.Now.AddDays(-MAX_NUMBER_OF_DAYS).Date;
             foreach (PastNotification pn in invalidNotifications)
             {
-                if(pn.Timestamp < cutoff)
+                if (pn.Timestamp < cutoff)
                     this.pastNotifications.Remove(pn);
             }
             invalidNotifications.Clear();
@@ -280,13 +359,71 @@ namespace Growl.UI
                 this.Groups.Add(groupName, groupName);
             }
 
-            validNotifications.Sort();
+            if (this.View != View.Details) this.View = View.Tile;
+
+            // prepare view layouts
+            if (this.View == View.Tile)
+            {
+                this.View = System.Windows.Forms.View.Tile;
+
+                if (this.tileColumns == null)
+                {
+                    ColumnHeader titleHeader = new ColumnHeader();
+                    ColumnHeader textHeader = new ColumnHeader();
+                    ColumnHeader appNameHeader = new ColumnHeader();
+                    this.tileColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader };
+                }
+
+                this.Columns.AddRange(this.tileColumns);
+                this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+                this.imageList.ImageSize = new System.Drawing.Size(48, 48);
+                this.LargeImageList = this.imageList;
+            }
+            else if (this.View == View.Details)
+            {
+                this.View = System.Windows.Forms.View.Details;
+
+                if (detailColumns == null)
+                {
+                    int w = 100;
+                    int x = (this.Width - (w * 2) - SCROLLBAR_WIDTH) / 2;
+
+                    ColumnHeader titleHeader = new ColumnHeader();
+                    titleHeader.Name = "TITLE";
+                    titleHeader.Text = Properties.Resources.History_Columns_Title;
+                    titleHeader.Width = x;
+                    ColumnHeader textHeader = new ColumnHeader();
+                    textHeader.Name = "TEXT";
+                    textHeader.Text = Properties.Resources.History_Columns_Text;
+                    textHeader.Width = x;
+                    ColumnHeader appNameHeader = new ColumnHeader();
+                    appNameHeader.Name = "APPLICATION";
+                    appNameHeader.Text = Properties.Resources.History_Columns_Application;
+                    appNameHeader.Width = w;
+                    ColumnHeader dateHeader = new ColumnHeader();
+                    dateHeader.Name = "TIMESTAMP";
+                    dateHeader.Text = Properties.Resources.History_Columns_Timestamp;
+                    dateHeader.Width = w;
+                    dateHeader.Tag = DATETIME_COMPARISON_INDICATOR;
+
+                    this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader };
+                }
+
+                this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
+                this.Columns.AddRange(this.detailColumns);
+                this.imageList.ImageSize = new System.Drawing.Size(16, 16);
+                this.SmallImageList = this.imageList;
+                this.SetSortIcon(this.lvcs.ColumnToSort, this.lvcs.Order);
+            }
 
             // add items
+            List<ListViewItem> lviList = new List<ListViewItem>();
             foreach (PastNotification pn in validNotifications)
             {
-                AddItem(pn);
+                lviList.Add(CreateItem(pn));
             }
+            lviList.Sort(this.lvcs);
+            this.Items.AddRange(lviList.ToArray());
 
             // handle empty groups
             foreach (ListViewGroup group in this.Groups)
@@ -303,7 +440,40 @@ namespace Growl.UI
             this.ResumeLayout();
         }
 
-        private void AddItem(PastNotification pn)
+        private List<PastNotification> ApplyFilter()
+        {
+            if (!String.IsNullOrEmpty(this.filter))
+            {
+                List<PastNotification> filteredList = new List<PastNotification>();
+                foreach (PastNotification pn in this.pastNotifications)
+                {
+                    if (StringContains(pn.Notification.ApplicationName, this.filter)
+                        || StringContains(pn.Notification.Title, this.filter)
+                        || StringContains(pn.Notification.Description, this.filter))
+                    {
+                        filteredList.Add(pn);
+                    }
+                }
+                return filteredList;
+            }
+            else
+            {
+                return this.pastNotifications;
+            }
+        }
+
+        private static bool StringContains(string str1, string str2)
+        {
+            bool contains = false;
+            if (!String.IsNullOrEmpty(str1))
+            {
+                int i = str1.IndexOf(str2, StringComparison.InvariantCultureIgnoreCase);
+                if (i >= 0) contains = true;
+            }
+            return contains;
+        }
+
+        private ListViewItem CreateItem(PastNotification pn)
         {
             System.Diagnostics.Debug.Assert(!this.InvokeRequired, "InvokeRequired");
 
@@ -317,7 +487,7 @@ namespace Growl.UI
             {
                 //System.Drawing.Image image = pn.Notification.GetImage();
                 System.Drawing.Image image = pn.Image;
-                if(image != null)
+                if (image != null)
                     this.imageList.Images.Add(pn.ImageKey, image);
             }
 
@@ -326,10 +496,10 @@ namespace Growl.UI
             string appName = Escape(pn.Notification.ApplicationName);
             string tooltip = String.Format("{0}\r\n{1}\r\n{4}: {2}\r\n{5}: {3}", pn.Notification.Title, pn.Notification.Description, pn.Notification.ApplicationName, pn.Timestamp.ToString(), Properties.Resources.LiteralString_ReceivedFrom, Properties.Resources.LiteralString_ReceivedAt);
 
-            string[] items = new string[] { title, text, appName };
+            string[] items = new string[] { title, text, appName, pn.Timestamp.ToString() };
             ListViewItem lvi = new ListViewItem(items, pn.ImageKey, this.Groups[groupName]);
             lvi.ToolTipText = tooltip;
-            this.Items.Add(lvi);
+            return lvi;
         }
 
         private bool IsInDateRange(DateTime timestamp)
@@ -366,7 +536,7 @@ namespace Growl.UI
                 // the Visual Studio form designer has a bug in it, so we have to check first in order to be able to set the name
                 // using the culture (since the culture doesnt get set until runtime)
                 string name = date.DayOfWeek.ToString();
-                if(Properties.Resources.Culture != null)
+                if (Properties.Resources.Culture != null)
                     name = Properties.Resources.Culture.DateTimeFormat.DayNames[(int)date.DayOfWeek];
 
                 // special case
@@ -380,7 +550,7 @@ namespace Growl.UI
         private void UpdateEndOfToday()
         {
             DateTime newEndOfToday = DateTime.Now.Date.AddDays(1);  // end of current 'Today' group
-            if(newEndOfToday != this.currentEndOfToday)
+            if (newEndOfToday != this.currentEndOfToday)
             {
                 this.currentEndOfToday = newEndOfToday;
                 GenerateDateGroups();
@@ -397,27 +567,58 @@ namespace Growl.UI
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        [ return: MarshalAs(UnmanagedType.Bool)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static private extern bool ShowScrollBar(System.IntPtr hWnd, int wBar, [MarshalAs(UnmanagedType.Bool)] bool bShow);
+
+        private bool isResizing = false;
 
         void HistoryListView_Resize(object sender, EventArgs e)
         {
-            try
+            if (!this.isResizing)
             {
-                int parentWidth = this.Size.Width - 26; // account for scrollbar
-                int columns = (parentWidth / 200);
-                if (columns == 0) columns = 1;
-                int width = (parentWidth / columns) - 12; // account for margin/padding;
-                //MessageBox.Show(String.Format("p: {0}; c: {1}; w: {2}; ots: {3}", parentWidth, columns, width, this.TileSize.Width));
-                int height = (this.TileSize.Height == 0 ? DEFAULT_TILE_HEIGHT : this.TileSize.Height);
-                this.TileSize = new System.Drawing.Size(width, height);
-                this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                ShowScrollBar(this.Handle, 0, false);
-            }
-            catch
-            {
+                this.isResizing = true;
+                try
+                {
 
+                    if (this.View == View.Tile)
+                    {
+                        int parentWidth = this.Size.Width - SCROLLBAR_WIDTH; // account for scrollbar
+                        int columns = (parentWidth / 200);
+                        if (columns == 0) columns = 1;
+                        int width = (parentWidth / columns) - 12; // account for margin/padding;
+                        //MessageBox.Show(String.Format("p: {0}; c: {1}; w: {2}; ots: {3}", parentWidth, columns, width, this.TileSize.Width));
+                        int height = (this.TileSize.Height == 0 ? DEFAULT_TILE_HEIGHT : this.TileSize.Height);
+                        this.TileSize = new System.Drawing.Size(width, height);
+                        this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        ShowScrollBar(this.Handle, 0, false);
+                    }
+                    else
+                    {
+                        if (this.currentWidth > 0)
+                        {
+                            int diff = this.Width - this.currentWidth;
+                            int half = diff / 2;
+                            this.Columns["TITLE"].Width += half;
+                            this.Columns["TEXT"].Width += half;
+
+                            int columnWidth = SCROLLBAR_WIDTH;
+                            foreach (ColumnHeader ch in this.Columns)
+                            {
+                                Console.WriteLine("Column Width: " + ch.Width.ToString());
+                                columnWidth += ch.Width;
+                            }
+                            Console.WriteLine("Column Total Width: " + columnWidth.ToString() + " - Total Width: " + this.Width.ToString());
+                            if(columnWidth < this.Width)
+                                ShowScrollBar(this.Handle, 0, false);
+                        }
+                    }
+                }
+                catch
+                {
+                }
             }
+            this.currentWidth = this.Width;
+            this.isResizing = false;
         }
 
         private void InitializeComponent()
@@ -445,8 +646,89 @@ namespace Growl.UI
             {
                 System.Drawing.Point p = PointToClient(Cursor.Position);
                 ListViewHitTestInfo info = this.HitTest(p);
-                if(info.Item == null)
+                if (info.Item == null)
                     this.tooltip.Hide(this);
+            }
+        }
+
+        void detailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.View != View.Details)
+            {
+                this.View = View.Details;
+                Draw();
+            }
+        }
+
+        void tileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.View != View.Tile)
+            {
+                this.View = View.Tile;
+                Draw();
+            }
+        }
+
+        // -- stuff for sort arrows
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        private struct LVCOLUMN
+        {
+            public Int32 mask;
+            public Int32 cx;
+            [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPTStr)]
+            public string pszText;
+            public IntPtr hbm;
+            public Int32 cchTextMax;
+            public Int32 fmt;
+            public Int32 iSubItem;
+            public Int32 iImage;
+            public Int32 iOrder;
+        }
+
+        private const Int32 HDI_FORMAT = 0x4;
+        private const Int32 HDF_SORTUP = 0x400;
+        private const Int32 HDF_SORTDOWN = 0x200;
+        private const Int32 LVM_GETHEADER = 0x101f;
+        private const Int32 HDM_GETITEM = 0x120b;
+        private const Int32 HDM_SETITEM = 0x120c;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private static extern IntPtr SendMessageLVCOLUMN(IntPtr hWnd, Int32 Msg, IntPtr wParam, ref LVCOLUMN lPLVCOLUMN);
+
+        public void SetSortIcon(int ColumnIndex, System.Windows.Forms.SortOrder Order)
+        {
+            IntPtr ColumnHeader = SendMessage(this.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
+
+            for (int ColumnNumber = 0; ColumnNumber <= this.Columns.Count - 1; ColumnNumber++)
+            {
+                IntPtr ColumnPtr = new IntPtr(ColumnNumber);
+                LVCOLUMN lvColumn = new LVCOLUMN();
+                lvColumn.mask = HDI_FORMAT;
+                SendMessageLVCOLUMN(ColumnHeader, HDM_GETITEM, ColumnPtr, ref lvColumn);
+
+                if (!(Order == System.Windows.Forms.SortOrder.None) && ColumnNumber == ColumnIndex)
+                {
+                    switch (Order)
+                    {
+                        case System.Windows.Forms.SortOrder.Ascending:
+                            lvColumn.fmt &= ~HDF_SORTDOWN;
+                            lvColumn.fmt |= HDF_SORTUP;
+                            break;
+                        case System.Windows.Forms.SortOrder.Descending:
+                            lvColumn.fmt &= ~HDF_SORTUP;
+                            lvColumn.fmt |= HDF_SORTDOWN;
+                            break;
+                    }
+                }
+                else
+                {
+                    lvColumn.fmt &= ~HDF_SORTDOWN & ~HDF_SORTUP;
+                }
+
+                SendMessageLVCOLUMN(ColumnHeader, HDM_SETITEM, ColumnPtr, ref lvColumn);
             }
         }
     }

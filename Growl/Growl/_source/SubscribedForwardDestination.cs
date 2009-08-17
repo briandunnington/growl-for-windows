@@ -31,6 +31,7 @@ namespace Growl
         public SubscribedForwardDestination(Growl.Daemon.Subscriber subscriber, int ttl)
             : this(subscriber.Name, true, subscriber.IPAddress, subscriber.Port, subscriber.Key.Password, ForwardDestinationPlatformType.FromString(subscriber.PlatformName), ttl)
         {
+            this.Key = subscriber.ID;
             this.hashAlgorithm = subscriber.Key.HashAlgorithm;
             this.encryptionAlgorithm = subscriber.Key.EncryptionAlgorithm;
         }

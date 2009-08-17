@@ -27,13 +27,19 @@ namespace Growl.Connector
         /// </summary>
         private string description;
 
+        /// <summary>
+        /// Indicates if the password is permanent (user-specified) vs. temporary (automatically added by a subscription)
+        /// </summary>
+        private bool permanent;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Password"/> class.
         /// </summary>
         /// <param name="password">The actual password</param>
-        public Password(string password)
-            : this(password, DEFAULT_DESCRIPTION)
+        /// <param name="permanent">Indicates if the password is permanent (user-specified) vs. temporary (automatically added by a subscription)</param>
+        public Password(string password, bool permanent)
+            : this(password, DEFAULT_DESCRIPTION, permanent)
         {
         }
 
@@ -42,10 +48,12 @@ namespace Growl.Connector
         /// </summary>
         /// <param name="password">The actual password</param>
         /// <param name="description">A description of the password</param>
-        public Password(string password, string description)
+        /// <param name="permanent">Indicates if the password is permanent (user-specified) vs. temporary (automatically added by a subscription)</param>
+        public Password(string password, string description, bool permanent)
         {
             this.password = password;
             this.description = description;
+            this.permanent = permanent;
         }
 
         /// <summary>
@@ -61,9 +69,18 @@ namespace Growl.Connector
         {
             string p = info.GetString("password");
             string d = info.GetString("description");
+            bool m = true;
+            try
+            {
+                m = info.GetBoolean("permanent");
+            }
+            catch
+            {
+            }
 
             this.password = Base64.Decode(p);
             this.description = d;
+            this.permanent = m;
         }
 
         /// <summary>
@@ -98,6 +115,22 @@ namespace Growl.Connector
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value that indicates if this is a permanent password
+        /// </summary>
+        /// <value>bool</value>
+        public bool Permanent
+        {
+            get
+            {
+                return this.permanent;
+            }
+            set
+            {
+                this.permanent = value;
+            }
+        }
+
         #region ISerializable Members
 
         /// <summary>
@@ -109,11 +142,12 @@ namespace Growl.Connector
         /// The serialization routine uses a simple Base64 encoding on the password text so that the passwords are
         /// not stored in clear text, but there is no additional security provided to the serialized password data.
         /// </remarks>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             string p = Base64.Encode(this.password);
             info.AddValue("password", p, typeof(string));
             info.AddValue("description", this.description, typeof(string));
+            info.AddValue("permanent", this.permanent);
         }
 
         #endregion

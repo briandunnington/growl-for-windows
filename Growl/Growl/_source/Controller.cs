@@ -379,6 +379,17 @@ namespace Growl
         {
             this.passwordManager = (Growl.Connector.PasswordManager)pmSettingSaver.Load();
             if (this.passwordManager == null) this.passwordManager = new Growl.Connector.PasswordManager();
+
+            // remove any temporary password that may have gotten serialized
+            List<string> listToRemove = new List<string>();
+            foreach (Growl.Connector.Password p in this.passwordManager.Passwords.Values)
+            {
+                if (!p.Permanent) listToRemove.Add(p.ActualPassword);
+            }
+            foreach (string password in listToRemove)
+            {
+                this.passwordManager.Remove(password);
+            }
         }
 
         private void LoadDisplays()
@@ -423,8 +434,8 @@ namespace Growl
                 }
                 else
                 {
-                    Growl.Connector.UrlCallbackTarget target = cbInfo.Context.GetUrlCallbackTarget();
-                    if (target != null && !String.IsNullOrEmpty(target.Url))
+                    string url = cbInfo.Context.CallbackUrl;
+                    if (!String.IsNullOrEmpty(url))
                     {
                         // this will only fire on CLICK since that is the more expected behavior
                         // NOTE: there is probably a huge security risk by doing this (for now, I am relying on UriBuilder to protect us from from other types of commands)
@@ -432,7 +443,7 @@ namespace Growl
                         {
                             try
                             {
-                                System.UriBuilder ub = new UriBuilder(target.Url);
+                                System.UriBuilder ub = new UriBuilder(url);
 
                                 // do this in another thread so the Process.Start doesnt block
                                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ub.Uri.AbsoluteUri);
@@ -441,7 +452,7 @@ namespace Growl
                             catch
                             {
                                 // TODO: this is temporary (and thus not localized either) // LOCALIZE:
-                                SendSystemNotification("Callback failure", String.Format("An application requested a callback via url, but the url was invalid. The url was: {0}", target.Url));
+                                SendSystemNotification("Callback failure", String.Format("An application requested a callback via url, but the url was invalid. The url was: {0}", url));
                             }
                         }
                     }
@@ -463,6 +474,17 @@ namespace Growl
         {
             this.forwards = (Dictionary<string, ForwardDestination>)fcSettingSaver.Load();
             if (this.forwards == null) this.forwards = new Dictionary<string, ForwardDestination>();
+
+            // remove any subscribed computers that may have gotten serialized
+            Dictionary<string, ForwardDestination> listToRemove = new Dictionary<string, ForwardDestination>();
+            foreach (KeyValuePair<string, ForwardDestination> item in this.forwards)
+            {
+                if (item.Value is SubscribedForwardDestination) listToRemove.Add(item.Key, item.Value);
+            }
+            foreach (KeyValuePair<string, ForwardDestination> item in listToRemove)
+            {
+                this.forwards.Remove(item.Key);
+            }
 
             // handle old serialized values that were stored by description instead of key
             Dictionary<string, ForwardDestination> listToUpdate = new Dictionary<string,ForwardDestination>();
@@ -825,6 +847,8 @@ namespace Growl
                         n.Title = notification.Title;
                         n.Duration = rn.Duration;
 
+//                        System.Diagnostics.Debug.Assert(!this.synchronizingObject.InvokeRequired, "InvokeRequired");
+
                         if (notification.Icon != null && notification.Icon.IsSet)
                         {
                             n.Image = notification.Icon;
@@ -1026,6 +1050,7 @@ namespace Growl
         {
             bool alertUser = true;
             int ttl = Properties.Settings.Default.SubscriptionTTL;
+            ttl = 300;
             SubscribedForwardDestination subscribedComputer = new SubscribedForwardDestination(subscriber, ttl);
             subscribedComputer.Unsubscribed += new SubscribedForwardDestination.SubscribingComputerUnscubscribedEventHandler(sfc_Unsubscribed);
             if (this.forwards.ContainsKey(subscribedComputer.Key))
@@ -1379,7 +1404,7 @@ namespace Growl
         {
             if (subscription.EnabledAndAvailable)
             {
-                this.passwordManager.Add(subscription.SubscriptionPassword);
+                this.passwordManager.Add(subscription.SubscriptionPassword, false);
             }
             else
             {

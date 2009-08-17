@@ -430,8 +430,8 @@ If another version of Growl is already running, please close that version and tr
     <comment>History tab: sort by date radio button label</comment>
   </data>
   <data name="History_SortByTitle" xml:space="preserve">
-    <value>Sort By</value>
-    <comment>History tab: Sort By</comment>
+    <value>Group By</value>
+    <comment>History tab: Group By</comment>
   </data>
   <data name="LiteralString_Format" xml:space="preserve">
     <value>format</value>
@@ -494,8 +494,8 @@ If another version of Growl is already running, please close that version and tr
     <comment>Network tab: checkbox text for 'forward notifications to other computers'</comment>
   </data>
   <data name="Network_RemoveComputer" xml:space="preserve">
-    <value>Remove Computer</value>
-    <comment>Network tab: 'Remove Computer' context menu item</comment>
+    <value>Remove</value>
+    <comment>Network tab: 'Remove' context menu item</comment>
   </data>
   <data name="Network_SubscribeToNotifications" xml:space="preserve">
     <value>Subscribe to notifications from other computers</value>
@@ -947,5 +947,29 @@ to Twitter</value>
   <data name="AddEmail_SMTPDone" xml:space="preserve">
     <value>done</value>
     <comment>Configure Email forwarding SMTP Settings: 'done' link</comment>
+  </data>
+  <data name="History_Columns_Application" xml:space="preserve">
+    <value>Application</value>
+    <comment>History tab: Column header for Application column</comment>
+  </data>
+  <data name="History_Columns_Text" xml:space="preserve">
+    <value>Text</value>
+    <comment>History tab: Column header for Text column</comment>
+  </data>
+  <data name="History_Columns_Timestamp" xml:space="preserve">
+    <value>Timestamp</value>
+    <comment>History tab: Column header for Timestamp column</comment>
+  </data>
+  <data name="History_Columns_Title" xml:space="preserve">
+    <value>Title</value>
+    <comment>History tab: Column header for Title column</comment>
+  </data>
+  <data name="History_DetailsView" xml:space="preserve">
+    <value>Details View</value>
+    <comment>History tab: Details View context menu option</comment>
+  </data>
+  <data name="History_TileView" xml:space="preserve">
+    <value>Tile View</value>
+    <comment>History tab: Tile View context menu option</comment>
   </data>
 </root>

@@ -10,6 +10,7 @@ namespace Growl.Connector
     /// will be returned with the response from Growl. The actual items and their values are
     /// not used by Growl.
     /// </summary>
+    [Serializable]
     public class RequestData : Dictionary<string, string>
     {
         /// <summary>

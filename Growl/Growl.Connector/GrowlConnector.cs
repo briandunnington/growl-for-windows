@@ -186,17 +186,15 @@ namespace Growl.Connector
 
             if (callbackContext != null)
             {
-                mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT, callbackContext.Data));
-                mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE, callbackContext.Type.ToString()));
-
-                UrlCallbackTarget target = callbackContext.GetUrlCallbackTarget();
-                if (target != null && !String.IsNullOrEmpty(target.Url))
+                string url = callbackContext.CallbackUrl;
+                if (!String.IsNullOrEmpty(url))
                 {
-                    mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET, target.Url));
-                    mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET_METHOD, target.Method));
+                    mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_TARGET, url));
                 }
                 else
                 {
+                    mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT, callbackContext.Data));
+                    mb.AddHeader(new Header(Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE, callbackContext.Type.ToString()));
                     waitForCallback = true;
                 }
             }

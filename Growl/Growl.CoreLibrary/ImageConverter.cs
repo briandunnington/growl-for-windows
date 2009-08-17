@@ -19,11 +19,14 @@ namespace Growl.CoreLibrary
             byte[] bytes = null;
             if (image != null)
             {
-                System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                using (ms)
+                lock (image)
                 {
-                    image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    bytes = ms.GetBuffer();
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    using (ms)
+                    {
+                        image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        bytes = ms.GetBuffer();
+                    }
                 }
             }
             return bytes;
@@ -50,7 +53,6 @@ namespace Growl.CoreLibrary
                         using (tempImage)
                         {
                             image = new Bitmap(tempImage);
-                            ms.Close();
                         }
                     }
                 }
@@ -84,7 +86,6 @@ namespace Growl.CoreLibrary
                             using (tempImage)
                             {
                                 image = new Bitmap(tempImage);
-                                fs.Close();
                             }
                         }
                     }
@@ -103,7 +104,6 @@ namespace Growl.CoreLibrary
                                 using (tempImage)
                                 {
                                     image = new Bitmap(tempImage);
-                                    ms.Close();
                                 }
                             }
                         }

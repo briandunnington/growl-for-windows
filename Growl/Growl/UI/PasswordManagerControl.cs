@@ -45,8 +45,11 @@ namespace Growl.UI
             this.passwordListBox.Items.Clear();
             foreach (Growl.Connector.Password password in this.pm.Passwords.Values)
             {
-                PasswordManagerControlListItem pi = new PasswordManagerControlListItem(password);
-                this.passwordListBox.Items.Add(pi);
+                if (password.Permanent)
+                {
+                    PasswordManagerControlListItem pi = new PasswordManagerControlListItem(password);
+                    this.passwordListBox.Items.Add(pi);
+                }
             }
             this.passwordListBox.ResumeLayout();
         }
@@ -168,20 +171,18 @@ namespace Growl.UI
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            string passwordToRemove = this.textBoxPassword.Text;
             if (this.editPanel.Tag != null)
             {
                 PasswordManagerControlListItem pi = (PasswordManagerControlListItem)this.editPanel.Tag;
-                pi.Password.ActualPassword = this.textBoxPassword.Text;
-                pi.Password.Description = this.textBoxDescription.Text;
+                passwordToRemove = pi.Password.ActualPassword;
             }
-            else
-            {
-                this.pm.Remove(this.textBoxPassword.Text); // just in case the same password already exists
-                Growl.Connector.Password p = new Growl.Connector.Password(this.textBoxPassword.Text, this.textBoxDescription.Text);
-                this.pm.Add(p);
 
-                RefreshItems();
-            }
+            this.pm.Remove(passwordToRemove); // just in case the same password already exists
+            Growl.Connector.Password p = new Growl.Connector.Password(this.textBoxPassword.Text, this.textBoxDescription.Text, true);
+            this.pm.Add(p);
+            RefreshItems();
+
             this.editPanel.Tag = null;
             this.editPanel.Visible = false;
             this.OnUpdated();
