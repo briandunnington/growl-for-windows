@@ -25,5 +25,13 @@ namespace Growl.Daemon
                 this.safeToDisconnect = value;
             }
         }
+
+        public AsyncSocket Socket
+        {
+            get
+            {
+                return this.socket;
+            }
+        }
     }
 }

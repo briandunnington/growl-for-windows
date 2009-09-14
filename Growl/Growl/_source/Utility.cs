@@ -84,6 +84,12 @@ namespace Growl
             return folder;
         }
 
+        public static string GetResourceString(string resourceString)
+        {
+            resourceString = resourceString.Replace("\\n", "\n");
+            return resourceString;
+        }
+
         public static bool DebugMode
         {
             get

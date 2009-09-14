@@ -158,12 +158,14 @@ namespace Growl
 
         internal virtual void CloseAllOpenNotifications()
         {
-            this.display.CloseAllOpenNotifications();
+            if(this.display != null)    // some displays (appears to be WPF only) are not loaded 100% yet, so this can fail if they have not been used yet
+                this.display.CloseAllOpenNotifications();
         }
 
         internal virtual void CloseLastNotification()
         {
-            this.display.CloseLastNotification();
+            if(this.display != null)
+                this.display.CloseLastNotification();
         }
 
         public override int GetHashCode()

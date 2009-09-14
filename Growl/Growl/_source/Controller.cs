@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32;
+using Mono.Zeroconf;
 
 namespace Growl
 {
@@ -24,6 +25,8 @@ namespace Growl
         private delegate void OnForwardDestinationsUpdatedDelegate();
         private delegate void OnSubscriptionsUpdatedDelegate(bool countChanged);
 
+        public event EventHandler Started;
+        public event EventHandler Stopped;
         public event FailedToStartEventHandler FailedToStart;
         public event FailedToStartEventHandler FailedToStartUDPLegacy;
         internal event ItemLoadedEventHandler ItemLoaded;
@@ -54,6 +57,7 @@ namespace Growl
         private Bonjour bonjour;
         private Growl.Connector.PasswordManager passwordManager;
 
+        private bool isStarted;
         private bool isRunning;
         private bool paused;
         private bool idle;
@@ -128,7 +132,6 @@ namespace Growl
         public bool Start()
         {
             bool started = false;
-            //string keyHex = "8917EEF78F63044182DB218FDC9715C16EE45AE1179A17A4521B0AFF559272AC";
 
             this.gntpListener = new Growl.Daemon.GrowlServer(Growl.Connector.GrowlConnector.TCP_PORT, this.passwordManager, Utility.UserSettingFolder);
             this.gntpListener.RegisterReceived += new Growl.Daemon.GrowlServer.RegisterReceivedEventHandler(gntpListener_RegisterReceived);
@@ -188,14 +191,19 @@ namespace Growl
 
             StartActivityMonitor();
 
+            OnStarted();
+
             // send a notification that growl is running
             SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text);
+
+            this.isStarted = started;
 
             return true;
         }
 
         public void Stop()
         {
+            this.isStarted = false;
             this.isRunning = false;
 
             StopActivityMonitor();
@@ -216,6 +224,8 @@ namespace Growl
             this.missedNotifications.Clear();
 
             SaveAppState();
+
+            OnStopped();
         }
 
         public void Pause()
@@ -546,18 +556,25 @@ namespace Growl
                 else
                 {
                     string data = System.IO.File.ReadAllText(file.FullName);
-                    object obj = Serialization.DeserializeObject(data);
-                    if (obj != null)
+                    try
                     {
-                        try
+                        object obj = Serialization.DeserializeObject(data);
+                        if (obj != null)
                         {
-                            PastNotification pn = (PastNotification)obj;
-                            pn.LinkImage();
-                            this.pastNotifications.Add(pn);
+                            try
+                            {
+                                PastNotification pn = (PastNotification)obj;
+                                pn.LinkImage();
+                                this.pastNotifications.Add(pn);
+                            }
+                            catch
+                            {
+                            }
                         }
-                        catch
-                        {
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Utility.WriteDebugInfo(String.Format("Deserialization of history item failed. {0} :: {1} :: {2}", ex.Message, ex.StackTrace, data));
                     }
                 }
             }
@@ -717,6 +734,22 @@ namespace Growl
             }
         }
 
+        protected void OnStarted()
+        {
+            if (this.Started != null)
+            {
+                this.Started(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnStopped()
+        {
+            if (this.Stopped != null)
+            {
+                this.Stopped(this, EventArgs.Empty);
+            }
+        }
+
         protected void OnApplicationRegistered(RegisteredApplication ra)
         {
             if (this.ApplicationRegistered != null)
@@ -846,8 +879,6 @@ namespace Growl
                         n.Sticky = sticky;
                         n.Title = notification.Title;
                         n.Duration = rn.Duration;
-
-//                        System.Diagnostics.Debug.Assert(!this.synchronizingObject.InvokeRequired, "InvokeRequired");
 
                         if (notification.Icon != null && notification.Icon.IsSet)
                         {
@@ -1050,7 +1081,6 @@ namespace Growl
         {
             bool alertUser = true;
             int ttl = Properties.Settings.Default.SubscriptionTTL;
-            ttl = 300;
             SubscribedForwardDestination subscribedComputer = new SubscribedForwardDestination(subscriber, ttl);
             subscribedComputer.Unsubscribed += new SubscribedForwardDestination.SubscribingComputerUnscubscribedEventHandler(sfc_Unsubscribed);
             if (this.forwards.ContainsKey(subscribedComputer.Key))
@@ -1120,8 +1150,11 @@ namespace Growl
                 System.IO.StreamWriter w = System.IO.File.CreateText(filepath);
                 using (w)
                 {
-                    string data = Serialization.SerializeObject(pn);
-                    w.Write(data);
+                    lock (pn.Image)
+                    {
+                        string data = Serialization.SerializeObject(pn);
+                        w.Write(data);
+                    }
                 }
             }
             return pn;
@@ -1214,7 +1247,7 @@ namespace Growl
                 this.missedNotifications.Clear();
         }
 
-        void bonjour_ServiceFound(Bonjour sender, ZeroconfService.NetService service, GrowlBonjourEventArgs args)
+        void bonjour_ServiceFound(Bonjour sender, IResolvableService service, GrowlBonjourEventArgs args)
         {
             BonjourForwardDestination bfc = MatchBonjourServiceToForwardDestination(service);
             if (bfc != null)
@@ -1224,7 +1257,7 @@ namespace Growl
             }
         }
 
-        void bonjour_ServiceRemoved(Bonjour sender, ZeroconfService.NetService service)
+        void bonjour_ServiceRemoved(Bonjour sender, IResolvableService service)
         {
             BonjourForwardDestination bfc = MatchBonjourServiceToForwardDestination(service);
             if (bfc != null)
@@ -1234,7 +1267,7 @@ namespace Growl
             }
         }
 
-        private BonjourForwardDestination MatchBonjourServiceToForwardDestination(ZeroconfService.NetService service)
+        private BonjourForwardDestination MatchBonjourServiceToForwardDestination(IResolvableService service)
         {
             if(this.forwards.ContainsKey(service.Name))
             {
@@ -1414,6 +1447,22 @@ namespace Growl
             InvokeOnSubscriptionsUpdated(false);
         }
 
+        public bool IsRunning
+        {
+            get
+            {
+                return this.isRunning;
+            }
+        }
+
+        public bool IsOn
+        {
+            get
+            {
+                return this.isStarted;
+            }
+        }
+
         public bool RequireLocalPassword
         {
             get
@@ -1507,6 +1556,9 @@ namespace Growl
             {
                 if (disposing)
                 {
+                    if (this.bonjour != null)
+                        this.bonjour.Dispose();
+
                     if (this.activityMonitor != null)
                         this.activityMonitor.Dispose();
 

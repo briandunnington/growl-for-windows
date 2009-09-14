@@ -51,6 +51,13 @@ namespace Growl.Installation
                         }
                     }
                 }
+
+                // 2. create proxy.config if necessary (but dont overwrite if it already exists)
+                string proxyPath = System.IO.Path.Combine(targetDir, "proxy.config");
+                if (!System.IO.File.Exists(proxyPath))
+                {
+                    System.IO.File.WriteAllText(proxyPath, Properties.Resources.proxy);
+                }
             }
             catch
             {

@@ -45,5 +45,25 @@ namespace Growl.UI
             }
             base.OnEnabledChanged(e);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.bgImage != null)
+                {
+                    this.bgImage.Dispose();
+                    this.bgImage = null;
+                }
+
+                if (this.bgImageDisabled != null)
+                {
+                    this.bgImageDisabled.Dispose();
+                    this.bgImageDisabled = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

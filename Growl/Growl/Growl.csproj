@@ -33,6 +33,14 @@
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Growl.Daemon\Third Party Assemblies\Mono.Zeroconf.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Growl.Daemon\Third Party Assemblies\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -44,10 +52,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TrackBar, Version=1.0.2486.37933, Culture=neutral, PublicKeyToken=503bf28f63ad27b4" />
-    <Reference Include="ZeroconfService, Version=0.5.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Growl.Daemon\Third Party Assemblies\ZeroconfService.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddComputer.cs">
@@ -109,6 +113,7 @@
     </Compile>
     <Compile Include="_source\EmailForwardDestinationHandler.cs" />
     <Compile Include="_source\ForwardDestinationListItem.cs" />
+    <Compile Include="_source\HotKeyManager.cs" />
     <Compile Include="_source\ManualForwardDestinationHandler.cs" />
     <Compile Include="_source\IForwardDestinationHandler.cs" />
     <Compile Include="UI\ListControl.cs">
@@ -405,12 +410,10 @@
     </Content>
     <Content Include="installer.jpg" />
     <None Include="lib\ICSharpCode.SharpZipLib.dll" />
-    <None Include="proxy.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\growl.png" />
     <None Include="Resources\growl.ico" />
     <None Include="Resources\Envelope.png" />
+    <None Include="Resources\proxy.config" />
     <None Include="Resources\twitter.png" />
     <Content Include="SystemBalloonIntercepter.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -444,6 +447,9 @@
     <Content Include="update.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Displays\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

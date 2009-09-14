@@ -298,7 +298,20 @@ namespace Growl.UI
         {
             this.SuspendLayout();
             this.ResumeLayout(false);
+        }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.imageList != null)
+                {
+                    this.imageList.Dispose();
+                    this.imageList = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

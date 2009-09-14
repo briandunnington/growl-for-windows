@@ -52,18 +52,19 @@ namespace Growl.Installation
                 this.wc = new WebClientEx();
                 wc.Headers.Add("User-Agent", USER_AGENT);
 
-                string definition = wc.DownloadString(this.uri);
+                byte[] data = wc.DownloadData(this.uri);
+                string definition = Encoding.UTF8.GetString(data).Trim();
                 DisplayInfo info = DisplayInfo.Parse(definition);
                 if (info != null)
                 {
-                    this.InfoLabel.Text = String.Format(Properties.Resources.DisplayInstaller_Prompt, info.Name, info.Author, info.Description);
+                    this.InfoLabel.Text = String.Format(Utility.GetResourceString(Properties.Resources.DisplayInstaller_Prompt), info.Name, info.Author, info.Description);
                     this.YesButton.Visible = true;
                     this.NoButton.Visible = true;
                     this.OKButton.Visible = false;
                     DialogResult result = this.ShowDialog();
                     if (result == DialogResult.Yes)
                     {
-                        this.InfoLabel.Text = Properties.Resources.DisplayInstaller_Installing;
+                        this.InfoLabel.Text = Utility.GetResourceString(Properties.Resources.DisplayInstaller_Installing);
                         this.progressBar1.Value = 0;
                         this.progressBar1.Visible = true;
                         this.YesButton.Enabled = false;
@@ -80,9 +81,11 @@ namespace Growl.Installation
                         wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
                         wc.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
 
-                        System.Threading.ParameterizedThreadStart pts = new System.Threading.ParameterizedThreadStart(StartDownload);
-                        System.Threading.Thread t = new System.Threading.Thread(pts);
-                        t.Start(info);
+                        //System.Threading.ParameterizedThreadStart pts = new System.Threading.ParameterizedThreadStart(StartDownload);
+                        //System.Threading.Thread t = new System.Threading.Thread(pts);
+                        //t.Start(info);
+
+                        StartDownload(info);
 
                         Utility.WriteDebugInfo(String.Format("Downloading display '{0}' to {1}", info.Name, info.LocalZipFileLocation));
 
@@ -110,9 +113,7 @@ namespace Growl.Installation
                                 Utility.WriteDebugInfo(String.Format("Display '{0}' downloaded - starting unzip.", info.Name));
                                 Unzipper.UnZipFiles(info.LocalZipFileLocation, newDisplayFolder, false);
 
-                                //ShowMessage(String.Format("The display '{0}' was installed successfully.", info.Name));
-
-                                InternalNotification n = new InternalNotification(Properties.Resources.DisplayInstaller_NewDisplayInstalledTitle, String.Format(Properties.Resources.DisplayInstaller_NewDisplayInstalledText, info.Name), info.Name);
+                                InternalNotification n = new InternalNotification(Properties.Resources.DisplayInstaller_NewDisplayInstalledTitle, String.Format(Utility.GetResourceString(Properties.Resources.DisplayInstaller_NewDisplayInstalledText), info.Name), info.Name);
                                 queuedNotifications.Add(n);
 
                                 newDisplayLoaded = true;
@@ -122,8 +123,7 @@ namespace Growl.Installation
                             else
                             {
                                 // display with the same name aleady exists...
-                                // TODO: ??
-                                ShowMessage(String.Format(Properties.Resources.DisplayInstaller_AlreadyInstalled, info.Name));
+                                ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.DisplayInstaller_AlreadyInstalled), info.Name));
                             }
 
                             // clean up
@@ -140,14 +140,14 @@ namespace Growl.Installation
                 else
                 {
                     // definition file was malformed
-                    ShowMessage(String.Format(Properties.Resources.DisplayInstaller_BadDefinitionFile, this.uri));
+                    ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.DisplayInstaller_BadDefinitionFile), this.uri));
                 }
             }
             catch (Exception ex)
             {
                 // error downloading definition file
                 Utility.WriteDebugInfo(String.Format("Error downloading display. {0} - {1}", ex.Message, ex.StackTrace));
-                ShowMessage(String.Format(Properties.Resources.DisplayInstaller_NonexistentDefinitionFile, this.uri));
+                ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.DisplayInstaller_NonexistentDefinitionFile), this.uri));
             }
             return newDisplayLoaded;
         }
@@ -163,33 +163,37 @@ namespace Growl.Installation
         {
             if (e.Error != null)
             {
-                this.errorMessage = Properties.Resources.DisplayInstaller_DownloadError;
+                Utility.WriteDebugInfo(e.Error.Message);
+                Utility.WriteDebugInfo(e.Error.StackTrace);
+                this.errorMessage = Utility.GetResourceString(Properties.Resources.DisplayInstaller_DownloadError);
             }
             else if (e.Cancelled)
             {
-                this.errorMessage = Properties.Resources.DisplayInstaller_DownloadCancelled;
+                this.errorMessage = Utility.GetResourceString(Properties.Resources.DisplayInstaller_DownloadCancelled);
             }
-
-            // sometimes the downloaded file is still being written to disk.
-            // this will wait until the file is readable before returning.
-            DisplayInfo info = (DisplayInfo)e.UserState;
-            bool fileAvailable = false;
-            int counter = 0;
-            while(!fileAvailable && counter < 10)
+            else
             {
-                counter++;
-                try
+                // sometimes the downloaded file is still being written to disk.
+                // this will wait until the file is readable before returning.
+                DisplayInfo info = (DisplayInfo)e.UserState;
+                bool fileAvailable = false;
+                int counter = 0;
+                while (!fileAvailable && counter < 10)
                 {
-                    FileStream fs = File.OpenRead(info.LocalZipFileLocation);
-                    using (fs)
+                    counter++;
+                    try
                     {
-                        fileAvailable = true;
+                        FileStream fs = File.OpenRead(info.LocalZipFileLocation);
+                        using (fs)
+                        {
+                            fileAvailable = true;
+                        }
                     }
-                }
-                catch
-                {
-                    // wait a bit to allow the disk I/O to complete
-                    System.Threading.Thread.Sleep(500);
+                    catch
+                    {
+                        // wait a bit to allow the disk I/O to complete
+                        System.Threading.Thread.Sleep(500);
+                    }
                 }
             }
 

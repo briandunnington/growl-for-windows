@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.ServiceModel.Syndication;
 using System.Xml;
 using System.Net;
 
 namespace GrowlExtras.FeedMonitor
 {
-    public class Feed
+    public class Feed : IDisposable
     {
         public event EventHandler<FeedRetrievedEventArgs> FeedRetrieved;
         public event EventHandler<FeedUpdatedEventArgs> FeedUpdated;
@@ -92,6 +91,7 @@ namespace GrowlExtras.FeedMonitor
         {
             if (!this.webclient.IsBusy)
             {
+                this.webclient.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
                 this.webclient.OpenReadAsync(this.url);
                 this.lastCheckForUpdates = DateTime.Now;
             }
@@ -99,36 +99,45 @@ namespace GrowlExtras.FeedMonitor
 
         void webclient_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
+            WebClient wc = (WebClient)sender;
+
             // process the feed
             if (e.Error == null && e.Result != null)
             {
-                using (XmlReader reader = XmlReader.Create(e.Result))
+                /* THIS IS JUST FOR TESTING
+                List<byte> chars = new List<byte>();
+                System.IO.StreamReader r = new System.IO.StreamReader(e.Result);
+                using (r)
                 {
-                    try
+                    while (r.Peek() > 0)
                     {
-                        SyndicationFeed feed = null;
-                        try
-                        {
-                            feed = SyndicationFeed.Load(reader);
-                        }
-                        catch
-                        {
-                            // the loader couldn't load the feed, but it might be RSS 1.0, so try that
-                            Rss10FeedFormatter formatter = new Rss10FeedFormatter();
-                            if (formatter.CanRead(reader))
-                            {
-                                formatter.ReadFrom(reader);
-                                feed = formatter.Feed;
-                            }
-                        }
-                        OnFeedRetrieved(feed);
+                        chars.Add((byte) r.Read());
                     }
-                    catch (Exception ex)
-                    {
-                        // the loader couldn't load the feed
-                        FeedErrorEventArgs args = new FeedErrorEventArgs(new FeedException(_parseErrorMessage, ex));
-                        OnFeedError(args);
-                    }
+                }
+                byte[] bytes = chars.ToArray();
+                string s = System.Text.Encoding.UTF8.GetString(bytes);
+                Console.WriteLine(s);
+                 * */
+
+                FeedInfo info = null;
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.ProhibitDtd = false;
+                using (XmlReader reader = XmlReader.Create(e.Result, settings))
+                {
+                    GenericFeedParser parser = new GenericFeedParser();
+                    info = parser.Parse(reader);
+                }
+
+                if (info != null)
+                {
+                    info.Url = this.Url;
+                    OnFeedRetrieved(info);
+                }
+                else
+                {
+                    // the loader couldn't load the feed
+                    FeedErrorEventArgs args = new FeedErrorEventArgs(new FeedException(_parseErrorMessage));
+                    OnFeedError(args);
                 }
             }
             else
@@ -154,9 +163,9 @@ namespace GrowlExtras.FeedMonitor
         /// <summary>
         /// Internal method used to raise the feed event
         /// </summary>
-        protected void OnFeedRetrieved(SyndicationFeed feed)
+        protected void OnFeedRetrieved(FeedInfo feed)
         {
-            this.name = feed.Title.Text;
+            this.name = feed.Title;
             DateTimeOffset mostRecentItem = this.feedLastUpdated;
             if (mostRecentItem == DateTimeOffset.MaxValue) mostRecentItem = DateTimeOffset.MinValue;
 
@@ -170,11 +179,11 @@ namespace GrowlExtras.FeedMonitor
 
             if (FeedUpdated != null)
             {
-                List<SyndicationItem> newitems = new List<SyndicationItem>();
-                foreach (SyndicationItem item in feed.Items)
+                List<FeedItem> newitems = new List<FeedItem>();
+                foreach (FeedItem item in feed.Items)
                 {
-                    DateTimeOffset itemDate = item.LastUpdatedTime;
-                    if (itemDate == DateTimeOffset.MinValue) itemDate = item.PublishDate;
+                    DateTimeOffset itemDate = item.PubDate;
+                    //if (itemDate == DateTimeOffset.MinValue) itemDate = item.PublishDate;
 
                     System.Diagnostics.Debug.WriteLine(String.Format("Item Published at: {0} - (last update at: {1})", itemDate, this.feedLastUpdated));
 
@@ -184,7 +193,6 @@ namespace GrowlExtras.FeedMonitor
                     if (itemDate > this.feedLastUpdated)
                     {
                         newitems.Add(item);
-                        //item.SourceFeed.Title = feed.Title; // override this value since some feed items specify a different source (and we dont want that)
                         item.SourceFeed = feed;
                     }
                 }
@@ -203,6 +211,28 @@ namespace GrowlExtras.FeedMonitor
             if (FeedError != null)
                 FeedError(this, args);
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.timer != null)
+                    this.timer.Dispose();
+
+                if (this.webclient != null)
+                    this.webclient.Dispose();
+            }
+        }
+
+        #endregion
     }
 
     public class FeedException : Exception
@@ -226,14 +256,14 @@ namespace GrowlExtras.FeedMonitor
 
     public class FeedUpdatedEventArgs : EventArgs
     {
-        private List<SyndicationItem> newitems;
+        private List<FeedItem> newitems;
 
-        public FeedUpdatedEventArgs(List<SyndicationItem> newitems)
+        public FeedUpdatedEventArgs(List<FeedItem> newitems)
         {
             this.newitems = newitems;
         }
 
-        public List<SyndicationItem> NewItems
+        public List<FeedItem> NewItems
         {
             get { return this.newitems; }
         }
@@ -242,14 +272,14 @@ namespace GrowlExtras.FeedMonitor
 
     public class FeedRetrievedEventArgs : EventArgs
     {
-        private SyndicationFeed feed;
+        private FeedInfo feed;
 
-        public FeedRetrievedEventArgs(SyndicationFeed feed)
+        public FeedRetrievedEventArgs(FeedInfo feed)
         {
             this.feed = feed;
         }
 
-        public SyndicationFeed Feed
+        public FeedInfo Feed
         {
             get { return this.feed; }
         }

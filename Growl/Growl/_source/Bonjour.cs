@@ -2,17 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using ZeroconfService;
+using Mono.Zeroconf;
 
 namespace Growl
 {
     /// <summary>
     /// Provides methos for browsing advertised services.
     /// </summary>
-    public class Bonjour
+    public class Bonjour : IDisposable
     {
-        public delegate void NetServiceFoundEventHandler(Bonjour sender, NetService service, GrowlBonjourEventArgs args);
-        public delegate void NetServiceRemovedEventHandler(Bonjour sender, NetService service);
+        public delegate void NetServiceFoundEventHandler(Bonjour sender, IResolvableService service, GrowlBonjourEventArgs args);
+        public delegate void NetServiceRemovedEventHandler(Bonjour sender, IResolvableService service);
         public event NetServiceFoundEventHandler ServiceFound;
         public event NetServiceRemovedEventHandler ServiceRemoved;
 
@@ -27,7 +27,7 @@ namespace Growl
         /// <summary>
         /// The service browser that monitors for other bonjour services
         /// </summary>
-        private NetServiceBrowser serviceBrowser;
+        private ServiceBrowser serviceBrowser;
 
         /// <summary>
         /// A list of other bonjour services found
@@ -36,19 +36,8 @@ namespace Growl
 
         static Bonjour()
         {
-            // we need to determine if Bonjour is available. this is kind of a crappy
-            // way to do it, but there is no other way to know for sure
-            try
-            {
-                ZeroconfService.NetServiceBrowser nsb = new NetServiceBrowser();
-                int version = nsb.GetVersion(); // we dont need the version, but this is a quick way to check if the necessary bonjour files are available
-                isSupported = true;
-            }
-            catch
-            {
-                Console.WriteLine("Bonjour is not supported");
-                isSupported = false;
-            }
+            // since we are providing our own mDNS, Bonjour is always supported
+            isSupported = true;
         }
 
 
@@ -57,22 +46,70 @@ namespace Growl
         /// </summary>
         public void Start()
         {
-            if(!this.isStarted)
+            if(isSupported && !this.isStarted)
             {
                 try
                 {
-                    this.serviceBrowser = new NetServiceBrowser();
-                    this.serviceBrowser.AllowMultithreadedCallbacks = true;
-                    this.serviceBrowser.DidFindService += new NetServiceBrowser.ServiceFound(serviceBrowser_DidFindService);
-                    this.serviceBrowser.DidRemoveService += new NetServiceBrowser.ServiceRemoved(serviceBrowser_DidRemoveService);
-                    this.serviceBrowser.SearchForService(Growl.Daemon.GrowlServer.BONJOUR_SERVICE_TYPE, Growl.Daemon.GrowlServer.BONJOUR_SERVICE_DOMAIN);
+                    this.serviceBrowser = new ServiceBrowser();
+                    this.serviceBrowser.ServiceAdded += new ServiceBrowseEventHandler(serviceBrowser_ServiceAdded);
+                    this.serviceBrowser.ServiceRemoved += new ServiceBrowseEventHandler(serviceBrowser_ServiceRemoved);
+                    this.serviceBrowser.Browse(Growl.Daemon.GrowlServer.BONJOUR_SERVICE_TYPE, null);
                     this.isStarted = true;
                 }
-                catch(DNSServiceException)
+                catch(Exception ex)
                 {
-                    isSupported = false;
+                    isStarted = false;
                 }
             }
+        }
+
+        void serviceBrowser_ServiceAdded(object o, ServiceBrowseEventArgs args)
+        {
+            IResolvableService service = args.Service;
+            Console.WriteLine(String.Format("Bonjour service detected: {0}", service.Name));
+
+            // check if we simply found ourself or another service
+            bool isSelf = IsOwnInstance(service);
+            if (!isSelf)
+            {
+                Console.WriteLine(String.Format("Bonjour Growl service detected: {0}", service.Name));
+
+                service.Resolved += new ServiceResolvedEventHandler(service_Resolved);
+                service.Resolve();
+            }
+        }
+
+        void service_Resolved(object o, ServiceResolvedEventArgs args)
+        {
+            IResolvableService service = args.Service;
+
+            ForwardDestinationPlatformType fcPlatform = ForwardDestinationPlatformType.Other;
+            if (service.TxtRecord != null)
+            {
+                foreach (TxtRecordItem record in service.TxtRecord)
+                {
+                    if (record.Key == "platform")
+                    {
+                        string platform = record.ValueString;
+                        fcPlatform = ForwardDestinationPlatformType.FromString(platform);
+                        break;
+                    }
+                }
+            }
+            GrowlBonjourEventArgs e = new GrowlBonjourEventArgs(fcPlatform);
+
+            this.OnServiceFound(service, e);
+        }
+
+        void serviceBrowser_ServiceRemoved(object o, ServiceBrowseEventArgs args)
+        {
+            IResolvableService service = args.Service;
+
+            Console.WriteLine("Bonjour service removed: {0}", service.Name);
+
+            service.Resolved -= service_Resolved;
+
+            this.OnServiceRemoved(args.Service);
         }
 
         /// <summary>
@@ -82,7 +119,13 @@ namespace Growl
         {
             if (this.isStarted)
             {
-                if (this.serviceBrowser != null) this.serviceBrowser.Stop();
+                if (this.serviceBrowser != null)
+                {
+                    this.serviceBrowser.ServiceAdded -= serviceBrowser_ServiceAdded;
+                    this.serviceBrowser.ServiceRemoved -= serviceBrowser_ServiceRemoved;
+                    this.serviceBrowser.Dispose();
+                    this.serviceBrowser = null;
+                }
                 this.isStarted = false;
             }
         }
@@ -125,7 +168,7 @@ namespace Growl
             }
         }
 
-        protected void OnServiceFound(NetService service, GrowlBonjourEventArgs args)
+        protected void OnServiceFound(IResolvableService service, GrowlBonjourEventArgs args)
         {
             if (!servicesFound.ContainsKey(service.Name))
             {
@@ -138,7 +181,7 @@ namespace Growl
             }
         }
 
-        protected void OnServiceRemoved(NetService service)
+        protected void OnServiceRemoved(IResolvableService service)
         {
             servicesFound.Remove(service.Name);
             if (this.ServiceRemoved != null)
@@ -160,65 +203,7 @@ namespace Growl
             return services;
         }
 
-        void serviceBrowser_DidFindService(NetServiceBrowser browser, NetService service, bool moreComing)
-        {
-            Console.WriteLine(String.Format("Bonjour service detected - trying to resolve : {0}", service.Name));
-
-            service.DidResolveService += new NetService.ServiceResolved(service_DidResolveService);
-            service.StartMonitoring();
-            service.ResolveWithTimeout(5);
-            // DONT fire ServiceFound here, we do that in DidResolveService
-        }
-
-        void service_DidResolveService(NetService service)
-        {
-            Console.WriteLine(String.Format("Bonjour service resolved: {0}", service.Name));
-
-            bool isSelf = IsOwnInstance(service);
-
-            ForwardDestinationPlatformType fcPlatform = ForwardDestinationPlatformType.Other;
-            IDictionary dict = ConvertTXTRecordToDictionary(service);
-            if (dict != null)
-            {
-                if (dict.Contains("platform"))
-                {
-                    byte[] bytes = (byte[])dict["platform"];
-                    string platform = Encoding.UTF8.GetString(bytes);
-                    fcPlatform = ForwardDestinationPlatformType.FromString(platform);
-                }
-            }
-
-            // otherwise, this is a different service, so lets keep track of it
-            if (!isSelf)
-            {
-                Console.WriteLine(String.Format("Bonjour Growl service detected: {0} - {1}", service.Name, "XXX"));
-
-                GrowlBonjourEventArgs args = new GrowlBonjourEventArgs(fcPlatform);
-
-                this.OnServiceFound(service, args);
-            }
-
-            /*
-            // NOTE: this is debug info only - not needed
-            if (service.Addresses != null)
-            {
-                foreach (System.Net.IPEndPoint ep in service.Addresses)
-                {
-                    Console.WriteLine(ep.ToString());
-                }
-            }
-             * */
-        }
-
-        void serviceBrowser_DidRemoveService(NetServiceBrowser browser, NetService service, bool moreComing)
-        {
-            Console.WriteLine("Bonjour service removed: {0}", service.Name);
-
-            this.OnServiceRemoved(service);
-            service.Dispose();
-        }
-
-        private static bool IsOwnInstance(NetService service)
+        private static bool IsOwnInstance(IResolvableService service)
         {
             if (service.Name == Growl.Daemon.GrowlServer.BonjourServiceName)
                 return true;
@@ -226,17 +211,30 @@ namespace Growl
                 return false;
         }
 
-        private static IDictionary ConvertTXTRecordToDictionary(NetService service)
+        #region IDisposable Members
+
+        public void Dispose()
         {
-            IDictionary dict = null;
-
-            if (service != null && service.TXTRecordData != null)
-            {
-                byte[] txt = service.TXTRecordData;
-                dict = NetService.DictionaryFromTXTRecordData(txt);
-            }
-
-            return dict;
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    Stop();
+                    if (this.serviceBrowser != null) this.serviceBrowser.Dispose();
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

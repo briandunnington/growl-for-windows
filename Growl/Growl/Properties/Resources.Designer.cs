@@ -1661,6 +1661,27 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;!-- if you dont run a proxy server OR want Growl to auto-detect your IE proxy settings, leave this file as-is --&gt;
+        ///&lt;!-- otherwise, if you want to override your default IE proxy address or port OR you need to pass custom authentication credentials, set those values here --&gt;
+        ///&lt;appSettings&gt;
+        ///  &lt;add key=&quot;ProxyAddress&quot; value=&quot;&quot;/&gt;
+        ///  &lt;add key=&quot;ProxyUsername&quot; value=&quot;&quot;/&gt;
+        ///  &lt;add key=&quot;ProxyPassword&quot; value=&quot;&quot;/&gt;
+        ///  &lt;add key=&quot;ProxyDomain&quot; value=&quot;&quot;/&gt;
+        ///&lt;/appSettings&gt;
+        ///
+        ///
+        ///&lt;!--  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string proxy {
+            get {
+                return ResourceManager.GetString("proxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow network notifications.
         /// </summary>
         internal static string Security_AllowNetworkNotifications {

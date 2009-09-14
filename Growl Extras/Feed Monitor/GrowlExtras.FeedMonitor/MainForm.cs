@@ -185,6 +185,7 @@ namespace GrowlExtras.FeedMonitor
             {
                 this.mainComponent.AddFeed(this.textBoxFeedUrl.Text, Properties.Settings.Default.DefaultInterval);
                 this.panel1.Hide();
+                this.textBoxFeedUrl.Text = String.Empty;
                 this.Show();
                 this.Refresh();
             }

@@ -7,7 +7,7 @@ using Growl.AutoUpdate;
 
 namespace Growl
 {
-    public class Program : ApplicationContext, System.ComponentModel.ISynchronizeInvoke
+    public class Program : ApplicationContext, System.ComponentModel.ISynchronizeInvoke, IDisposable
     {
         public event EventHandler ProgramRunning;
 
@@ -16,9 +16,6 @@ namespace Growl
         private MainForm mainForm;
         private bool initialized;
         Timer initializationTimer;
-        private Keys closeLastKeyCombo;
-        private Keys closeAllKeyCombo;
-        private bool isResponsingToKeyIntercept;
         private Updater updater;
         private Timer autoUpdateTimer = new Timer();
         private UpdateForm updateForm;
@@ -229,6 +226,9 @@ namespace Growl
                         key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY);
                     key.SetValue(null, Application.ExecutablePath);
                 }
+
+                this.initializationTimer.Dispose();
+                this.initializationTimer = null;
             }
         }
 
@@ -253,17 +253,6 @@ namespace Growl
 
             this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Preferences, 75);
 
-            try
-            {
-                KeysConverter kc = new KeysConverter();
-                this.closeLastKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseLast);
-                this.closeAllKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseAll);
-                Keyboard.KeyIntercepted += new Keyboard.KeyInterceptedEventHandler(Keyboard_KeyIntercepted);
-            }
-            catch
-            {
-            }
-
             // load all user preferences
             Microsoft.Win32.SystemEvents.TimeChanged += new EventHandler(SystemEvents_TimeChanged);
             this.mainForm.InitializePreferences();
@@ -272,7 +261,7 @@ namespace Growl
             //this.mainForm.Mute(Properties.Settings.Default.MuteAllSounds);
 
             // start growl (and set button at the same time)
-            this.mainForm.OnOffButton.Switched +=new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
+            this.mainForm.OnOffButton.Switched += new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
             this.mainForm.OnOffButton.On = true;
 
             this.mainForm.Hide();
@@ -320,6 +309,7 @@ namespace Growl
                 try
                 {
                     this.updateForm.Close();
+                    this.updateForm.Dispose();
                     this.updateForm = null;
                 }
                 finally
@@ -371,7 +361,6 @@ namespace Growl
         private bool StartGrowl()
         {
             bool started = this.controller.Start();
-            if (started) Keyboard.SetHook();
 
             UpdateState(started, false);
             Mute(Properties.Settings.Default.MuteAllSounds);
@@ -384,7 +373,6 @@ namespace Growl
             UpdateState(false, false);
 
             this.controller.Stop();
-            Keyboard.Unhook();
         }
 
         private void UpdateState(bool isRunning, bool isPaused)
@@ -424,48 +412,60 @@ namespace Growl
 
         void controller_ItemLoaded(string itemLoaded)
         {
-            int val = this.mainForm.ProgressBarInitializing.Value + 10;
-            if (val > 75) val = this.mainForm.ProgressBarInitializing.Value;
+            if (this.mainForm != null)
+            {
+                int val = this.mainForm.ProgressBarInitializing.Value + 10;
+                if (val > 75) val = this.mainForm.ProgressBarInitializing.Value;
 
-            this.mainForm.UpdateInitializationProgress(itemLoaded, val);
+                this.mainForm.UpdateInitializationProgress(itemLoaded, val);
+            }
         }
 
         void controller_ApplicationRegistered(RegisteredApplication ra)
         {
-            if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
+            if (this.mainForm != null)
             {
-                Controller.ApplicationRegisteredDelegate del = new Controller.ApplicationRegisteredDelegate(this.mainForm.OnApplicationRegistered);
-                this.mainForm.BeginInvoke(del, new object[] { ra });
-            }
-            else
-            {
-                this.mainForm.OnApplicationRegistered(ra);
+                if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
+                {
+                    Controller.ApplicationRegisteredDelegate del = new Controller.ApplicationRegisteredDelegate(this.mainForm.OnApplicationRegistered);
+                    this.mainForm.BeginInvoke(del, new object[] { ra });
+                }
+                else
+                {
+                    this.mainForm.OnApplicationRegistered(ra);
+                }
             }
         }
 
         void controller_NotificationReceived(Growl.DisplayStyle.Notification n)
         {
-            if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
+            if (this.mainForm != null)
             {
-                Controller.NotificationReceivedDelegate del = new Controller.NotificationReceivedDelegate(this.mainForm.OnNotificationReceived);
-                this.mainForm.BeginInvoke(del, new object[] { n });
-            }
-            else
-            {
-                this.mainForm.OnNotificationReceived(n);
+                if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
+                {
+                    Controller.NotificationReceivedDelegate del = new Controller.NotificationReceivedDelegate(this.mainForm.OnNotificationReceived);
+                    this.mainForm.BeginInvoke(del, new object[] { n });
+                }
+                else
+                {
+                    this.mainForm.OnNotificationReceived(n);
+                }
             }
         }
 
         void controller_NotificationPast(PastNotification pn)
         {
-            if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
+            if (this.mainForm != null)
             {
-                Controller.NotificationPastDelegate del = new Controller.NotificationPastDelegate(this.mainForm.OnNotificationPast);
-                this.mainForm.BeginInvoke(del, new object[] { pn });
-            }
-            else
-            {
-                this.mainForm.OnNotificationPast(pn);
+                if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
+                {
+                    Controller.NotificationPastDelegate del = new Controller.NotificationPastDelegate(this.mainForm.OnNotificationPast);
+                    this.mainForm.BeginInvoke(del, new object[] { pn });
+                }
+                else
+                {
+                    this.mainForm.OnNotificationPast(pn);
+                }
             }
         }
 
@@ -485,17 +485,20 @@ namespace Growl
 
         void controller_BonjourServiceUpdate(BonjourForwardDestination bfc)
         {
-            this.mainForm.OnBonjourServiceUpdated(bfc);
+            if(this.mainForm != null)
+                this.mainForm.OnBonjourServiceUpdated(bfc);
         }
 
         void controller_ForwardDestinationsUpdated(object sender, EventArgs e)
         {
-            this.mainForm.OnForwardDestinationsUpdated();
+            if(this.mainForm != null)
+                this.mainForm.OnForwardDestinationsUpdated();
         }
 
         void controller_SubscriptionsUpdated(bool countChanged)
         {
-            this.mainForm.OnSubscriptionsUpdated(countChanged);
+            if(this.mainForm != null)
+                this.mainForm.OnSubscriptionsUpdated(countChanged);
         }
 
         void OnOffButton_Switched(Growl.UI.OnOffSwitchedEventArgs args)
@@ -517,25 +520,6 @@ namespace Growl
             if (this.mainForm != null) this.mainForm.OnSystemTimeChanged();
         }
 
-        void Keyboard_KeyIntercepted(Keyboard.KeyboardHookEventArgs args)
-        {
-            if (!this.isResponsingToKeyIntercept)
-            {
-                if (args.KeyData == this.closeLastKeyCombo)
-                {
-                    this.isResponsingToKeyIntercept = true;
-                    if (this.controller != null) this.controller.CloseLastNotification();
-                    this.isResponsingToKeyIntercept = false;
-                }
-                else if (args.KeyData == this.closeAllKeyCombo)
-                {
-                    this.isResponsingToKeyIntercept = true;
-                    if (this.controller != null) this.controller.CloseAllOpenNotifications();
-                    this.isResponsingToKeyIntercept = false;
-                }
-            }
-        }
-
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
             if(this.mainForm != null)
@@ -551,28 +535,21 @@ namespace Growl
         private void pauseGrowlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UpdateState(true, true);
-
-            // controller.Pause();
         }
 
         private void unpauseGrowlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UpdateState(true, false);
-
-            // controller.Unpause();
-
         }
 
         private void muteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.mainForm != null)
-                this.mainForm.Mute(true);
+            Mute(true);
         }
 
         private void unmuteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.mainForm != null)
-                this.mainForm.Mute(false);
+            Mute(false);
         }
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -591,6 +568,9 @@ namespace Growl
             this.unmuteToolStripMenuItem.Visible = mute;
             Properties.Settings.Default.MuteAllSounds = mute;
             Properties.Settings.Default.Save();
+
+            if (this.mainForm != null)
+                this.mainForm.Mute(mute);
         }
 
         #region ISynchronizeInvoke Members
@@ -614,6 +594,69 @@ namespace Growl
         public bool InvokeRequired
         {
             get { return this.splash.InvokeRequired; }
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    Microsoft.Win32.SystemEvents.TimeChanged -= SystemEvents_TimeChanged;
+
+                    if (this.components != null)
+                    {
+                        this.components.Dispose();
+                    }
+
+                    if (this.initializationTimer != null)
+                    {
+                        this.initializationTimer.Dispose();
+                        this.initializationTimer = null;
+                    }
+
+                    if (this.autoUpdateTimer != null)
+                    {
+                        this.autoUpdateTimer.Dispose();
+                        this.autoUpdateTimer = null;
+                    }
+
+                    if (this.updater != null)
+                    {
+                        this.updater.Dispose();
+                        this.updater = null;
+                    }
+
+                    if (this.mainForm != null)
+                    {
+                        this.mainForm.Close();
+                        this.mainForm.Dispose();
+                        this.mainForm = null;
+                    }
+
+                    if (this.controller != null) this.controller.Dispose();
+
+                    if (this.splash != null)
+                    {
+                        this.splash.Dispose();
+                        this.splash = null;
+                    }
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
         }
 
         #endregion

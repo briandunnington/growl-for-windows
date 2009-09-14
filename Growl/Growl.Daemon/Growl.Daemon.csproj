@@ -30,20 +30,33 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono|AnyCPU' ">
+    <OutputPath>bin\Mono\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleAssemblies>C:\Program Files\Microsoft Visual Studio 8\Team Tools\Static Analysis Tools\FxCop\\rules</CodeAnalysisRuleAssemblies>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZeroconfService, Version=0.5.0.4, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncSocket.cs" />
     <Compile Include="BonjourService.cs" />
     <Compile Include="CallbackInfo.cs" />
     <Compile Include="ConnectedSocket.cs" />
+    <Compile Include="ConnectedSocketCollection.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="FlashPolicy.cs" />
     <Compile Include="GNTPStreamReader.cs" />
@@ -72,7 +85,8 @@
     <Content Include="flashpolicy.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Third Party Assemblies\ZeroconfService.dll" />
+    <Content Include="Third Party Assemblies\Mono.Zeroconf.dll" />
+    <Content Include="Third Party Assemblies\Mono.Zeroconf.Providers.Bonjour.dll" />
     <None Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -83,4 +97,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>if NOT $(ConfigurationName) == Mono goto :exit
+
+xbuild "$(ProjectPath)"
+
+:exit</PostBuildEvent>
+  </PropertyGroup>
 </Project>

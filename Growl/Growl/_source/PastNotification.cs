@@ -8,7 +8,7 @@ using System.Security.Permissions;
 namespace Growl
 {
     [Serializable]
-    public class PastNotification : IComparable
+    public class PastNotification : IComparable, IDisposable
     {
         [NonSerialized]
         private static Dictionary<string, System.Drawing.Image> imageList = new Dictionary<string, System.Drawing.Image>();
@@ -63,7 +63,7 @@ namespace Growl
         private System.Drawing.Image GenerateThumbnail(System.Drawing.Image originalImage, int newWidth, int newHeight)
         {
             System.Drawing.Bitmap bmpResized = new System.Drawing.Bitmap(newWidth, newHeight);
-            lock (originalImage)
+            lock (bmpResized)
             {
                 System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmpResized);
                 using (g)
@@ -138,6 +138,25 @@ namespace Growl
             PastNotification pn = obj as PastNotification;
             if (obj == null || pn == null) return -1;
             return -this.Timestamp.CompareTo(pn.Timestamp);
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.image != null)
+                    this.image.Dispose();
+            }
         }
 
         #endregion

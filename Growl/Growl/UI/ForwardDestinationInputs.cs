@@ -71,12 +71,15 @@ namespace Growl.UI
                 this.isBonjour = true;
                 DetectedService ds = bli.DetectedService;
                 this.selectedService = ds;
-                System.Net.IPEndPoint endpoint = (System.Net.IPEndPoint)ds.Service.Addresses[0];
+
+                string host = ds.Hostname;
+                int port = ds.Service.Port;
+                
                 this.textBoxDescription.Text = ds.Service.Name;
                 this.textBoxDescription.Enabled = false;
-                this.textBoxAddress.Text = endpoint.Address.ToString();
+                this.textBoxAddress.Text = host;
                 this.textBoxAddress.Enabled = false;
-                this.textBoxPort.Text = endpoint.Port.ToString();
+                this.textBoxPort.Text = port.ToString();
                 this.textBoxPort.Enabled = false;
                 this.comboBoxFormat.SelectedIndex = 0;
                 this.comboBoxFormat.Enabled = false;

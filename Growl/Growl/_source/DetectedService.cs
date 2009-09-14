@@ -1,22 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ZeroconfService;
+using Mono.Zeroconf;
 
 namespace Growl
 {
     public class DetectedService : IDisposable
     {
-        private NetService service;
+        private IResolvableService service;
         private ForwardDestinationPlatformType platform;
 
-        public DetectedService(NetService service, ForwardDestinationPlatformType platform)
+        public DetectedService(IResolvableService service, ForwardDestinationPlatformType platform)
         {
             this.service = service;
             this.platform = platform;
         }
 
-        public NetService Service
+        public IResolvableService Service
         {
             get
             {
@@ -30,6 +30,42 @@ namespace Growl
             {
                 return this.platform;
             }
+        }
+
+        public string Hostname
+        {
+            get
+            {
+                return GetHostname(this.service);
+            }
+        }
+
+        public static string GetHostname(IResolvableService service)
+        {
+            string hostname = null;
+
+            if (service != null)
+            {
+                hostname = service.HostTarget;
+
+                if (String.IsNullOrEmpty(hostname))
+                {
+                    if (service.HostEntry != null)
+                    {
+                        hostname = service.HostEntry.HostName;
+
+                        if (String.IsNullOrEmpty(hostname))
+                        {
+                            if (service.HostEntry.AddressList != null && service.HostEntry.AddressList.Length > 0)
+                            {
+                                hostname = service.HostEntry.AddressList[0].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return hostname;
         }
 
         #region IDisposable Members
@@ -46,7 +82,7 @@ namespace Growl
             {
                 try
                 {
-                    if (this.service != null) this.service.Dispose();
+
                 }
                 catch
                 {

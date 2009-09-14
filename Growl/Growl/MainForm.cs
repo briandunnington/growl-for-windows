@@ -17,6 +17,10 @@ namespace Growl
         private ToolTip historyTrackBarToolTip = new ToolTip();
         private Timer historyTrackBarTimer = new Timer();
 
+        private Keys closeLastKeyCombo;
+        private Keys closeAllKeyCombo;
+        private HotKeyManager closeLastHotKey;
+        private HotKeyManager closeAllHotKey;
 
         public MainForm()
         {
@@ -193,6 +197,7 @@ namespace Growl
             this.checkBoxAllowWebNotifications.Checked = this.controller.AllowWebNotifications;
             this.checkBoxAllowSubscriptions.Checked = this.controller.AllowSubscriptions;
             this.passwordManagerControl1.SetPasswordManager(this.controller.PasswordManager);
+            this.passwordManagerControl1.Updated += new EventHandler(passwordManagerControl1_Updated);
 
             // NETWORK
             this.checkBoxEnableForwarding.Checked = Properties.Settings.Default.AllowForwarding;
@@ -480,6 +485,7 @@ namespace Growl
 
         internal void OnSystemTimeChanged()
         {
+            this.controller.ReloadPastNotifications();
             this.historyListView.PastNotifications = this.controller.PastNotifications;
             this.historyListView.Draw();
         }
@@ -495,10 +501,18 @@ namespace Growl
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (historyTrackBarToolTip != null) historyTrackBarToolTip.Dispose();
+
+                if (historyTrackBarTimer != null) historyTrackBarTimer.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -1209,6 +1223,33 @@ namespace Growl
         private void historyFilterTextBox_TextChanged(object sender, EventArgs e)
         {
             this.historyListView.Filter = this.historyFilterTextBox.Text;
+        }
+
+        void passwordManagerControl1_Updated(object sender, EventArgs e)
+        {
+            this.controller.SavePasswordPrefs();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            // check if we got a hot key pressed.
+            if (m.Msg == HotKeyManager.WM_HOTKEY)
+            {
+                // we could get the actual key pressed, but it is easier to just check the id
+                int id = m.WParam.ToInt32();
+
+                if (id == this.closeLastHotKey.ID)
+                    this.controller.CloseLastNotification();
+                else if (id == this.closeAllHotKey.ID)
+                    this.controller.CloseAllOpenNotifications();
+            }
+
+            /* this is for handling intercepted system balloon messages - NOT READY YET
+            if (this.sbi != null)
+                sbi.ProcessWindowMessage(ref m);
+             * */
+
+            base.WndProc(ref m);
         }
 
         /* THIS IS NOT READY FOR RELEASE YET

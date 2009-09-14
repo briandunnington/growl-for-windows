@@ -32,7 +32,6 @@ namespace Growl
             string domain = ConfigurationManager.AppSettings["ProxyDomain"];
             if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password))
             {
-                this.UseDefaultCredentials = false;
                 credentials = new NetworkCredential(username, password, domain);
                 this.Proxy.Credentials = credentials;
             }

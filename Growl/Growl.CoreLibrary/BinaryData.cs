@@ -130,7 +130,11 @@ namespace Growl.CoreLibrary
         {
             if (data != null)
             {
-                byte[] hash = md5.ComputeHash(data);
+                byte[] hash = null;
+                lock (md5)
+                {
+                    hash = md5.ComputeHash(data);
+                }
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < hash.Length; i++)
                     sb.Append(hash[i].ToString("x2").ToLower());

@@ -124,7 +124,7 @@ namespace Growl.Daemon
         /// <summary>
         /// A list of connected sockets currently being serviced
         /// </summary>
-        private Dictionary<AsyncSocket, ConnectedSocket> connectedSockets;
+        private ConnectedSocketCollection connectedSockets;
 
         /// <summary>
         /// A list of MessageHandlers currently servicing requests
@@ -215,7 +215,7 @@ namespace Growl.Daemon
 
             // Initialize list to hold connected sockets
             // We support multiple concurrent connections
-            connectedSockets = new Dictionary<AsyncSocket, ConnectedSocket>();
+            connectedSockets = new ConnectedSocketCollection();
             connectedHandlers = new Dictionary<AsyncSocket, MessageHandler>();
             socketCleanupTimer = new System.Timers.Timer(30 * 1000);
             socketCleanupTimer.Elapsed += new System.Timers.ElapsedEventHandler(socketCleanupTimer_Elapsed);
@@ -408,7 +408,7 @@ namespace Growl.Daemon
             if (this.isStarted)
             {
                 // Stop accepting connections
-                listenSocket.Disconnect();
+                listenSocket.Close();
 
                 // Stop trying to clean up sockets
                 this.socketCleanupTimer.Stop();
@@ -421,13 +421,8 @@ namespace Growl.Daemon
                     // which will remove the socket and handler from the list.
 
                     // (we have to use some trickery to a single item from the list without knowing the key)
-                    AsyncSocket someSocket = null;
-                    foreach (AsyncSocket socket in connectedSockets.Keys)
-                    {
-                        someSocket = socket;
-                        break;
-                    }
-                    someSocket.Disconnect();
+                    AsyncSocket someSocket = connectedSockets[0].Socket;
+                    if(someSocket != null) someSocket.Close();
                 }
 
                 if(this.bonjour != null) this.bonjour.Stop();
@@ -465,21 +460,21 @@ namespace Growl.Daemon
             {
                 // remote connections not allowed - Should we return a GNTP error response? i think this is better (no reply at all)
                 LogInfo("Blocked network request from '{0}'", newSocket.RemoteAddress);
-                newSocket.Disconnect();
+                newSocket.Close();
                 return;
             }
 
             newSocket.AllowMultithreadedCallbacks = true;
 
             MessageHandler mh = new MessageHandler(this.serverName, this.passwordManager, isLocal, this.logFolder, this.loggingEnabled, this.requireLocalPassword, this.allowNetworkNotifications, this.allowFlash, this.allowSubscriptions);
-            newSocket.DidDisconnect += new AsyncSocket.SocketDidDisconnect(newSocket_DidDisconnect);
+            newSocket.DidClose += new AsyncSocket.SocketDidClose(newSocket_DidClose);
             newSocket.DidRead += new AsyncSocket.SocketDidRead(mh.SocketDidRead);
             newSocket.DidWrite += new AsyncSocket.SocketDidWrite(mh.SocketDidWrite);
             mh.MessageParsed += new MessageHandler.MessageHandlerMessageParsedEventHandler(mh_MessageParsed);
             mh.Error += new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
             mh.SocketUsageComplete += new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
 
-            connectedSockets.Add(newSocket, new ConnectedSocket(newSocket));
+            connectedSockets.Add(new ConnectedSocket(newSocket));
             connectedHandlers.Add(newSocket, mh);
 
             mh.InitialRead(newSocket);
@@ -721,10 +716,10 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Handles the <see cref="AsyncSocket.DidDisconnect"/> event
+        /// Handles the <see cref="AsyncSocket.DidClose"/> event
         /// </summary>
         /// <param name="sender">The <see cref="AsyncSocket"/> that disconnected</param>
-        void newSocket_DidDisconnect(AsyncSocket sender)
+        void newSocket_DidClose(AsyncSocket sender)
         {
             if (sender != null)
             {
@@ -733,10 +728,11 @@ namespace Growl.Daemon
                     this.connectedHandlers[sender] = null;
                     this.connectedHandlers.Remove(sender);
                 }
-                if (this.connectedSockets.ContainsKey(sender))
+                if (this.connectedSockets.Contains(sender))
                 {
-                    this.connectedSockets[sender] = null;
+                    ConnectedSocket cs = this.connectedSockets[sender];
                     this.connectedSockets.Remove(sender);
+                    cs = null;
                 }
 
                 sender = null;
@@ -754,19 +750,27 @@ namespace Growl.Daemon
             int count = this.connectedSockets.Count;
             if (count > 0)
             {
-                Queue<AsyncSocket> queue = new Queue<AsyncSocket>(this.connectedSockets.Keys);
+                Queue<AsyncSocket> queue = new Queue<AsyncSocket>(this.connectedSockets.Count);
+                lock (this.connectedSockets)
+                {
+                    foreach (ConnectedSocket cs in this.connectedSockets)
+                    {
+                        queue.Enqueue(cs.Socket);
+                    }
+                }
+
                 while (queue.Count > 0)
                 {
                     AsyncSocket socket = queue.Dequeue();
                     if (socket != null)
                     {
-                        if (this.connectedSockets.ContainsKey(socket))
+                        if (this.connectedSockets.Contains(socket))
                         {
                             bool safeToDisconnect = this.connectedSockets[socket].SafeToDisconnect;
                             if (safeToDisconnect && !socket.SmartConnected)
                             {
                                 // socket is disconnected from the other end
-                                socket.Disconnect();
+                                socket.Close();
                             }
                         }
                     }
@@ -777,7 +781,7 @@ namespace Growl.Daemon
 
         void mh_SocketUsageComplete(AsyncSocket socket)
         {
-            if (this.connectedSockets.ContainsKey(socket))
+            if (this.connectedSockets.Contains(socket))
             {
                 this.connectedSockets[socket].SafeToDisconnect = true;
             }

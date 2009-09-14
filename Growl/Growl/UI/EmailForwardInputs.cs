@@ -72,7 +72,7 @@ namespace Growl.UI
             if (efd != null)
             {
                 this.textBoxDescription.Text = efd.Description;
-                this.textBoxUsername.Text = efd.To; // TODO:
+                this.textBoxUsername.Text = efd.To;
                 if (efd.MinimumPriority != null && efd.MinimumPriority.HasValue)
                     this.comboBoxMinimumPriority.SelectedItem = PrefPriority.GetByValue(efd.MinimumPriority.Value);
                 this.checkBoxOnlyWhenIdle.Checked = efd.OnlyWhenIdle;
@@ -101,7 +101,7 @@ namespace Growl.UI
             if (efd != null)
             {
                 efd.Description = this.textBoxDescription.Text;
-                efd.To = this.textBoxUsername.Text; // TODO:
+                efd.To = this.textBoxUsername.Text;
                 efd.OnlyWhenIdle = this.checkBoxOnlyWhenIdle.Checked;
                 PrefPriority prefPriority = this.comboBoxMinimumPriority.SelectedItem as PrefPriority;
                 efd.MinimumPriority = (prefPriority != null ? prefPriority.Priority : null);

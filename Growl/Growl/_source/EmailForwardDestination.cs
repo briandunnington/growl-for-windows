@@ -150,7 +150,6 @@ namespace Growl
             if (this.SMTPConfiguration.UseAuthentication)
             {
                 System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(this.SMTPConfiguration.Username, this.SMTPConfiguration.Password);
-                smtp.UseDefaultCredentials = false;
                 smtp.Credentials = credentials;
             }
 

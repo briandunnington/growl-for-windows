@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Security;
 using System.Security.Permissions;
 using System.Text;
-using ZeroconfService;
+using Mono.Zeroconf;
 
 namespace Growl
 {
@@ -18,8 +18,7 @@ namespace Growl
         public BonjourForwardDestination(string serviceName, bool enabled, string password) : base(serviceName, enabled, null, 0, password)
         {
             this.serviceName = serviceName;
-            //Resolve();
-        }
+         }
 
         private BonjourForwardDestination(string serviceName, ForwardDestinationPlatformType platform, bool enabled, string password) : this(serviceName, enabled, password)
         {
@@ -54,14 +53,17 @@ namespace Growl
             }
         }
 
-        public void Update(NetService service, GrowlBonjourEventArgs args)
+        public void Update(IResolvableService service, GrowlBonjourEventArgs args)
         {
-            if (service != null && service.Addresses != null && service.Addresses.Count > 0)
+            if (service != null && service.HostEntry != null)
             {
-                System.Net.IPEndPoint endpoint = (System.Net.IPEndPoint)service.Addresses[0];
+
+                string host = DetectedService.GetHostname(service);
+                int port = (int) service.Port;
+
                 this.Description = service.Name;
-                this.IPAddress = endpoint.Address.ToString();
-                this.Port = endpoint.Port;
+                this.IPAddress = host;
+                this.Port = port;
                 this.Platform = args.Platform;
                 this.Available = true;
                 this.resolved = true;

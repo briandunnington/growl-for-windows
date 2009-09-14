@@ -233,5 +233,25 @@ namespace Growl.UI
             this.listbox.Location = new Point(0, headerHeight);
             this.listbox.Size = new Size(this.ClientSize.Width, this.ClientSize.Height - this.headerHeight);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.headerFont != null)
+                {
+                    this.headerFont.Dispose();
+                    this.headerFont = null;
+                }
+
+                if (this.listbox != null)
+                {
+                    this.listbox.Dispose();
+                    this.listbox = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

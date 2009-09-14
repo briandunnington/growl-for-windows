@@ -594,7 +594,7 @@ namespace Growl.UI
                     }
                     else
                     {
-                        if (this.currentWidth > 0)
+                        if (this.currentWidth > 0 && this.Columns.Count > 0)
                         {
                             int diff = this.Width - this.currentWidth;
                             int half = diff / 2;
@@ -667,6 +667,32 @@ namespace Growl.UI
                 this.View = View.Tile;
                 Draw();
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.imageList != null)
+                {
+                    this.imageList.Dispose();
+                    this.imageList = null;
+                }
+
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Dispose();
+                    this.tooltip = null;
+                }
+
+                if (this.contextMenu != null)
+                {
+                    this.contextMenu.Dispose();
+                    this.contextMenu = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         // -- stuff for sort arrows

@@ -240,5 +240,28 @@ namespace Growl.UI
                 this.Updated(this, EventArgs.Empty);
             }
         }
+
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Dispose();
+                    this.tooltip = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }

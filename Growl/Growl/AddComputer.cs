@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using ZeroconfService;
 using Growl.UI;
 
 namespace Growl
@@ -129,6 +128,28 @@ namespace Growl
                 }
             }
             this.Close();
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (this.settingsPanel != null)
+                {
+                    this.settingsPanel.Dispose();
+                    this.settingsPanel = null;
+                }
+            }
+            base.Dispose(disposing);
         }
     }
 }

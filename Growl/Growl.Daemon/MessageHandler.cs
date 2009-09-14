@@ -488,12 +488,13 @@ namespace Growl.Daemon
         /// Handles the socket's DidRead event.
         /// </summary>
         /// <param name="socket">The <see cref="AsyncSocket"/></param>
-        /// <param name="data">The <see cref="Data"/> that was read</param>
+        /// <param name="readBytes">Array of <see cref="byte"/>s that were read</param>
         /// <param name="tag">The tag identifying the read operation</param>
-        public void SocketDidRead(AsyncSocket socket, Data data, long tag)
+        public void SocketDidRead(AsyncSocket socket, byte[] readBytes, long tag)
         {
             try
             {
+                Data data = new Data(readBytes);
                 string s = data.ToString();
                 alreadyReceived.Append(s);
 
@@ -516,9 +517,8 @@ namespace Growl.Daemon
                     {
                         if (this.allowFlash)
                         {
-                            Data response = new Data(FlashPolicy.ResponseBytes);
-                            socket.Write(response, TIMEOUT_FLASHPOLICYRESPONSE, FLASH_POLICY_RESPONSE_TAG);
-                            socket.DisconnectAfterWriting();
+                            socket.Write(FlashPolicy.ResponseBytes, TIMEOUT_FLASHPOLICYRESPONSE, FLASH_POLICY_RESPONSE_TAG);
+                            socket.CloseAfterWriting();
                         }
                         else
                         {
@@ -1033,14 +1033,14 @@ namespace Growl.Daemon
             Data data = new Data(bytes);
             Log(data);
 
-            socket.Write(data, timeout, tag);
+            socket.Write(bytes, timeout, tag);
 
             // if we are the ones disconnecting, do it now.
             // otherwise, we need to know if the request is complete (all callbacks are done)
             // if so, we must trigger another read attempt so we can be notified of the other end's decision to disconnect
             // if not, we can just leave the socket alone until the request is complete
             if (disconnectAfterWriting)
-                socket.DisconnectAfterWriting();
+                socket.CloseAfterWriting();
             else if (requestComplete)
                 OnSocketUsageComplete(socket);
 

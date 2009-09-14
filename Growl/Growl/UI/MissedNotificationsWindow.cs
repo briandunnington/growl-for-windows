@@ -96,5 +96,33 @@ namespace Growl.UI
         {
             this.pictureBoxClose.Image = normal;
         }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (this.normal != null)
+                {
+                    this.normal.Dispose();
+                    this.normal = null;
+                }
+
+                if (this.hover != null)
+                {
+                    this.hover.Dispose();
+                    this.hover = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }

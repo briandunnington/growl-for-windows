@@ -68,6 +68,7 @@ namespace Growl
                         program = new Program();
                         program.ProgramRunning += new EventHandler(program_ProgramRunning);
                         app.Run(program);
+                        program.Dispose();
                     }
                     catch (Exception ex)
                     {

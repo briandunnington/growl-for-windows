@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using ZeroconfService;
 
 namespace Growl.Daemon
 {
@@ -46,23 +45,13 @@ namespace Growl.Daemon
         /// <summary>
         /// The service that advertises this server
         /// </summary>
-        private NetService service;
+        //private Network.Bonjour.Service service;
+        private Mono.Zeroconf.RegisterService service;
 
         static BonjourService()
         {
-            // we need to determine if Bonjour is available. this is kind of a crappy
-            // way to do it, but there is no other way to know for sure
-            try
-            {
-                ZeroconfService.NetServiceBrowser nsb = new NetServiceBrowser();
-                int version = nsb.GetVersion(); // we dont need the version, but this is a quick way to check if the necessary bonjour files are available
-                isSupported = true;
-            }
-            catch
-            {
-                Console.WriteLine("Bonjour is not supported");
-                isSupported = false;
-            }
+            // since we are providing our own mDNS support, Bonjour is always available
+            isSupported = true;
         }
 
 
@@ -99,14 +88,15 @@ namespace Growl.Daemon
         /// <param name="port">The port the actual server is running on</param>
         internal void Start(int port)
         {
-            if(!isStarted)
+            if(isSupported && !isStarted)
             {
                 try
                 {
                     this.service = Publish(DOMAIN, this.serviceType, this.serviceName, port);
+
                     this.isStarted = true;
                 }
-                catch(DNSServiceException)
+                catch(Exception ex)
                 {
                     this.isStarted = false;
                 }
@@ -120,7 +110,8 @@ namespace Growl.Daemon
         {
             if (this.isStarted)
             {
-                if (this.service != null) this.service.Stop();
+                if (this.service != null) this.service.Dispose();
+                this.service = null;
             }
         }
 
@@ -158,20 +149,23 @@ namespace Growl.Daemon
         /// <param name="type">The service type</param>
         /// <param name="name">The service name</param>
         /// <param name="port">The port being advertised</param>
-        /// <returns><see cref="NetService"/></returns>
-        private NetService Publish(string domain, string type, string name, int port)
+        /// <returns><see cref="Mono.Zeroconf.RegisterService"/></returns>
+        private Mono.Zeroconf.RegisterService Publish(string domain, string type, string name, int port)
         {
-            NetService service = new NetService(domain, type, name, port);
-            service.AllowMultithreadedCallbacks = true;
+            Stop();
 
-            System.Collections.Hashtable dict = new System.Collections.Hashtable();
-            dict.Add("txtvers", "1");
-            dict.Add(GUID_KEY, guid);
-            dict.Add("platform", "windows");
-            service.setTXTRecordData(NetService.DataFromTXTRecordDictionary(dict));
+            Mono.Zeroconf.TxtRecord txt = new Mono.Zeroconf.TxtRecord();
+            txt.Add("txtvers", "1");
+            txt.Add("platform", "windows");
 
-            service.Publish();
-            return service;
+            Mono.Zeroconf.RegisterService s = new Mono.Zeroconf.RegisterService();
+            s.Name = name;
+            s.UPort = 23053;
+            s.RegType = type;
+            s.ReplyDomain = "";
+            s.TxtRecord = txt;
+            s.Register();
+            return s;
         }
 
         #region IDisposable Members
@@ -188,7 +182,7 @@ namespace Growl.Daemon
             {
                 try
                 {
-                    if (this.service != null) this.service.Dispose();
+                    Stop();
                 }
                 catch
                 {

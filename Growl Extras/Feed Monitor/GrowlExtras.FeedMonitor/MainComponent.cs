@@ -142,6 +142,7 @@ namespace GrowlExtras.FeedMonitor
             feed.FeedRetrieved -= feed_FeedRetrieved;
             feed.FeedUpdated -= feed_FeedUpdated;
             this.feeds.Remove(feed);
+            feed.Dispose();
             feed = null;
         }
 
@@ -175,16 +176,16 @@ namespace GrowlExtras.FeedMonitor
         {
             if (e != null && e.NewItems != null)
             {
-                foreach (SyndicationItem item in e.NewItems)
+                foreach (FeedItem item in e.NewItems)
                 {
                     //this.notifyIcon.ShowBalloonTip(1000, item.SourceFeed.Title.Text, item.Title.Text, ToolTipIcon.Info);
 
-                    Notification n = new Notification(this.app.Name, this.ntNewFeedItem.Name, item.Id, item.SourceFeed.Title.Text, item.Title.Text);
+                    Notification n = new Notification(this.app.Name, this.ntNewFeedItem.Name, String.Empty, item.SourceFeed.Title, item.Title);
 
                     CallbackContext c = null;
-                    if (item.Links != null && item.Links.Count > 0)
+                    if (!String.IsNullOrEmpty(item.Link))
                     {
-                        c = new CallbackContext(item.Links[0].Uri.ToString());
+                        c = new CallbackContext(item.Link);
                     }
 
                     this.growl.Notify(n, c);
@@ -216,6 +217,7 @@ namespace GrowlExtras.FeedMonitor
         private void ShowForm()
         {
             this.mainForm.Show();
+            this.mainForm.Activate();
         }
     }
 }

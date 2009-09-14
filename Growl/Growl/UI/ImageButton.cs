@@ -114,5 +114,25 @@ namespace Growl.UI
             this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
             base.OnMouseUp(e);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.image != null)
+                {
+                    this.image.Dispose();
+                    this.image = null;
+                }
+
+                if (this.disabledImage != null)
+                {
+                    this.disabledImage.Dispose();
+                    this.disabledImage = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }
