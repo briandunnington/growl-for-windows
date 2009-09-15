@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -14,15 +15,59 @@ namespace Growl
 {
     public class DisplayLoader
     {
+        const string CURRENTLY_LOADING_DISPLAY_PATH = "CURRENTLY_LOADING_DISPLAY_PATH";
+
+        /// <summary>
+        /// Contains a list of assemblies for each display type (used to resolve dependencies in displays)
+        /// </summary>
+        static Dictionary<string, Dictionary<string, Assembly>> referencedAssemblies = new Dictionary<string, Dictionary<string, Assembly>>();
+
+        /// <summary>
+        /// Indicates if the display contains a valid IDisplay module or not
+        /// </summary>
         private bool containsValidModule;
+
+        /// <summary>
+        /// The IDisplay module
+        /// </summary>
         private IDisplay module;
+
+
+        static DisplayLoader()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+        }
+
+        static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // get the folder we are currently processing
+            string folder = (string)AppDomain.CurrentDomain.GetData(CURRENTLY_LOADING_DISPLAY_PATH);
+
+            // get the assembly that we are looking for
+            Assembly assembly = referencedAssemblies[folder][args.Name];
+            return assembly;
+        }
 
         public DisplayLoader(string path)
         {
-            string[] assemblies = Directory.GetFiles(path, "*.dll");
-            for (int a = 0; a < assemblies.Length; a++)
+            // remember which folder we are currently processing
+            AppDomain.CurrentDomain.SetData(CURRENTLY_LOADING_DISPLAY_PATH, path);
+
+            Dictionary<string, Assembly> assemblies = new Dictionary<string, Assembly>();
+            string[] dlls = Directory.GetFiles(path, "*.dll");
+
+            // loop through once and load each file - we have to load all assemblies before trying to do .GetTypes since some types might reside in other assemblies
+            for (int d = 0; d < dlls.Length; d++)
             {
-                Assembly assembly = Assembly.LoadFile(assemblies[a]);   // LoadFile means we use the exact .dlls in this folder. LoadFrom could redirect and use previously loaded .dlls (like Growl.CoreLibrary.dll, etc)
+                Assembly assembly = Assembly.LoadFile(dlls[d]);   // LoadFile means we use the exact .dlls in this folder. LoadFrom could redirect and use previously loaded .dlls (like Growl.CoreLibrary.dll, etc)
+                assemblies.Add(assembly.FullName, assembly);
+            }
+            // remember which assemblies we loaded for this display
+            referencedAssemblies.Add(path, assemblies);
+
+            // now check each assembly for the required interfaces
+            foreach(Assembly assembly in assemblies.Values)
+            {
                 foreach (Type type in assembly.GetTypes())
                 {
                     if (type != typeof(IDisplay) && type != typeof(Display) && type != typeof(VisualDisplay) && !type.IsAbstract && typeof(IDisplay).IsAssignableFrom(type))
@@ -39,6 +84,9 @@ namespace Growl
                     }
                 }
             }
+
+            // clean up a bit
+            referencedAssemblies.Remove(path);
         }
 
         /// <summary>
