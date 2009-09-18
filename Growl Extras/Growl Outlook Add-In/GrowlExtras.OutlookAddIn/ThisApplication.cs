@@ -63,9 +63,7 @@ namespace GrowlExtras.OutlookAddIn
                         text = String.Format("You have {0} new messages", ids.Length);
 
                         Growl.Connector.Notification notification = new Growl.Connector.Notification(this.application.Name, newmail.Name, String.Empty, title, text);
-                        Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext();
-                        callbackContext.Data = "null";
-                        callbackContext.Type = "multimessage";
+                        Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext("null", "multimessage");
                         growl.Notify(notification, callbackContext);
                     }
                     else
@@ -84,10 +82,13 @@ namespace GrowlExtras.OutlookAddIn
                                 title = (String.IsNullOrEmpty(title) ? "[No Subject]" : message.Subject);
                                 text = String.Format("From: {0}\n{1}", message.SenderName, body);
 
+                                Growl.Connector.Priority priority = Growl.Connector.Priority.Normal;
+                                if (message.Importance == Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh) priority = Growl.Connector.Priority.High;
+                                else if (message.Importance == Microsoft.Office.Interop.Outlook.OlImportance.olImportanceLow) priority = Growl.Connector.Priority.Moderate;
+
                                 Growl.Connector.Notification notification = new Growl.Connector.Notification(this.application.Name, newmail.Name, String.Empty, title, text);
-                                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext();
-                                callbackContext.Data = id;
-                                callbackContext.Type = "mailmessage";
+                                notification.Priority = priority;
+                                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext(id, "mailmessage");
                                 growl.Notify(notification, callbackContext);
                             }
                             else if (obj is Outlook.MeetingItem)
@@ -101,10 +102,13 @@ namespace GrowlExtras.OutlookAddIn
                                 title = (String.IsNullOrEmpty(title) ? "[No Subject]" : message.Subject);
                                 text = String.Format("From: {0}\n{1}", message.SenderName, body);
 
+                                Growl.Connector.Priority priority = Growl.Connector.Priority.Normal;
+                                if (message.Importance == Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh) priority = Growl.Connector.Priority.High;
+                                else if (message.Importance == Microsoft.Office.Interop.Outlook.OlImportance.olImportanceLow) priority = Growl.Connector.Priority.Moderate;
+
                                 Growl.Connector.Notification notification = new Growl.Connector.Notification(this.application.Name, newmail.Name, String.Empty, title, text);
-                                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext();
-                                callbackContext.Data = id;
-                                callbackContext.Type = "mailmessage";
+                                notification.Priority = priority;
+                                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext(id, "mailmessage");
                                 growl.Notify(notification, callbackContext);
                             }
                         }
@@ -157,9 +161,7 @@ namespace GrowlExtras.OutlookAddIn
 
                 // send to growl
                 Growl.Connector.Notification notification = new Growl.Connector.Notification(this.application.Name, reminder.Name, String.Empty, title, reminderMsg);
-                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext();
-                callbackContext.Data = data;
-                callbackContext.Type = type;
+                Growl.Connector.CallbackContext callbackContext = new Growl.Connector.CallbackContext(data, type);
                 growl.Notify(notification, callbackContext);
             }
         }
