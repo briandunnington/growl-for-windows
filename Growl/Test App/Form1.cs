@@ -34,10 +34,11 @@ namespace Test_App
             this.app = new Growl.Connector.Application("SurfWriter");
             //app.Icon = "http://atomicbride.com/Apple.gif";
             //app.Icon = "http://www.thetroyers.com/images/Apple_Logo.jpg";
-            app.Icon = @"c:\apple.png";
+            //app.Icon = @"c:\apple.png";
+            app.Icon = Properties.Resources.Apple;
             app.CustomTextAttributes.Add("Creator", "Apple Software");
             app.CustomTextAttributes.Add("Application-ID", "08d6c05a21512a79a1dfeb9d2a8f262f");
-            app.CustomBinaryAttributes.Add("Sound", "http://fake.net/app.wav");
+            //app.CustomBinaryAttributes.Add("Sound", "http://fake.net/app.wav");
 
 
             Growl.CoreLibrary.Detector detector = new Detector();
@@ -78,16 +79,49 @@ namespace Test_App
 
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
+            System.IO.FileStream fs1 = System.IO.File.Open(@"C:\Documents and Settings\brian\Desktop\f1.ico", System.IO.FileMode.Open);
+            System.Drawing.Image i1 = System.Drawing.Bitmap.FromStream(fs1);
+
+            System.IO.FileStream fs2 = System.IO.File.Open(@"C:\Documents and Settings\brian\Desktop\f2.ico", System.IO.FileMode.Open);
+            System.Drawing.Image i2 = System.Drawing.Bitmap.FromStream(fs2);
+
+            System.IO.FileStream fs3 = System.IO.File.Open(@"C:\Documents and Settings\brian\Desktop\f3.ico", System.IO.FileMode.Open);
+            //System.Drawing.Image i3 = System.Drawing.Bitmap.FromStream(fs3);
+            Icon icon = new Icon(fs3);
+            Image i3 = icon.ToBitmap();
+
+            System.Drawing.Image i4 = System.Drawing.Bitmap.FromFile(@"C:\Documents and Settings\brian\Desktop\f3.ico");
+
+            System.Net.WebClient wc = new System.Net.WebClient();
+            using (wc)
+            {
+                byte[] bytes = wc.DownloadData("http://haxe.org/favicon.ico");
+                System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes, false);
+                using (ms)
+                {
+                    ms.Position = 0;
+                    System.Drawing.Image tempImage = System.Drawing.Bitmap.FromStream(ms, false, false);
+                    // dont close stream yet, first create a copy
+                    using (tempImage)
+                    {
+                        Image image = new Bitmap(tempImage);
+                        Console.WriteLine(image);
+                    }
+                }
+            }
+            */
+
             NotificationType nt1 = new NotificationType("Download Complete");
             //nt1.Icon = new BinaryData(new byte[] { 65, 66, 67, 68 });
             nt1.Icon = "http://www.hamradio.pl/images/thumb/e/e5/Icon_48x48_star_01.png/48px-Icon_48x48_star_01.png";
             nt1.Enabled = false;
             nt1.CustomTextAttributes.Add("Language", "English");
             nt1.CustomTextAttributes.Add("Timezone", "PST");
-            nt1.CustomBinaryAttributes.Add("Sound", "http://fake.net/nt.wav");
+            //nt1.CustomBinaryAttributes.Add("Sound", "http://fake.net/nt.wav");
             NotificationType nt2 = new NotificationType("Document Published", "Document successfully published", null, true);
             nt2.Icon = "http://coaching.typepad.com/EspressoPundit/feed-icon-legacy_blue_38.png";
-            nt2.CustomBinaryAttributes.Add("Sound", "http://fake.net/sound.wav");
+            //nt2.CustomBinaryAttributes.Add("Sound", "http://fake.net/sound.wav");
             nt2.CustomBinaryAttributes.Add("Sound-Alt", new BinaryData(new byte[] { 70, 71, 72, 73 }));
 
             NotificationType[] types = new NotificationType[] { nt1, nt2 };
@@ -119,7 +153,7 @@ namespace Test_App
             notification.Sticky = false;
             notification.Priority = Priority.Emergency;
             //notification.Icon = "http://atomicbride.com/Apple.gif";
-            //app.Icon = @"c:\apple.png";
+            notification.Icon = "http://haxe.org/favicon.ico";
             notification.CustomTextAttributes.Add("Filename", @"c:\file.txt");
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");
             notification.CustomBinaryAttributes.Add("File", new BinaryData(new byte[] { 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78 }));

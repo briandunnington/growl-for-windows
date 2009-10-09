@@ -62,8 +62,6 @@ namespace Growl
 
                     loadedDisplayStyle.SetGrowlApplicationPath(Application.StartupPath);
                     loadedDisplayStyle.SetDisplayStylePath(directory.FullName);
-                    loadedDisplayStyle.Load();
-                    currentlyLoadedDisplayStyles.Add(directory.FullName, loadedDisplayStyle);
 
                     if (loadedDisplayStyle.Display.SettingsPanel != null)
                     {
@@ -71,6 +69,9 @@ namespace Growl
                         loadedDisplayStyle.Display.SettingsPanel.SetDirectories(directory.FullName, Utility.GetDisplayUserSettingsFolder(directory.Name));
                         loadedDisplayStyle.Display.SettingsCollection = loadedDisplayStyle.Display.SettingsPanel.GetSettings();
                     }
+
+                    loadedDisplayStyle.Load();
+                    currentlyLoadedDisplayStyles.Add(directory.FullName, loadedDisplayStyle);
 
                     /* REMOVED 07.23.2009 - this was left over from when displays were loaded into separate AppDomains
                     Assembly a = Assembly.LoadFrom(displayLoader.SettingsPanelAssemblyLocation);

@@ -385,8 +385,10 @@ namespace Growl.UI
 
                 if (detailColumns == null)
                 {
-                    int w = 100;
-                    int x = (this.Width - (w * 2) - SCROLLBAR_WIDTH) / 2;
+                    int w = 80;
+                    int y = 60;
+                    int x = (this.Width - (w * 2) - y - SCROLLBAR_WIDTH) / 2;
+                    //int x = (this.Width - (w * 3) - SCROLLBAR_WIDTH);
 
                     ColumnHeader titleHeader = new ColumnHeader();
                     titleHeader.Name = "TITLE";
@@ -405,8 +407,12 @@ namespace Growl.UI
                     dateHeader.Text = Properties.Resources.History_Columns_Timestamp;
                     dateHeader.Width = w;
                     dateHeader.Tag = DATETIME_COMPARISON_INDICATOR;
+                    ColumnHeader originHeader = new ColumnHeader();
+                    originHeader.Name = "ORIGIN";
+                    originHeader.Text = Properties.Resources.History_Columns_Origin;
+                    originHeader.Width = y;
 
-                    this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader };
+                    this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader, originHeader };
                 }
 
                 this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
@@ -449,7 +455,9 @@ namespace Growl.UI
                 {
                     if (StringContains(pn.Notification.ApplicationName, this.filter)
                         || StringContains(pn.Notification.Title, this.filter)
-                        || StringContains(pn.Notification.Description, this.filter))
+                        || StringContains(pn.Notification.Description, this.filter)
+                        || StringContains(pn.Notification.OriginMachineName, this.filter)
+                        )
                     {
                         filteredList.Add(pn);
                     }
@@ -485,7 +493,6 @@ namespace Growl.UI
 
             if (pn.HasImage && !this.imageList.Images.ContainsKey(pn.ImageKey))
             {
-                //System.Drawing.Image image = pn.Notification.GetImage();
                 System.Drawing.Image image = pn.Image;
                 if (image != null)
                     this.imageList.Images.Add(pn.ImageKey, image);
@@ -494,9 +501,11 @@ namespace Growl.UI
             string title = Escape(pn.Notification.Title);
             string text = Escape(pn.Notification.Description);
             string appName = Escape(pn.Notification.ApplicationName);
-            string tooltip = String.Format("{0}\r\n{1}\r\n{4}: {2}\r\n{5}: {3}", pn.Notification.Title, pn.Notification.Description, pn.Notification.ApplicationName, pn.Timestamp.ToString(), Properties.Resources.LiteralString_ReceivedFrom, Properties.Resources.LiteralString_ReceivedAt);
+            string origin = (!String.IsNullOrEmpty(pn.Notification.OriginMachineName) ? pn.Notification.OriginMachineName : "Local Machine");
+            string tooltipAppNameappName = Escape(String.Format("{0}{1}", pn.Notification.ApplicationName, (!String.IsNullOrEmpty(pn.Notification.OriginMachineName) ? String.Format("[{0}]", pn.Notification.OriginMachineName) : "")));
+            string tooltip = String.Format("{0}\r\n{1}\r\n{4}: {2}\r\n{5}: {3}", pn.Notification.Title, pn.Notification.Description, tooltipAppNameappName, pn.Timestamp.ToString(), Properties.Resources.LiteralString_ReceivedFrom, Properties.Resources.LiteralString_ReceivedAt);
 
-            string[] items = new string[] { title, text, appName, pn.Timestamp.ToString() };
+            string[] items = new string[] { title, text, appName, pn.Timestamp.ToString(), origin };
             ListViewItem lvi = new ListViewItem(items, pn.ImageKey, this.Groups[groupName]);
             lvi.ToolTipText = tooltip;
             return lvi;
@@ -574,7 +583,7 @@ namespace Growl.UI
 
         void HistoryListView_Resize(object sender, EventArgs e)
         {
-            if (!this.isResizing)
+            if (!this.isResizing && this.Visible)
             {
                 this.isResizing = true;
                 try
@@ -631,7 +640,6 @@ namespace Growl.UI
         {
             if (this.UseCustomToolTips)
             {
-                //System.Drawing.Point position = Cursor.Position;
                 System.Drawing.Point position = this.PointToClient(Cursor.Position);
                 position.Offset(0, Cursor.Current.Size.Height - 10);
                 IntPtr handle = (IntPtr)typeof(ToolTip).GetProperty("Handle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(this.tooltip, null);

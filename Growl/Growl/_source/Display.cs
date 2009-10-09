@@ -71,11 +71,6 @@ namespace Growl
         {
             try
             {
-                //System.Threading.ParameterizedThreadStart pts = new System.Threading.ParameterizedThreadStart(DoShowNotification);
-                //System.Threading.Thread t = new System.Threading.Thread(pts);
-                //t.Start(notification);
-
-                //this.display.HandleNotification(notification, this.name);
                 bool done = this.display.ProcessNotification(notification, this.ActualName);
 
                 // for any notifications that remain open (essentially, any visual notifications), add them to a list so we

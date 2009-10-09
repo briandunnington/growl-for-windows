@@ -816,9 +816,9 @@ namespace Growl.Daemon
             {
                 WriteError(socket, gEx.ErrorCode, gEx.Message, gEx.AdditionalInfo);
             }
-            catch
+            catch(Exception ex)
             {
-                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST);
+                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST, ex.Message);
             }
         }
 
@@ -1201,6 +1201,8 @@ namespace Growl.Daemon
             //byte[] decryptedBytes = Cryptography.Decrypt(encryptionKey, this.iv, encryptedBytes, this.encryptionAlgorithm);
             byte[] decryptedBytes = this.key.Decrypt(encryptedBytes, this.iv);
 
+            string x = Encoding.UTF8.GetString(decryptedBytes);
+
             System.IO.MemoryStream stream = new System.IO.MemoryStream(decryptedBytes);
             using (stream)
             {
@@ -1222,16 +1224,6 @@ namespace Growl.Daemon
                                 {
                                     // a REGISTER request with no notifications is not valid
                                     WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.NO_NOTIFICATIONS_REGISTERED);
-                                }
-                            }
-                            else
-                            {
-                                // otherwise, check the number of resource pointers we got and start reading those
-                                this.pointersExpected = GetNumberOfPointers();
-                                if (this.pointersExpected > 0)
-                                {
-                                    this.pointersExpectedRemaining = this.pointersExpected;
-                                    this.currentPointer = 1;
                                 }
                             }
                             break;
@@ -1291,13 +1283,6 @@ namespace Growl.Daemon
                                 }
                                 else
                                 {
-                                    // otherwise, check the number of resource pointers we got and start reading those
-                                    this.pointersExpected = GetNumberOfPointers();
-                                    if (this.pointersExpected > 0)
-                                    {
-                                        this.pointersExpectedRemaining = this.pointersExpected;
-                                        this.currentPointer = 1;
-                                    }
                                     break;
                                 }
                             }
@@ -1312,6 +1297,14 @@ namespace Growl.Daemon
                                 this.notificationsToBeRegistered[this.currentNotification - 1].AddHeader(header);
                             }
                         }
+                    }
+
+                    // now that we have read the stream, check for any embedded resources
+                    this.pointersExpected = GetNumberOfPointers();
+                    if (this.pointersExpected > 0)
+                    {
+                        this.pointersExpectedRemaining = this.pointersExpected;
+                        this.currentPointer = 1;
                     }
                 }
             }

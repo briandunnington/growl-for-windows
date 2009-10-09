@@ -153,7 +153,8 @@ namespace Growl.Displays.Standard
                 this.descriptionLabel.Width = this.descriptionLabel.Width - offset;
             }
 
-            this.applicationNameLabel.Text = n.ApplicationName;
+            string applicationNameFormat = (!String.IsNullOrEmpty(n.OriginMachineName) ? "{0} on {1}" : "{0}");
+            this.applicationNameLabel.Text = String.Format(applicationNameFormat, n.ApplicationName, n.OriginMachineName);
             this.titleLabel.Text = n.Title;
             this.descriptionLabel.Text = n.Description.Replace("\n", "\r\n");
             this.Sticky = n.Sticky;

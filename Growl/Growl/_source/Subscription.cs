@@ -112,7 +112,7 @@ namespace Growl
                 EnsureTimer();
                 StopRetryTimer();
 
-                if (this.subscriberID == null) this.subscriberID = Growl.Daemon.Subscriber.GenerateID();
+                if (this.subscriberID == null) this.subscriberID = Utility.MachineID;
                 this.AdditionalOfflineDisplayInfo = "connecting...";
                 if (this.sc != null) this.sc = null;
                 Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, Environment.MachineName, Growl.Connector.GrowlConnector.TCP_PORT);

@@ -158,16 +158,16 @@
     <comment>Add Computer form: Format label</comment>
   </data>
   <data name="AddComputer_FormTitle_Forward" xml:space="preserve">
-    <value>Doorstuur notificaties</value>
+    <value>Meldingen doorsturen</value>
     <comment>Add Computer form title - when fowarding</comment>
   </data>
   <data name="AddComputer_FormTitle_Subscriptions" xml:space="preserve">
-    <value>Geabonneerd op notificaties</value>
+    <value>Geabonneerd op meldingen</value>
     <comment>Add Computer form title - when subscribing</comment>
   </data>
   <data name="AddComputer_ManualAdd" xml:space="preserve">
-    <value>[Klik hier om handmatig een computer
-niet in de lijst toe te voegen]</value>
+    <value>[Klik hier om handmatig een niet gedetecteerde computer
+aan de lijst toe te voegen]</value>
     <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
   </data>
   <data name="AddComputer_NameLabel" xml:space="preserve">
@@ -187,9 +187,7 @@ niet in de lijst toe te voegen]</value>
     <comment>Applications tab: list item for application-wide preferences</comment>
   </data>
   <data name="Applications_NoAppsRegistered" xml:space="preserve">
-    <value>Nog geen geregistreerde applicaties.
-
-Zodra een applicatie, met Growl ondersteuning, zich registreert zal deze in de lijst links verschijnen en kunnen de applicatie specifieke instellingen aangepast worden.</value>
+    <value>Nog geen geregistreerde applicaties.</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
@@ -305,7 +303,7 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
     <comment>General tab: Default Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>Beschouw me als niet actief na {0} secondes</value>
+    <value>Beschouw me als niet actief na {0} seconde</value>
     <comment>General tab: Radio button text for 'consider me idle after x seconds' - Placeholder {0} is where the TextBox will go</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
@@ -361,11 +359,11 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
     <comment>Loading progress indicator: Application list</comment>
   </data>
   <data name="Loading_Display" xml:space="preserve">
-    <value>Weergave '{0}' wordt geladen...</value>
+    <value>Display '{0}' wordt geladen...</value>
     <comment>Loading progress indicator for a specific display - Placeholder {0} is the display name</comment>
   </data>
   <data name="Loading_Displays" xml:space="preserve">
-    <value>Weergaves worden geladen...</value>
+    <value>Displays worden geladen...</value>
     <comment>Loading progress indicator: Displays</comment>
   </data>
   <data name="Loading_History" xml:space="preserve">
@@ -445,7 +443,7 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
     <comment>Forwarding Pref: Choose</comment>
   </data>
   <data name="PrefForward_Never" xml:space="preserve">
-    <value>Niet doorsteuren</value>
+    <value>Niet doorsturen</value>
     <comment>Forwarding Pref: Never</comment>
   </data>
   <data name="PrefPriority_Emergency" xml:space="preserve">
@@ -497,11 +495,11 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
     <comment>Security tab: checkbox text for 'allow network notificaions'</comment>
   </data>
   <data name="Security_AllowSubscriptions" xml:space="preserve">
-    <value>Het is toegestaan dat computers zich abonneren op notificaties</value>
+    <value>Het is toegestaan dat computers zich abonneren op meldingen</value>
     <comment>Security tab: checkbox text for 'allows subscriptions'</comment>
   </data>
   <data name="Security_AllowWebNotifications" xml:space="preserve">
-    <value>Notificaties van websites toegestaan</value>
+    <value>Meldingen van websites toegestaan</value>
     <comment>Security tab: checkbox text for 'allow web notifications'</comment>
   </data>
   <data name="Security_PasswordManager_DescriptionLabel" xml:space="preserve">
@@ -549,7 +547,7 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
     <comment>The application name used for system notifications</comment>
   </data>
   <data name="SystemNotification_AppRegistered_Text" xml:space="preserve">
-    <value>De applicatie '{0}' heeft zich aangemeld om notificaties te sturen.</value>
+    <value>De applicatie '{0}' heeft zich aangemeld om meldingente sturen.</value>
     <comment>Notification text when an application registers. Placeholder {0} is the application name.</comment>
   </data>
   <data name="SystemNotification_AppRegistered_Title" xml:space="preserve">
@@ -557,7 +555,7 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
     <comment>The title used for the system notification when an application registers</comment>
   </data>
   <data name="SystemNotification_ClientSubscribed_Text" xml:space="preserve">
-    <value>De computer '{0}' heeft zich aangemeld om doorgestuurde notificaties te ontvangen.</value>
+    <value>De computer '{0}' heeft zich aangemeld om doorgestuurde meldingen te ontvangen.</value>
     <comment>Notification text when a client subscribes to notifications. Placeholder {0} is the subscribing client's name.</comment>
   </data>
   <data name="SystemNotification_ClientSubscribed_Title" xml:space="preserve">
@@ -627,5 +625,253 @@ Als er reeds een Growl versie actief is, sluit deze dan eerst en probeer het opn
   <data name="Updater_UpdateAvailable" xml:space="preserve">
     <value>Nieuwe versie {0} van Growl is beschikbaar. Wilt u Growl bijwerken naar de laatste versie? (huidige versie: {1})</value>
     <comment>Check for Updates form: displayed when an update is available. Placeholder {0} is the newer version number, {1} is the current version number</comment>
+  </data>
+  <data name="Button_SetAsDefault" xml:space="preserve">
+    <value>Gebruik als standaard</value>
+    <comment>Any 'Set as Default' button</comment>
+  </data>
+  <data name="Displays_CreatedBy" xml:space="preserve">
+    <value>Auteur:</value>
+    <comment>Displays tab: created by label</comment>
+  </data>
+  <data name="General_SoundSettings_MuteLabel" xml:space="preserve">
+    <value>Geen geluiden</value>
+    <comment>General tab: mute all sounds label</comment>
+  </data>
+  <data name="Applications_NoAppsRegistered_Description" xml:space="preserve">
+    <value>Zodra een applicatie met Growl ondersteuning zich registreert zal deze in de lijst links verschijnen en kunnen de applicatie specifieke instellingen aangepast worden.</value>
+    <comment>Applications tab: shown when no applications are registered</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Mute" xml:space="preserve">
+    <value>Geluid uit</value>
+    <comment>Notify icon context menu: Mute</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Unmute" xml:space="preserve">
+    <value>Geluid aan</value>
+    <comment>Notify icon context menu: Unmute</comment>
+  </data>
+  <data name="Applications_ApplicationListHeader" xml:space="preserve">
+    <value>Applicatienaam</value>
+    <comment>Applications tab: Header text for applications list box</comment>
+  </data>
+  <data name="Applications_NotificationListHeader" xml:space="preserve">
+    <value>Melding Type</value>
+    <comment>Applications tab: Header text for notifications list box</comment>
+  </data>
+  <data name="Displays_DisplayListHeader" xml:space="preserve">
+    <value>Display naam</value>
+    <comment>Displays tab: Header text for displays list box</comment>
+  </data>
+  <data name="LiteralString_Seconds" xml:space="preserve">
+    <value>seconden</value>
+    <comment>The string 'seconds' (Used in Duration preference)</comment>
+  </data>
+  <data name="Applications_Preferences_DurationLabel" xml:space="preserve">
+    <value>Tijdsduur:</value>
+    <comment>Applications tab: duration preference label</comment>
+  </data>
+  <data name="DisplayInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Display '{0}' is al geïnstalleerd.</value>
+    <comment>Display installer: message shown if a display is already installed when attempting to install again</comment>
+  </data>
+  <data name="DisplayInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>Het definitiebestand '{0}' is ongeldig.\n\nDe display kan niet geïnstalleerd worden.</value>
+    <comment>Display installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="DisplayInstaller_DownloadCancelled" xml:space="preserve">
+    <value>De installatie van de display is afgebroken.\n\nDe display is niet geïnstalleerd.</value>
+    <comment>Display installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="DisplayInstaller_DownloadError" xml:space="preserve">
+    <value>Er is een fout opgetreden tijdens het downloaden van de display bestanden.\n\nDe display is niet geïnstalleerd.</value>
+    <comment>Display installer: message shown if the download of the display files fails for any reason</comment>
+  </data>
+  <data name="DisplayInstaller_FormTitle" xml:space="preserve">
+    <value>Installeer display</value>
+    <comment>Display installer: form title</comment>
+  </data>
+  <data name="DisplayInstaller_Installing" xml:space="preserve">
+    <value>Display aan het installeren...</value>
+    <comment>Display installer: displayed while the display is being installed</comment>
+  </data>
+  <data name="DisplayInstaller_NewDisplayInstalledText" xml:space="preserve">
+    <value>Display '{0}' is succesvol geïnstalleerd.</value>
+    <comment>Display installer: text of the notification shown when a new display is installed. {0} is the name of the installed display.</comment>
+  </data>
+  <data name="DisplayInstaller_NewDisplayInstalledTitle" xml:space="preserve">
+    <value>Nieuw display geïnstalleerd</value>
+    <comment>Display installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="DisplayInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>Definitiebestand '{0}' bestaat niet.\n\nDe display kon niet worden geïnstalleerd.</value>
+    <comment>Display installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="DisplayInstaller_Prompt" xml:space="preserve">
+    <value>Wil je de volgende display installeren?\n\nNaam: {0}\nAuteur: {1}\nOmschrijving: {2}</value>
+    <comment>Display installer: displayed when a click-to-install link is clicked. {0} is the name of the display, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="Displays_FindMore" xml:space="preserve">
+    <value>Vind &amp; installeer meer displays</value>
+    <comment>Displays tab: text that links to the GFW website to find more displays</comment>
+  </data>
+  <data name="AddComputer_AddProwl" xml:space="preserve">
+    <value>Klik hier om meldingen door te sturen naar een iPhone</value>
+    <comment>Add computer form: click to forward notification to iphone</comment>
+  </data>
+  <data name="AddComputer_AddEmail" xml:space="preserve">
+    <value>Klik hier om meldingen door te sturen naar een email account</value>
+    <comment>Add computer form: click to add email forwarding</comment>
+  </data>
+  <data name="AddComputer_AddTwitter" xml:space="preserve">
+    <value>Klik hier om meldingen door te sturen naar Twitter</value>
+    <comment>Add computer form: click to forward notifications to Twitter</comment>
+  </data>
+  <data name="AddProwl_AnyPriority" xml:space="preserve">
+    <value>[Elke prioriteit]</value>
+    <comment>Configure iPhone Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddProwl_MinimumPriorityLabel" xml:space="preserve">
+    <value>Alleen doorsturen bij min. prioriteit van:</value>
+    <comment>Configure iPhone Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddProwl_NameLabel" xml:space="preserve">
+    <value>Omschrijving:</value>
+    <comment>Configure iPhone Forwarding: 'Description' label</comment>
+  </data>
+  <data name="AddProwl_APIKeyLabel" xml:space="preserve">
+    <value>API sleutel</value>
+    <comment>Configure iPhone Forwarding: 'API Key' label</comment>
+  </data>
+  <data name="AddProwl_OnlyWhenIdle" xml:space="preserve">
+    <value>Alleen doorsturen bij afwezigheid</value>
+    <comment>Configure iphone forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="AddTwitter_AnyPriority" xml:space="preserve">
+    <value>[Elke prioriteit]</value>
+    <comment>Configure Twitter Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddTwitter_MinimumPriorityLabel" xml:space="preserve">
+    <value>Alleen doorsturen bij min. prioriteit van:</value>
+    <comment>Configure Twitter Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddTwitter_PasswordLabel" xml:space="preserve">
+    <value>Wachtwoord:</value>
+    <comment>Configure Twitter Forwarding: 'Password' label</comment>
+  </data>
+  <data name="AddTwitter_UsernameLabel" xml:space="preserve">
+    <value>Gebruikersnaam:</value>
+    <comment>Configure Twitter Forwarding: 'Username' label</comment>
+  </data>
+  <data name="AddTwitter_FormatLabel" xml:space="preserve">
+    <value>Formaat:</value>
+    <comment>Configure Twitter Forwarding: 'Format' label</comment>
+  </data>
+  <data name="AddTwitter_OnlyWhenIdle" xml:space="preserve">
+    <value>Alleen doorsturen bij afwezigheid</value>
+    <comment>Configure Twitter forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="LiteralString_Always" xml:space="preserve">
+    <value>Altijd</value>
+    <comment>The string 'Always'</comment>
+  </data>
+  <data name="LiteralString_IdleOnly" xml:space="preserve">
+    <value>Alleen inactief</value>
+    <comment>The string 'Idle Only'</comment>
+  </data>
+  <data name="Network_EditComputer" xml:space="preserve">
+    <value>Bewerk</value>
+    <comment>Network tab: 'Edit' context menu item</comment>
+  </data>
+  <data name="ProwlConfirmation_Text" xml:space="preserve">
+    <value>Je hebt Growl succesvol geconfigureerd om meldingen naar Prowl door te sturen.</value>
+    <comment>Text of Prowl confirmation notification sent to confirm successful configuration</comment>
+  </data>
+  <data name="ProwlConfirmation_Title" xml:space="preserve">
+    <value>Prowl Test</value>
+    <comment>Title of Prowl confirmation notification sent to confirm successful configuration</comment>
+  </data>
+  <data name="AddEmail_AnyPriority" xml:space="preserve">
+    <value>[Elke Prioriteit]</value>
+    <comment>Configure Email Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddEmail_MinimumPriorityLabel" xml:space="preserve">
+    <value>Alleen doorsturen bij min. prioriteit van:</value>
+    <comment>Configure Email Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddEmail_NameLabel" xml:space="preserve">
+    <value>Omschrijving:</value>
+    <comment>Configure Email Forwarding: 'Description' label</comment>
+  </data>
+  <data name="AddEmail_EmailAddressLabel" xml:space="preserve">
+    <value>Emailadres:</value>
+    <comment>Configure Email Forwarding: 'Email Address' label</comment>
+  </data>
+  <data name="AddEmail_SMTPSettingsLabel" xml:space="preserve">
+    <value>SMTP instellingen</value>
+    <comment>Configure Email Forwarding: 'SMTP Settings' label</comment>
+  </data>
+  <data name="AddEmail_EditSMTP" xml:space="preserve">
+    <value>bewerk</value>
+    <comment>Configure Email Forwarding: 'edit' link</comment>
+  </data>
+  <data name="AddEmail_OnlyWhenIdle" xml:space="preserve">
+    <value>Alleen doorsturen bij afwezigheid of inactiviteit</value>
+    <comment>Configure Email forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPServerLabel" xml:space="preserve">
+    <value>Server:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Server' label</comment>
+  </data>
+  <data name="AddEmail_SMTPPortLabel" xml:space="preserve">
+    <value>Poort:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Port' label</comment>
+  </data>
+  <data name="AddEmail_SMTPUseAuthentication" xml:space="preserve">
+    <value>Gebruik authenticatie</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Use Authentication' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPUseSSL" xml:space="preserve">
+    <value>Gebruik SSL</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Use SSL' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPUsernameLabel" xml:space="preserve">
+    <value>Gebruikersnaam:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Username' label</comment>
+  </data>
+  <data name="AddEmail_SMTPPasswordLabel" xml:space="preserve">
+    <value>Wachtwoord:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Password' label</comment>
+  </data>
+  <data name="AddEmail_SMTPDone" xml:space="preserve">
+    <value>klaar</value>
+    <comment>Configure Email forwarding SMTP Settings: 'done' link</comment>
+  </data>
+  <data name="History_Columns_Application" xml:space="preserve">
+    <value>Applicatie</value>
+    <comment>History tab: Column header for Application column</comment>
+  </data>
+  <data name="History_Columns_Text" xml:space="preserve">
+    <value>Tekst</value>
+    <comment>History tab: Column header for Text column</comment>
+  </data>
+  <data name="History_Columns_Timestamp" xml:space="preserve">
+    <value>Tijdsaanduiding</value>
+    <comment>History tab: Column header for Timestamp column</comment>
+  </data>
+  <data name="History_Columns_Title" xml:space="preserve">
+    <value>Titel</value>
+    <comment>History tab: Column header for Title column</comment>
+  </data>
+  <data name="History_DetailsView" xml:space="preserve">
+    <value>Detailoverzicht</value>
+    <comment>History tab: Details View context menu option</comment>
+  </data>
+  <data name="History_TileView" xml:space="preserve">
+    <value>Tile View</value>
+    <comment>History tab: Tile View context menu option</comment>
+  </data>
+  <data name="Button_No" xml:space="preserve">
+    <value>Nee</value>
+    <comment>Any 'No' button</comment>
   </data>
 </root>

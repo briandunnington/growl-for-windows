@@ -242,7 +242,7 @@ namespace Growl
             {
                 this.ResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopUnlocked));
                 this.isLocked = false;
-                StartTimer();   // start checking for idle again
+                MaybeStartTimer();   // start checking for idle again
                 //Console.WriteLine("unlocked");
             }
         }

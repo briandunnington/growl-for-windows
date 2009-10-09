@@ -99,6 +99,22 @@ namespace Growl
                 idleAfterText = String.Format(idleAfterText, "         "); // this leaves space for the textbox
             }
             this.radioButtonIdleAfter.Text = idleAfterText;
+
+            try
+            {
+                KeysConverter kc = new KeysConverter();
+                this.closeLastKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseLast);
+                this.closeAllKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseAll);
+
+                this.closeLastHotKey = new HotKeyManager(this, this.closeLastKeyCombo);
+                this.closeAllHotKey = new HotKeyManager(this, this.closeAllKeyCombo);
+
+                this.closeLastHotKey.Register();
+                this.closeAllHotKey.Register();
+            }
+            catch
+            {
+            }
         }
 
         # region visual style
@@ -166,6 +182,8 @@ namespace Growl
                 int y = Screen.PrimaryScreen.WorkingArea.Bottom - this.Height;
                 this.Location = new Point(x, y);
             }
+
+            //StartInterceptingSystemBalloons();
         }
 
         internal void InitializePreferences()
@@ -508,9 +526,30 @@ namespace Growl
                     components.Dispose();
                 }
 
-                if (historyTrackBarToolTip != null) historyTrackBarToolTip.Dispose();
+                if (historyTrackBarToolTip != null)
+                {
+                    historyTrackBarToolTip.Dispose();
+                    historyTrackBarToolTip = null;
+                }
 
-                if (historyTrackBarTimer != null) historyTrackBarTimer.Dispose();
+                if (historyTrackBarTimer != null)
+                {
+                    historyTrackBarTimer.Dispose();
+                    historyTrackBarTimer = null;
+                }
+
+                if (this.closeLastHotKey != null)
+                {
+                    this.closeLastHotKey.Dispose();
+                    this.closeLastHotKey = null;
+                }
+                if (this.closeAllHotKey != null)
+                {
+                    this.closeAllHotKey.Dispose();
+                    this.closeAllHotKey = null;
+                }
+
+                //StopInterceptingSystemBalloons();
             }
 
             base.Dispose(disposing);
@@ -803,6 +842,16 @@ namespace Growl
 
                     this.panelDisplaySettings.Visible = true;
                 }
+            }
+        }
+
+        void listControlDisplays_DoubleClick(object sender, System.EventArgs e)
+        {
+            if (this.listControlDisplays.SelectedItem != null)
+            {
+                Display newDefault = (Display)this.listControlDisplays.SelectedItem;
+                this.controller.DefaultDisplay = newDefault;
+                this.listControlDisplays.Refresh();
             }
         }
 
@@ -1269,14 +1318,6 @@ namespace Growl
                 this.sbi.Stop();
                 this.sbi = null;
             }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (this.sbi != null)
-                sbi.ProcessWindowMessage(ref m);
-
-            base.WndProc(ref m);
         }
          * */
     }

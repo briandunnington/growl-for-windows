@@ -34,7 +34,7 @@ namespace Growl.Installation
             this.Text = Properties.Resources.DisplayInstaller_FormTitle;
             //this.InfoLabel.Text gets set below when displayed
             this.YesButton.Text = Properties.Resources.Button_Yes;
-            this.NoButton.Text = Properties.Resources.Button_Later;
+            this.NoButton.Text = Properties.Resources.Button_Cancel;
             this.OKButton.Text = Properties.Resources.Button_OK;
 
             this.BackColor = Color.FromArgb(240, 240, 240);
@@ -108,7 +108,7 @@ namespace Growl.Installation
                         {
                             // unzip files to the correct location
                             string newDisplayFolder = Path.Combine(DisplayStyleManager.UserDisplayStyleDirectory, Growl.CoreLibrary.PathUtility.GetSafeFolderName(info.Name));
-                            if (!Directory.Exists(newDisplayFolder))
+                            if (!ApplicationMain.HasProgramLaunchedYet || !Directory.Exists(newDisplayFolder))
                             {
                                 Utility.WriteDebugInfo(String.Format("Display '{0}' downloaded - starting unzip.", info.Name));
                                 Unzipper.UnZipFiles(info.LocalZipFileLocation, newDisplayFolder, false);

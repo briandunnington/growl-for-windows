@@ -79,6 +79,8 @@ namespace Growl
 
                     if(!String.IsNullOrEmpty(ti.nid.szInfo))
                         OnSystemBalloonIntercepted(ti.nid.szInfoTitle, ti.nid.szInfo, null);
+
+                    m.Result = new IntPtr(1);
                 }
             }
             else if (m.Msg == MSG_REPLACED)

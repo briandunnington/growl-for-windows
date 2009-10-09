@@ -16,76 +16,6 @@ namespace Growl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("Thursday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Wednesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelGeneral = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -1351,79 +1281,7 @@ namespace Growl
             this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.historyListView.FullRowSelect = true;
             this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
-            listViewGroup1.Header = "Today";
-            listViewGroup1.Name = "Today";
-            listViewGroup2.Header = "Yesterday";
-            listViewGroup2.Name = "Yesterday";
-            listViewGroup3.Header = "Monday";
-            listViewGroup3.Name = "Monday";
-            listViewGroup4.Header = "Sunday";
-            listViewGroup4.Name = "Sunday";
-            listViewGroup5.Header = "Saturday";
-            listViewGroup5.Name = "Saturday";
-            listViewGroup6.Header = "Friday";
-            listViewGroup6.Name = "Friday";
-            listViewGroup7.Header = "Thursday";
-            listViewGroup7.Name = "Thursday";
-            listViewGroup8.Header = "Today";
-            listViewGroup8.Name = "Today";
-            listViewGroup9.Header = "Yesterday";
-            listViewGroup9.Name = "Yesterday";
-            listViewGroup10.Header = "Sunday";
-            listViewGroup10.Name = "Sunday";
-            listViewGroup11.Header = "Saturday";
-            listViewGroup11.Name = "Saturday";
-            listViewGroup12.Header = "Friday";
-            listViewGroup12.Name = "Friday";
-            listViewGroup13.Header = "Thursday";
-            listViewGroup13.Name = "Thursday";
-            listViewGroup14.Header = "Wednesday";
-            listViewGroup14.Name = "Wednesday";
-            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3,
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6,
-            listViewGroup7,
-            listViewGroup8,
-            listViewGroup9,
-            listViewGroup10,
-            listViewGroup11,
-            listViewGroup12,
-            listViewGroup13,
-            listViewGroup14});
             this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem1.Group = listViewGroup1;
-            listViewItem2.Group = listViewGroup2;
-            listViewItem3.Group = listViewGroup3;
-            listViewItem4.Group = listViewGroup4;
-            listViewItem5.Group = listViewGroup5;
-            listViewItem6.Group = listViewGroup6;
-            listViewItem7.Group = listViewGroup7;
-            listViewItem8.Group = listViewGroup8;
-            listViewItem9.Group = listViewGroup9;
-            listViewItem10.Group = listViewGroup10;
-            listViewItem11.Group = listViewGroup11;
-            listViewItem12.Group = listViewGroup12;
-            listViewItem13.Group = listViewGroup13;
-            listViewItem14.Group = listViewGroup14;
-            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14});
             this.historyListView.LabelWrap = false;
             this.historyListView.Location = new System.Drawing.Point(196, 5);
             this.historyListView.MultiSelect = false;
@@ -1594,6 +1452,7 @@ namespace Growl
             this.listControlDisplays.Size = new System.Drawing.Size(176, 264);
             this.listControlDisplays.TabIndex = 2;
             this.listControlDisplays.SelectedIndexChanged += new System.EventHandler(this.listControlDisplays_SelectedIndexChanged);
+            this.listControlDisplays.DoubleClick += new System.EventHandler(listControlDisplays_DoubleClick);
             // 
             // buttonSetAsDefault
             // 
@@ -1662,7 +1521,7 @@ namespace Growl
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(670, 393);
+            this.MinimumSize = new System.Drawing.Size(670, 400);
             this.Name = "MainForm";
             this.Text = "Growl";
             this.Load += new System.EventHandler(this.MainForm_Load);

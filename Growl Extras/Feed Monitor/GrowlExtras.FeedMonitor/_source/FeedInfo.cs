@@ -7,7 +7,8 @@ namespace GrowlExtras.FeedMonitor
 {
     public class FeedInfo
     {
-        string title;
+        string actualTitle;
+        string customTitle;
         string url;
         List<FeedItem> items;
 
@@ -15,11 +16,34 @@ namespace GrowlExtras.FeedMonitor
         {
             get
             {
-                return this.title;
+                if (String.IsNullOrEmpty(this.customTitle))
+                    return this.actualTitle;
+                else
+                    return this.customTitle;
+            }
+        }
+
+        public string ActualTitle
+        {
+            get
+            {
+                return this.actualTitle;
             }
             set
             {
-                this.title = value;
+                this.actualTitle = value;
+            }
+        }
+
+        public string CustomTitle
+        {
+            get
+            {
+                return this.customTitle;
+            }
+            set
+            {
+                this.customTitle = value;
             }
         }
 

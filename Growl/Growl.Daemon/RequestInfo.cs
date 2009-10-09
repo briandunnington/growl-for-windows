@@ -169,5 +169,15 @@ namespace Growl.Daemon
                 return this.handlingInfo;
             }
         }
+
+        public bool WasForwarded()
+        {
+            if (this.previousReceivedHeaders != null && this.previousReceivedHeaders.Count > 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

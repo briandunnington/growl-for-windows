@@ -145,15 +145,6 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Generates a UUID for a subscriber
-        /// </summary>
-        /// <returns>UUID (string)</returns>
-        public static string GenerateID()
-        {
-            return System.Guid.NewGuid().ToString();
-        }
-
-        /// <summary>
         /// Converts the object to a list of headers
         /// </summary>
         /// <returns><see cref="HeaderCollection"/></returns>

@@ -316,6 +316,14 @@ namespace Growl.Connector
                 if (length > 0)
                 {
                     string response = System.Text.Encoding.UTF8.GetString(state.Buffer, 0, length);
+                    state.Response += response;
+
+                    // read additional data
+                    while (state.Stream.DataAvailable)
+                    {
+                        AsyncCallback callback = new AsyncCallback(ReadCallback);
+                        state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
+                    }
 
                     if (state.Delegate != null)
                         state.Delegate(response);
@@ -481,6 +489,11 @@ namespace Growl.Connector
             /// The buffer to hold the response
             /// </summary>
             public byte[] Buffer;
+
+            /// <summary>
+            /// Holds the response text
+            /// </summary>
+            public string Response;
         }
     }
 }

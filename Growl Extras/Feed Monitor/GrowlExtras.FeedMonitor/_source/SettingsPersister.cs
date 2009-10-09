@@ -46,9 +46,12 @@ namespace GrowlExtras.FeedMonitor
                 foreach (Feed feed in feeds)
                 {
                     FeedElement fe = new FeedElement();
-                    fe.Name = feed.Name;
+                    fe.Name = feed.ActualName;
                     fe.Url = feed.Url;
                     fe.PollInterval = feed.PollInterval;
+                    fe.CustomName = feed.CustomName;
+                    fe.Username = feed.Username;
+                    fe.Password = feed.Password;
                     section.Feeds.Add(fe);
                 }
 
@@ -72,7 +75,7 @@ namespace GrowlExtras.FeedMonitor
                 {
                     foreach (FeedElement fe in section.Feeds)
                     {
-                        Feed feed = Feed.Create(fe.Url, fe.PollInterval);
+                        Feed feed = Feed.Create(fe.Url, fe.PollInterval, fe.CustomName, fe.Username, fe.Password);
                         feeds.Add(feed);
                     }
                 }
@@ -188,6 +191,45 @@ namespace GrowlExtras.FeedMonitor
                 set
                 {
                     this["pollinterval"] = value;
+                }
+            }
+
+            [ConfigurationProperty("customname", IsRequired = false)]
+            public string CustomName
+            {
+                get
+                {
+                    return (string)this["customname"];
+                }
+                set
+                {
+                    this["customname"] = value;
+                }
+            }
+
+            [ConfigurationProperty("username", IsRequired = false)]
+            public string Username
+            {
+                get
+                {
+                    return (string)this["username"];
+                }
+                set
+                {
+                    this["username"] = value;
+                }
+            }
+
+            [ConfigurationProperty("password", IsRequired = false)]
+            public string Password
+            {
+                get
+                {
+                    return (string)this["password"];
+                }
+                set
+                {
+                    this["password"] = value;
                 }
             }
         }

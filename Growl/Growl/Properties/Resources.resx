@@ -220,6 +220,9 @@
   <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="proxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\proxy.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="NotifyIcon_NotRunning" xml:space="preserve">
     <value>Growl (not running)</value>
     <comment>Tooltip for notify icon when Growl is not running</comment>
@@ -972,7 +975,56 @@ to Twitter</value>
     <value>Tile View</value>
     <comment>History tab: Tile View context menu option</comment>
   </data>
-  <data name="proxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\proxy.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Button_No" xml:space="preserve">
+    <value>No</value>
+    <comment>Any 'No' button</comment>
+  </data>
+  <data name="History_Columns_Origin" xml:space="preserve">
+    <value>Origin</value>
+    <comment>History tab: Column header for Origin column</comment>
+  </data>
+  <data name="LanguageInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>The '{0}' language pack is already installed.</value>
+    <comment>Language Pack installer: message shown if a language pack is already installed when attempting to install again. {0} is the name of the language</comment>
+  </data>
+  <data name="LanguageInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe language pack could not be installed.</value>
+    <comment>Language Pack installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="LanguageInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the language pack was cancelled.\n\nThe language pack was not installed.</value>
+    <comment>Language Pack installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="LanguageInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the language pack files.\n\nThe language pack was not installed.</value>
+    <comment>Language Pack installer: message shown if the download of the language pack files fails for any reason</comment>
+  </data>
+  <data name="LanguageInstaller_FormTitle" xml:space="preserve">
+    <value>Install Language Pack</value>
+    <comment>Language Pack installer: form title</comment>
+  </data>
+  <data name="LanguageInstaller_Installing" xml:space="preserve">
+    <value>Installing language pack...</value>
+    <comment>Language Pack installer: displayed while the language pack is being installed</comment>
+  </data>
+  <data name="LanguageInstaller_LanguageInstalledText" xml:space="preserve">
+    <value>The '{0}' language pack was installed successfully.</value>
+    <comment>Language Pack installer: text of the notification shown when a new language pack is installed. {0} is the name of the language.</comment>
+  </data>
+  <data name="LanguageInstaller_RestartRequiredText" xml:space="preserve">
+    <value>You must restart Growl for the changes to take effect.</value>
+    <comment>Language Pack installer: additional text of the notification shown when a new language pack is installed if Growl must be restarted.</comment>
+  </data>
+  <data name="LanguageInstaller_LanguageInstalledTitle" xml:space="preserve">
+    <value>Language Pack Installed</value>
+    <comment>Language Pack installer: title of the notification shown when a new language pack is installed</comment>
+  </data>
+  <data name="LanguageInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe language pack could not be installed.</value>
+    <comment>Language Pack installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="LanguageInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the language pack for the following language:  {0}\n\nNOTE: Users running Vista or Windows 7 must have administrator privileges to install language packs.</value>
+    <comment>Language Pack installer: displayed when a click-to-install link is clicked. {0} is the name of the language</comment>
   </data>
 </root>

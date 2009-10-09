@@ -7,6 +7,7 @@ namespace Growl
     static class ApplicationMain
     {
         public const int SIGNAL_RELOAD_DISPLAYS = 1;
+        public const int SIGNAL_UPDATE_LANGUAGE = 2;
 
         static Program program;
         static bool appIsAlreadyRunning;
@@ -23,6 +24,7 @@ namespace Growl
             using (app)
             {
                 int signalFlag = 0;
+                int signalValue = 0;
                 appIsAlreadyRunning = app.IsAlreadyRunning;
 
                 // handle protocol-triggered operations
@@ -30,7 +32,7 @@ namespace Growl
                 {
                     string protocolArgument = args[0];
                     Installation.ProtocolHandler handler = new Growl.Installation.ProtocolHandler(appIsAlreadyRunning);
-                    signalFlag = handler.Process(protocolArgument, ref queuedNotifications);
+                    signalFlag = handler.Process(protocolArgument, ref queuedNotifications, ref signalValue);
                 }
 
                 if (!appIsAlreadyRunning)
@@ -84,12 +86,11 @@ namespace Growl
                         elog.WriteEntry(logtext, System.Diagnostics.EventLogEntryType.Error);
                         MessageBox.Show(msgtext, "Growl - Fatal Exception", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
-                    Keyboard.Unhook();
                 }
                 else
                 {
                     InternalNotification.SaveToDisk(ref queuedNotifications);
-                    app.SignalFirstInstance(signalFlag);
+                    app.SignalFirstInstance(signalFlag, signalValue);
                 }
             }
         }
@@ -99,12 +100,12 @@ namespace Growl
             HandleSystemNotifications();
         }
 
-        static void app_AnotherInstanceStarted(int signalFlag)
+        static void app_AnotherInstanceStarted(int signalFlag, int signalValue)
         {
             // show notification that growl is already running...
             Console.WriteLine("INSTANCE: growl is already running");
 
-            program.AlreadyRunning(signalFlag);
+            program.AlreadyRunning(signalFlag, signalValue);
 
             HandleSystemNotifications();
         }
@@ -123,6 +124,14 @@ namespace Growl
                 queuedNotifications.Clear();
             }
             queuedNotifications = null;
+        }
+
+        static public bool HasProgramLaunchedYet
+        {
+            get
+            {
+                return (appIsAlreadyRunning || program != null);
+            }
         }
 
         static public Program Program

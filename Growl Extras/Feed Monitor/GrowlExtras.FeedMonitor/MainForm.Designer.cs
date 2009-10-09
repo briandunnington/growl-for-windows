@@ -33,13 +33,13 @@
             this.labelAddFeed = new System.Windows.Forms.Label();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.checkNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setIntervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oneMinuteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.twoMinutesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fiveMinutesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tenMinutesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.thirtyMinutesToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.labelAdd = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -89,21 +89,14 @@
             this.removeToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
             this.contextMenu.ShowImageMargin = false;
-            this.contextMenu.Size = new System.Drawing.Size(128, 92);
+            this.contextMenu.Size = new System.Drawing.Size(107, 70);
             // 
             // checkNowToolStripMenuItem
             // 
             this.checkNowToolStripMenuItem.Name = "checkNowToolStripMenuItem";
-            this.checkNowToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.checkNowToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.checkNowToolStripMenuItem.Text = "Check Now";
             this.checkNowToolStripMenuItem.Click += new System.EventHandler(this.checkNowToolStripMenuItem_Click);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // setIntervalToolStripMenuItem
             // 
@@ -114,13 +107,13 @@
             this.tenMinutesToolStripMenuItem2,
             this.thirtyMinutesToolStripMenuItem3});
             this.setIntervalToolStripMenuItem.Name = "setIntervalToolStripMenuItem";
-            this.setIntervalToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.setIntervalToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.setIntervalToolStripMenuItem.Text = "Set Interval";
             // 
             // oneMinuteToolStripMenuItem
             // 
             this.oneMinuteToolStripMenuItem.Name = "oneMinuteToolStripMenuItem";
-            this.oneMinuteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.oneMinuteToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.oneMinuteToolStripMenuItem.Tag = "1";
             this.oneMinuteToolStripMenuItem.Text = "1 minute";
             this.oneMinuteToolStripMenuItem.Click += new System.EventHandler(this.oneMinuteToolStripMenuItem_Click);
@@ -128,7 +121,7 @@
             // twoMinutesToolStripMenuItem
             // 
             this.twoMinutesToolStripMenuItem.Name = "twoMinutesToolStripMenuItem";
-            this.twoMinutesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoMinutesToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.twoMinutesToolStripMenuItem.Tag = "2";
             this.twoMinutesToolStripMenuItem.Text = "2 minutes";
             this.twoMinutesToolStripMenuItem.Click += new System.EventHandler(this.twoMinutesToolStripMenuItem_Click);
@@ -136,7 +129,7 @@
             // fiveMinutesToolStripMenuItem1
             // 
             this.fiveMinutesToolStripMenuItem1.Name = "fiveMinutesToolStripMenuItem1";
-            this.fiveMinutesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.fiveMinutesToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
             this.fiveMinutesToolStripMenuItem1.Tag = "5";
             this.fiveMinutesToolStripMenuItem1.Text = "5 minutes";
             this.fiveMinutesToolStripMenuItem1.Click += new System.EventHandler(this.fiveMinutesToolStripMenuItem1_Click);
@@ -144,7 +137,7 @@
             // tenMinutesToolStripMenuItem2
             // 
             this.tenMinutesToolStripMenuItem2.Name = "tenMinutesToolStripMenuItem2";
-            this.tenMinutesToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.tenMinutesToolStripMenuItem2.Size = new System.Drawing.Size(126, 22);
             this.tenMinutesToolStripMenuItem2.Tag = "10";
             this.tenMinutesToolStripMenuItem2.Text = "10 minutes";
             this.tenMinutesToolStripMenuItem2.Click += new System.EventHandler(this.tenMinutesToolStripMenuItem2_Click);
@@ -152,10 +145,17 @@
             // thirtyMinutesToolStripMenuItem3
             // 
             this.thirtyMinutesToolStripMenuItem3.Name = "thirtyMinutesToolStripMenuItem3";
-            this.thirtyMinutesToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.thirtyMinutesToolStripMenuItem3.Size = new System.Drawing.Size(126, 22);
             this.thirtyMinutesToolStripMenuItem3.Tag = "30";
             this.thirtyMinutesToolStripMenuItem3.Text = "30 minutes";
             this.thirtyMinutesToolStripMenuItem3.Click += new System.EventHandler(this.thirtyMinutesToolStripMenuItem3_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // panel1
             // 

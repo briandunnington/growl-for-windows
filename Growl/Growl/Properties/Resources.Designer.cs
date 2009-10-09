@@ -633,6 +633,15 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string Button_No {
+            get {
+                return ResourceManager.GetString("Button_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         internal static string Button_OK {
@@ -1062,6 +1071,15 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Origin.
+        /// </summary>
+        internal static string History_Columns_Origin {
+            get {
+                return ResourceManager.GetString("History_Columns_Origin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         internal static string History_Columns_Text {
@@ -1162,6 +1180,105 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("iphone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The &apos;{0}&apos; language pack is already installed..
+        /// </summary>
+        internal static string LanguageInstaller_AlreadyInstalled {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_AlreadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; is invalid.\n\nThe language pack could not be installed..
+        /// </summary>
+        internal static string LanguageInstaller_BadDefinitionFile {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_BadDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The installation of the language pack was cancelled.\n\nThe language pack was not installed..
+        /// </summary>
+        internal static string LanguageInstaller_DownloadCancelled {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_DownloadCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while downloading the language pack files.\n\nThe language pack was not installed..
+        /// </summary>
+        internal static string LanguageInstaller_DownloadError {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Language Pack.
+        /// </summary>
+        internal static string LanguageInstaller_FormTitle {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_FormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing language pack....
+        /// </summary>
+        internal static string LanguageInstaller_Installing {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_Installing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The &apos;{0}&apos; language pack was installed successfully..
+        /// </summary>
+        internal static string LanguageInstaller_LanguageInstalledText {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_LanguageInstalledText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language Pack Installed.
+        /// </summary>
+        internal static string LanguageInstaller_LanguageInstalledTitle {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_LanguageInstalledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; does not exist.\n\nThe language pack could not be installed..
+        /// </summary>
+        internal static string LanguageInstaller_NonexistentDefinitionFile {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_NonexistentDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install the language pack for the following language:  {0}\n\nNOTE: Users running Vista or Windows 7 must have administrator privileges to install language packs..
+        /// </summary>
+        internal static string LanguageInstaller_Prompt {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must restart Growl for the changes to take effect..
+        /// </summary>
+        internal static string LanguageInstaller_RestartRequiredText {
+            get {
+                return ResourceManager.GetString("LanguageInstaller_RestartRequiredText", resourceCulture);
             }
         }
         

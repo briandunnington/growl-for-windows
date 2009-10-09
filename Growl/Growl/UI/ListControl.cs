@@ -44,6 +44,12 @@ namespace Growl.UI
             this.listbox.ForeColorChanged += new EventHandler(ListControl_ForeColorChanged);
             this.listbox.SelectedIndexChanged += new EventHandler(listbox_SelectedIndexChanged);
             this.listbox.MouseDown += new MouseEventHandler(listbox_MouseDown);
+            this.listbox.DoubleClick += new EventHandler(listbox_DoubleClick);
+        }
+
+        void listbox_DoubleClick(object sender, EventArgs e)
+        {
+            this.OnDoubleClick(e);
         }
 
         void listbox_MouseDown(object sender, MouseEventArgs e)

@@ -44,8 +44,14 @@ namespace Growl
             string folder = (string)AppDomain.CurrentDomain.GetData(CURRENTLY_LOADING_DISPLAY_PATH);
 
             // get the assembly that we are looking for
-            Assembly assembly = referencedAssemblies[folder][args.Name];
-            return assembly;
+            Assembly assembly;
+            Dictionary<string, Assembly> displayAssemblies;
+            if (referencedAssemblies.TryGetValue(folder, out displayAssemblies) &&
+                displayAssemblies.TryGetValue(args.Name, out assembly))
+            {
+                return assembly;
+            }
+            return null;
         }
 
         public DisplayLoader(string path)

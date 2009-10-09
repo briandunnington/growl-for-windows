@@ -763,7 +763,7 @@ namespace Growl
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 ShowNotificationDelegate snd = new ShowNotificationDelegate(ShowNotification);
-                this.synchronizingObject.BeginInvoke(snd, new object[] { notification, display, cbInfo, recordInMissedNotifications, requestInfo });
+                this.synchronizingObject.Invoke(snd, new object[] { notification, display, cbInfo, recordInMissedNotifications, requestInfo });
             }
             else
             {
@@ -795,7 +795,7 @@ namespace Growl
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 ShowMissedNotificationsDelegate smnd = new ShowMissedNotificationsDelegate(ShowMissedNotifications);
-                this.synchronizingObject.BeginInvoke(smnd, new object[] { missedNotifications });
+                this.synchronizingObject.Invoke(smnd, new object[] { missedNotifications });
             }
             else
             {
@@ -813,7 +813,7 @@ namespace Growl
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 RefreshActiveNotificationsDelegate rand = new RefreshActiveNotificationsDelegate(RefreshActiveNotifications);
-                this.synchronizingObject.BeginInvoke(rand, null);
+                this.synchronizingObject.Invoke(rand, null);
             }
             else
             {
@@ -879,6 +879,7 @@ namespace Growl
                         n.Sticky = sticky;
                         n.Title = notification.Title;
                         n.Duration = rn.Duration;
+                        if (requestInfo.WasForwarded()) n.OriginMachineName = notification.MachineName;
 
                         if (notification.Icon != null && notification.Icon.IsSet)
                         {
@@ -1035,6 +1036,7 @@ namespace Growl
                 n.Sticky = false;   // registration notifications are never sticky
                 n.Title = Properties.Resources.SystemNotification_AppRegistered_Title;
                 n.Image = ra.Icon;
+                if (requestInfo.WasForwarded()) n.OriginMachineName = application.MachineName;
 
                 // handle custom attributes
                 n.AddCustomTextAttributes(application.CustomTextAttributes);
@@ -1343,7 +1345,7 @@ namespace Growl
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 OnBonjourServiceUpdateDelegate obsud = new OnBonjourServiceUpdateDelegate(OnBonjourServiceUpdate);
-                this.synchronizingObject.BeginInvoke(obsud, new object[] { bfc });
+                this.synchronizingObject.Invoke(obsud, new object[] { bfc });
             }
             else
             {
@@ -1379,7 +1381,7 @@ namespace Growl
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 OnForwardDestinationsUpdatedDelegate ofcud = new OnForwardDestinationsUpdatedDelegate(OnForwardDestinationsUpdated);
-                this.synchronizingObject.BeginInvoke(ofcud, null);
+                this.synchronizingObject.Invoke(ofcud, null);
             }
             else
             {
@@ -1417,7 +1419,7 @@ namespace Growl
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 OnSubscriptionsUpdatedDelegate osud = new OnSubscriptionsUpdatedDelegate(OnSubscriptionsUpdated);
-                this.synchronizingObject.BeginInvoke(osud, new object[] {countChanged});
+                this.synchronizingObject.Invoke(osud, new object[] {countChanged});
             }
             else
             {

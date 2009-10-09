@@ -55,6 +55,11 @@ namespace Growl.DisplayStyle
         public int Duration;
 
         /// <summary>
+        /// The name of the machine where the notification originated
+        /// </summary>
+        public string OriginMachineName;
+
+        /// <summary>
         /// Creates a new <see cref="NotificationLite"/> instance, copying the property values
         /// of the <paramref name="original"/> <see cref="NotificationLite"/>.
         /// </summary>
@@ -69,6 +74,8 @@ namespace Growl.DisplayStyle
             n.Description = original.Description;
             n.Priority = original.Priority;
             n.Sticky = original.Sticky;
+            n.Duration = original.Duration;
+            n.OriginMachineName = original.OriginMachineName;
             return n;
         }
     }

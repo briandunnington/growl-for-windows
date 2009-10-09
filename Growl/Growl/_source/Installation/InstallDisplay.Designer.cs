@@ -37,7 +37,7 @@ namespace Growl.Installation
             // 
             this.InfoLabel.Location = new System.Drawing.Point(9, 9);
             this.InfoLabel.Name = "InfoLabel";
-            this.InfoLabel.Size = new System.Drawing.Size(320, 90);
+            this.InfoLabel.Size = new System.Drawing.Size(320, 115);
             this.InfoLabel.TabIndex = 5;
             this.InfoLabel.Text = "Do you want to install the following display:";
             this.InfoLabel.UseMnemonic = false;

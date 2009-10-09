@@ -1,3 +1,32 @@
+RC2 changes
+------------------------------
+- added 'Origin' column to History Detail view
+- removed built-in displays from showing up in the Alt-Tab list
+- fixed a bug that didnt allow loading dependent libraries from external displays
+- fixed a bug that didnt handle some types of .ico files as valid images
+- fixed the 'object is currently in use somewhere else' exception (again)
+- fixed a bug that did not honor the 'Never consider me idle' setting if the computer had been locked previously
+- fixed a bug that caused a crash when lots of subscribers came online
+- fixed a bug that failed to forward notifications that originated over UDP
+- fixed a bug that caused keyboard shortcuts to not work
+- updated click-to-install protocol handler to workaround bug in Google Chrome browser (http://code.google.com/p/chromium/issues/detail?id=160)
+- return more descriptive error message for 'MALFORMED REQUEST' errors
+- moved call to IDisplay.Load to after SettingsPanel has been configured
+
+RC1/Beta 21 changes
+------------------------------
+- replaced entire Bonjour implementation - hopefully solves the dnssd.dll crashes
+- replaced global keyboard hook code with RegisterHotKey (no functional change, just better - thanks Jaykul)
+- now automatically create the default proxy.config file on install
+- fixed the 'object is currently in use somewhere else' exception
+- fixed a bug that caused 'click-to-install' definition files to be considered invalid if not ASCII encoded
+- fixed a bug that sometimes causes 'click-to-install' downloads to hang
+- fixed messed up rendering of text in dialogs during 'click-to-install' process
+- fixed a bug that caused a crash if a saved History item was corrupted
+- fixed a bug that caused password changes to be lost if GfW was not shut down properly
+- updated growlnotify to send filesystem-based images as binary data (url-based images are still sent as urls)
+- fixed a bug in growlnotify if an empty /cu: parameter was passed
+
 Beta 20 changes
 ------------------------------
 - improved History tab: added detail view and filtering capability

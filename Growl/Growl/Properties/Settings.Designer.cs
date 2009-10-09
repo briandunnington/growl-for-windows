@@ -346,5 +346,17 @@ namespace Growl.Properties {
                 this["DisableBonjour"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MachineID {
+            get {
+                return ((string)(this["MachineID"]));
+            }
+            set {
+                this["MachineID"] = value;
+            }
+        }
     }
 }

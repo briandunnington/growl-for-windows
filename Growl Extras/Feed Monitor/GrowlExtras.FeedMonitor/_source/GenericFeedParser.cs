@@ -36,7 +36,7 @@ namespace GrowlExtras.FeedMonitor
                         if (!parsingItems && name.ToLowerInvariant() == "title")
                         {
                             reader.Read();
-                            info.Title = reader.Value;
+                            info.ActualTitle = reader.Value;
                         }
 
                         if (name.ToLowerInvariant() == "item" || name.ToLowerInvariant() == "entry")

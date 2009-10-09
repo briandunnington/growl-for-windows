@@ -1781,7 +1781,7 @@ namespace Growl.Daemon
         {
             flags |= kClosed;
 
-            ThreadPool.QueueUserWorkItem(new WaitCallback(Close));
+            ThreadPool.QueueUserWorkItem(new WaitCallback(Close), null);
         }
 
         /// <summary>

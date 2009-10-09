@@ -47,13 +47,7 @@ namespace Growl.CoreLibrary
                     System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes, false);
                     using (ms)
                     {
-                        ms.Position = 0;
-                        System.Drawing.Image tempImage = System.Drawing.Bitmap.FromStream(ms);
-                        // dont close stream yet, first create a copy
-                        using (tempImage)
-                        {
-                            image = new Bitmap(tempImage);
-                        }
+                        image = ImageFromStream(ms);
                     }
                 }
             }
@@ -81,12 +75,7 @@ namespace Growl.CoreLibrary
                         System.IO.FileStream fs = new System.IO.FileStream(uri.LocalPath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
                         using (fs)
                         {
-                            System.Drawing.Image tempImage = System.Drawing.Bitmap.FromStream(fs);
-                            // dont close stream yet, first create a copy
-                            using (tempImage)
-                            {
-                                image = new Bitmap(tempImage);
-                            }
+                            image = ImageFromStream(fs);
                         }
                     }
                     else
@@ -98,13 +87,7 @@ namespace Growl.CoreLibrary
                             System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes, false);
                             using (ms)
                             {
-                                ms.Position = 0;
-                                System.Drawing.Image tempImage = System.Drawing.Bitmap.FromStream(ms);
-                                // dont close stream yet, first create a copy
-                                using (tempImage)
-                                {
-                                    image = new Bitmap(tempImage);
-                                }
+                                image = ImageFromStream(ms);
                             }
                         }
                     }
@@ -115,6 +98,38 @@ namespace Growl.CoreLibrary
             }
             return image;
         }
+
+        private static System.Drawing.Image ImageFromStream(System.IO.Stream stream)
+        {
+            System.Drawing.Image image = null;
+            try
+            {
+                stream.Position = 0;
+                System.Drawing.Image tempImage = System.Drawing.Bitmap.FromStream(stream);
+                // dont close stream yet, first create a copy
+                using (tempImage)
+                {
+                    image = new Bitmap(tempImage);
+                }
+            }
+            catch
+            {
+                // the file could be an .ico file that is not usable by the Image class, so try that just in case
+                try
+                {
+                    stream.Position = 0;
+                    Icon icon = new Icon(stream);
+                    if (icon != null) image = icon.ToBitmap();
+                }
+                catch
+                {
+                    // give up - we cant open this file type
+                }
+            }
+
+            return image;
+        }
+
 
         /* I AM JUST SAVING THIS FOR NOW
         private byte[] ConvertToBytes2(Bitmap bmp)

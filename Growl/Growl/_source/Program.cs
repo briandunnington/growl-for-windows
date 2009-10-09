@@ -345,7 +345,7 @@ namespace Growl
             Application.Exit();
         }
 
-        internal void AlreadyRunning(int signalFlag)
+        internal void AlreadyRunning(int signalFlag, int signalValue)
         {
             if(this.controller != null) this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
 
@@ -354,6 +354,18 @@ namespace Growl
                 case ApplicationMain.SIGNAL_RELOAD_DISPLAYS :
                     DisplayStyleManager.Load();
                     if(this.mainForm != null) this.mainForm.BindDisplayList();
+                    break;
+                case ApplicationMain.SIGNAL_UPDATE_LANGUAGE :
+                    // read each subfolder in the app folder and find the one with the matching hash
+                    System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath);
+                    foreach (System.IO.DirectoryInfo directory in di.GetDirectories())
+                    {
+                        if (directory.Name.GetHashCode() == signalValue)
+                        {
+                            Properties.Settings.Default.CultureCode = directory.Name;
+                            break;
+                        }
+                    }
                     break;
             }
         }
@@ -428,7 +440,7 @@ namespace Growl
                 if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
                 {
                     Controller.ApplicationRegisteredDelegate del = new Controller.ApplicationRegisteredDelegate(this.mainForm.OnApplicationRegistered);
-                    this.mainForm.BeginInvoke(del, new object[] { ra });
+                    this.mainForm.Invoke(del, new object[] { ra });
                 }
                 else
                 {
@@ -444,7 +456,7 @@ namespace Growl
                 if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
                 {
                     Controller.NotificationReceivedDelegate del = new Controller.NotificationReceivedDelegate(this.mainForm.OnNotificationReceived);
-                    this.mainForm.BeginInvoke(del, new object[] { n });
+                    this.mainForm.Invoke(del, new object[] { n });
                 }
                 else
                 {
@@ -460,7 +472,7 @@ namespace Growl
                 if (this.mainForm.IsHandleCreated && this.mainForm.InvokeRequired)
                 {
                     Controller.NotificationPastDelegate del = new Controller.NotificationPastDelegate(this.mainForm.OnNotificationPast);
-                    this.mainForm.BeginInvoke(del, new object[] { pn });
+                    this.mainForm.Invoke(del, new object[] { pn });
                 }
                 else
                 {

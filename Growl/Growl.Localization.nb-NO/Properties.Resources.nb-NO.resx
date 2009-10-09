@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NotifyIcon_NotRunning" xml:space="preserve">
+    <value>Growl (Ikke Aktiv)</value>
+    <comment>Tooltip for notify icon when Growl is not running</comment>
+  </data>
+  <data name="About_BuildNumber" xml:space="preserve">
+    <value>(build: {0})</value>
+    <comment>About tab: build number information - Placeholder {0} is the actual build number</comment>
+  </data>
+  <data name="About_FindInformationLabel" xml:space="preserve">
+    <value>Finn visningsmoduler, utvidelser og oppdateringer på:</value>
+    <comment>About tab: Growl website label</comment>
+  </data>
+  <data name="About_GrowlVersion" xml:space="preserve">
+    <value>Growl v{0}</value>
+    <comment>About tab: name and version - Placeholder {0} is the actual version number</comment>
+  </data>
+  <data name="About_IconInfoLabel" xml:space="preserve">
+    <value>Ikoner:</value>
+    <comment>About tab: Icons</comment>
+  </data>
+  <data name="About_IconInfoLabel2" xml:space="preserve">
+    <value>VistaICO Aero Pack -</value>
+    <comment>About tab: VistaICO label</comment>
+  </data>
+  <data name="About_OriginalLabel" xml:space="preserve">
+    <value>Original ide, inspirasjon og logo:</value>
+    <comment>About tab: original Growl</comment>
+  </data>
+  <data name="About_OriginalLabel2" xml:space="preserve">
+    <value>Growl for OSX -</value>
+    <comment>About tab: Growl for OSX</comment>
+  </data>
+  <data name="AddComputer_AddressLabel" xml:space="preserve">
+    <value>Vertsnavn:</value>
+    <comment>Add Computer form: Address label</comment>
+  </data>
+  <data name="AddComputer_FormatLabel" xml:space="preserve">
+    <value>Format:</value>
+    <comment>Add Computer form: Format label</comment>
+  </data>
+  <data name="AddComputer_FormTitle_Forward" xml:space="preserve">
+    <value>Videresend notifikasjoner</value>
+    <comment>Add Computer form title - when fowarding</comment>
+  </data>
+  <data name="AddComputer_FormTitle_Subscriptions" xml:space="preserve">
+    <value>Abboner på notifikasjoner</value>
+    <comment>Add Computer form title - when subscribing</comment>
+  </data>
+  <data name="AddComputer_ManualAdd" xml:space="preserve">
+    <value>Klikk her for å legge til en computer som ikke er i denne listen</value>
+    <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
+  </data>
+  <data name="AddComputer_NameLabel" xml:space="preserve">
+    <value>Navn:</value>
+    <comment>Add Computer form: Name label</comment>
+  </data>
+  <data name="AddComputer_PasswordLabel" xml:space="preserve">
+    <value>Passord:</value>
+    <comment>Add Computer form: Password label</comment>
+  </data>
+  <data name="AddComputer_PortLabel" xml:space="preserve">
+    <value>Port:</value>
+    <comment>Add Computer form: Port label</comment>
+  </data>
+  <data name="Applications_AllNotifications" xml:space="preserve">
+    <value>(Alle notifikasjoner)</value>
+    <comment>Applications tab: list item for application-wide preferences</comment>
+  </data>
+  <data name="Applications_NoAppsRegistered_Title" xml:space="preserve">
+    <value>Ingen applikasjoner har registrert seg enda</value>
+    <comment>Applications tab: shown when no applications are registered</comment>
+  </data>
+  <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
+    <value>Visningsmodul:</value>
+    <comment>Applications tab: display preference label</comment>
+  </data>
+  <data name="Applications_Preferences_EnabledLabel" xml:space="preserve">
+    <value>Aktiv:</value>
+    <comment>Applications tab: enabled preference label</comment>
+  </data>
+  <data name="Applications_Preferences_ForwardingLabel" xml:space="preserve">
+    <value>Videresend:</value>
+    <comment>Applications tab: forwarding preference label</comment>
+  </data>
+  <data name="Applications_Preferences_PriorityLabel" xml:space="preserve">
+    <value>Prioritet:</value>
+    <comment>Applications tab: priority preference label</comment>
+  </data>
+  <data name="Applications_Preferences_SoundLabel" xml:space="preserve">
+    <value>Lyd:</value>
+    <comment>Applications tab: sound preference label</comment>
+  </data>
+  <data name="Applications_Preferences_StickyLabel" xml:space="preserve">
+    <value>Limt:</value>
+    <comment>Applications tab: sticky preference label</comment>
+  </data>
+  <data name="Applications_RemoveApplication" xml:space="preserve">
+    <value>Fjern Applikasjon</value>
+    <comment>Applications tab: 'Remove Applications' context menu item</comment>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Avbryt</value>
+    <comment>Any 'Cancel' button</comment>
+  </data>
+  <data name="Button_Clear" xml:space="preserve">
+    <value>Fjern</value>
+    <comment>Any 'Clear' button</comment>
+  </data>
+  <data name="Button_Close" xml:space="preserve">
+    <value>Lukk</value>
+    <comment>Any 'Close' button</comment>
+  </data>
+  <data name="Button_Later" xml:space="preserve">
+    <value>Senere</value>
+    <comment>Any 'Later' button</comment>
+  </data>
+  <data name="Button_OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>Any 'OK' button</comment>
+  </data>
+  <data name="Button_Preview" xml:space="preserve">
+    <value>Forhåndsvisning</value>
+    <comment>Any 'Preview' button</comment>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>Lagre</value>
+    <comment>Any 'Save' button</comment>
+  </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>Ja</value>
+    <comment>Any 'Yes' button</comment>
+  </data>
+  <data name="ChooseForwarding_FormTitle" xml:space="preserve">
+    <value>Velg videresending</value>
+    <comment>Choose Forwarding form title</comment>
+  </data>
+  <data name="DefaultPreference_Name" xml:space="preserve">
+    <value>[Standard]</value>
+    <comment>The name displayed for the '[Default]' preference option</comment>
+  </data>
+  <data name="FailedToStart_Caption" xml:space="preserve">
+    <value>Growl kunne ikke starte</value>
+    <comment>MessageBox caption shown if Growl fails to start</comment>
+  </data>
+  <data name="FailedToStart_Message_GNTP" xml:space="preserve">
+    <value>TCP Porten Growl bruker (TCP port {0}) er opptatt.
+
+Om en annen versjon av Growl kjører, vennligst lukk dene og prøv igjen</value>
+    <comment>MessageBox text shown if Growl fails to start the GNTP listener. Placeholder {0} is the port number.</comment>
+  </data>
+  <data name="FailedToStart_Message_UDP" xml:space="preserve">
+    <value>UDP Porten Growl bruker ({0}) er opptatt.
+
+Om en annen versjon av Growl kjører, vennligst lukk dene og prøv igjen</value>
+    <comment>MessageBox text shown if Growl fails to start the UDPlistener. Placeholder {0} is the port number.</comment>
+  </data>
+  <data name="General_ApplicationPaused" xml:space="preserve">
+    <value>Ute til lunch. Tilbake etter pausen</value>
+    <comment>General tab: Displayed when Growl is paused</comment>
+  </data>
+  <data name="General_ApplicationRunning" xml:space="preserve">
+    <value>Growl er aktiv</value>
+    <comment>General tab: Displayed when Growl is running</comment>
+  </data>
+  <data name="General_ApplicationStopped" xml:space="preserve">
+    <value>Growl er inaktiv</value>
+    <comment>General tab: Displaysed when Growl is stopped</comment>
+  </data>
+  <data name="General_AutoStart" xml:space="preserve">
+    <value>Start Growl automatisk når du logger deg på</value>
+    <comment>General tab: auto start checkbox text</comment>
+  </data>
+  <data name="General_SoundSettings_SoundLabel" xml:space="preserve">
+    <value>Standard lyd:</value>
+    <comment>General tab: Default Sound label</comment>
+  </data>
+  <data name="General_SoundSettingsTitle" xml:space="preserve">
+    <value>Lydinnstillinger</value>
+    <comment>General tab: Sound Settings group box title</comment>
+  </data>
+  <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
+    <value>Anta at jeg er inaktiv etter            sekunder</value>
+    <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
+  </data>
+  <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
+    <value>Lat som om jeg er her hele tiden</value>
+    <comment>General tab: Radio button text for 'never consider me idle'</comment>
+  </data>
+  <data name="General_IdleSettingsTitle" xml:space="preserve">
+    <value>Gjør dette når jeg er borte:</value>
+    <comment>General tab: Idle Settings group box title</comment>
+  </data>
+  <data name="History_NoNotificationsForDate" xml:space="preserve">
+    <value>(Ingen notifikasjoner denne dagen)</value>
+    <comment>History tab: shown when sorted by date and the date had no notifications</comment>
+  </data>
+  <data name="History_NumberOfDaysTitle" xml:space="preserve">
+    <value>Antall dager</value>
+    <comment>History tab: Number of Days</comment>
+  </data>
+  <data name="History_SortBy_Application" xml:space="preserve">
+    <value>Applikasjon</value>
+    <comment>History tab: sort by application radio button label</comment>
+  </data>
+  <data name="History_SortBy_Date" xml:space="preserve">
+    <value>Dato</value>
+    <comment>History tab: sort by date radio button label</comment>
+  </data>
+  <data name="History_SortByTitle" xml:space="preserve">
+    <value>Sorter etter</value>
+    <comment>History tab: Group By</comment>
+  </data>
+  <data name="LiteralString_Format" xml:space="preserve">
+    <value>format</value>
+    <comment>The string 'format' (used in forward list view to show protocol format)</comment>
+  </data>
+  <data name="LiteralString_ReceivedAt" xml:space="preserve">
+    <value>Mottatt den</value>
+    <comment>The string 'Received At' (used in History for each past notification to indicate the date/time the notification was received)</comment>
+  </data>
+  <data name="LiteralString_ReceivedFrom" xml:space="preserve">
+    <value>Sendt av</value>
+    <comment>The string 'Received From' (used in History for each past notification item to indicate which application sent the notification)</comment>
+  </data>
+  <data name="LiteralString_Today" xml:space="preserve">
+    <value>Idag</value>
+    <comment>The string 'Today' (used in History view for the current day)</comment>
+  </data>
+  <data name="LiteralString_Yesterday" xml:space="preserve">
+    <value>Igår</value>
+    <comment>ry view for yesterday's date)</comment>
+  </data>
+  <data name="Loading_ApplicationList" xml:space="preserve">
+    <value>Henter applikasjonsliste...</value>
+    <comment>Loading progress indicator: Application list</comment>
+  </data>
+  <data name="Loading_Display" xml:space="preserve">
+    <value>Henter visningsmodul '{0}' ...</value>
+    <comment>Loading progress indicator for a specific display - Placeholder {0} is the display name</comment>
+  </data>
+  <data name="Loading_Displays" xml:space="preserve">
+    <value>Henter visningsmoduler...</value>
+    <comment>Loading progress indicator: Displays</comment>
+  </data>
+  <data name="Loading_History" xml:space="preserve">
+    <value>Studerer historie...</value>
+    <comment>Loading progress indicator: History</comment>
+  </data>
+  <data name="Loading_Initializing" xml:space="preserve">
+    <value>Initialiserer...</value>
+    <comment>Loading progress indicator: Initializing</comment>
+  </data>
+  <data name="Loading_Preferences" xml:space="preserve">
+    <value>Sjekker preferanser...</value>
+    <comment>Loading progress indicator: Preferences</comment>
+  </data>
+  <data name="Loading_Ready" xml:space="preserve">
+    <value>Utført sjef!</value>
+    <comment>Loading progress indicator: Ready</comment>
+  </data>
+  <data name="Loading_Starting" xml:space="preserve">
+    <value>Starter Growl...</value>
+    <comment>Loading progress indicator: Starting</comment>
+  </data>
+  <data name="Missed_Summary" xml:space="preserve">
+    <value>Du gikk glipp av {0} notifikasjoner siden sist du var her.</value>
+    <comment>Missed Notifications Summary: the summary text - Placeholder {0} is the number of notifications missed.</comment>
+  </data>
+  <data name="Network_ForwardNotifications" xml:space="preserve">
+    <value>Send notifikasjonene videre til en annen maskin</value>
+    <comment>Network tab: checkbox text for 'forward notifications to other computers'</comment>
+  </data>
+  <data name="Network_RemoveComputer" xml:space="preserve">
+    <value>Fjern</value>
+    <comment>Network tab: 'Remove' context menu item</comment>
+  </data>
+  <data name="Network_SubscribeToNotifications" xml:space="preserve">
+    <value>Abboner på notifikasjoner fra andre maskiner</value>
+    <comment>Network tab: checkbox text for 'subscribe to notifications from other computers'</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_CheckForUpdates" xml:space="preserve">
+    <value>Sjekk for oppdateringer</value>
+    <comment>Notify icon context menu: Check for updates</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Exit" xml:space="preserve">
+    <value>Exit</value>
+    <comment>Notify icon context menu: Exit</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Pause" xml:space="preserve">
+    <value>Gi Growl en velfortjent pause fra all jobbinga...</value>
+    <comment>Notify icon context menu: Pause</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Settings" xml:space="preserve">
+    <value>Åpne Growl</value>
+    <comment>Notify icon context menu: Open Growl (formerly Settings)</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Unpause" xml:space="preserve">
+    <value>Be Growl begynne å jobbe igjen</value>
+    <comment>Notify icon context menu: Unpause</comment>
+  </data>
+  <data name="NotifyIcon_Paused" xml:space="preserve">
+    <value>Growl (pause)</value>
+    <comment>Tooltip for notificy icon when Growl is paused</comment>
+  </data>
+  <data name="NotifyIcon_Running" xml:space="preserve">
+    <value>Growl</value>
+    <comment>Tooltip for notify icon when Growl is running</comment>
+  </data>
+  <data name="PrefEnabled_False" xml:space="preserve">
+    <value>Nei</value>
+    <comment>Enabled Pref: False</comment>
+  </data>
+  <data name="PrefEnabled_True" xml:space="preserve">
+    <value>Ja</value>
+    <comment>Enabled Pref: True</comment>
+  </data>
+  <data name="PrefForward_Choose" xml:space="preserve">
+    <value>Velg...</value>
+    <comment>Forwarding Pref: Choose</comment>
+  </data>
+  <data name="PrefForward_Never" xml:space="preserve">
+    <value>Ikke videresend</value>
+    <comment>Forwarding Pref: Never</comment>
+  </data>
+  <data name="PrefPriority_Emergency" xml:space="preserve">
+    <value>Kritisk</value>
+    <comment>Priority Pref: Emergency</comment>
+  </data>
+  <data name="PrefPriority_High" xml:space="preserve">
+    <value>Høy</value>
+    <comment>Priority Pref: High</comment>
+  </data>
+  <data name="PrefPriority_Low" xml:space="preserve">
+    <value>Lav</value>
+    <comment>Priority Pref: Low</comment>
+  </data>
+  <data name="PrefPriority_Normal" xml:space="preserve">
+    <value>Normal</value>
+    <comment>Priority Pref: Normal</comment>
+  </data>
+  <data name="PrefPriority_VeryLow" xml:space="preserve">
+    <value>Svært lav</value>
+    <comment>Priority Pref: Very Low</comment>
+  </data>
+  <data name="PrefSound_None" xml:space="preserve">
+    <value>Ingen</value>
+    <comment>Sound Pref: None</comment>
+  </data>
+  <data name="PrefSticky_Always" xml:space="preserve">
+    <value>Alltid</value>
+    <comment>Sticky Pref: Always</comment>
+  </data>
+  <data name="PrefSticky_Never" xml:space="preserve">
+    <value>Aldri</value>
+    <comment>Sticky Pref: Never</comment>
+  </data>
+  <data name="PrefSticky_WhenIdle" xml:space="preserve">
+    <value>Når jeg er borte</value>
+    <comment>Sticky Pref: When Idle</comment>
+  </data>
+  <data name="Protocol_Type_GNTP" xml:space="preserve">
+    <value>GNTP</value>
+    <comment>GNTP protocol name (used in forwarding dropdown, etc)</comment>
+  </data>
+  <data name="Protocol_Type_UDP" xml:space="preserve">
+    <value>UDP</value>
+    <comment>UDP protocol name (used in forwarding dropdown, etc)</comment>
+  </data>
+  <data name="Security_AllowNetworkNotifications" xml:space="preserve">
+    <value>Tillat notifikasjoner fra nettverket</value>
+    <comment>Security tab: checkbox text for 'allow network notificaions'</comment>
+  </data>
+  <data name="Security_AllowSubscriptions" xml:space="preserve">
+    <value>Tillat andre å abbonere på notifikasjoner</value>
+    <comment>Security tab: checkbox text for 'allows subscriptions'</comment>
+  </data>
+  <data name="Security_AllowWebNotifications" xml:space="preserve">
+    <value>Tillat notifikasjoner fra nettsider</value>
+    <comment>Security tab: checkbox text for 'allow web notifications'</comment>
+  </data>
+  <data name="Security_PasswordManager_DescriptionLabel" xml:space="preserve">
+    <value>Beskrivelse:</value>
+    <comment>Security tab: Password Manager 'Description' label</comment>
+  </data>
+  <data name="Security_PasswordManager_Edit" xml:space="preserve">
+    <value>Rediger</value>
+    <comment>Security tab: Password Manager 'Edit' context menu item</comment>
+  </data>
+  <data name="Security_PasswordManager_Instructions" xml:space="preserve">
+    <value>Skriv inn ett passord, og en kort beskrivelse av passordet som ett passordhint.</value>
+    <comment>Security tab: Password Manager instructions</comment>
+  </data>
+  <data name="Security_PasswordManager_PasswordLabel" xml:space="preserve">
+    <value>Passord:</value>
+    <comment>Security tab: Password Manager 'Password' label</comment>
+  </data>
+  <data name="Security_PasswordManager_Title" xml:space="preserve">
+    <value>Passordoversikt</value>
+    <comment>Security tab: Password Manager title</comment>
+  </data>
+  <data name="Security_RequirePasswordLocalApps" xml:space="preserve">
+    <value>Lokale applikasjoner må bruke passord:</value>
+    <comment>Security tab: checkbox text for 'require password for local apps'</comment>
+  </data>
+  <data name="SettingsForm_FormTitle" xml:space="preserve">
+    <value>Growl</value>
+    <comment>Settings form title</comment>
+  </data>
+  <data name="SplashScreen_Loading" xml:space="preserve">
+    <value>Jobber...</value>
+    <comment>The loading progress indicator shown on the initial splash screen.</comment>
+  </data>
+  <data name="SplashScreen_Title" xml:space="preserve">
+    <value>Growl for Windows</value>
+    <comment>The name of the application shown on the initial splash screen</comment>
+  </data>
+  <data name="SplashScreen_Version" xml:space="preserve">
+    <value>Versjon: {0}</value>
+    <comment>The version informatino shown on the initial splash screen. Placeholder {0} is the version number.</comment>
+  </data>
+  <data name="SystemNotification_ApplicationName" xml:space="preserve">
+    <value>Growl</value>
+    <comment>The application name used for system notifications</comment>
+  </data>
+  <data name="SystemNotification_AppRegistered_Text" xml:space="preserve">
+    <value>Applikasjonen '{0}' har registert seg som en avsender.</value>
+    <comment>Notification text when an application registers. Placeholder {0} is the application name.</comment>
+  </data>
+  <data name="SystemNotification_AppRegistered_Title" xml:space="preserve">
+    <value>Ny applikasjon!</value>
+    <comment>The title used for the system notification when an application registers</comment>
+  </data>
+  <data name="SystemNotification_ClientSubscribed_Text" xml:space="preserve">
+    <value>Klienten '{0}' har tegnet ett abbonement på notifikasjoner.</value>
+    <comment>Notification text when a client subscribes to notifications. Placeholder {0} is the subscribing client's name.</comment>
+  </data>
+  <data name="SystemNotification_ClientSubscribed_Title" xml:space="preserve">
+    <value>Ny abbonent!</value>
+    <comment>The title used for the system notification when a client subscribes to notifications</comment>
+  </data>
+  <data name="SystemNotification_Preview_Text" xml:space="preserve">
+    <value>Dette er en forhåndsvisning av '{0}'.</value>
+    <comment>Notification text shown for preview notifications - Placeholder {0} is the actual display name</comment>
+  </data>
+  <data name="SystemNotification_Preview_Title" xml:space="preserve">
+    <value>Vis meg hvordan Visningsmodulen ser ut</value>
+    <comment>The title used for preview notifications</comment>
+  </data>
+  <data name="SystemNotification_Running_Text" xml:space="preserve">
+    <value>Growl aktivert</value>
+    <comment>Notification text shown when Growl starts</comment>
+  </data>
+  <data name="SystemNotification_Running_Title" xml:space="preserve">
+    <value>Growl</value>
+    <comment>The title used for the system notification when Growl starts</comment>
+  </data>
+  <data name="Toolbar_About" xml:space="preserve">
+    <value>Om</value>
+    <comment>'About' tab title</comment>
+  </data>
+  <data name="Toolbar_Applications" xml:space="preserve">
+    <value>Applikasjoner</value>
+    <comment>'Applications' tab title</comment>
+  </data>
+  <data name="Toolbar_Displays" xml:space="preserve">
+    <value>Visningsmoduler</value>
+    <comment>'Displays' tab title</comment>
+  </data>
+  <data name="Toolbar_General" xml:space="preserve">
+    <value>Generelt</value>
+    <comment>'General' tab title</comment>
+  </data>
+  <data name="Toolbar_History" xml:space="preserve">
+    <value>Historikk</value>
+    <comment>'History' tab title</comment>
+  </data>
+  <data name="Toolbar_Network" xml:space="preserve">
+    <value>Nettverk</value>
+    <comment>'Network' tab title</comment>
+  </data>
+  <data name="Toolbar_Security" xml:space="preserve">
+    <value>Sikkerhet</value>
+    <comment>'Security' tab title</comment>
+  </data>
+  <data name="Updater_DownloadComplete" xml:space="preserve">
+    <value>Nedlastning fullført. Starter installasjon...</value>
+    <comment>Check for Updates form: displayed when the update has finished downloading and the installation is starting</comment>
+  </data>
+  <data name="Updater_DownloadingUpdate" xml:space="preserve">
+    <value>Henter oppdatering..</value>
+    <comment>Check for Updates form: displayed while an update is downloading</comment>
+  </data>
+  <data name="Updater_FormTitle" xml:space="preserve">
+    <value>Sjekk oppdateringer</value>
+    <comment>Check for Updates form title</comment>
+  </data>
+  <data name="Updater_GrowlIsUpToDate" xml:space="preserve">
+    <value>Nyeste Growl er innstallert. Nåværende versjon: {1}</value>
+    <comment>Check for Updates form: displayed when Growl is up-to-date. Placeholder {0} is any newer version number, {1} is the current up-to-date version number</comment>
+  </data>
+  <data name="Updater_UpdateAvailable" xml:space="preserve">
+    <value>Versjon {0} av Growl er tilgjengelig. Vil du oppdatere til nyeste versjon? (Du har nå versjon: {1})</value>
+    <comment>Check for Updates form: displayed when an update is available. Placeholder {0} is the newer version number, {1} is the current version number</comment>
+  </data>
+  <data name="Button_SetAsDefault" xml:space="preserve">
+    <value>Bruk denne som standard</value>
+    <comment>Any 'Set as Default' button</comment>
+  </data>
+  <data name="Displays_CreatedBy" xml:space="preserve">
+    <value>Laget av:</value>
+    <comment>Displays tab: created by label</comment>
+  </data>
+  <data name="General_SoundSettings_MuteLabel" xml:space="preserve">
+    <value>Vær stille</value>
+    <comment>General tab: mute all sounds label</comment>
+  </data>
+  <data name="Applications_NoAppsRegistered_Description" xml:space="preserve">
+    <value>Når ett program med Growl tileggsfunskjonalitet registrerer seg som en avsender vil det dukke opp i listen til høyre, og du vil kunne endre applikasjonens innstillinger.</value>
+    <comment>Applications tab: shown when no applications are registered</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Mute" xml:space="preserve">
+    <value>Stumt</value>
+    <comment>Notify icon context menu: Mute</comment>
+  </data>
+  <data name="NotifyIcon_ContextMenu_Unmute" xml:space="preserve">
+    <value>Gi stemmerett</value>
+    <comment>Notify icon context menu: Unmute</comment>
+  </data>
+  <data name="Applications_ApplicationListHeader" xml:space="preserve">
+    <value>Applikasjonsnavn</value>
+    <comment>Applications tab: Header text for applications list box</comment>
+  </data>
+  <data name="Applications_NotificationListHeader" xml:space="preserve">
+    <value>Notifikasjonstype</value>
+    <comment>Applications tab: Header text for notifications list box</comment>
+  </data>
+  <data name="Displays_DisplayListHeader" xml:space="preserve">
+    <value>Visningsnavn</value>
+    <comment>Displays tab: Header text for displays list box</comment>
+  </data>
+  <data name="LiteralString_Seconds" xml:space="preserve">
+    <value>sekunder</value>
+    <comment>The string 'seconds' (Used in Duration preference)</comment>
+  </data>
+  <data name="Applications_Preferences_DurationLabel" xml:space="preserve">
+    <value>Varighet:</value>
+    <comment>Applications tab: duration preference label</comment>
+  </data>
+  <data name="DisplayInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Visningsmodul '{0}' er allerede installert.</value>
+    <comment>Display installer: message shown if a display is already installed when attempting to install again</comment>
+  </data>
+  <data name="DisplayInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>Definisjonsfila '{0}' inneholder feil.\n\nVisninsgmodulen kunne ikke innstalleres</value>
+    <comment>Display installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="DisplayInstaller_DownloadCancelled" xml:space="preserve">
+    <value>Installeringa av visningsmodulen ble avbrutt.\n\nVisningsmodulen ble ikke installert.</value>
+    <comment>Display installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="DisplayInstaller_DownloadError" xml:space="preserve">
+    <value>Det skjedde en feil ved henting av visningsmodulen.\n\nVisningsmodulen ble ikke installert.</value>
+    <comment>Display installer: message shown if the download of the display files fails for any reason</comment>
+  </data>
+  <data name="DisplayInstaller_FormTitle" xml:space="preserve">
+    <value>Installer Visningsmodul</value>
+    <comment>Display installer: form title</comment>
+  </data>
+  <data name="DisplayInstaller_Installing" xml:space="preserve">
+    <value>Installerer Visningsmodul...</value>
+    <comment>Display installer: displayed while the display is being installed</comment>
+  </data>
+  <data name="DisplayInstaller_NewDisplayInstalledText" xml:space="preserve">
+    <value>Visningsmodulen '{0}' ble korrekt installert.</value>
+    <comment>Display installer: text of the notification shown when a new display is installed. {0} is the name of the installed display.</comment>
+  </data>
+  <data name="DisplayInstaller_NewDisplayInstalledTitle" xml:space="preserve">
+    <value>Ny visningsmodul installert</value>
+    <comment>Display installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="DisplayInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>Definisjonsfila '{0}' eksisterer ikke.\n\nVisningsmodulen ble ikke installert.</value>
+    <comment>Display installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="DisplayInstaller_Prompt" xml:space="preserve">
+    <value>Ønsker du å installere denne?\n\nNavn: {0}\nLaget av: {1}\nBeskrivelse: {2}</value>
+    <comment>Display installer: displayed when a click-to-install link is clicked. {0} is the name of the display, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="Displays_FindMore" xml:space="preserve">
+    <value>Finn &amp; flere visningsmoduler</value>
+    <comment>Displays tab: text that links to the GFW website to find more displays</comment>
+  </data>
+  <data name="AddComputer_AddProwl" xml:space="preserve">
+    <value>Aktiver videresending til iPhone</value>
+    <comment>Add computer form: click to forward notification to iphone</comment>
+  </data>
+  <data name="AddComputer_AddEmail" xml:space="preserve">
+    <value>Aktiver videresending til epost</value>
+    <comment>Add computer form: click to add email forwarding</comment>
+  </data>
+  <data name="AddComputer_AddTwitter" xml:space="preserve">
+    <value>Aktiver videresending til Twitter</value>
+    <comment>Add computer form: click to forward notifications to Twitter</comment>
+  </data>
+  <data name="AddProwl_AnyPriority" xml:space="preserve">
+    <value>[alle prioriteter]</value>
+    <comment>Configure iPhone Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddProwl_MinimumPriorityLabel" xml:space="preserve">
+    <value>Videresend kun når prioriteten er minst:</value>
+    <comment>Configure iPhone Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddProwl_NameLabel" xml:space="preserve">
+    <value>Beskrivelse:</value>
+    <comment>Configure iPhone Forwarding: 'Description' label</comment>
+  </data>
+  <data name="AddProwl_APIKeyLabel" xml:space="preserve">
+    <value>API Key:</value>
+    <comment>Configure iPhone Forwarding: 'API Key' label</comment>
+  </data>
+  <data name="AddProwl_OnlyWhenIdle" xml:space="preserve">
+    <value>Videresend bare når du er utilgjengelig</value>
+    <comment>Configure iphone forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="AddTwitter_AnyPriority" xml:space="preserve">
+    <value>[alle prioriteter]</value>
+    <comment>Configure Twitter Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddTwitter_MinimumPriorityLabel" xml:space="preserve">
+    <value>Videresend kun når prioriteten er minst:</value>
+    <comment>Configure Twitter Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddTwitter_PasswordLabel" xml:space="preserve">
+    <value>Passord:</value>
+    <comment>Configure Twitter Forwarding: 'Password' label</comment>
+  </data>
+  <data name="AddTwitter_UsernameLabel" xml:space="preserve">
+    <value>Brukernavn:</value>
+    <comment>Configure Twitter Forwarding: 'Username' label</comment>
+  </data>
+  <data name="AddTwitter_FormatLabel" xml:space="preserve">
+    <value>Format:</value>
+    <comment>Configure Twitter Forwarding: 'Format' label</comment>
+  </data>
+  <data name="AddTwitter_OnlyWhenIdle" xml:space="preserve">
+    <value>Videresend bare når du er utilgjengelig</value>
+    <comment>Configure Twitter forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="LiteralString_Always" xml:space="preserve">
+    <value>Alltid</value>
+    <comment>The string 'Always'</comment>
+  </data>
+  <data name="LiteralString_IdleOnly" xml:space="preserve">
+    <value>Kun utilgjengelig</value>
+    <comment>The string 'Idle Only'</comment>
+  </data>
+  <data name="Network_EditComputer" xml:space="preserve">
+    <value>Rediger</value>
+    <comment>Network tab: 'Edit' context menu item</comment>
+  </data>
+  <data name="ProwlConfirmation_Text" xml:space="preserve">
+    <value>Videresending til Prowl er korrekt satt opp</value>
+    <comment>Text of Prowl confirmation notification sent to confirm successful configuration</comment>
+  </data>
+  <data name="ProwlConfirmation_Title" xml:space="preserve">
+    <value>Test Prowl</value>
+    <comment>Title of Prowl confirmation notification sent to confirm successful configuration</comment>
+  </data>
+  <data name="AddEmail_AnyPriority" xml:space="preserve">
+    <value>[alle prioriteter]</value>
+    <comment>Configure Email Forwarding: label for combobox choice for forwarding all notification priorities</comment>
+  </data>
+  <data name="AddEmail_MinimumPriorityLabel" xml:space="preserve">
+    <value>Videresend kun når prioriteten er minst:</value>
+    <comment>Configure Email Forwarding: label for minimum priority</comment>
+  </data>
+  <data name="AddEmail_NameLabel" xml:space="preserve">
+    <value>Beskrivelse:</value>
+    <comment>Configure Email Forwarding: 'Description' label</comment>
+  </data>
+  <data name="AddEmail_EmailAddressLabel" xml:space="preserve">
+    <value>Epost Adresse:</value>
+    <comment>Configure Email Forwarding: 'Email Address' label</comment>
+  </data>
+  <data name="AddEmail_SMTPSettingsLabel" xml:space="preserve">
+    <value>Utgående eposttjener (SMTP):</value>
+    <comment>Configure Email Forwarding: 'SMTP Settings' label</comment>
+  </data>
+  <data name="AddEmail_EditSMTP" xml:space="preserve">
+    <value>rediger</value>
+    <comment>Configure Email Forwarding: 'edit' link</comment>
+  </data>
+  <data name="AddEmail_OnlyWhenIdle" xml:space="preserve">
+    <value>Videresend bare når du er utilgjengelig</value>
+    <comment>Configure Email forwarding: 'only forward when idle' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPServerLabel" xml:space="preserve">
+    <value>Tjener:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Server' label</comment>
+  </data>
+  <data name="AddEmail_SMTPPortLabel" xml:space="preserve">
+    <value>Port:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Port' label</comment>
+  </data>
+  <data name="AddEmail_SMTPUseAuthentication" xml:space="preserve">
+    <value>Bruk autentisering</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Use Authentication' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPUseSSL" xml:space="preserve">
+    <value>Bruk SSL</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Use SSL' checkbox text</comment>
+  </data>
+  <data name="AddEmail_SMTPUsernameLabel" xml:space="preserve">
+    <value>Brukernavn:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Username' label</comment>
+  </data>
+  <data name="AddEmail_SMTPPasswordLabel" xml:space="preserve">
+    <value>Passord:</value>
+    <comment>Configure Email forwarding SMTP Settings: 'Password' label</comment>
+  </data>
+  <data name="AddEmail_SMTPDone" xml:space="preserve">
+    <value>Utført!</value>
+    <comment>Configure Email forwarding SMTP Settings: 'done' link</comment>
+  </data>
+  <data name="History_Columns_Application" xml:space="preserve">
+    <value>Applikasjon</value>
+    <comment>History tab: Column header for Application column</comment>
+  </data>
+  <data name="History_Columns_Text" xml:space="preserve">
+    <value>Tekst</value>
+    <comment>History tab: Column header for Text column</comment>
+  </data>
+  <data name="History_Columns_Timestamp" xml:space="preserve">
+    <value>Tidsstempel</value>
+    <comment>History tab: Column header for Timestamp column</comment>
+  </data>
+  <data name="History_Columns_Title" xml:space="preserve">
+    <value>Tittel</value>
+    <comment>History tab: Column header for Title column</comment>
+  </data>
+  <data name="History_DetailsView" xml:space="preserve">
+    <value>Detaljevisning</value>
+    <comment>History tab: Details View context menu option</comment>
+  </data>
+  <data name="History_TileView" xml:space="preserve">
+    <value>Rutevisning</value>
+    <comment>History tab: Tile View context menu option</comment>
+  </data>
+  <data name="Button_No" xml:space="preserve">
+    <value>Nei</value>
+    <comment>Any 'No' button</comment>
+  </data>
+</root>

@@ -108,7 +108,7 @@ namespace GrowlExtras.FeedMonitor
             List<Feed> savedFeeds = SettingsPersister.Read();
             foreach (Feed feed in savedFeeds)
             {
-                AddFeed(feed.Url, feed.PollInterval);
+                AddFeed(feed);
             }
 
             if (this.feeds.Count == 0)
@@ -120,11 +120,21 @@ namespace GrowlExtras.FeedMonitor
             }
         }
 
+        public void AddFeed(Feed feed)
+        {
+            AddFeed(feed.Url, feed.PollInterval, feed.CustomName, feed.Username, feed.Password);
+        }
+
         public void AddFeed(string url, int pollInterval)
+        {
+            AddFeed(url, pollInterval, null, null, null);
+        }
+
+        private void AddFeed(string url, int pollInterval, string customName, string username, string password)
         {
             try
             {
-                Feed feed = Feed.Create(url, pollInterval);
+                Feed feed = Feed.Create(url, pollInterval, customName, username, password);
                 feed.FeedRetrieved += new EventHandler<FeedRetrievedEventArgs>(feed_FeedRetrieved);
                 feed.FeedUpdated += new EventHandler<FeedUpdatedEventArgs>(feed_FeedUpdated);
                 feed.FeedError += new EventHandler<FeedErrorEventArgs>(feed_FeedError);

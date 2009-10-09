@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace Growl
 {
+    /// <summary>
+    /// Provides access to commonly used properties and methods
+    /// </summary>
     public static class Utility
     {
         private static string userSettingsFolder;
@@ -52,6 +55,10 @@ namespace Growl
             Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(userSettingsFolder);
         }
 
+        /// <summary>
+        /// Gets the full path to folder where all user settings are saved.
+        /// </summary>
+        /// <value>Full folder path</value>
         public static string UserSettingFolder
         {
             get
@@ -60,6 +67,10 @@ namespace Growl
             }
         }
 
+        /// <summary>
+        /// Gets the full path to folder where all user settings were saved in earlier beta versions.
+        /// </summary>
+        /// <value>Full folder path</value>
         public static string UserSettingFolderBeta
         {
             get
@@ -68,6 +79,10 @@ namespace Growl
             }
         }
 
+        /// <summary>
+        /// Gets the file version info.
+        /// </summary>
+        /// <value>The file version info.</value>
         public static System.Diagnostics.FileVersionInfo FileVersionInfo
         {
             [PermissionSet(SecurityAction.LinkDemand, Unrestricted = true)]
@@ -77,6 +92,11 @@ namespace Growl
             }
         }
 
+        /// <summary>
+        /// Gets the full path to the folder where a displays user settings are saved.
+        /// </summary>
+        /// <param name="displayName">The display name.</param>
+        /// <returns>Full folder path</returns>
         public static string GetDisplayUserSettingsFolder(string displayName)
         {
             string folder = Growl.CoreLibrary.PathUtility.Combine(UserSettingFolder, String.Format(@"Displays\{0}\", displayName));
@@ -84,12 +104,40 @@ namespace Growl
             return folder;
         }
 
+        /// <summary>
+        /// Handles properly formatting strings, especially those from resource strings.
+        /// </summary>
+        /// <param name="resourceString">The resource string.</param>
+        /// <returns>Properly formatted string</returns>
+        /// <remarks>The main use for this method is to convert literal \n characters to newlines (since newlines are a pain to deal with in the resource xml files)</remarks>
         public static string GetResourceString(string resourceString)
         {
             resourceString = resourceString.Replace("\\n", "\n");
             return resourceString;
         }
 
+        /// <summary>
+        /// Gets an ID that can be used to uniquely identify this machine.
+        /// </summary>
+        /// <value>The machine ID.</value>
+        public static string MachineID
+        {
+            get
+            {
+                string machineID = Properties.Settings.Default.MachineID;
+                if (String.IsNullOrEmpty(machineID))
+                {
+                    machineID = System.Guid.NewGuid().ToString();
+                    Properties.Settings.Default.MachineID = machineID;
+                }
+                return machineID;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the app is running in debug mode
+        /// </summary>
+        /// <value><c>true</c> if in debug mode; otherwise, <c>false</c>.</value>
         public static bool DebugMode
         {
             get
@@ -102,6 +150,10 @@ namespace Growl
             }
         }
 
+        /// <summary>
+        /// Writes debug info to a log file
+        /// </summary>
+        /// <param name="info">The information to log</param>
         public static void WriteDebugInfo(string info)
         {
             bool ok = DebugMode;

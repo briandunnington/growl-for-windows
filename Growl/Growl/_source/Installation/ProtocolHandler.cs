@@ -16,14 +16,16 @@ namespace Growl.Installation
             this.appIsAlreadyRunning = appIsAlreadyRunning;
         }
 
-        public int Process(string uri, ref List<InternalNotification> queuedNotifications)
+        public int Process(string uri, ref List<InternalNotification> queuedNotifications, ref int signalValue)
         {
-            // general format: growl://action*data1&data2&data3...etc
-            // example: growl://display*http://www.somesite.org/display.xml
+            // general format: growl:action*data1&data2&data3...etc
+            // example: growl:display*http://www.somesite.org/display.xml
+            // 09.22.2009 - changed protocol scheme from growl:// to just growl: because of a bug in Google Chrome: http://code.google.com/p/chromium/issues/detail?id=160
+            //              the old syntax (with //) is still supported as well
 
             int result = 0;
 
-            Regex regex = new Regex(@"growl://(?<Action>[^\*]*)\*(?<Data>[\s\S]*)");
+            Regex regex = new Regex(@"growl:(//)?(?<Action>[^\*]*)\*(?<Data>[\s\S]*)");
             Match match = regex.Match(uri);
             if (match.Success)
             {
@@ -32,15 +34,21 @@ namespace Growl.Installation
                 switch (action)
                 {
                     case "display":
-                        InstallDisplay form = new InstallDisplay();
-                        bool newDisplayLoaded = form.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications);
+                        InstallDisplay id = new InstallDisplay();
+                        bool newDisplayLoaded = id.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications);
                         if (newDisplayLoaded) result = ApplicationMain.SIGNAL_RELOAD_DISPLAYS;
+                        id.Close();
+                        id = null;
                         break;
                     case "extension":
                         // this isnt a real use case yet
                         break;
                     case "language":
-                        // this isnt a real use case yet
+                        InstallLanguage il = new InstallLanguage();
+                        bool languageInstalled = il.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications, ref signalValue);
+                        if (languageInstalled) result = ApplicationMain.SIGNAL_UPDATE_LANGUAGE;
+                        il.Close();
+                        il = null;
                         break;
                 }
             }

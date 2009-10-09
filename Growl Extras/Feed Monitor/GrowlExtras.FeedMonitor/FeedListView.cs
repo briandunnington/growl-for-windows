@@ -20,8 +20,9 @@ namespace GrowlExtras.FeedMonitor
 
             this.SuspendLayout();
 
-            this.OwnerDraw = true;
             this.DoubleBuffered = true;
+            this.OwnerDraw = true;
+            this.DrawItem += new DrawListViewItemEventHandler(FeedListView_DrawItem);
 
             // columns
             ColumnHeader nameHeader = new ColumnHeader();
@@ -39,8 +40,6 @@ namespace GrowlExtras.FeedMonitor
             this.ShowItemToolTips = true;
             this.LabelWrap = false;
 
-            this.DrawItem += new DrawListViewItemEventHandler(FeedListView_DrawItem);
-
             // uncomment this to use custom tool tips
             //this.ShowItemToolTips = false;
             this.ItemMouseHover += new ListViewItemMouseHoverEventHandler(FeedListView_ItemMouseHover);
@@ -56,15 +55,11 @@ namespace GrowlExtras.FeedMonitor
                 Feed feed = (Feed) e.Item.Tag;
 
                 // draw the background and focus rectangle for selected and non-selected states
-                if ((e.State & ListViewItemStates.Selected) != 0)
+                e.DrawBackground();
+                if (e.Item.Selected)
                 {
                     e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, e.Bounds);
-                    e.DrawFocusRectangle();
-                }
-                else
-                {
-                    e.DrawBackground();
-                    e.DrawFocusRectangle();
+                    ControlPaint.DrawFocusRectangle(e.Graphics, e.Bounds);
                 }
 
                 // draw icon

@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.ja-JP", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Displays.Plain", "Growl.Displays.Plain\Growl.Displays.Plain.csproj", "{FCE7A843-0E7E-4BF0-8FD1-08200A8A51A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.de-DE", "Growl.Localization.de-DE\Growl.Localization.de-DE.csproj", "{774E3560-B4CA-4041-A21E-A9437FD3C932}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.nb-NO", "Growl.Localization.nb-NO\Growl.Localization.nb-NO.csproj", "{BED0DDCE-6C19-4487-86A0-CD58F2DC5F66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +111,14 @@ Global
 		{FCE7A843-0E7E-4BF0-8FD1-08200A8A51A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE7A843-0E7E-4BF0-8FD1-08200A8A51A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE7A843-0E7E-4BF0-8FD1-08200A8A51A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{774E3560-B4CA-4041-A21E-A9437FD3C932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774E3560-B4CA-4041-A21E-A9437FD3C932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774E3560-B4CA-4041-A21E-A9437FD3C932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774E3560-B4CA-4041-A21E-A9437FD3C932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BED0DDCE-6C19-4487-86A0-CD58F2DC5F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED0DDCE-6C19-4487-86A0-CD58F2DC5F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED0DDCE-6C19-4487-86A0-CD58F2DC5F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED0DDCE-6C19-4487-86A0-CD58F2DC5F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

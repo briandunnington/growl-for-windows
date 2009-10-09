@@ -99,7 +99,9 @@ namespace Growl
             growl.KeyHashAlgorithm = this.HashAlgorithm;
             growl.EncryptionAlgorithm = this.EncryptionAlgorithm;
             growl.ForwardedNotificationCallback += callbackFunction;
-            growl.Notify(notification, callbackInfo.Context);
+            CallbackContext context = null;
+            if (callbackInfo != null) context = callbackInfo.Context;
+            growl.Notify(notification, context);
         }
     }
 }

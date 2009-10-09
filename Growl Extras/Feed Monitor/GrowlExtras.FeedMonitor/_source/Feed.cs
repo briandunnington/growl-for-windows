@@ -17,9 +17,12 @@ namespace GrowlExtras.FeedMonitor
         private const string _nullResultErrorMessage = "The returned stream was null.";
         private const string _parseErrorMessage = "Unable to parse feed.";
 
-        private string name;
+        private string actualName;
+        private string customName;
         private Uri url;
         private int pollInterval;
+        private string username;
+        private string password;
         private DateTime lastCheckForUpdates;
         private DateTimeOffset feedLastUpdated;
         private WebClient webclient;
@@ -29,14 +32,22 @@ namespace GrowlExtras.FeedMonitor
 
         public static Feed Create(string url, int pollInterval)
         {
-            return new Feed(url, pollInterval, DateTime.MaxValue);
+            return Create(url, pollInterval, null, null, null);
         }
 
-        private Feed(string url, int pollInterval, DateTime lastCheckForUpdates)
+        public static Feed Create(string url, int pollInterval, string customName, string username, string password)
         {
-            this.name = LOADING;
+            return new Feed(url, pollInterval, customName, username, password, DateTime.MaxValue);
+        }
+
+        private Feed(string url, int pollInterval, string customName, string username, string password, DateTime lastCheckForUpdates)
+        {
+            this.actualName = LOADING;
+            this.customName = customName;
             this.url = new Uri(url);
             this.pollInterval = pollInterval;
+            this.username = username;
+            this.password = password;
             this.lastCheckForUpdates = lastCheckForUpdates;
             this.feedLastUpdated = DateTimeOffset.MaxValue;
 
@@ -56,7 +67,26 @@ namespace GrowlExtras.FeedMonitor
         {
             get
             {
-                return this.name;
+                if (this.actualName == LOADING || String.IsNullOrEmpty(this.customName))
+                    return this.actualName;
+                else
+                    return this.customName;
+            }
+        }
+
+        public string ActualName
+        {
+            get
+            {
+                return this.actualName;
+            }
+        }
+
+        public string CustomName
+        {
+            get
+            {
+                return this.customName;
             }
         }
 
@@ -81,6 +111,22 @@ namespace GrowlExtras.FeedMonitor
             }
         }
 
+        public string Username
+        {
+            get
+            {
+                return this.username;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return this.password;
+            }
+        }
+
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             this.timer.Stop();
@@ -91,6 +137,7 @@ namespace GrowlExtras.FeedMonitor
         {
             if (!this.webclient.IsBusy)
             {
+                this.webclient.Credentials = new NetworkCredential(this.username, this.password);
                 this.webclient.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
                 this.webclient.OpenReadAsync(this.url);
                 this.lastCheckForUpdates = DateTime.Now;
@@ -130,6 +177,7 @@ namespace GrowlExtras.FeedMonitor
 
                 if (info != null)
                 {
+                    info.CustomTitle = this.CustomName;
                     info.Url = this.Url;
                     OnFeedRetrieved(info);
                 }
@@ -165,11 +213,11 @@ namespace GrowlExtras.FeedMonitor
         /// </summary>
         protected void OnFeedRetrieved(FeedInfo feed)
         {
-            this.name = feed.Title;
+            this.actualName = feed.ActualTitle;
             DateTimeOffset mostRecentItem = this.feedLastUpdated;
             if (mostRecentItem == DateTimeOffset.MaxValue) mostRecentItem = DateTimeOffset.MinValue;
 
-            System.Diagnostics.Debug.WriteLine(String.Format("Feed Retrieved: {0} - Most Recent Item: {1}", this.name, mostRecentItem));
+            System.Diagnostics.Debug.WriteLine(String.Format("Feed Retrieved: {0} - Most Recent Item: {1}", this.Name, mostRecentItem));
 
             if (FeedRetrieved != null)
             {

@@ -177,7 +177,7 @@ namespace Test_Server
         private string subscriberID;
         private void button2_Click(object sender, EventArgs e)
         {
-            this.subscriberID = Growl.Daemon.Subscriber.GenerateID();
+            this.subscriberID = System.Guid.NewGuid().ToString();
             Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, "Superman", 24000);
             Growl.Daemon.SubscriptionConnector sc = new Growl.Daemon.SubscriptionConnector(subscriber, password, "127.0.0.1");
             sc.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;

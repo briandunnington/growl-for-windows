@@ -11,6 +11,9 @@ namespace Growl.DisplayStyle
     /// </summary>
     public class NotificationWindow : Form
     {
+        private const int WS_EX_TOOLWINDOW = 0x80;
+        private const int WS_EX_APPWINDOW = 0x40000;
+
         /// <summary>
         /// Fires after <c>Load</c> but before <c>BeforeShown</c>
         /// </summary>
@@ -135,6 +138,22 @@ namespace Growl.DisplayStyle
 
             this.displayTimer = new Timer();
             this.displayTimer.Tick += new EventHandler(displayTimer_Tick);
+        }
+
+        /// <summary>
+        /// Overridden to set the WS_EX_TOOLWINDOW style bit so that notification windows don't
+        /// show up in the Alt-Tab list.
+        /// </summary>
+        /// <value></value>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= WS_EX_TOOLWINDOW; // turn on WS_EX_TOOLWINDOW style bit
+                cp.ExStyle &= ~WS_EX_APPWINDOW;  // turn off WS_EX_APPWINDOW style bit
+                return cp;
+            }
         }
 
         /// <summary>
