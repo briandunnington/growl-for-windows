@@ -128,7 +128,7 @@ namespace Growl.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Rectangle headerRect = new Rectangle(e.ClipRectangle.X, e.ClipRectangle.Y, e.ClipRectangle.Width, this.headerHeight);
+            Rectangle headerRect = new Rectangle(0, 0, ClientSize.Width, headerHeight);
             Brush b1 = new SolidBrush(Color.FromArgb(222, 222, 222));
             using (b1)
             {

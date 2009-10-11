@@ -14,6 +14,9 @@ namespace Growl.Connector
     /// Along with applications sending notifications, this class serves as the basis
     /// for objects that do things like forward notifications from one server to another
     /// or subscribe to notifications from a remote client.
+    /// 
+    /// NOTE: This class' ability to parse and receive GNTP responses is not currently able
+    /// to handle responses with inline binary data.
     /// </remarks>
     public abstract class ConnectorBase
     {
