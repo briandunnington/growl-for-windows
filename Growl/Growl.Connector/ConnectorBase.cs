@@ -22,6 +22,9 @@ namespace Growl.Connector
         /// </summary>
         public const int TCP_PORT = 23053;
 
+        // End-of-message indicator
+        private const string EOM = "\r\n\r\n";
+
         /// <summary>
         /// Represents methods that handle the ResponseReceived events
         /// </summary>
@@ -308,6 +311,7 @@ namespace Growl.Connector
         {
             TcpState state = null;
             bool waitForCallback = false;
+            bool moreData = false;
             try
             {
                 state = (TcpState)iar.AsyncState;
@@ -318,25 +322,30 @@ namespace Growl.Connector
                     string response = System.Text.Encoding.UTF8.GetString(state.Buffer, 0, length);
                     state.Response += response;
 
-                    // read additional data
-                    while (state.Stream.DataAvailable)
+                    // keep waiting for more data if this wasnt the end of the message
+                    if (!state.Response.EndsWith(EOM))
                     {
+                        moreData = true;
                         AsyncCallback callback = new AsyncCallback(ReadCallback);
                         state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
                     }
-
-                    if (state.Delegate != null)
-                        state.Delegate(response);
-
-                    // wait for more data
-                    if (state.WaitForCallback)
+                    else
                     {
-                        waitForCallback = true;
-                        state.WaitForCallback = false;
-                        state.Buffer = new byte[4096];
-                        AsyncCallback callback = new AsyncCallback(ReadCallback);
-                        state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
-                        return;
+
+                        if (state.Delegate != null)
+                            state.Delegate(state.Response);
+
+                        // wait for callback data
+                        if (state.WaitForCallback)
+                        {
+                            waitForCallback = true;
+                            state.WaitForCallback = false;
+                            state.Buffer = new byte[4096];
+                            state.Response = String.Empty;
+                            AsyncCallback callback = new AsyncCallback(ReadCallback);
+                            state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
+                            return;
+                        }
                     }
                 }
             }
@@ -347,7 +356,7 @@ namespace Growl.Connector
             }
             finally
             {
-                if (state != null && !waitForCallback)
+                if (state != null && !waitForCallback && !moreData)
                 {
                     CleanUpSocket(state);
                 }
