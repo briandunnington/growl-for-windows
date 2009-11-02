@@ -13,12 +13,12 @@ namespace Growl.DisplayStyle
         /// <summary>
         /// The default interval for the fade timer
         /// </summary>
-        private const int TIMER_INTERVAL = 50;
+        private const int TIMER_INTERVAL = 10;
 
         /// <summary>
         /// The maximum value for opacity. (this is kept below 1.0 to avoid a flicker when Windows converts the form to/from a layered window)
         /// </summary>
-        private const double MAX_OPACITY = 0.99;
+        public const double MAX_OPACITY = 0.99;
 
         /// <summary>
         /// The timer that controls the fading
@@ -38,7 +38,7 @@ namespace Growl.DisplayStyle
         /// <summary>
         /// The amount of time (in milliseconds) over which the fade-out should occur
         /// </summary>
-        private int fadeOutDuration = 1000;
+        private int fadeOutDuration = 500;
 
         /// <summary>
         /// The final opacity of the form once faded in
@@ -72,7 +72,7 @@ namespace Growl.DisplayStyle
             form.AutoClosing += new FormClosingEventHandler(form_AutoClosing);
 
             this.timer = new Timer();
-            this.timer.Interval = 50;
+            this.timer.Interval = TIMER_INTERVAL;
             this.timer.Tick += new EventHandler(timer_Tick);
         }
 
@@ -196,12 +196,19 @@ namespace Growl.DisplayStyle
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
             if (disposing)

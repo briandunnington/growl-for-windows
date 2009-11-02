@@ -77,6 +77,11 @@ namespace GrowlExtras.OutlookAddIn
                                 string body = message.Body.Replace("\r\n", "\n");
                                 body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
 
+                                // just saving this for future reference
+                                //Outlook.MAPIFolder folder = message.Parent as Outlook.MAPIFolder;
+                                //Outlook.NameSpace outlookNameSpace = this.GetNamespace("MAPI");
+                                //Outlook.MAPIFolder junkFolder = outlookNameSpace.GetDefaultFolder(Microsoft.Office.Interop.Outlook.OlDefaultFolders..olFolderJunk);
+
                                 title = message.Subject;
                                 if (!String.IsNullOrEmpty(title)) title = title.Trim();
                                 title = (String.IsNullOrEmpty(title) ? "[No Subject]" : message.Subject);

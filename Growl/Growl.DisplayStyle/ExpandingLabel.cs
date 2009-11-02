@@ -109,7 +109,7 @@ namespace Growl.DisplayStyle
              * */
 
             Size size = new Size(desWidth, Int32.MaxValue);
-            TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.WordBreak;
+            TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.WordBreak | TextFormatFlags.LeftAndRightPadding;
             Size returnSize = TextRenderer.MeasureText(text, font, size, flags);
 
             if (returnSize.Height < minHeight)

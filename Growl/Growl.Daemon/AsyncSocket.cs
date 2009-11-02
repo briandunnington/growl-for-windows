@@ -1753,6 +1753,13 @@ namespace Growl.Daemon
 
                 // The readTimer and writeTimer are cleared in the EmptyQueues method above.
 
+                // Clear flags to signal closed socket
+                flags = (kForbidReadsWrites | kClosed);
+
+                // Notify delegate that we're now disconnected
+                OnSocketDidClose();
+
+                /* GFW - change to always call OnSocketDidClose
                 if ((flags & kDidPassConnectMethod) > 0)
                 {
                     // Clear flags to signal closed socket
@@ -1766,6 +1773,7 @@ namespace Growl.Daemon
                     // Clear flags to signal closed socket
                     flags = (kForbidReadsWrites | kClosed);
                 }
+                 * */
             }
         }
 
@@ -1820,6 +1828,11 @@ namespace Growl.Daemon
 
             // Queue a call to MaybeClose
             ThreadPool.QueueUserWorkItem(new WaitCallback(MaybeClose));
+        }
+
+        public void CloseImmediately()
+        {
+            Close(null);
         }
 
         private void MaybeClose(object ignore)

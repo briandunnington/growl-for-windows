@@ -116,7 +116,7 @@ namespace Notify
         {
             int minHeight = 80;
             int topHeight = 30;
-            int bottomHeight = 20;
+            int bottomHeight = 19;
 
             if (newHeight < minHeight) newHeight = minHeight;
 
@@ -172,7 +172,7 @@ namespace Notify
         void NotifyWindow_AutoClosing(object sender, FormClosingEventArgs e)
         {
             this.fadeOutTimer = new Timer();
-            this.fadeOutTimer.Interval = 50;
+            this.fadeOutTimer.Interval = 10;
             this.fadeOutTimer.Tick += new EventHandler(fadeOutTimer_Tick);
             this.fadeOutTimer.Start();
             e.Cancel = true;    // IMPORTANT!
@@ -206,7 +206,8 @@ namespace Notify
         {
             if (args.HeightChange != 0)
             {
-                this.textLabel.Top += args.HeightChange;
+                int fudge = 2;
+                this.textLabel.Top += (args.HeightChange + fudge);
                 textLabel_LabelHeightChanged(args);
             }
         }
@@ -215,7 +216,9 @@ namespace Notify
         {
             if (args.HeightChange != 0)
             {
-                this.Height += args.HeightChange;
+                int fudge = 2;
+                this.textLabel.Height += fudge;
+                this.Height += (args.HeightChange + fudge);
             }
         }
     }

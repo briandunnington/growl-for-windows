@@ -195,7 +195,8 @@ namespace Growl.Daemon
         /// <param name="userFolder">The full path to the user folder where logs, resource cache, and other files will be stored.</param>
         public GrowlServer(int port, PasswordManager passwordManager, string userFolder)
         {
-            ExtensibleObject.SetSoftwareInformation(serverName, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            // this will set the server name and version properly
+            ServerName = serverName;
 
             this.port = (ushort) port;
 
@@ -252,8 +253,11 @@ namespace Growl.Daemon
             }
             set
             {
+                System.Diagnostics.FileVersionInfo f = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string version = f.FileVersion;
+
                 this.serverName = value;
-                ExtensibleObject.SetSoftwareInformation(this.serverName, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                ExtensibleObject.SetSoftwareInformation(this.serverName, version);
             }
         }
 
@@ -414,15 +418,27 @@ namespace Growl.Daemon
                 this.socketCleanupTimer.Stop();
 
                 // Stop any client connections
+                int connected = 0;
                 while(connectedSockets.Count > 0)
                 {
+                    // if this happens, then the socket could not be closed properly for some reason.
+                    // we have no choice but to abandon the routine and force the stop anyway.
+                    // (hopefully, dangling sockets will get cleaned up later by the GC)
+                    if (connectedSockets.Count == connected)
+                    {
+                        this.connectedSockets.Clear();
+                        this.connectedHandlers.Clear();
+                        break;
+                    }
+                    connected = connectedSockets.Count;
+
                     // Call Disconnect on the socket,
                     // which will invoke the DidDisconnect method,
                     // which will remove the socket and handler from the list.
 
                     // (we have to use some trickery to a single item from the list without knowing the key)
                     AsyncSocket someSocket = connectedSockets[0].Socket;
-                    if(someSocket != null) someSocket.Close();
+                    if(someSocket != null) someSocket.CloseImmediately();
                 }
 
                 if(this.bonjour != null) this.bonjour.Stop();
@@ -702,7 +718,12 @@ namespace Growl.Daemon
                 exObj.CustomTextAttributes.Add("Timestamp", DateTime.Now.ToString());
         }
 
-        // TODO:
+
+        /// <summary>
+        /// Adds any application-specific headers to the message
+        /// </summary>
+        /// <param name="mb">The <see cref="MessageBuilder"/> used to construct the message</param>
+        /// <param name="requestData">The <see cref="RequestData"/> that contains the application-specific data</param>
         private void AddRequestData(MessageBuilder mb, RequestData requestData)
         {
             if (requestData != null)
@@ -826,12 +847,19 @@ namespace Growl.Daemon
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
             if (disposing)

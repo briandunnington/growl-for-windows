@@ -14,7 +14,7 @@ namespace Growl.DisplayStyle
         /// <summary>
         /// The default interval for the fade timer
         /// </summary>
-        private const int TIMER_INTERVAL = 50;
+        private const int TIMER_INTERVAL = 10;
 
         /// <summary>
         /// The timer that controls the fading
@@ -82,7 +82,7 @@ namespace Growl.DisplayStyle
             form.AutoClosing += new System.Windows.Forms.FormClosingEventHandler(form_AutoClosing);
 
             this.timer = new Timer();
-            this.timer.Interval = 50;
+            this.timer.Interval = TIMER_INTERVAL;
             this.timer.Tick += new EventHandler(timer_Tick);
         }
 
@@ -270,12 +270,19 @@ namespace Growl.DisplayStyle
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
             if (disposing)

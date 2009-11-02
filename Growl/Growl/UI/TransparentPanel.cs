@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Security;
 using System.Security.Permissions;
 using System.Windows.Forms;
-using System.Data;
 
 namespace Growl.UI
 {

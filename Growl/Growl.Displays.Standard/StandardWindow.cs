@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
@@ -28,7 +27,7 @@ namespace Growl.Displays.Standard
             this.Load += new EventHandler(StandardWindow_Load);
             this.FormClosed += new FormClosedEventHandler(StandardWindow_FormClosed);
 
-            this.Animator = new FadeAnimator(this);
+            this.Animator = new FadeAnimator(this, 300, 250, FadeAnimator.MAX_OPACITY);
 
             HookUpClickEvents(this);
 

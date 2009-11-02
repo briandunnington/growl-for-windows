@@ -104,6 +104,7 @@
     <Compile Include="_source\FeedInfo.cs" />
     <Compile Include="_source\FeedItem.cs" />
     <Compile Include="_source\GenericFeedParser.cs" />
+    <Compile Include="_source\Rfc822DateTime.cs" />
     <Compile Include="_source\Rss10FeedFormatter.cs" />
     <Compile Include="_source\SettingsPersister.cs" />
     <Compile Include="_source\User32DLL.cs" />

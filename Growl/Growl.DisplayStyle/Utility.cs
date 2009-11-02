@@ -7,8 +7,21 @@ using System.Windows.Forms;
 
 namespace Growl.DisplayStyle
 {
+    /// <summary>
+    /// Provides common routines used when drawing notification windows
+    /// </summary>
     public static class Utility
     {
+        /// <summary>
+        /// Creates a rounded region.
+        /// </summary>
+        /// <param name="top">The top.</param>
+        /// <param name="left">The left.</param>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
+        /// <param name="xradius">The xradius.</param>
+        /// <param name="yradius">The yradius.</param>
+        /// <returns><see cref="System.Drawing.Region"/></returns>
         public static System.Drawing.Region CreateRoundedRegion(int top, int left, int width, int height, int xradius, int yradius)
         {
             System.Drawing.Region r = null;
@@ -25,11 +38,26 @@ namespace Growl.DisplayStyle
             return r;
         }
 
-        public static void UpdateLayeredWindow(Bitmap bitmap, Form form, int x, int y)
+        /// <summary>
+        /// Updates the layered window.
+        /// </summary>
+        /// <param name="b">The image to uses as the window background</param>
+        /// <param name="form">The form containing any controls to draw</param>
+        /// <param name="x">The x position</param>
+        /// <param name="y">The y position</param>
+        public static void UpdateLayeredWindow(Bitmap b, Form form, int x, int y)
         {
-            UpdateLayeredWindow(bitmap, form, x, y, 255);
+            UpdateLayeredWindow(b, form, x, y, 255);
         }
 
+        /// <summary>
+        /// Updates the layered window.
+        /// </summary>
+        /// <param name="b">The image to uses as the window background</param>
+        /// <param name="form">The form containing any controls to draw</param>
+        /// <param name="x">The x position</param>
+        /// <param name="y">The y position</param>
+        /// <param name="opacity">The opacity</param>
         public static void UpdateLayeredWindow(Bitmap b, Form form, int x, int y, byte opacity)
         {
             if (b.PixelFormat != System.Drawing.Imaging.PixelFormat.Format32bppArgb)
@@ -111,6 +139,12 @@ namespace Growl.DisplayStyle
             }
         }
 
+        /// <summary>
+        /// Draws the control to bitmap.
+        /// </summary>
+        /// <param name="control">The control to draw</param>
+        /// <param name="bitmap">The bitmap to draw on</param>
+        /// <param name="targetBounds">The bounds of the area to draw on</param>
         private static void DrawControlToBitmap(Control control, Bitmap bitmap, Rectangle targetBounds)
         {
             if (bitmap == null)

@@ -477,7 +477,15 @@ namespace Growl
         private void OpenUrl(object state)
         {
             string url = (string)state;
-            System.Diagnostics.Process.Start(url);
+            try
+            {
+                System.Diagnostics.Process.Start(url);
+            }
+            catch (Exception ex)
+            {
+                // TODO: this is temporary (and thus not localized either) // LOCALIZE:
+                SendSystemNotification("Callback failure", string.Format("Could not start or open '{0}':\r\n{1}", url, ex.Message));
+            }
         }
 
         private void LoadForwardedComputers()
@@ -805,7 +813,8 @@ namespace Growl
 
         private void ShowMissedNotifications(List<PastNotification> missedNotifications)
         {
-            this.missedNotificationsDisplay.HandleNotification(missedNotifications);
+            if(!Properties.Settings.Default.DisableMissedNotifications)
+                this.missedNotificationsDisplay.HandleNotification(missedNotifications);
         }
 
         private void InvokeRefreshActiveNotifications()

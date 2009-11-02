@@ -26,18 +26,18 @@ namespace Test_App
             this.growl.NotificationCallback +=new GrowlConnector.CallbackEventHandler(growl_NotificationCallback);
 
             growl.KeyHashAlgorithm = Cryptography.HashAlgorithmType.SHA256;
-            growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
             //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.DES;
             //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.TripleDES;
-            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
+            growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
 
             this.app = new Growl.Connector.Application("SurfWriter");
             //app.Icon = "http://atomicbride.com/Apple.gif";
             //app.Icon = "http://www.thetroyers.com/images/Apple_Logo.jpg";
             //app.Icon = @"c:\apple.png";
-            app.Icon = Properties.Resources.Apple;
-            app.CustomTextAttributes.Add("Creator", "Apple Software");
-            app.CustomTextAttributes.Add("Application-ID", "08d6c05a21512a79a1dfeb9d2a8f262f");
+            //app.Icon = Properties.Resources.Apple;
+            //app.CustomTextAttributes.Add("Creator", "Apple Software");
+            //app.CustomTextAttributes.Add("Application-ID", "08d6c05a21512a79a1dfeb9d2a8f262f");
             //app.CustomBinaryAttributes.Add("Sound", "http://fake.net/app.wav");
 
 
@@ -116,13 +116,13 @@ namespace Test_App
             //nt1.Icon = new BinaryData(new byte[] { 65, 66, 67, 68 });
             nt1.Icon = "http://www.hamradio.pl/images/thumb/e/e5/Icon_48x48_star_01.png/48px-Icon_48x48_star_01.png";
             nt1.Enabled = false;
-            nt1.CustomTextAttributes.Add("Language", "English");
-            nt1.CustomTextAttributes.Add("Timezone", "PST");
+            //nt1.CustomTextAttributes.Add("Language", "English");
+            //nt1.CustomTextAttributes.Add("Timezone", "PST");
             //nt1.CustomBinaryAttributes.Add("Sound", "http://fake.net/nt.wav");
             NotificationType nt2 = new NotificationType("Document Published", "Document successfully published", null, true);
             nt2.Icon = "http://coaching.typepad.com/EspressoPundit/feed-icon-legacy_blue_38.png";
             //nt2.CustomBinaryAttributes.Add("Sound", "http://fake.net/sound.wav");
-            nt2.CustomBinaryAttributes.Add("Sound-Alt", new BinaryData(new byte[] { 70, 71, 72, 73 }));
+            //nt2.CustomBinaryAttributes.Add("Sound-Alt", new BinaryData(new byte[] { 70, 71, 72, 73 }));
 
             NotificationType[] types = new NotificationType[] { nt1, nt2 };
 
@@ -278,9 +278,7 @@ namespace Test_App
                 string filename = f.FullName;
                 byte[] rb = new byte[4096];
 
-                System.IO.StreamReader r = new System.IO.StreamReader(filename);
-                string request = r.ReadToEnd();
-                byte[] b = System.Text.Encoding.UTF8.GetBytes(request);
+                byte[] b = System.IO.File.ReadAllBytes(filename);
 
                 System.Net.Sockets.TcpClient tcp = new System.Net.Sockets.TcpClient("127.0.0.1", Growl.Connector.GrowlConnector.TCP_PORT);    //local
                 //System.Net.Sockets.TcpClient tcp = new System.Net.Sockets.TcpClient("superman", Growl.Connector.GrowlConnector.TCP_PORT);       //remote
@@ -358,6 +356,59 @@ namespace Test_App
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             this.growl.Password = textBox2.Text;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string pass = "testing";
+            byte[] salt = Growl.Connector.Cryptography.HexUnencode("bbdf0d5db70ab6f0bf6a18b804a4c3c0");
+
+            Key key = Key.GenerateKey(pass, Cryptography.HashAlgorithmType.SHA256, Cryptography.SymmetricAlgorithmType.TripleDES);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Application-Name: Growl\r\n");
+            sb.Append("Application-Icon: x-growl-resource://1aa5ef7f6ff637cd70b4d35463889f8e\r\n");
+            sb.Append("X-Application-BundleID: com.Growl.GrowlHelperApp\r\n");
+            sb.Append("Notifications-Count: 3\r\n");
+            sb.Append("Sent-By: zoidberg\r\n");
+            sb.Append("Origin-Machine-Name: zoidberg\r\n");
+            sb.Append("Origin-Software-Name: Growl\r\n");
+            sb.Append("Origin-Software-Version: 1.2\r\n");
+            sb.Append("Origin-Platform-Name: Mac OS X\r\n");
+            sb.Append("Origin-Platform-Version: 10.6.1\r\n");
+            sb.Append("\r\n");
+            sb.Append("Notification-Name: Growl update available\r\n");
+            sb.Append("Notification-Display-Name: Growl update available\r\n");
+            sb.Append("Notification-Enabled: Yes\r\n");
+            sb.Append("\r\n");
+            sb.Append("Notification-Name: User went idle\r\n");
+            sb.Append("Notification-Display-Name: User went idle\r\n");
+            sb.Append("Notification-Enabled: no\r\n");
+            sb.Append("\r\n");
+            sb.Append("Notification-Name: User returned\r\n");
+            sb.Append("Notification-Display-Name: User returned\r\n");
+            sb.Append("Notification-Enabled: no\r\n");
+            sb.Append("\r\n");
+
+            string input = sb.ToString();
+            byte[] b = Encoding.UTF8.GetBytes(input);
+
+            byte[] iv = Cryptography.HexUnencode("af88602d2e17c145");
+            EncryptionResult er = key.Encrypt(b, ref iv);
+            //EncryptionResult er = key.Encrypt(b);
+
+            string ivHex = Cryptography.HexEncode(er.IV);
+            Console.WriteLine(ivHex);
+
+            string eb = Cryptography.HexEncode(er.EncryptedBytes);
+            Console.WriteLine(eb);
+
+            byte[] g = Cryptography.HexUnencode("18b337f2e8bd00254c395e358d1cd619889bd374eb48d3e74cc1c4137ddb5dc1e23d914b5a529462e9c9cb990ac38aa771ed825c172f5981f3fed7ec54a9f9cfa65bc590c0bbf58cf3e32fdda14fe568cab913f0bca3b833a34083b0093f6ac611ea1e15763d8a6d028f62cb15ebb98321316ce7578a14376fc4c4167a3d2c46838b146810d334d5578dbffa25cf3d44bb333e978afc70b4cf9367c0a5201facca5fa5a241858dde7e973dae17d0f5ef9c7fba0c752d6a935d06ecfa641e798f3ec5e6d68c4ecc8b4dc511cf431d5beef37cb2c4457a7ff1e6bc5913fbb75a67a75c483f43093302c05f5443c15fef78cea1f8efd14ac7d3a666ee60b4a17f143a4647e0aa1d7169872e34fe2b3af7bdc0f2fac5532a499ad4512b44497d67cc4b0fb0038cc0f72a153ec34e6d165b6dc46b783f5450aebc08bce0b3be9e515afd3a9022a2214ab2ceb70a2f6c8219d2741eda9e7cc4e0dffe3f7f7303491c97965127f45d24c13c3a5c03f7db3c34ab1f4b34b6fe24435e0ccfc299ee055d938596d805a70e9af10c133735cf077660412ec23673d64d283835003b6c07dadac74db61e76437b22235aa9803450c833ee422b2e5beb6754923e8bcbd9f5c6a1d8942784a62b651881ca11770080331030acb6a66a38a3e5afc37cb7c946a84f19bc90fd6cf5cd7ad95771dadc3e5dbd3e6908dc85739c774176884c2f030cad7c817769607401c9f752cad3582160eab41f216e3cb3d519576366aa1c9bce342954641281c5133826113c556f7179c2a07b284481acedf1085f7f9768fd74ee854b6c04ba04566187699f81e351e528323d50e439d0d168ecfb1500f9ef8b8f8018220f2814948940a5fda118d44ad1dc7c58c66dfbc81c66f3f229b8c57dbd30c789c8d98c2c0117140e431369c37fa23d77c8d92bfcd4fa42db3c5f86f30cba4e198a786d4591");
+            Console.WriteLine(g.Length);
+
+            byte[] d = key.Decrypt(g, iv);
+            Console.WriteLine(d.Length);
+
         }
     }
 }

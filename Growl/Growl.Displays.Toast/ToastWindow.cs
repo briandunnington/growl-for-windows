@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -23,7 +22,7 @@ namespace Growl.Displays.Toast
 
             HookUpClickEvents(this, true, true);
 
-            this.Animator = new PopupAnimator(this, 600, 300, PopupAnimator.PopupDirection.Up);
+            this.Animator = new PopupAnimator(this, 400, 150, PopupAnimator.PopupDirection.Up);
 
             this.AutoClose(4000);
 

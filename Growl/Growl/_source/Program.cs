@@ -187,6 +187,7 @@ namespace Growl
             this.mainForm = new MainForm();
             IntPtr handle = this.mainForm.Handle;   // this forces the creation of the handle even when the form is not shown
             //this.mainForm.ShowForm();
+            this.mainForm.RegisterHotKeys();
 
             // initialization timer (we do the bulk of the initialization in the timer.Tick so that 1) the splash screen can draw completely without being held up, and 2) it frees up the UI thread)
             this.initializationTimer = new Timer();
@@ -612,13 +613,7 @@ namespace Growl
 
         #region IDisposable Members
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected void Dispose(bool disposing)
+        protected override void  Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -669,6 +664,7 @@ namespace Growl
                     // suppress
                 }
             }
+            base.Dispose(disposing);
         }
 
         #endregion

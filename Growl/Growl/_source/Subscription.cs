@@ -8,8 +8,6 @@ namespace Growl
     [Serializable]
     public class Subscription : GNTPForwardDestination, IDeserializationCallback, IDisposable
     {
-        private const int RETRY_INTERVAL = 30;
-
         public delegate void SubscriptionStatusChangedEventHandler(Subscription subscription);
 
         [field: NonSerialized]
@@ -20,9 +18,6 @@ namespace Growl
 
         [NonSerialized]
         private Growl.Daemon.SubscriptionConnector sc;
-
-        [NonSerialized]
-        private System.Timers.Timer timer;
 
         [NonSerialized]
         private string subscriberID;
@@ -99,8 +94,7 @@ namespace Growl
             }
             else
             {
-                EnsureTimer();
-                StopRetryTimer();
+                Kill();
             }
             this.OnStatusChanged();
         }
@@ -109,25 +103,22 @@ namespace Growl
         {
             if (this.Allowed)
             {
-                EnsureTimer();
-                StopRetryTimer();
-
                 if (this.subscriberID == null) this.subscriberID = Utility.MachineID;
                 this.AdditionalOfflineDisplayInfo = "connecting...";
-                if (this.sc != null) this.sc = null;
-                Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, Environment.MachineName, Growl.Connector.GrowlConnector.TCP_PORT);
-                this.sc = new Growl.Daemon.SubscriptionConnector(subscriber, this.Password, this.IPAddress, this.Port);
-                this.sc.EncryptionAlgorithm = Growl.Connector.Cryptography.SymmetricAlgorithmType.PlainText;
-                this.sc.OKResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_OKResponse);
-                this.sc.ErrorResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_ErrorResponse);
+                if (this.sc == null)
+                {
+                    Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, Environment.MachineName, Growl.Connector.GrowlConnector.TCP_PORT);
+                    this.sc = new Growl.Daemon.SubscriptionConnector(subscriber, this.Password, this.IPAddress, this.Port);
+                    this.sc.EncryptionAlgorithm = Growl.Connector.Cryptography.SymmetricAlgorithmType.PlainText;
+                    this.sc.OKResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_OKResponse);
+                    this.sc.ErrorResponse += new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_ErrorResponse);
+                }
                 this.sc.Subscribe();
             }
         }
 
         internal void Kill()
         {
-            EnsureTimer();
-            StopRetryTimer();
             if (this.sc != null)
             {
                 this.sc.StopRenewing();
@@ -159,8 +150,7 @@ namespace Growl
             this.available = false;
             OnStatusChanged();
 
-            // if the subscription failed, try again periodically in case the server comes online
-            StartRetryTimer();
+            // if the subscription failed, the SubscriptionConnector will take care of trying to reestablish it
         }
 
         protected void OnStatusChanged()
@@ -184,46 +174,9 @@ namespace Growl
             {
                 this.AdditionalOfflineDisplayInfo = "not enabled";
                 this.AdditionalOnlineDisplayInfo = "not enabled";
-                EnsureTimer();
-                StopRetryTimer();
+                Kill();
             }
             this.OnStatusChanged();
-        }
-
-        private void EnsureTimer()
-        {
-            if (this.timer == null)
-            {
-                this.timer = new System.Timers.Timer();
-                this.timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
-            }
-        }
-
-        /// <summary>
-        /// Starts the retry timer.
-        /// </summary>
-        private void StartRetryTimer()
-        {
-            this.timer.Interval = (RETRY_INTERVAL * 1000);
-            this.timer.Start();
-        }
-
-        /// <summary>
-        /// Stops the retry timer.
-        /// </summary>
-        private void StopRetryTimer()
-        {
-            this.timer.Stop();
-        }
-
-        /// <summary>
-        /// Fires when the renewal timer elapses. Renews the caller's subscription.
-        /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">Event args</param>
-        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            Subscribe();
         }
 
         #region IDeserializationCallback Members
@@ -250,7 +203,6 @@ namespace Growl
             {
                 if (disposing)
                 {
-                    if (this.timer != null) this.timer.Dispose();
                     if (this.sc != null) this.sc.Dispose();
                 }
                 this.disposed = true;

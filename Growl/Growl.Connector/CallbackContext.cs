@@ -9,21 +9,41 @@ namespace Growl.Connector
     /// </summary>
     public class CallbackContext : CallbackDataBase
     {
+        /// <summary>
+        /// The callback url
+        /// </summary>
         private string url;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CallbackContext"/> class.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="type">The type.</param>
         public CallbackContext(string data, string type) : base(data, type)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CallbackContext"/> class,
+        /// specifying a callback url.
+        /// </summary>
+        /// <param name="url">The URL.</param>
         public CallbackContext(string url)
         {
             this.url = url;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CallbackContext"/> class.
+        /// </summary>
         private CallbackContext()
         {
         }
 
+        /// <summary>
+        /// Gets the callback URL.
+        /// </summary>
+        /// <value>The callback URL.</value>
         public string CallbackUrl
         {
             get

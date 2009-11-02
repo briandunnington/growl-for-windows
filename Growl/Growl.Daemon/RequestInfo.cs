@@ -170,6 +170,10 @@ namespace Growl.Daemon
             }
         }
 
+        /// <summary>
+        /// Indicates if the request was forwarded from another machine
+        /// </summary>
+        /// <returns><c>true</c> if the request was forwarded from another machine;<c>false</c> otherwise</returns>
         public bool WasForwarded()
         {
             if (this.previousReceivedHeaders != null && this.previousReceivedHeaders.Count > 0)

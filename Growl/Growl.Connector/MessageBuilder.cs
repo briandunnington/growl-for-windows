@@ -249,8 +249,12 @@ namespace Growl.Connector
         /// <param name="val">The value of the header</param>
         protected void AddHeader(string name, string val)
         {
-            string s = String.Format(HEADER_FORMAT, name, val);
-            this.bytes.AddRange(GetStringBytes(s));
+            if (!String.IsNullOrEmpty(name))
+            {
+                if (!String.IsNullOrEmpty(val)) val = val.Replace("\r", "");    // remove any \r characters
+                string s = String.Format(HEADER_FORMAT, name, val);
+                this.bytes.AddRange(GetStringBytes(s));
+            }
         }
 
         /// <summary>

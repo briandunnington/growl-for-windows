@@ -247,7 +247,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_2A3D301AE43B4562686ECF2B7D48C150"
@@ -420,7 +420,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E6C013D54794CC24E6A5582343AF2461"
@@ -577,14 +577,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl Add-In for Visual Studio"
-        "ProductCode" = "8:{21327019-EE79-4052-9F4D-AE24F6E68BAF}"
-        "PackageCode" = "8:{85D78094-C9EA-4EF0-81DB-0713A0AD5ED3}"
+        "ProductCode" = "8:{BB29F808-40C0-4886-9AB9-393D73628676}"
+        "PackageCode" = "8:{C5E155D7-72FB-4A43-9C77-7470469897C3}"
         "UpgradeCode" = "8:{F831506E-1E2C-4B2E-B02A-EAB81096EF29}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.0.3"
         "Manufacturer" = "8:Growl Extras"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

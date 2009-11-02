@@ -96,7 +96,7 @@ namespace Growl.Connector
                             {
                                 this.version = match.Groups["Version"].Value;
                                 this.directive = match.Groups["Directive"].Value;
-                                if (this.directive.StartsWith("-")) this.directive = this.directive.Remove(0, 1);
+                                if (this.directive.StartsWith("-", StringComparison.InvariantCulture)) this.directive = this.directive.Remove(0, 1);
 
                                 if (version == GNTP_SUPPORTED_VERSION)
                                 {

@@ -1,3 +1,25 @@
+RC4 changes
+------------------------------
+- updated the Origin-Software-Version header to return the specific file version (ie: 2.0.0.24 instead of 2.0.0.0)
+- updated Email Forwarding option to make sure you cant accidentally not save your custom SMTP settings
+- changed GNTP forwarding to always encrypt messages (defaults to SHA256/AES)
+- fixed a regression bug introduced in RC2 that caused decryption of encrypted requests to corrupt some data (thanks to Laurent)
+- fixed a bug that could cause Growl to hang when shutting down
+- fixed a bug in the 'Notify' display style that could cut off the last line of text
+- fixed a bug in Feed Monitor that prevented it from correctly parsing dates with timezones other than GMT
+
+RC3 changes
+------------------------------
+- updated/added support for localization; Dutch, Japanese, German, Norwegian
+- added click-to-install support for language packs
+- added ability to set default display by double-clicking its name in the list
+- updated GrowlConnector to automatically strip '\r' characters from header values
+- fixed a bug in ConnectorBase that didnt handle chunked responses properly (thanks to Rudy @ Growl)
+- fixed several bugs that could cause subscription renewals to fire too often
+- fixed a bug that caused ListControl headers to redraw improperly (thanks FrozenCow)
+- fixed a bug that could crash Growl if a non-existent file path url callback is encountered
+- fixed a bug that could cause an OutOfMemoryException when closing down Growl
+
 RC2 changes
 ------------------------------
 - added 'Origin' column to History Detail view

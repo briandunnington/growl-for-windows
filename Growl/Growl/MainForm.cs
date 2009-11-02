@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -99,22 +98,6 @@ namespace Growl
                 idleAfterText = String.Format(idleAfterText, "         "); // this leaves space for the textbox
             }
             this.radioButtonIdleAfter.Text = idleAfterText;
-
-            try
-            {
-                KeysConverter kc = new KeysConverter();
-                this.closeLastKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseLast);
-                this.closeAllKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseAll);
-
-                this.closeLastHotKey = new HotKeyManager(this, this.closeLastKeyCombo);
-                this.closeAllHotKey = new HotKeyManager(this, this.closeAllKeyCombo);
-
-                this.closeLastHotKey.Register();
-                this.closeAllHotKey.Register();
-            }
-            catch
-            {
-            }
         }
 
         # region visual style
@@ -538,16 +521,7 @@ namespace Growl
                     historyTrackBarTimer = null;
                 }
 
-                if (this.closeLastHotKey != null)
-                {
-                    this.closeLastHotKey.Dispose();
-                    this.closeLastHotKey = null;
-                }
-                if (this.closeAllHotKey != null)
-                {
-                    this.closeAllHotKey.Dispose();
-                    this.closeAllHotKey = null;
-                }
+                UnregisterHotKeys();
 
                 //StopInterceptingSystemBalloons();
             }
@@ -1277,6 +1251,45 @@ namespace Growl
         void passwordManagerControl1_Updated(object sender, EventArgs e)
         {
             this.controller.SavePasswordPrefs();
+        }
+
+        public void RegisterHotKeys()
+        {
+            try
+            {
+                KeysConverter kc = new KeysConverter();
+
+                if (this.closeLastHotKey == null)
+                {
+                    this.closeLastKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseLast);
+                    this.closeLastHotKey = new HotKeyManager(this, this.closeLastKeyCombo);
+                    this.closeLastHotKey.Register();
+                }
+
+                if (this.closeAllHotKey == null)
+                {
+                    this.closeAllKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseAll);
+                    this.closeAllHotKey = new HotKeyManager(this, this.closeAllKeyCombo);
+                    this.closeAllHotKey.Register();
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        public void UnregisterHotKeys()
+        {
+            if (this.closeLastHotKey != null)
+            {
+                this.closeLastHotKey.Dispose();
+                this.closeLastHotKey = null;
+            }
+            if (this.closeAllHotKey != null)
+            {
+                this.closeAllHotKey.Dispose();
+                this.closeAllHotKey = null;
+            }
         }
 
         protected override void WndProc(ref Message m)

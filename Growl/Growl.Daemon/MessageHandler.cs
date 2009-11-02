@@ -62,15 +62,6 @@ namespace Growl.Daemon
         /// </summary>
         private static Regex regExMessageHeader_Remote = new Regex(@"GNTP/(?<Version>.\..)\s+(?<Directive>\S+)\s+(((?<EncryptionAlgorithm>\S+):(?<IV>\S+))\s+|((?<EncryptionAlgorithm>\S+)\s+))(?<KeyHashAlgorithm>(\S+)):(?<KeyHash>(\S+))\.(?<Salt>(\S+))\s*[\r\n]");
 
-        /// <summary>
-        /// A list of all of the hash types supported by this server
-        /// </summary>
-        private static Dictionary<string, Cryptography.HashAlgorithmType> hashTypes;
-
-        /// <summary>
-        /// A list of all of the encryption algorithms supported by this server.
-        /// </summary>
-        private static Dictionary<string, Cryptography.SymmetricAlgorithmType> encryptionTypes;
 
         private const long ACCEPT_TAG = 0;
         private const long FLASH_POLICY_REQUEST_TAG = 1;
@@ -285,17 +276,7 @@ namespace Growl.Daemon
         /// </summary>
         static MessageHandler()
         {
-            hashTypes = new Dictionary<string, Cryptography.HashAlgorithmType>();
-            foreach (Cryptography.HashAlgorithmType type in Enum.GetValues(typeof(Cryptography.HashAlgorithmType)))
-            {
-                hashTypes.Add(DisplayName.Fetch(type), type);
-            }
-
-            encryptionTypes = new Dictionary<string, Cryptography.SymmetricAlgorithmType>();
-            foreach (Cryptography.SymmetricAlgorithmType type in Enum.GetValues(typeof(Cryptography.SymmetricAlgorithmType)))
-            {
-                encryptionTypes.Add(DisplayName.Fetch(type), type);
-            }
+            // we dont do anything here anymore, but lets keep it around for now...
         }
 
         /// <summary>
@@ -553,7 +534,7 @@ namespace Growl.Daemon
                                 }
                                 else
                                 {
-                                    this.encryptionAlgorithm = GetEncryptionType(match.Groups["EncryptionAlgorithm"].Value);
+                                    this.encryptionAlgorithm = Cryptography.GetEncryptionType(match.Groups["EncryptionAlgorithm"].Value);
                                     this.ivHex = (match.Groups["IV"] != null ? match.Groups["IV"].Value : null);
                                     if (!String.IsNullOrEmpty(this.ivHex)) this.iv = Cryptography.HexUnencode(this.ivHex);
                                     string keyHash = match.Groups["KeyHash"].Value.ToUpper();
@@ -575,7 +556,7 @@ namespace Growl.Daemon
                                         else
                                         {
                                             string keyHashAlgorithmType = match.Groups["KeyHashAlgorithm"].Value;
-                                            this.keyHashAlgorithm = GetKeyHashType(keyHashAlgorithmType);
+                                            this.keyHashAlgorithm = Cryptography.GetKeyHashType(keyHashAlgorithmType);
                                             string salt = match.Groups["Salt"].Value.ToUpper();
                                             authorized = this.passwordManager.IsValid(keyHash, salt, this.keyHashAlgorithm, this.encryptionAlgorithm, out this.key);
                                         }
@@ -1160,32 +1141,6 @@ namespace Growl.Daemon
                 }
             }
             return false;
-        }
-
-        /// <summary>
-        /// Gets the type of hash algorithm used in the request.
-        /// </summary>
-        /// <param name="name">The name of the hash type</param>
-        /// <returns></returns>
-        private static Cryptography.HashAlgorithmType GetKeyHashType(string name)
-        {
-            if (!String.IsNullOrEmpty(name) && hashTypes.ContainsKey(name))
-                return hashTypes[name];
-            else
-                throw new GrowlException(ErrorCode.INVALID_REQUEST, ErrorDescription.UNSUPPORTED_HASH_ALGORITHM, name);
-        }
-
-        /// <summary>
-        /// Gets the type of encryption algorithm used in the request.
-        /// </summary>
-        /// <param name="name">The name of the encryption algorithm</param>
-        /// <returns></returns>
-        private static Cryptography.SymmetricAlgorithmType GetEncryptionType(string name)
-        {
-            if (encryptionTypes.ContainsKey(name))
-                return encryptionTypes[name];
-            else
-                throw new GrowlException(ErrorCode.INVALID_REQUEST, ErrorDescription.UNSUPPORTED_ENCRYPTION_ALGORITHM, name);
         }
 
         /// <summary>

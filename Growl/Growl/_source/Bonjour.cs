@@ -58,6 +58,7 @@ namespace Growl
                 }
                 catch(Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine(String.Format("Bonjour service browser not started - {0}", ex.Message));
                     isStarted = false;
                 }
             }

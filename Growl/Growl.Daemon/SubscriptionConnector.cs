@@ -11,11 +11,16 @@ namespace Growl.Daemon
     /// <remarks>
     /// After calling the <see cref="Subscribe"/> method, this class will
     /// automatically try to renew the subscription at regular intervals in
-    /// order to keep the subscription alive.
+    /// order to keep the subscription alive or reestablish it if it fails.
     /// The renewal interval is determined by the subscribed-to server.
     /// </remarks>
     public class SubscriptionConnector : ConnectorBase, IDisposable
     {
+        /// <summary>
+        /// How often to try connecting to the server if it is not available
+        /// </summary>
+        private const int RETRY_INTERVAL = 30;
+
         /// <summary>
         /// Represents methods that handle responses to 'SUBSCRIBE' requests
         /// </summary>
@@ -44,8 +49,12 @@ namespace Growl.Daemon
         /// <summary>
         /// Fires more frequently than the TTL value in order to keep the subscription alive.
         /// </summary>
-        private System.Timers.Timer timer;
+        private RenewalTimer timer;
 
+        /// <summary>
+        /// A unique ID used each time the timer is started/stopped
+        /// </summary>
+        private string timerID;
 
 
         /// <summary>
@@ -72,7 +81,8 @@ namespace Growl.Daemon
         {
             this.subscriber = subscriber;
 
-            this.timer = new System.Timers.Timer();
+            this.timer = new RenewalTimer();
+            this.timer.AutoReset = false;
             this.timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
         }
 
@@ -141,20 +151,26 @@ namespace Growl.Daemon
 
             SubscriptionResponse sr = SubscriptionResponse.FromResponse(response, headers);
 
+            ResetTimerBasedOnResponse(sr);
+
             if (sr.IsOK)
             {
-                this.ttl = sr.TTL - 30;  // try to renew 30 seconds before the server disconnects us
-
-                if (this.ttl > 0) StartRenewalTimer();
-                else StopRenewalTimer();
-
                 this.OnOKResponse(sr);
             }
             else
             {
-                StopRenewalTimer();
                 this.OnErrorResponse(sr);
             }
+        }
+
+        private void ResetTimerBasedOnResponse(SubscriptionResponse sr)
+        {
+            // try to renew 30 seconds before the server disconnects us, or at the retry interval if this failed
+            this.ttl = (sr.IsOK ? Math.Max((sr.TTL - 30), 0) : RETRY_INTERVAL);
+            if (this.ttl > 0)
+                StartRenewalTimer();
+            else
+                StopRenewalTimer();
         }
 
         /// <summary>
@@ -167,6 +183,7 @@ namespace Growl.Daemon
         protected override void OnCommunicationFailure(Response response)
         {
             SubscriptionResponse sr = SubscriptionResponse.FromResponse(response, null);
+            ResetTimerBasedOnResponse(sr);
             this.OnErrorResponse(sr);
         }
 
@@ -199,8 +216,11 @@ namespace Growl.Daemon
         /// </summary>
         private void StartRenewalTimer()
         {
+            StopRenewalTimer();
+            this.timerID = System.Guid.NewGuid().ToString();
             this.timer.Interval = (this.ttl * 1000);
             this.timer.Start();
+            this.timer.ID = this.timerID;
         }
 
         /// <summary>
@@ -208,6 +228,7 @@ namespace Growl.Daemon
         /// </summary>
         private void StopRenewalTimer()
         {
+            this.timer.ID = null;
             this.timer.Stop();
         }
 
@@ -218,17 +239,25 @@ namespace Growl.Daemon
         /// <param name="e">Event args</param>
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            RenewSubscription();
+            if(this.timerID == this.timer.ID)
+                RenewSubscription();
         }
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
             if (disposing)
@@ -245,5 +274,22 @@ namespace Growl.Daemon
         }
 
         #endregion
+
+        private class RenewalTimer : System.Timers.Timer
+        {
+            private string id;
+
+            public string ID
+            {
+                get
+                {
+                    return this.id;
+                }
+                set
+                {
+                    this.id = value;
+                }
+            }
+        }
     }
 }

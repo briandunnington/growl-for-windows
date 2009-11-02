@@ -69,7 +69,10 @@ namespace Growl.Connector
                 this.hashAlgorithm = hashAlgorithm;
                 this.encryptionAlgorithm = encryptionAlgorithm;
 
-                byte[] saltBytes = Cryptography.GenerateBytes(8);
+//                byte[] saltBytes = Cryptography.GenerateBytes(8);
+//                this.salt = Cryptography.HexEncode(saltBytes);
+
+                byte[] saltBytes = Growl.Connector.Cryptography.HexUnencode("bbdf0d5db70ab6f0bf6a18b804a4c3c0");
                 this.salt = Cryptography.HexEncode(saltBytes);
 
                 byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);

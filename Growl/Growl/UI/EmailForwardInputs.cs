@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
@@ -148,6 +147,7 @@ namespace Growl.UI
             this.textBoxSMTPUsername.Enabled = this.smtp.UseAuthentication;
             this.textBoxSMTPPassword.Enabled = this.smtp.UseAuthentication;
 
+            OnValidChanged(false);
             this.panelSMTPSettings.Visible = true;
         }
 
@@ -162,6 +162,7 @@ namespace Growl.UI
 
             this.labelSMTPValues.Text = String.Format("{0}", this.smtp.Host);
             this.panelSMTPSettings.Visible = false;
+            ValidateInputs();
         }
 
         private void checkBoxSMTPUseAuthentication_CheckedChanged(object sender, EventArgs e)

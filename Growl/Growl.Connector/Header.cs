@@ -163,7 +163,7 @@ namespace Growl.Connector
             if (name == null && val == null) this.isBlankLine = true;
             if (!this.isBlankLine)
             {
-                if (val != null && val.StartsWith(GROWL_RESOURCE_POINTER_PREFIX))
+                if (val != null && val.StartsWith(GROWL_RESOURCE_POINTER_PREFIX, StringComparison.InvariantCultureIgnoreCase))
                 {
                     this.isGrowlResourcePointer = true;
                     this.growlResourcePointerID = val.Replace(GROWL_RESOURCE_POINTER_PREFIX, "");

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
@@ -46,7 +45,7 @@ namespace Growl.Displays.Smokestack
         {
             InitializeComponent();
 
-            this.Animator = new FadeAnimator(this, 250, 250, 1.0);
+            this.Animator = new FadeAnimator(this, 250, 100, 0.8);
 
             HookUpClickEvents(this);
 

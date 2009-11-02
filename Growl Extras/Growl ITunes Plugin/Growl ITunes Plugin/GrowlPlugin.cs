@@ -134,9 +134,7 @@ namespace GrowlExtras.ITunesPlugin
                     int databaseID;
                     song.GetITObjectIDs(out sourceID, out playlistID, out trackID, out databaseID);
 
-                    Growl.Connector.CallbackContext callback = new Growl.Connector.CallbackContext();
-                    callback.Type = "song";
-                    callback.Data = String.Format("{0}|{1}|{2}|{3}", sourceID, playlistID, trackID, databaseID);
+                    Growl.Connector.CallbackContext callback = new Growl.Connector.CallbackContext("song", String.Format("{0}|{1}|{2}|{3}", sourceID, playlistID, trackID, databaseID));
 
                     //Growl.CoreLibrary.Resource albumIcon = artworkFilePath;
                     Growl.CoreLibrary.Resource albumIcon = (artworkData != null ? new Growl.CoreLibrary.BinaryData(artworkData) : null);

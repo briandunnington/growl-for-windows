@@ -8,7 +8,7 @@ namespace Growl.Connector
     /// The base exception type for any exceptions thrown from Growl code.
     /// </summary>
     [Serializable]
-    public class GrowlException : ApplicationException
+    public class GrowlException : Exception
     {
         /// <summary>
         /// The <see cref="ErrorCode"/> of the exception

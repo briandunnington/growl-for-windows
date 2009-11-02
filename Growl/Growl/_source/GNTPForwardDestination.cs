@@ -68,6 +68,36 @@ namespace Growl
             }
         }
 
+        public override Cryptography.HashAlgorithmType HashAlgorithm
+        {
+            get
+            {
+                try
+                {
+                    return Cryptography.GetKeyHashType(Properties.Settings.Default.GNTPForwardHashType);
+                }
+                catch
+                {
+                    return Cryptography.HashAlgorithmType.SHA256;
+                }
+            }
+        }
+
+        public override Cryptography.SymmetricAlgorithmType EncryptionAlgorithm
+        {
+            get
+            {
+                try
+                {
+                    return Cryptography.GetEncryptionType(Properties.Settings.Default.GNTPForwardEncryptionAlgorithm);
+                }
+                catch
+                {
+                    return Cryptography.SymmetricAlgorithmType.AES;
+                }
+            }
+        }
+
         public override string AddressDisplay
         {
             get

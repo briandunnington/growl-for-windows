@@ -228,6 +228,7 @@ namespace Growl.Connector
                 {
                     TcpClient client = new TcpClient();
                     byte[] bytes = mb.GetBytes();
+
                     mb = null;
                     AsyncCallback callback = new AsyncCallback(ConnectCallback);
                     state = new ConnectState(client, bytes, del, waitForCallback);
@@ -326,7 +327,7 @@ namespace Growl.Connector
                     state.Response += response;
 
                     // keep waiting for more data if this wasnt the end of the message
-                    if (!state.Response.EndsWith(EOM))
+                    if (!state.Response.EndsWith(EOM, StringComparison.InvariantCulture))
                     {
                         moreData = true;
                         AsyncCallback callback = new AsyncCallback(ReadCallback);

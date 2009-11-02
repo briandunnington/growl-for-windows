@@ -21,6 +21,13 @@ namespace Growl.Connector
         /// </summary>
         private string notificationID;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CallbackData"/> class.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="result">The result.</param>
+        /// <param name="notificationID">The notification ID.</param>
         public CallbackData(string data, string type, CallbackResult result, string notificationID)
             : base(data, type)
         {

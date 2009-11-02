@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -22,6 +23,16 @@ namespace Growl.Connector
         /// </summary>
         private static RandomNumberGenerator rng = RNGCryptoServiceProvider.Create();
 
+        /// <summary>
+        /// A list of all of the supported hash types
+        /// </summary>
+        private static Dictionary<string, Cryptography.HashAlgorithmType> hashTypes;
+
+        /// <summary>
+        /// A list of all of the supported encryption algorithms
+        /// </summary>
+        private static Dictionary<string, Cryptography.SymmetricAlgorithmType> encryptionTypes;
+
         # endregion member variables & constants
 
         # region constructors
@@ -31,6 +42,25 @@ namespace Growl.Connector
         /// private to prevent instances from being created with "new Cryptography()".
         /// </summary>
         private Cryptography() { }
+
+
+        /// <summary>
+        /// Initializes the <see cref="Cryptography"/> class.
+        /// </summary>
+        static Cryptography()
+        {
+            hashTypes = new Dictionary<string, Cryptography.HashAlgorithmType>();
+            foreach (Cryptography.HashAlgorithmType type in Enum.GetValues(typeof(Cryptography.HashAlgorithmType)))
+            {
+                hashTypes.Add(DisplayName.Fetch(type), type);
+            }
+
+            encryptionTypes = new Dictionary<string, Cryptography.SymmetricAlgorithmType>();
+            foreach (Cryptography.SymmetricAlgorithmType type in Enum.GetValues(typeof(Cryptography.SymmetricAlgorithmType)))
+            {
+                encryptionTypes.Add(DisplayName.Fetch(type), type);
+            }
+        }
 
         # endregion constructors
 
@@ -351,6 +381,7 @@ namespace Growl.Connector
 
                 // decrypt
                 ICryptoTransform decryptor = algorithm.CreateDecryptor();
+
                 byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
                 return decryptedBytes;
             }
@@ -430,6 +461,32 @@ namespace Growl.Connector
                 byte.TryParse(hexString.Substring(i * 2, 2), System.Globalization.NumberStyles.HexNumber, null, out bytes[i]);
             }
             return bytes;
+        }
+
+        /// <summary>
+        /// Looks up the hash algorithm by name
+        /// </summary>
+        /// <param name="name">The name of the hash type</param>
+        /// <returns><see cref="Cryptography.HashAlgorithmType"/></returns>
+        public static Cryptography.HashAlgorithmType GetKeyHashType(string name)
+        {
+            if (!String.IsNullOrEmpty(name) && hashTypes.ContainsKey(name))
+                return hashTypes[name];
+            else
+                throw new CryptographicException(String.Format("No matching hash type found for name '{0}'.", name));
+        }
+
+        /// <summary>
+        /// Looks up the encryption algorithm by name
+        /// </summary>
+        /// <param name="name">The name of the encryption algorithm</param>
+        /// <returns><see cref="Cryptography.SymmetricAlgorithmType"/></returns>
+        public static Cryptography.SymmetricAlgorithmType GetEncryptionType(string name)
+        {
+            if (encryptionTypes.ContainsKey(name))
+                return encryptionTypes[name];
+            else
+                throw new CryptographicException(String.Format("No matching encryption algorithm found for name '{0}'.", name));
         }
 
         # endregion Public Methods
@@ -520,7 +577,7 @@ namespace Growl.Connector
             [DisplayName("DES")]
             DES,
             /// <summary>
-            /// TripleDES Encryption (128-bit key, 64-bit IV)
+            /// TripleDES Encryption (192-bit key, 64-bit IV)
             /// </summary>
             [DisplayName("3DES")]
             TripleDES,

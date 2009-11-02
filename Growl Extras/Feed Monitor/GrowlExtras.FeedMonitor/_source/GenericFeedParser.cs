@@ -84,8 +84,8 @@ namespace GrowlExtras.FeedMonitor
                             case "pubDate":
                             case "issued":
                                 DateTime dt;
-                                DateTime.TryParse(d[k], out dt);
-                                itm.PubDate = dt != DateTime.MinValue ? dt : DateTime.Now;
+                                bool ok = Rfc822DateTime.TryParse(d[k], out dt);
+                                itm.PubDate = ok ? dt : DateTime.Now;
                                 break;
                             case "content":
                             case "description":

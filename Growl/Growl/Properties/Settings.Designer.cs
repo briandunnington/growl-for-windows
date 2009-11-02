@@ -336,6 +336,7 @@ namespace Growl.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool DisableBonjour {
@@ -348,6 +349,7 @@ namespace Growl.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string MachineID {
@@ -356,6 +358,58 @@ namespace Growl.Properties {
             }
             set {
                 this["MachineID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableMissedNotifications {
+            get {
+                return ((bool)(this["DisableMissedNotifications"]));
+            }
+            set {
+                this["DisableMissedNotifications"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SHA256")]
+        public string GNTPForwardHashType {
+            get {
+                return ((string)(this["GNTPForwardHashType"]));
+            }
+            set {
+                this["GNTPForwardHashType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AES")]
+        public string GNTPForwardEncryptionAlgorithm {
+            get {
+                return ((string)(this["GNTPForwardEncryptionAlgorithm"]));
+            }
+            set {
+                this["GNTPForwardEncryptionAlgorithm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("growl@growlforwindows.com")]
+        public string EmailForwardFromAddress {
+            get {
+                return ((string)(this["EmailForwardFromAddress"]));
+            }
+            set {
+                this["EmailForwardFromAddress"] = value;
             }
         }
     }

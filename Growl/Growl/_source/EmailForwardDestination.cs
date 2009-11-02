@@ -93,6 +93,24 @@ namespace Growl
             }
         }
 
+        private string FromAddress
+        {
+            get
+            {
+                try
+                {
+                    string from = Properties.Settings.Default.EmailForwardFromAddress;
+                    System.Net.Mail.MailAddress address = new System.Net.Mail.MailAddress(from);    // this ensures that the address is valid (properly formatted)
+                    return from;
+                }
+                catch
+                {
+                    Utility.WriteDebugInfo(String.Format("Invalid email address configured as 'From' address: '{0}' - using default address instead.", Properties.Settings.Default.EmailForwardFromAddress));
+                    return "growl@growlforwindows.com";
+                }
+            }
+        }
+
         public override ForwardDestination Clone()
         {
             EmailForwardDestination clone = new EmailForwardDestination(this.Description, this.Enabled, this.To, this.SMTPConfiguration, this.MinimumPriority, this.OnlyWhenIdle);
@@ -128,11 +146,12 @@ namespace Growl
         {
             System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage();
             m.To.Add(this.to);
-            m.From = new System.Net.Mail.MailAddress("growl@growlforwindows.com", appName);
+            m.From = new System.Net.Mail.MailAddress(this.FromAddress, appName);
             m.Subject = subject;
             m.Body = message;
             m.Priority = GetMessagePriority(priority);
             m.Sender = new System.Net.Mail.MailAddress("growl@growlforwindows.com", "Growl for Windows");
+            m.Headers.Add("X-Growl-Origin-Application", appName);
 
             // send the email using another thread (since the Smtp.SendAsync seems to be flakey)
             System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(SendAsync), m);

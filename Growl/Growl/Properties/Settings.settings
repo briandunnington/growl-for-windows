@@ -74,11 +74,23 @@
     <Setting Name="MuteAllSounds" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="DisableBonjour" Type="System.Boolean" Scope="User">
+    <Setting Name="DisableBonjour" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MachineID" Type="System.String" Scope="User">
+    <Setting Name="MachineID" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DisableMissedNotifications" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GNTPForwardHashType" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SHA256</Value>
+    </Setting>
+    <Setting Name="GNTPForwardEncryptionAlgorithm" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AES</Value>
+    </Setting>
+    <Setting Name="EmailForwardFromAddress" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">growl@growlforwindows.com</Value>
     </Setting>
   </Settings>
 </SettingsFile>

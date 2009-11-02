@@ -11,22 +11,22 @@ namespace Growl.Connector
         /// <summary>
         /// The name of the notification type
         /// </summary>
-        protected string name = "Undefined Notification";
+        private string name = "Undefined Notification";
 
         /// <summary>
         /// The display name of the notification type
         /// </summary>
-        protected string displayName = null;
+        private string displayName = null;
 
         /// <summary>
         /// The default icon for notifications of this type
         /// </summary>
-        protected Resource icon;
+        private Resource icon;
 
         /// <summary>
         /// Indicates if this type of notification should be enabled or disabled by default
         /// </summary>
-        protected bool enabled = true;
+        private bool enabled = true;
 
         /// <summary>
         /// Creates a instance of the <see cref="NotificationType"/> class.

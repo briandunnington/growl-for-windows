@@ -173,7 +173,7 @@ namespace StickyNote
         void StickyNoteWindow_AutoClosing(object sender, FormClosingEventArgs e)
         {
             this.fadeOutTimer = new Timer();
-            this.fadeOutTimer.Interval = 50;
+            this.fadeOutTimer.Interval = 10;
             this.fadeOutTimer.Tick += new EventHandler(fadeOutTimer_Tick);
             this.fadeOutTimer.Start();
             e.Cancel = true;    // IMPORTANT!
