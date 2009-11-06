@@ -119,7 +119,6 @@ namespace Growl.Connector
             // encrypt message
             byte[] bytesToEncrypt = messageBytes.ToArray();
             EncryptionResult result = key.Encrypt(bytesToEncrypt);
-            //EncryptionResult result = Cryptography.Encrypt(encryptionKey, bytesToEncrypt, this.encryptionAlgorithm);
 
             string encryptionInfo = DisplayName.Fetch(key.EncryptionAlgorithm);
             if (key.EncryptionAlgorithm != Cryptography.SymmetricAlgorithmType.PlainText)
@@ -131,8 +130,6 @@ namespace Growl.Connector
             string hashInfo = "";
             if (includeKeyHash)
             {
-                //string keyHash = Cryptography.HexEncode(Cryptography.ComputeHash(key, keyHashAlgorithm));
-                //string keyHash = key.GetKeyHash(this.keyHashAlgorithm);
                 string keyHash = key.KeyHash;
                 string salt = key.Salt;
                 hashInfo = String.Format("{0}:{1}.{2}", DisplayName.Fetch(key.HashAlgorithm), keyHash, salt);
@@ -152,7 +149,6 @@ namespace Growl.Connector
                 if (data != null && data.Data != null)
                 {
                     // encrypt each resource, making sure to use the same IV
-                    //EncryptionResult er = Cryptography.Encrypt(encryptionKey, data.Data, this.encryptionAlgorithm, ref result.IV);
                     EncryptionResult er = key.Encrypt(data.Data, ref result.IV);
 
                     MessageSection section = new MessageSection();

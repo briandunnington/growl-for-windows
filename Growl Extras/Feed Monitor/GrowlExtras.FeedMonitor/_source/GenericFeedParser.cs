@@ -55,7 +55,7 @@ namespace GrowlExtras.FeedMonitor
                             reader.Read();
                             // some feeds can have duplicate keys, so we don't want to blow up here:
                             if (!currentItem.ContainsKey(name))
-                                currentItem.Add(name, reader.Value);
+                                currentItem.Add(name, reader.Value.Trim());
                         }
                     }
                 }

@@ -50,14 +50,14 @@ namespace Growl.Connector
         private int port = TCP_PORT;
 
         /// <summary>
-        /// The algorithm to use when generating hashes
+        /// The algorithm to use when generating hashes [defaults to MD5]
         /// </summary>
         private Cryptography.HashAlgorithmType keyHashAlgorithm = Cryptography.HashAlgorithmType.MD5;
 
         /// <summary>
-        /// The algorithm to use when doing encryption
+        /// The algorithm to use when doing encryption [defaults to PlainText]
         /// </summary>
-        private Cryptography.SymmetricAlgorithmType encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
+        private Cryptography.SymmetricAlgorithmType encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
 
         /// <summary>
         /// A collection of active ConnectState objects awaiting the EndConnect callback
@@ -135,7 +135,7 @@ namespace Growl.Connector
         /// Gets or sets the algorithm used when hashing values
         /// </summary>
         /// <value>
-        /// <see cref="Cryptography.HashAlgorithmType"/>
+        /// <see cref="Cryptography.HashAlgorithmType"/> - Defaults to <see cref="Cryptography.HashAlgorithmType.MD5"/>
         /// </value>
         public Cryptography.HashAlgorithmType KeyHashAlgorithm
         {
@@ -153,7 +153,7 @@ namespace Growl.Connector
         /// Gets or sets the algorithm used when encrypting values
         /// </summary>
         /// <value>
-        /// <see cref="Cryptography.SymmetricAlgorithmType"/>
+        /// <see cref="Cryptography.SymmetricAlgorithmType"/> - Defaults to <see cref="Cryptography.SymmetricAlgorithmType.PlainText"/>
         /// </value>
         public Cryptography.SymmetricAlgorithmType EncryptionAlgorithm
         {
@@ -220,28 +220,32 @@ namespace Growl.Connector
         protected void Send(MessageBuilder mb, ResponseReceivedEventHandler del, bool waitForCallback)
         {
             ConnectState state = null;
-            try
+
+            // do some of this *outside* the try...catch so we can just throw an exception if the error occurs
+            // *before* we even send the request (like when generating the message bytes)
+            bool doSend = this.OnBeforeSend(mb);
+            if (doSend)
             {
-                bool doSend = this.OnBeforeSend(mb);
+                TcpClient client = new TcpClient();
+                byte[] bytes = mb.GetBytes();
+                mb = null;
 
-                if (doSend)
+                // anything else that happens will be the result of Growl not being available, so we just want
+                // to suppress any subsequent exceptions
+                try
                 {
-                    TcpClient client = new TcpClient();
-                    byte[] bytes = mb.GetBytes();
-
-                    mb = null;
                     AsyncCallback callback = new AsyncCallback(ConnectCallback);
                     state = new ConnectState(client, bytes, del, waitForCallback);
                     connecting.Add(state.GUID, state);
                     client.BeginConnect(this.hostname, this.port, callback, state);
                 }
-            }
-            catch
-            {
-                // suppress
-                // could mean growl is not installed, not running, wrong address, etc
-                CleanUpSocket(state);
-                OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE));
+                catch
+                {
+                    // suppress
+                    // could mean growl is not installed, not running, wrong address, etc
+                    CleanUpSocket(state);
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE));
+                }
             }
         }
 

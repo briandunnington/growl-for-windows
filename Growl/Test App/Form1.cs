@@ -131,8 +131,15 @@ namespace Test_App
             //rd.Add("Return-To-Me2", "another value");
             Growl.Connector.RequestData rd = null;
 
-            growl.Register(this.app, types, rd);
-            this.textBox1.Text = "REGISTER sent";
+            try
+            {
+                growl.Register(this.app, types, rd);
+                this.textBox1.Text = "REGISTER sent";
+            }
+            catch (Exception ex)
+            {
+                this.textBox1.Text = ex.Message;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
