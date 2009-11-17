@@ -1,3 +1,11 @@
+v2.0 Final changes
+------------------------------
+- fixed a regression that caused the same salt value to be used for all encrypted requests
+- smoother animation for many displays, including the built-in Visor and Toast displays
+- modified GrowlConnector to throw any exceptions encountered before the request is sent (it used to silently fail and incorrectly return 201 response)
+- updated growlnotify to not crash if the specified local image does not exist
+- created Growl for Windows 2.0 Redistributable (gfw2rdst.exe) for including GfW as a prerequisite in VS Setup projects
+
 RC4 changes
 ------------------------------
 - updated the Origin-Software-Version header to return the specific file version (ie: 2.0.0.24 instead of 2.0.0.0)

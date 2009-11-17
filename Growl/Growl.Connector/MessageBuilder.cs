@@ -140,8 +140,22 @@ namespace Growl.Connector
             allBytes.AddRange(protocolHeaderBytes);
             allBytes.AddRange(GetStringBytes(s.ToUpper()));
             allBytes.AddRange(blankLineBytes);
-            allBytes.AddRange(result.EncryptedBytes);
-            if (key.EncryptionAlgorithm != Cryptography.SymmetricAlgorithmType.PlainText) allBytes.AddRange(blankLineBytes);
+
+            if (key.EncryptionAlgorithm != Cryptography.SymmetricAlgorithmType.PlainText)
+            {
+                /* use this to add the Length: header to the main section
+                MessageSection lengthSection = new MessageSection();
+                lengthSection.AddHeader(new Header(Header.RESOURCE_LENGTH, result.EncryptedBytes.Length.ToString()));
+                lengthSection.AddBlankLine();
+                allBytes.AddRange(lengthSection.GetBytes());
+                 * */
+                allBytes.AddRange(result.EncryptedBytes);
+                allBytes.AddRange(blankLineBytes);
+            }
+            else
+            {
+                allBytes.AddRange(result.EncryptedBytes);
+            }
 
             // handle binary resources
             foreach (BinaryData data in allBinaryData)

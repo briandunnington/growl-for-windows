@@ -58,7 +58,7 @@ namespace Growl.Displays.Visor
 
         void slideInTimer_Tick(object sender, EventArgs e)
         {
-            bool result = MoveWindow(10, this.endY, true);
+            bool result = MoveWindow(2, this.endY, true);
             if (result)
             {
                 this.slideInTimer.Stop();
@@ -73,7 +73,7 @@ namespace Growl.Displays.Visor
 
         void slideOutTimer_Tick(object sender, EventArgs e)
         {
-            bool result = MoveWindow(-10, this.startY, false);
+            bool result = MoveWindow(-3, this.startY, false);
             if (result)
             {
                 this.slideOutTimer.Stop();
@@ -125,7 +125,7 @@ namespace Growl.Displays.Visor
             this.endY = 0;
 
             // start sliding the window in
-            this.slideInTimer.Interval = 100;
+            this.slideInTimer.Interval = 10;
             this.slideInTimer.Start();
         }
 
@@ -134,7 +134,7 @@ namespace Growl.Displays.Visor
             // start sliding the window out
             this.slideInTimer.Stop();
             this.displayTimer.Stop();
-            this.slideOutTimer.Interval = 100;
+            this.slideOutTimer.Interval = 10;
             this.slideOutTimer.Start();
         }
 

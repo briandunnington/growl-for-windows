@@ -389,7 +389,7 @@ namespace Growl.Connector
                     if (state.Client != null && state.Client.Client != null)
                     {
                         state.Client.Client.Blocking = true;
-                        state.Client.Client.Shutdown(SocketShutdown.Both);
+                        try { state.Client.Client.Shutdown(SocketShutdown.Both); } catch { }
                         state.Client.Client.Close();
                         state.Client.Close();
                     }

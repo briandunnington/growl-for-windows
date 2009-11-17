@@ -800,6 +800,11 @@ namespace Growl.Daemon
             if(this.isStarted) this.socketCleanupTimer.Start();
         }
 
+        /// <summary>
+        /// Called when a socket is done being used (for example, after all responses and callbacks
+        /// have been returned to the caller).
+        /// </summary>
+        /// <param name="socket">The <see cref="AsyncSocket"/> that has completed</param>
         void mh_SocketUsageComplete(AsyncSocket socket)
         {
             if (this.connectedSockets.Contains(socket))

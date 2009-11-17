@@ -129,6 +129,7 @@ namespace Growl
                 {
                     machineID = System.Guid.NewGuid().ToString();
                     Properties.Settings.Default.MachineID = machineID;
+                    Properties.Settings.Default.Save();
                 }
                 return machineID;
             }

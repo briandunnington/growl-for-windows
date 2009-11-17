@@ -16,6 +16,41 @@ namespace Growl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            "(No notifications for this date)",
+            "",
+            ""}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelGeneral = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -172,7 +207,7 @@ namespace Growl
             this.panelGeneral.Controls.Add(this.groupBoxSoundSettings);
             this.panelGeneral.Location = new System.Drawing.Point(0, 70);
             this.panelGeneral.Name = "panelGeneral";
-            this.panelGeneral.Size = new System.Drawing.Size(663, 298);
+            this.panelGeneral.Size = new System.Drawing.Size(663, 304);
             this.panelGeneral.TabIndex = 2;
             this.panelGeneral.Visible = false;
             // 
@@ -313,7 +348,7 @@ namespace Growl
             this.panelApplications.Controls.Add(this.panelNoApps);
             this.panelApplications.Location = new System.Drawing.Point(0, 70);
             this.panelApplications.Name = "panelApplications";
-            this.panelApplications.Size = new System.Drawing.Size(663, 298);
+            this.panelApplications.Size = new System.Drawing.Size(663, 304);
             this.panelApplications.TabIndex = 3;
             this.panelApplications.Visible = false;
             // 
@@ -327,7 +362,7 @@ namespace Growl
             this.panelSelectedApplication.Controls.Add(this.labelApplication);
             this.panelSelectedApplication.Location = new System.Drawing.Point(186, 4);
             this.panelSelectedApplication.Name = "panelSelectedApplication";
-            this.panelSelectedApplication.Size = new System.Drawing.Size(474, 291);
+            this.panelSelectedApplication.Size = new System.Drawing.Size(474, 296);
             this.panelSelectedApplication.TabIndex = 3;
             this.panelSelectedApplication.Visible = false;
             // 
@@ -354,7 +389,7 @@ namespace Growl
             this.panelPrefs.Controls.Add(this.comboBoxPrefEnabled);
             this.panelPrefs.Location = new System.Drawing.Point(196, 57);
             this.panelPrefs.Name = "panelPrefs";
-            this.panelPrefs.Size = new System.Drawing.Size(273, 229);
+            this.panelPrefs.Size = new System.Drawing.Size(273, 234);
             this.panelPrefs.TabIndex = 6;
             // 
             // labelPrefDuration
@@ -580,7 +615,7 @@ namespace Growl
             this.panelDisplays.Controls.Add(this.panelDisplaySettings);
             this.panelDisplays.Location = new System.Drawing.Point(0, 70);
             this.panelDisplays.Name = "panelDisplays";
-            this.panelDisplays.Size = new System.Drawing.Size(663, 298);
+            this.panelDisplays.Size = new System.Drawing.Size(663, 304);
             this.panelDisplays.TabIndex = 2;
             this.panelDisplays.Visible = false;
             // 
@@ -588,7 +623,7 @@ namespace Growl
             // 
             this.getDisplaysLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.getDisplaysLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
-            this.getDisplaysLabel.Location = new System.Drawing.Point(3, 272);
+            this.getDisplaysLabel.Location = new System.Drawing.Point(3, 277);
             this.getDisplaysLabel.Name = "getDisplaysLabel";
             this.getDisplaysLabel.Size = new System.Drawing.Size(177, 16);
             this.getDisplaysLabel.TabIndex = 7;
@@ -614,7 +649,7 @@ namespace Growl
             this.panelDisplaySettings.Controls.Add(this.panelDisplaySettingsContainer);
             this.panelDisplaySettings.Location = new System.Drawing.Point(186, 5);
             this.panelDisplaySettings.Name = "panelDisplaySettings";
-            this.panelDisplaySettings.Size = new System.Drawing.Size(470, 286);
+            this.panelDisplaySettings.Size = new System.Drawing.Size(470, 291);
             this.panelDisplaySettings.TabIndex = 1;
             this.panelDisplaySettings.Visible = false;
             // 
@@ -622,7 +657,7 @@ namespace Growl
             // 
             this.displayStyleWebsiteLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.displayStyleWebsiteLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
-            this.displayStyleWebsiteLabel.Location = new System.Drawing.Point(12, 267);
+            this.displayStyleWebsiteLabel.Location = new System.Drawing.Point(12, 272);
             this.displayStyleWebsiteLabel.Name = "displayStyleWebsiteLabel";
             this.displayStyleWebsiteLabel.Size = new System.Drawing.Size(253, 16);
             this.displayStyleWebsiteLabel.TabIndex = 6;
@@ -646,7 +681,7 @@ namespace Growl
             this.displayStyleAuthorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.displayStyleAuthorLabel.AutoSize = true;
             this.displayStyleAuthorLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayStyleAuthorLabel.Location = new System.Drawing.Point(12, 252);
+            this.displayStyleAuthorLabel.Location = new System.Drawing.Point(12, 257);
             this.displayStyleAuthorLabel.Name = "displayStyleAuthorLabel";
             this.displayStyleAuthorLabel.Size = new System.Drawing.Size(50, 16);
             this.displayStyleAuthorLabel.TabIndex = 4;
@@ -679,7 +714,7 @@ namespace Growl
             this.panelDisplaySettingsContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDisplaySettingsContainer.Location = new System.Drawing.Point(14, 80);
             this.panelDisplaySettingsContainer.Name = "panelDisplaySettingsContainer";
-            this.panelDisplaySettingsContainer.Size = new System.Drawing.Size(450, 168);
+            this.panelDisplaySettingsContainer.Size = new System.Drawing.Size(450, 173);
             this.panelDisplaySettingsContainer.TabIndex = 0;
             // 
             // panelAbout
@@ -701,7 +736,7 @@ namespace Growl
             this.panelAbout.Controls.Add(this.labelAboutGrowlVersion);
             this.panelAbout.Location = new System.Drawing.Point(0, 70);
             this.panelAbout.Name = "panelAbout";
-            this.panelAbout.Size = new System.Drawing.Size(663, 298);
+            this.panelAbout.Size = new System.Drawing.Size(663, 304);
             this.panelAbout.TabIndex = 4;
             this.panelAbout.Visible = false;
             // 
@@ -805,7 +840,7 @@ namespace Growl
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = global::Growl.Properties.Resources.growl_big;
-            this.pictureBox1.Location = new System.Drawing.Point(311, 17);
+            this.pictureBox1.Location = new System.Drawing.Point(311, 24);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(346, 279);
@@ -836,7 +871,7 @@ namespace Growl
             this.panelSecurity.Controls.Add(this.checkBoxRequireLocalPassword);
             this.panelSecurity.Location = new System.Drawing.Point(0, 70);
             this.panelSecurity.Name = "panelSecurity";
-            this.panelSecurity.Size = new System.Drawing.Size(663, 298);
+            this.panelSecurity.Size = new System.Drawing.Size(663, 304);
             this.panelSecurity.TabIndex = 4;
             this.panelSecurity.Visible = false;
             // 
@@ -912,7 +947,7 @@ namespace Growl
             this.panelHistory.Controls.Add(this.historyListView);
             this.panelHistory.Location = new System.Drawing.Point(0, 70);
             this.panelHistory.Name = "panelHistory";
-            this.panelHistory.Size = new System.Drawing.Size(663, 298);
+            this.panelHistory.Size = new System.Drawing.Size(663, 304);
             this.panelHistory.TabIndex = 3;
             this.panelHistory.Visible = false;
             // 
@@ -1000,7 +1035,7 @@ namespace Growl
             this.panelInitializing.Controls.Add(this.labelInitializing);
             this.panelInitializing.Location = new System.Drawing.Point(0, 70);
             this.panelInitializing.Name = "panelInitializing";
-            this.panelInitializing.Size = new System.Drawing.Size(663, 298);
+            this.panelInitializing.Size = new System.Drawing.Size(663, 304);
             this.panelInitializing.TabIndex = 2;
             // 
             // labelInitializationStage
@@ -1046,7 +1081,7 @@ namespace Growl
             this.panelNetwork.Controls.Add(this.checkBoxEnableForwarding);
             this.panelNetwork.Location = new System.Drawing.Point(0, 70);
             this.panelNetwork.Name = "panelNetwork";
-            this.panelNetwork.Size = new System.Drawing.Size(663, 298);
+            this.panelNetwork.Size = new System.Drawing.Size(663, 304);
             this.panelNetwork.TabIndex = 3;
             this.panelNetwork.Visible = false;
             // 
@@ -1281,7 +1316,44 @@ namespace Growl
             this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.historyListView.FullRowSelect = true;
             this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
+            listViewGroup1.Header = "Today";
+            listViewGroup1.Name = "Today";
+            listViewGroup2.Header = "Yesterday";
+            listViewGroup2.Name = "Yesterday";
+            listViewGroup3.Header = "Tuesday";
+            listViewGroup3.Name = "Tuesday";
+            listViewGroup4.Header = "Monday";
+            listViewGroup4.Name = "Monday";
+            listViewGroup5.Header = "Sunday";
+            listViewGroup5.Name = "Sunday";
+            listViewGroup6.Header = "Saturday";
+            listViewGroup6.Name = "Saturday";
+            listViewGroup7.Header = "Friday";
+            listViewGroup7.Name = "Friday";
+            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6,
+            listViewGroup7});
             this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            listViewItem1.Group = listViewGroup1;
+            listViewItem2.Group = listViewGroup2;
+            listViewItem3.Group = listViewGroup3;
+            listViewItem4.Group = listViewGroup4;
+            listViewItem5.Group = listViewGroup5;
+            listViewItem6.Group = listViewGroup6;
+            listViewItem7.Group = listViewGroup7;
+            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7});
             this.historyListView.LabelWrap = false;
             this.historyListView.Location = new System.Drawing.Point(196, 5);
             this.historyListView.MultiSelect = false;
@@ -1290,7 +1362,7 @@ namespace Growl
             this.historyListView.OwnerDraw = true;
             this.historyListView.PastNotifications = null;
             this.historyListView.ShowItemToolTips = true;
-            this.historyListView.Size = new System.Drawing.Size(460, 284);
+            this.historyListView.Size = new System.Drawing.Size(460, 289);
             this.historyListView.TabIndex = 2;
             this.historyListView.TileSize = new System.Drawing.Size(205, 56);
             this.historyListView.UseCompatibleStateImageBehavior = false;
@@ -1311,7 +1383,7 @@ namespace Growl
             this.listControlApplications.Name = "listControlApplications";
             this.listControlApplications.SelectedIndex = -1;
             this.listControlApplications.SelectedItem = null;
-            this.listControlApplications.Size = new System.Drawing.Size(176, 286);
+            this.listControlApplications.Size = new System.Drawing.Size(176, 291);
             this.listControlApplications.TabIndex = 9;
             this.listControlApplications.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listControlApplications_MouseDown);
             this.listControlApplications.SelectedIndexChanged += new System.EventHandler(this.listControlApplications_SelectedIndexChanged);
@@ -1329,7 +1401,7 @@ namespace Growl
             this.listControlApplicationNotifications.Name = "listControlApplicationNotifications";
             this.listControlApplicationNotifications.SelectedIndex = -1;
             this.listControlApplicationNotifications.SelectedItem = null;
-            this.listControlApplicationNotifications.Size = new System.Drawing.Size(176, 229);
+            this.listControlApplicationNotifications.Size = new System.Drawing.Size(176, 234);
             this.listControlApplicationNotifications.TabIndex = 7;
             this.listControlApplicationNotifications.SelectedIndexChanged += new System.EventHandler(this.listControlApplicationNotifications_SelectedIndexChanged);
             // 
@@ -1449,10 +1521,10 @@ namespace Growl
             this.listControlDisplays.Name = "listControlDisplays";
             this.listControlDisplays.SelectedIndex = -1;
             this.listControlDisplays.SelectedItem = null;
-            this.listControlDisplays.Size = new System.Drawing.Size(176, 264);
+            this.listControlDisplays.Size = new System.Drawing.Size(176, 269);
             this.listControlDisplays.TabIndex = 2;
+            this.listControlDisplays.DoubleClick += new System.EventHandler(this.listControlDisplays_DoubleClick);
             this.listControlDisplays.SelectedIndexChanged += new System.EventHandler(this.listControlDisplays_SelectedIndexChanged);
-            this.listControlDisplays.DoubleClick += new System.EventHandler(listControlDisplays_DoubleClick);
             // 
             // buttonSetAsDefault
             // 
@@ -1465,7 +1537,7 @@ namespace Growl
             this.buttonSetAsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSetAsDefault.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonSetAsDefault.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonSetAsDefault.Location = new System.Drawing.Point(279, 251);
+            this.buttonSetAsDefault.Location = new System.Drawing.Point(279, 256);
             this.buttonSetAsDefault.Margin = new System.Windows.Forms.Padding(0);
             this.buttonSetAsDefault.Name = "buttonSetAsDefault";
             this.buttonSetAsDefault.Size = new System.Drawing.Size(106, 32);
@@ -1485,7 +1557,7 @@ namespace Growl
             this.buttonPreviewDisplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPreviewDisplay.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonPreviewDisplay.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonPreviewDisplay.Location = new System.Drawing.Point(391, 251);
+            this.buttonPreviewDisplay.Location = new System.Drawing.Point(391, 256);
             this.buttonPreviewDisplay.Margin = new System.Windows.Forms.Padding(0);
             this.buttonPreviewDisplay.Name = "buttonPreviewDisplay";
             this.buttonPreviewDisplay.Size = new System.Drawing.Size(73, 32);
@@ -1508,16 +1580,16 @@ namespace Growl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 366);
+            this.ClientSize = new System.Drawing.Size(662, 373);
             this.Controls.Add(this.toolbarPanel);
+            this.Controls.Add(this.panelAbout);
+            this.Controls.Add(this.panelSecurity);
             this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
             this.Controls.Add(this.panelGeneral);
             this.Controls.Add(this.panelDisplays);
-            this.Controls.Add(this.panelAbout);
-            this.Controls.Add(this.panelSecurity);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

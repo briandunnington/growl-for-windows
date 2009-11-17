@@ -13,29 +13,63 @@ namespace Growl.Daemon
     public class CallbackInfo
     {
         /// <summary>
-        /// The unique notification ID
-        /// </summary>
-        private string notificationID;
-
-        // TODO: see below
-        private RequestInfo requestInfo;
-
-        private bool alreadyResponded;
-
-        private Dictionary<string, string> additionalInfo;
-
-        /// <summary>
         /// The callback context from the request
         /// </summary>
-        public CallbackContext Context;
+        private CallbackContext context;
 
         /// <summary>
         /// The MessageHandler that will peform the callback write
         /// </summary>
-        public MessageHandler MessageHandler;
+        private MessageHandler messageHandler;
 
-        // TODO: figure out if this really should be in here or not
-        public RequestInfo RequestInfo;
+        /// <summary>
+        /// The unique notification ID
+        /// </summary>
+        private string notificationID;
+
+        /// <summary>
+        /// Indicates if a callback associated with this notification has already been triggered
+        /// </summary>
+        private bool alreadyResponded;
+
+        /// <summary>
+        /// Any additional information to return in the callback
+        /// </summary>
+        private Dictionary<string, string> additionalInfo;
+
+        // TODO: see below
+        private RequestInfo requestInfo;
+
+
+        /// <summary>
+        /// The callback context from the request
+        /// </summary>
+        public CallbackContext Context
+        {
+            get
+            {
+                return this.context;
+            }
+            set
+            {
+                this.context = value;
+            }
+        }
+
+        /// <summary>
+        /// The MessageHandler that will peform the callback write
+        /// </summary>
+        public MessageHandler MessageHandler
+        {
+            get
+            {
+                return this.messageHandler;
+            }
+            set
+            {
+                this.messageHandler = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the unique notification ID provided in the request
@@ -52,62 +86,6 @@ namespace Growl.Daemon
             internal set
             {
                 this.notificationID = value;
-            }
-        }
-
-        /// <summary>
-        /// Indicates if the server should keep the connection open to perform the callback
-        /// </summary>
-        /// <returns>
-        /// <c>true</c> to keep the connection open and perform the callback via the connection,
-        /// <c>false</c> if the callback is url-based and will be performed out-of-band
-        /// </returns>
-        public bool ShouldKeepConnectionOpen()
-        {
-            if (this.Context != null && this.Context.ShouldKeepConnectionOpen())
-                return true;
-            else
-                return false;
-        }
-
-        /*
-        /// <summary>
-        /// Gets the url-formatted callback data that is to be sent for url callbacks.
-        /// </summary>
-        /// <param name="result">The <see cref="CallbackResult"/> indicating the user action</param>
-        /// <returns>string - querystring/post format</returns>
-        public string GetUrlCallbackData(CallbackResult result)
-        {
-            string data = null;
-            if (this.Context != null)
-            {
-                UrlCallbackTarget target = this.Context.GetUrlCallbackTarget();
-                if (target != null)
-                {
-                    data = String.Format("notification-id={0}&notification-callback-result={1}&notification-callback-context={2}&notification-callback-context-type={3}", HttpUtility.UrlEncode(this.notificationID), HttpUtility.UrlEncode(result.ToString()), HttpUtility.UrlEncode(this.Context.Data), HttpUtility.UrlEncode(this.Context.Type));
-                }
-            }
-            return data;
-        }
-         * */
-
-        /// <summary>
-        /// Saves all extended information that should be returned with the callback response.
-        /// </summary>
-        /// <param name="additionalInfo">A <see cref="Dictionary{TKey, TValue}"/> containing all of the additional information key/value pairs</param>
-        public void SetAdditionalInfo(Dictionary<string, string> additionalInfo)
-        {
-            this.additionalInfo = additionalInfo;
-        }
-
-        /// <summary>
-        /// Gets a list of all extended-information key/value pairs that should be returned with the callback response.
-        /// </summary>
-        internal Dictionary<string, string> AdditionalInfo
-        {
-            get
-            {
-                return this.additionalInfo;
             }
         }
 
@@ -129,5 +107,66 @@ namespace Growl.Daemon
                 this.alreadyResponded = value;
             }
         }
+
+        /// <summary>
+        /// Gets a list of all extended-information key/value pairs that should be returned with the callback response.
+        /// </summary>
+        internal Dictionary<string, string> AdditionalInfo
+        {
+            get
+            {
+                return this.additionalInfo;
+            }
+        }
+
+        // TODO: figure out if this really should be in here or not
+        public RequestInfo RequestInfo;
+
+        /// <summary>
+        /// Indicates if the server should keep the connection open to perform the callback
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> to keep the connection open and perform the callback via the connection,
+        /// <c>false</c> if the callback is url-based and will be performed out-of-band
+        /// </returns>
+        public bool ShouldKeepConnectionOpen()
+        {
+            if (this.Context != null && this.Context.ShouldKeepConnectionOpen())
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Saves all extended information that should be returned with the callback response.
+        /// </summary>
+        /// <param name="additionalInfo">A <see cref="Dictionary{TKey, TValue}"/> containing all of the additional information key/value pairs</param>
+        public void SetAdditionalInfo(Dictionary<string, string> additionalInfo)
+        {
+            this.additionalInfo = additionalInfo;
+        }
+
+
+
+        /*
+        /// <summary>
+        /// Gets the url-formatted callback data that is to be sent for url callbacks.
+        /// </summary>
+        /// <param name="result">The <see cref="CallbackResult"/> indicating the user action</param>
+        /// <returns>string - querystring/post format</returns>
+        public string GetUrlCallbackData(CallbackResult result)
+        {
+            string data = null;
+            if (this.Context != null)
+            {
+                UrlCallbackTarget target = this.Context.GetUrlCallbackTarget();
+                if (target != null)
+                {
+                    data = String.Format("notification-id={0}&notification-callback-result={1}&notification-callback-context={2}&notification-callback-context-type={3}", HttpUtility.UrlEncode(this.notificationID), HttpUtility.UrlEncode(result.ToString()), HttpUtility.UrlEncode(this.Context.Data), HttpUtility.UrlEncode(this.Context.Type));
+                }
+            }
+            return data;
+        }
+         * */
     }
 }

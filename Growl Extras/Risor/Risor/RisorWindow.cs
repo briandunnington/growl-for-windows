@@ -58,7 +58,7 @@ namespace Growl.Displays.Risor
 
         void slideInTimer_Tick(object sender, EventArgs e)
         {
-            bool result = MoveWindow(-10, this.endY, false);
+            bool result = MoveWindow(-2, this.endY, false);
             if (result)
             {
                 this.slideInTimer.Stop();
@@ -73,7 +73,7 @@ namespace Growl.Displays.Risor
 
         void slideOutTimer_Tick(object sender, EventArgs e)
         {
-            bool result = MoveWindow(10, this.startY, true);
+            bool result = MoveWindow(3, this.startY, true);
             if (result)
             {
                 this.slideOutTimer.Stop();
@@ -124,7 +124,7 @@ namespace Growl.Displays.Risor
             this.endY = this.screenHeight - this.Height;
 
             // start sliding the window in
-            this.slideInTimer.Interval = 100;
+            this.slideInTimer.Interval = 10;
             this.slideInTimer.Start();
         }
 
@@ -133,7 +133,7 @@ namespace Growl.Displays.Risor
             // start sliding the window out
             this.slideInTimer.Stop();
             this.displayTimer.Stop();
-            this.slideOutTimer.Interval = 100;
+            this.slideOutTimer.Interval = 10;
             this.slideOutTimer.Start();
         }
 

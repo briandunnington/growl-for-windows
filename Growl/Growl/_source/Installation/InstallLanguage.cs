@@ -48,6 +48,15 @@ namespace Growl.Installation
 
             try
             {
+                // handle special case where we are resetting the value
+                if (uri == "reset")
+                {
+                    Properties.Settings.Default.CultureCode = "";
+                    cultureCodeHash = 0;
+                    languageInstalled = true;
+                    return languageInstalled;
+                }
+
                 this.wc = new WebClientEx();
                 wc.Headers.Add("User-Agent", USER_AGENT);
 
@@ -124,7 +133,7 @@ namespace Growl.Installation
                             else
                             {
                                 // display with the same name aleady exists...
-                                ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_AlreadyInstalled), info.Name));
+                                ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_AlreadyInstalled), info.Name), true);
                             }
 
                             // clean up
@@ -134,21 +143,21 @@ namespace Growl.Installation
                         else
                         {
                             Utility.WriteDebugInfo(String.Format("Error downloading language pack '{0}'.", info.Name));
-                            ShowMessage(errorMessage);
+                            ShowMessage(errorMessage, true);
                         }
                     }
                 }
                 else
                 {
                     // definition file was malformed
-                    ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_BadDefinitionFile), this.uri));
+                    ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_BadDefinitionFile), this.uri), true);
                 }
             }
             catch (Exception ex)
             {
                 // error downloading definition file
                 Utility.WriteDebugInfo(String.Format("Error downloading language pack. {0} - {1}", ex.Message, ex.StackTrace));
-                ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_NonexistentDefinitionFile), this.uri));
+                ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_NonexistentDefinitionFile), this.uri), true);
             }
             return languageInstalled;
         }
@@ -212,12 +221,17 @@ namespace Growl.Installation
 
         private void ShowMessage(string message)
         {
+            ShowMessage(message, false);
+        }
+
+        private void ShowMessage(string message, bool modal)
+        {
             this.InfoLabel.Text = message;
             this.progressBar1.Visible = false;
             this.YesButton.Visible = false;
             this.NoButton.Visible = false;
             this.OKButton.Visible = true;
-            if (this.appIsAlreadyRunning)
+            if (this.appIsAlreadyRunning || modal)
             {
                 this.Hide();
                 DialogResult result = this.ShowDialog();

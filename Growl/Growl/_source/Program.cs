@@ -222,7 +222,7 @@ namespace Growl
                 if (!detector.IsInstalled)
                 {
                     // something is not right with the registry setting, so lets fix it now
-                    Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY, true);
+                    Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY, true);
                     if (key == null)
                         key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY);
                     key.SetValue(null, Application.ExecutablePath);

@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace Growl.DisplayStyle
 {
+    /// <summary>
+    /// Provides access to structs, constants, and native methods used when calling into the Win32 API
+    /// </summary>
     public class Win32
     {
         public enum Bool

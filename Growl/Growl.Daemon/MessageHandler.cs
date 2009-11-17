@@ -781,6 +781,18 @@ namespace Growl.Daemon
 
                 else if (tag == ENCRYPTED_HEADERS_TAG)
                 {
+                    // see if a length was specified (the original spec did not require the main encrypted headers portion to specify a length)
+                    if (s.StartsWith(Header.RESOURCE_LENGTH))
+                    {
+                        Header header = Header.ParseHeader(s);
+                        if (header != null)
+                        {
+                            int len = Convert.ToInt32(header.Value);
+                            socket.Read(len, TIMEOUT_ENCRYPTED_HEADERS, ENCRYPTED_HEADERS_TAG);
+                            return;
+                        }
+                    }
+
                     ParseEncryptedMessage(data.ByteArray);
                     if (this.pointersExpected > 0)
                         socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
@@ -1149,7 +1161,19 @@ namespace Growl.Daemon
         /// <param name="bytes">The encrypted bytes</param>
         private void ParseEncryptedMessage(byte[] bytes)
         {
-            byte[] encryptedBytes = new byte[bytes.Length - 4];
+            byte[] encryptedBytes = null;
+
+            if (bytes[bytes.Length - 4] == ((byte)'\r')
+                && bytes[bytes.Length - 3] == ((byte)'\n')
+                && bytes[bytes.Length - 2] == ((byte)'\r')
+                && bytes[bytes.Length - 1] == ((byte)'\n'))
+            {
+                encryptedBytes = new byte[bytes.Length - 4];
+            }
+            else
+            {
+                encryptedBytes = new byte[bytes.Length];
+            }
             Buffer.BlockCopy(bytes, 0, encryptedBytes, 0, encryptedBytes.Length);
 
             //byte[] encryptionKey = this.key.GetEncryptionKey(this.keyHashAlgorithm);

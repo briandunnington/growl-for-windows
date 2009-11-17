@@ -298,7 +298,7 @@ Om en annen versjon av Growl kjører, vennligst lukk dene og prøv igjen</value>
     <comment>General tab: Sound Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>Anta at jeg er inaktiv etter            sekunder</value>
+    <value>Anta at jeg er inaktiv etter {0} sekunder</value>
     <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">

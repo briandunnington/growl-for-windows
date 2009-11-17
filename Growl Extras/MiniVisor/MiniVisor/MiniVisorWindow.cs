@@ -22,7 +22,7 @@ namespace MiniVisor
         Bitmap bitmap;
         int x = 0;
         int y = 0;
-        int moveBy = 5;
+        int moveBy = 1;
         bool closed = true;
         int originalHeight;
 
@@ -82,7 +82,7 @@ namespace MiniVisor
         {
             if (!this.closed)
             {
-                bool result = MoveWindow(-this.moveBy, this.startY, false);
+                bool result = MoveWindow(-this.moveBy * 2, this.startY, false);
                 if (result)
                 {
                     this.slideOutTimer.Stop();
@@ -138,7 +138,7 @@ namespace MiniVisor
             this.endY = 0;
 
             // start sliding the window in
-            this.slideInTimer.Interval = 100;
+            this.slideInTimer.Interval = 10;
             this.slideInTimer.Start();
         }
 
@@ -147,7 +147,7 @@ namespace MiniVisor
             // start sliding the window out
             this.slideInTimer.Stop();
             this.displayTimer.Stop();
-            this.slideOutTimer.Interval = 100;
+            this.slideOutTimer.Interval = 10;
             this.slideOutTimer.Start();
         }
 

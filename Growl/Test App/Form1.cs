@@ -34,7 +34,7 @@ namespace Test_App
             this.app = new Growl.Connector.Application("SurfWriter");
             //app.Icon = "http://atomicbride.com/Apple.gif";
             //app.Icon = "http://www.thetroyers.com/images/Apple_Logo.jpg";
-            //app.Icon = @"c:\apple.png";
+            app.Icon = @"c:\apple.png";
             //app.Icon = Properties.Resources.Apple;
             //app.CustomTextAttributes.Add("Creator", "Apple Software");
             //app.CustomTextAttributes.Add("Application-ID", "08d6c05a21512a79a1dfeb9d2a8f262f");
@@ -160,7 +160,7 @@ namespace Test_App
             notification.Sticky = false;
             notification.Priority = Priority.Emergency;
             //notification.Icon = "http://atomicbride.com/Apple.gif";
-            notification.Icon = "http://haxe.org/favicon.ico";
+            //notification.Icon = "http://haxe.org/favicon.ico";
             notification.CustomTextAttributes.Add("Filename", @"c:\file.txt");
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");
             notification.CustomBinaryAttributes.Add("File", new BinaryData(new byte[] { 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78 }));

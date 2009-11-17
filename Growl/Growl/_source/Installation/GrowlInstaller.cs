@@ -58,6 +58,12 @@ namespace Growl.Installation
                 {
                     System.IO.File.WriteAllText(proxyPath, Properties.Resources.proxy);
                 }
+
+                // 3. set a registry key that will later tell other software if Growl is installed or not (and where)
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY, true);
+                if (key == null)
+                    key = Registry.CurrentUser.CreateSubKey(Growl.CoreLibrary.Detector.REGISTRY_KEY);
+                key.SetValue(null, exePath);
             }
             catch
             {
@@ -73,6 +79,7 @@ namespace Growl.Installation
             try
             {
                 Registry.ClassesRoot.DeleteSubKeyTree("growl");
+                Registry.CurrentUser.DeleteSubKeyTree(Growl.CoreLibrary.Detector.REGISTRY_KEY);
             }
             catch
             {
