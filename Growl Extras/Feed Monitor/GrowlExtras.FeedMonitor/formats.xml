@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<datetimeparser>
+  <formats>
+    <!-- two-digit day, four-digit year patterns -->
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'fffffff zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'ffffff zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'fffff zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'ffff zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'fff zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'ff zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss'.'f zzzz</format>
+    <format>ddd',' dd MMM yyyy HH':'mm':'ss zzzz</format>
+
+    <!-- two-digit day, two-digit year patterns -->
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'fffffff zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'ffffff zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'fffff zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'ffff zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'fff zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'ff zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss'.'f zzzz</format>
+    <format>ddd',' dd MMM yy HH':'mm':'ss zzzz</format>
+
+    <!-- one-digit day, four-digit year patterns -->
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'fffffff zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'ffffff zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'fffff zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'ffff zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'fff zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'ff zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss'.'f zzzz</format>
+    <format>ddd',' d MMM yyyy HH':'mm':'ss zzzz</format>
+
+    <!-- two-digit day, two-digit year patterns -->
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'fffffff zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'ffffff zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'fffff zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'ffff zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'fff zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'ff zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss'.'f zzzz</format>
+    <format>ddd',' d MMM yy HH':'mm':'ss zzzz</format>
+
+    <!-- Other -->
+    <format>yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK</format>
+    <format>yyyy'-'MM'-'dd'T'HH':'mm':'sszzz</format>
+    <format>yyyy'-'MM'-'dd'T'HH':'mm':'ss zzz</format>
+  </formats>
+  <timezones>
+    <timezone abbr="UT">+00:00</timezone>
+    <timezone abbr="GMT">+00:00</timezone>
+    <timezone abbr="GMT+00:00">+00:00</timezone>
+    <timezone abbr="EST">-05:00</timezone>
+    <timezone abbr="EDT">-04:00</timezone>
+    <timezone abbr="CST">-06:00</timezone>
+    <timezone abbr="CDT">-05:00</timezone>
+    <timezone abbr="MST">-07:00</timezone>
+    <timezone abbr="MDT">-06:00</timezone>
+    <timezone abbr="PST">-08:00</timezone>
+    <timezone abbr="PDT">-07:00</timezone>
+    <timezone abbr="Z">+00:00</timezone>
+    <timezone abbr="A">-01:00</timezone>
+    <timezone abbr="M">-12:00</timezone>
+    <timezone abbr="N">+01:00</timezone>
+    <timezone abbr="Y">+12:00</timezone>
+  </timezones>
+</datetimeparser>

@@ -278,14 +278,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Feed Monitor"
-        "ProductCode" = "8:{D99BA834-77E8-4EF6-A7A2-EBEE443D008D}"
-        "PackageCode" = "8:{EE845C0A-695D-4FC6-B6AF-2E4DD4718025}"
+        "ProductCode" = "8:{DC4C593B-CD43-4367-8DB0-0140911B87E3}"
+        "PackageCode" = "8:{A990284C-9B85-4E9B-8177-4585D19C9224}"
         "UpgradeCode" = "8:{E8D784D8-949E-4CC9-BA80-A316D25574D7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.7"
+        "ProductVersion" = "8:1.0.8"
         "Manufacturer" = "8:element code project"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -811,6 +811,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_175184ED0EAB4826BC56616B18977203"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_194ABD0627A144529BAE11330BC2D515"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
+            "OutputProjectGuid" = "8:{40C8E85D-CED7-4CB5-8584-EB7E27C516FD}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C67A5587097A4441ADB422A23AA85F88"
             {
             "SourcePath" = "8:..\\GrowlExtras.FeedMonitor\\obj\\Release\\GrowlExtras.FeedMonitor.exe"
