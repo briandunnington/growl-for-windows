@@ -28,8 +28,6 @@
 
 #define SERVER_IP 		"127.0.0.1:23053"
 
-char CurrentPath[_MAX_PATH];
-
 char* notifications[] = {
 "Playback Started"
 };
@@ -70,7 +68,7 @@ static void md5_finish(md5_context *ctx, uint8 digest[16]);
 
 
 void gntp_notify(char* notify, char* icon, char* title, char* message, char* password);
-void gntp_register(char* password);
+void gntp_register(char* icon);
 void gntp_parse_response(int sock);
 int create_socket(const char* server);
 
@@ -451,7 +449,7 @@ gntp_parse_response(int sock)
 }
 
 void
-gntp_register(char* password)
+gntp_register(char* icon, char* password)
 {
 	int sock = -1;
 	char* salt;
@@ -490,12 +488,9 @@ gntp_register(char* password)
 		return;
 	}
 
-	_getcwd(CurrentPath, _MAX_PATH);
-	strcat (CurrentPath, "\\..\\Plugins\\winamp.png");
-
 	sendline(sock, "GNTP/1.0 REGISTER NONE", authheader);
 	sendline(sock, "Application-Name: ", "Winamp");
-	sendline(sock, "Application-Icon: ", CurrentPath);
+	sendline(sock, "Application-Icon: ", icon);
 	
 	sendline(sock, "Notifications-Count: 1", NULL);
 

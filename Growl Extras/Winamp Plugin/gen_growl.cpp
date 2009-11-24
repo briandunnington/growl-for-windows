@@ -57,6 +57,8 @@ CLSID bitmap_guid;
 char *INI_FILE;
 const int buffer_length = 256;
 
+char CurrentPath[_MAX_PATH];
+
 static api_memmgr* memory_manager;
 static api_service* service_manager;
 static api_albumart* album_art_manager;
@@ -112,6 +114,9 @@ int init() {
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
     GetEncoderClsid(L"image/bmp", &bitmap_guid);
+
+	_getcwd(CurrentPath, _MAX_PATH);
+	strcat (CurrentPath, "\\..\\Plugins\\winamp.png");
 
     return 0;
 }
@@ -203,7 +208,7 @@ char* convertToChar(wchar_t* utf16)
 
 void growl(char* type, wchar_t* icon, wchar_t* title, wchar_t* notice)
 {
-	gntp_register(NULL);
+	gntp_register(CurrentPath, NULL);
 	gntp_notify(type, convertToChar(icon), convertToChar(title), convertToChar(notice), NULL);
 }
 
