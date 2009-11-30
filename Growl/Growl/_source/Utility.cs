@@ -45,12 +45,12 @@ namespace Growl
             fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(a.Location);
 
             string root = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string folder = String.Format(@"Growl\{0}", a.GetName().Version.ToString());
-            string folderBeta = @"Growl\2.0b2";
+            string folder = String.Format(@"Growl" + System.IO.Path.DirectorySeparatorChar + "{0}", a.GetName().Version.ToString());
+            string folderBeta = @"Growl" + System.IO.Path.DirectorySeparatorChar + "2.0b2";
             userSettingsFolder = System.IO.Path.Combine(root, folder);
-            if (!userSettingsFolder.EndsWith(@"\")) userSettingsFolder += @"\";
+            if (!userSettingsFolder.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString())) userSettingsFolder += System.IO.Path.DirectorySeparatorChar;
             userSettingsFolderBeta = System.IO.Path.Combine(root, folderBeta);
-            if (!userSettingsFolderBeta.EndsWith(@"\")) userSettingsFolderBeta += @"\";
+            if (!userSettingsFolderBeta.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString())) userSettingsFolderBeta += System.IO.Path.DirectorySeparatorChar;
 
             Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(userSettingsFolder);
         }

@@ -14,8 +14,8 @@ namespace Growl
         internal delegate void DisplayLoadedEventHandler(string displayName);
         internal static event DisplayLoadedEventHandler DisplayLoaded;
 
-        private static string appDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Application.StartupPath, @"Displays\");
-        private static string userDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Displays\");
+        private static string appDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Application.StartupPath, @"Displays" + Path.DirectorySeparatorChar);
+        private static string userDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Displays" + Path.DirectorySeparatorChar);
         private static Dictionary<string, LoadedDisplayStyle> currentlyLoadedDisplayStyles = new Dictionary<string, LoadedDisplayStyle>();
         private static Dictionary<string, SettingsPanelBase> settingsPanels = new Dictionary<string, SettingsPanelBase>();
         private static Dictionary<string, Display> availableDisplays;
