@@ -42,8 +42,12 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Third Party Assemblies\Mono.Zeroconf.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Third Party Assemblies\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
