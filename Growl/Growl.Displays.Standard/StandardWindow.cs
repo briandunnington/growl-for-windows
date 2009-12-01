@@ -41,7 +41,7 @@ namespace Growl.Displays.Standard
             {
                 int.TryParse(d, out duration);
             }
-            this.AutoClose(duration);
+            this.SetAutoCloseInterval(duration);
         }
 
         void StandardWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -139,7 +139,7 @@ namespace Growl.Displays.Standard
         {
             base.SetNotification(n);
 
-            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) this.SetAutoCloseInterval(n.Duration * 1000);
 
             //Image image = n.GetImage();
             Image image = n.Image;

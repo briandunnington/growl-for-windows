@@ -881,6 +881,7 @@ namespace Growl
                         DisplayStyle.Notification n = new Growl.DisplayStyle.Notification();
                         n.UUID = requestInfo.RequestID;
                         n.NotificationID = requestInfo.RequestID;
+                        n.CoalescingID = notification.CoalescingID;
                         n.ApplicationName = notification.ApplicationName;
                         n.Description = notification.Text;
                         n.Name = notification.Name;

@@ -42,5 +42,17 @@ namespace Growl.DisplayStyle
         /// anyway.
         /// </remarks>
         bool Disabled { get;set;}
+
+
+        /// <summary>
+        /// Cancels the closing (and thus, animation) of a display.
+        /// </summary>
+        /// <remarks>
+        /// If the display is not yet closing, this has no effect.
+        /// This only cancels the current animation - if the display is closed again later, a new
+        /// animation may be started.
+        /// </remarks>
+        void CancelClosing();
+
     }
 }

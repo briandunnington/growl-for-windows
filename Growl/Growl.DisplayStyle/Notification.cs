@@ -32,6 +32,13 @@ namespace Growl.DisplayStyle
         public string NotificationID;
 
         /// <summary>
+        /// The 'replacement group' id for a notification.
+        /// In other words, if a subsequent notification is sent from the same app with the same coalescing ID,
+        /// it should replace any existing notification from the same app with the same coalescing ID.
+        /// </summary>
+        public string CoalescingID;
+
+        /// <summary>
         /// The Image associated with the notification
         /// </summary>
         public Resource Image;
@@ -107,6 +114,27 @@ namespace Growl.DisplayStyle
                         this.customBinaryAttributes.Remove(item.Key);
                     this.customBinaryAttributes.Add(item.Key, item.Value);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the coalescing group of the notification.
+        /// </summary>
+        /// <value>The coalescing group.</value>
+        /// <remarks>
+        /// Notifications from the same application with the same CoalescingID will be in the same
+        /// coalescing group. If no CoalescingID is supplied, CoalescingGroup will return an empty string.
+        /// </remarks>
+        public string CoalescingGroup
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(this.CoalescingID))
+                {
+                    return String.Format("{0}_{1}", this.ApplicationName, this.CoalescingID);
+                }
+                else
+                    return String.Empty;
             }
         }
     }

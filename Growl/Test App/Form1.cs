@@ -164,6 +164,7 @@ namespace Test_App
             notification.CustomTextAttributes.Add("Filename", @"c:\file.txt");
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");
             notification.CustomBinaryAttributes.Add("File", new BinaryData(new byte[] { 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78 }));
+            notification.CoalescingID = "secretfaketest";
 
             //string url = "http://localhost/growl-callback.aspx";
             //string url = "mailto:brian@elementcodeproject.com";

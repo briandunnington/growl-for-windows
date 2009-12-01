@@ -14,7 +14,7 @@ namespace Growl.DisplayStyle
     /// MDI child forms do not support the Blend method and only support other methods while 
     /// being displayed for the first time and when closing.
     /// </remarks>
-    public sealed class Win32Animator : IAnimator, IDisposable
+    public sealed class Win32Animator : AnimatorBase, IDisposable
     {
         #region Types
 
@@ -113,7 +113,6 @@ namespace Growl.DisplayStyle
         /// </summary>
         private int _duration;
 
-        private bool disabled;
 
         #endregion // Variables
 
@@ -190,25 +189,6 @@ namespace Growl.DisplayStyle
             get
             {
                 return this._form;
-            }
-        }
-
-        /// <summary>
-        /// Indicates if the animator is disabled
-        /// </summary>
-        /// <value>
-        /// <c>true</c> - the animator is disabled and should not animate the window;
-        /// <c>false</c> - the animator is enabled and should perform its animations
-        /// </value>
-        public bool Disabled
-        {
-            get
-            {
-                return this.disabled;
-            }
-            set
-            {
-                this.disabled = true;
             }
         }
 
@@ -310,7 +290,7 @@ namespace Growl.DisplayStyle
         /// </summary>
         private void Form_Load(object sender, EventArgs e)
         {
-            if (!this.disabled)
+            if (!this.Disabled)
             {
                 // MDI child forms do not support transparency so do not try to use the Blend method.
                 if (this._form.MdiParent == null || this._method != AnimationMethod.Blend)
@@ -329,7 +309,7 @@ namespace Growl.DisplayStyle
         /// </summary>
         private void Form_VisibleChanged(object sender, EventArgs e)
         {
-            if (!this.disabled)
+            if (!this.Disabled)
             {
                 // Do not attempt to animate MDI child forms while showing or hiding as they do not behave as expected.
                 if (this._form.MdiParent == null)
@@ -361,7 +341,7 @@ namespace Growl.DisplayStyle
         {
             if (!e.Cancel)
             {
-                if (!this.disabled)
+                if (!this.Disabled)
                 {
                     // MDI child forms do not support transparency so do not try to use the Blend method.
                     if (this._form.MdiParent == null || this._method != AnimationMethod.Blend)
@@ -376,6 +356,19 @@ namespace Growl.DisplayStyle
         }
 
         #endregion // Event Handlers
+
+        /// <summary>
+        /// Cancels the closing (and thus, animation) of a display.
+        /// </summary>
+        /// <remarks>
+        /// If the display is not yet closing, this has no effect.
+        /// This only cancels the current animation - if the display is closed again later, a new
+        /// animation may be started.
+        /// </remarks>
+        public override void CancelClosing()
+        {
+            // since this animator uses the Win32 API, there is no way to cancel the animation
+        }
 
         #region IDisposable Members
 

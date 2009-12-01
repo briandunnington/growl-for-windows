@@ -74,6 +74,11 @@ namespace Growl.DisplayStyle
         private string notificationID = null;
 
         /// <summary>
+        /// The coalescing group of the notification
+        /// </summary>
+        private string coalescingGroup = null;
+
+        /// <summary>
         /// Indicates if the notification has already been clicked
         /// </summary>
         private bool alreadyClicked;
@@ -118,6 +123,11 @@ namespace Growl.DisplayStyle
         /// </summary>
         private bool userClosed;
 
+        /// <summary>
+        /// Indicates if the display window should not automatically close itself if the mouse cursor is over the window
+        /// </summary>
+        private bool pauseWhenMouseOver;
+
 
         /// <summary>
         /// Creates a new instance of the NotificationWindow class
@@ -132,6 +142,7 @@ namespace Growl.DisplayStyle
             // always show on top of other windows
             this.TopMost = true;
 
+            this.MouseEnter += new EventHandler(NotificationWindow_MouseEnter);
             this.FormClosed += new FormClosedEventHandler(NotificationWindow_FormClosed);
             this.Activated += new EventHandler(NotificationWindow_Activated);
             this.Shown += new EventHandler(NotificationWindow_Shown);
@@ -203,6 +214,19 @@ namespace Growl.DisplayStyle
             this.OnNotificationClosed(new Growl.CoreLibrary.NotificationCallbackEventArgs(this.NotificationUUID, result));
         }
 
+        void NotificationWindow_MouseEnter(object sender, EventArgs e)
+        {
+            /* this would only apply if the Animator had already started, but that is an edge case
+             * and this doesnt work well anyway.
+             * If a developer wants to handle that case, they can manually call Animator.CancelClosing()
+            if (this.PauseWhenMouseOver)
+            {
+                this.StopAutoCloseTimer();
+                this.StartAutoCloseTimer();
+            }
+             * */
+        }
+
         /// <summary>
         /// Gets the UUID of the notification being shown
         /// </summary>
@@ -226,6 +250,17 @@ namespace Growl.DisplayStyle
         }
 
         /// <summary>
+        /// Gets the coalescing group.
+        /// </summary>
+        public string CoalescingGroup
+        {
+            get
+            {
+                return this.coalescingGroup;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value that indicates if the nofication wants to be sticky
         /// </summary>
         /// <remarks>
@@ -241,7 +276,7 @@ namespace Growl.DisplayStyle
             set
             {
                 this.sticky = value;
-                if (value) this.AutoClose(0);
+                if (value) this.SetAutoCloseInterval(0);
             }
         }
 
@@ -271,10 +306,7 @@ namespace Growl.DisplayStyle
             this.currentForegroundWindow = Win32.GetForegroundWindow();
             base.Show();
             Win32.SetForegroundWindow(this.currentForegroundWindow);
-            if (this.isAutoClose)
-            {
-                this.displayTimer.Start();
-            }
+            StartAutoCloseTimer();
         }
 
         /// <summary>
@@ -307,6 +339,105 @@ namespace Growl.DisplayStyle
         {
             this.notificationUUID = n.UUID;
             this.notificationID = n.NotificationID;
+            this.coalescingGroup = n.CoalescingGroup;
+        }
+
+        /// <summary>
+        /// Starts the auto close timer.
+        /// </summary>
+        /// <remarks>
+        /// If no value has been set using SetAutoCloseInterval, this method does nothing.
+        /// </remarks>
+        public void StartAutoCloseTimer()
+        {
+            if(this.isAutoClose)
+                this.displayTimer.Start();
+        }
+
+        /// <summary>
+        /// Stops the auto close timer.
+        /// </summary>
+        public void StopAutoCloseTimer()
+        {
+            if (this.animator != null)
+            {
+                this.animator.CancelClosing();
+            }
+            if (this.displayTimer != null)
+            {
+                this.displayTimer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// Sets the auto close interval.
+        /// </summary>
+        /// <param name="duration">The duration.</param>
+        /// <remarks>
+        /// If the auto close timer was already started, it will be stopped when this method is called.
+        /// You must manually call StartAutoCloseTimer() again after calling this method.
+        /// </remarks>
+        public void SetAutoCloseInterval(int duration)
+        {
+            StopAutoCloseTimer();
+
+            if (duration > 0)
+            {
+                this.isAutoClose = true;
+                this.displayTimer.Interval = duration;
+            }
+            else
+            {
+                this.isAutoClose = false;
+            }
+        }
+
+        /// <summary>
+        /// Causes the form to automatically close after a set period of time
+        /// </summary>
+        /// <param name="duration">The amount of time (in milliseconds) to wait before automatically closing</param>
+        /// <remarks>
+        /// A value of zero will disable the AutoClose behavior.
+        /// This method must be called before the form is shown to work properly.
+        /// </remarks>
+        [Obsolete("AutoClose() is obsolete. Use SetAutoCloseInterval() instead.")]
+        protected void AutoClose(int duration)
+        {
+            SetAutoCloseInterval(duration);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the notification's auto-closing behavior should
+        /// pause if the mouse cursor is over the display.
+        /// </summary>
+        internal protected bool PauseWhenMouseOver
+        {
+            get
+            {
+                return this.pauseWhenMouseOver;
+            }
+            set
+            {
+                this.pauseWhenMouseOver = value;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the mouse cursor is mouse over the form.
+        /// </summary>
+        /// <returns>
+        /// 	<c>true</c> if the mouse is over the form; otherwise, <c>false</c>.
+        /// </returns>
+        internal protected bool IsMouseOver()
+        {
+            if (this.ClientRectangle.Contains(this.PointToClient(Cursor.Position)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -347,27 +478,6 @@ namespace Growl.DisplayStyle
             this.dontCloseOnClick = dontCloseOnClick;
             this.fireFormClick = fireFormClick;
             HookUpClickEvents(control);
-        }
-
-        /// <summary>
-        /// Causes the form to automatically close after a set period of time
-        /// </summary>
-        /// <param name="duration">The amount of time (in milliseconds) to wait before automatically closing</param>
-        /// <remarks>
-        /// A value of zero will disable the AutoClose behavior.
-        /// This method must be called before the form is shown to work properly.
-        /// </remarks>
-        protected void AutoClose(int duration)
-        {
-            if (duration > 0)
-            {
-                this.isAutoClose = true;
-                this.displayTimer.Interval = duration;
-            }
-            else
-            {
-                this.isAutoClose = false;
-            }
         }
 
         /// <summary>
@@ -487,11 +597,20 @@ namespace Growl.DisplayStyle
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void displayTimer_Tick(object sender, EventArgs e)
         {
-            this.displayTimer.Stop();
-            FormClosingEventArgs args = new FormClosingEventArgs(CloseReason.None, false);
-            this.OnAutoClosing(this, args);
-            if(!args.Cancel)
-                this.Close();
+            this.StopAutoCloseTimer();
+            if (!this.pauseWhenMouseOver || !this.IsMouseOver())
+            {
+                FormClosingEventArgs args = new FormClosingEventArgs(CloseReason.None, false);
+                this.OnAutoClosing(this, args);
+                if (!args.Cancel)
+                    this.Close();
+            }
+            else
+            {
+                // try again
+                if (this.isAutoClose)
+                    this.StartAutoCloseTimer();
+            }
         }
 
         private void InitializeComponent()

@@ -55,7 +55,7 @@ package
          */
         private function dataHandler(event:ProgressEvent):void 
         {
-            while (this.bytesAvailable > 0) 
+            while (this.connected && this.bytesAvailable > 0) 
             {
                 var b:String = this.readUTFBytes(this.bytesAvailable);
 

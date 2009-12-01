@@ -9,7 +9,7 @@ namespace Growl.DisplayStyle
     /// <summary>
     /// Provides the behavior for popping up a notification (like toast)
     /// </summary>
-    public class PopupAnimator : IAnimator, IDisposable
+    public class PopupAnimator : AnimatorBase, IDisposable
     {
         /// <summary>
         /// The default interval for the fade timer
@@ -45,11 +45,6 @@ namespace Growl.DisplayStyle
         /// The direction the window should pop
         /// </summary>
         private PopupDirection direction = PopupDirection.Up;
-
-        /// <summary>
-        /// Indicates if the animator is disabled
-        /// </summary>
-        private bool disabled = false;
 
         /// <summary>
         /// The final X cooridinate that indicates the popup is done (for horizontal directions)
@@ -166,10 +161,6 @@ namespace Growl.DisplayStyle
 
                 willAnimate = true;
 
-                finalX = this.form.Location.X;
-                finalY = this.form.Bottom;
-                regionHeight = this.form.Height;
-
                 this.timer.Interval = TIMER_INTERVAL;
                 this.timer.Start();
             }
@@ -188,68 +179,76 @@ namespace Growl.DisplayStyle
         void timer_Tick(object sender, EventArgs e)
         {
             this.timer.Stop();
-            bool restart = true;
-            if (this.popInComplete)
-            {
-                this.regionHeight -= this.interval;
-                int newTop = this.form.Top + this.interval;
-                if (newTop >= this.finalY)
-                {
-                    restart = false;
-                    form.Close();
-                    return;
-                }
-                else
-                {
-                    this.form.Region = new Region(new Rectangle(0, 0, this.form.Width, this.regionHeight));
-                    this.form.Top = newTop;
-                    this.form.Invalidate();
-                }
-            }
-            else
-            {
-                this.regionHeight += this.interval;
-                int newTop = this.form.Top - this.interval;
-                if (newTop <= this.finalY)
-                {
-                    this.form.Top = this.finalY;
-                    this.form.Region = null;
-                    this.form.Invalidate();
-                    regionHeight = this.form.Height;
-                    restart = false;
-                }
-                else
-                {
-                    this.form.Region = new Region(new Rectangle(0, 0, this.form.Width, this.regionHeight));
-                    this.form.Top = newTop;
-                    this.form.Invalidate();
-                }
-            }
-            if (restart) this.timer.Start();
-        }
 
-        #region IAnimator Members
+            if (!this.Disabled)
+            {
+                bool restart = true;
+                if (this.popInComplete)
+                {
+                    if (!this.form.PauseWhenMouseOver || !this.form.IsMouseOver())
+                    {
+                        this.regionHeight -= this.interval;
+                        int newTop = this.form.Top + this.interval;
+                        if (newTop >= this.finalY)
+                        {
+                            restart = false;
+                            form.Close();
+                            return;
+                        }
+                        else
+                        {
+                            this.form.Region = new Region(new Rectangle(0, 0, this.form.Width, this.regionHeight));
+                            this.form.Top = newTop;
+                            this.form.Invalidate();
+                        }
+                    }
+                    else
+                    {
+                        restart = false;
+                        CancelClosing();
+                        this.form.StartAutoCloseTimer();
+                    }
+                }
+                else
+                {
+                    this.regionHeight += this.interval;
+                    int newTop = this.form.Top - this.interval;
+                    if (newTop <= this.finalY)
+                    {
+                        this.form.Top = this.finalY;
+                        this.form.Region = null;
+                        this.form.Invalidate();
+                        regionHeight = this.form.Height;
+                        finalX = this.form.Location.X;
+                        finalY = this.form.Bottom;
+                        restart = false;
+                    }
+                    else
+                    {
+                        this.form.Region = new Region(new Rectangle(0, 0, this.form.Width, this.regionHeight));
+                        this.form.Top = newTop;
+                        this.form.Invalidate();
+                    }
+                }
+                if (restart) this.timer.Start();
+            }
+        }
 
         /// <summary>
-        /// Indicates if the animator is disabled
+        /// Cancels the closing (and thus, animation) of a display.
         /// </summary>
-        /// <value>
-        /// <c>true</c> - the animator is disabled and should not animate the window;
-        /// <c>false</c> - the animator is enabled and should perform its animations
-        /// </value>
-        public bool Disabled
+        /// <remarks>
+        /// If the display is not yet closing, this has no effect.
+        /// This only cancels the current animation - if the display is closed again later, a new
+        /// animation may be started.
+        /// </remarks>
+        public override void CancelClosing()
         {
-            get
+            if (this.timer != null)
             {
-                return this.disabled;
-            }
-            set
-            {
-                this.disabled = value;
+                this.timer.Stop();
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Specifies the direction that the window should pop

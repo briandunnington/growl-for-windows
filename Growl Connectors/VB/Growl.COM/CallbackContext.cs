@@ -8,22 +8,23 @@ namespace Growl.COM
     [ClassInterface(ClassInterfaceType.AutoDual)]
     public class CallbackContext
     {
-        private Growl.Connector.CallbackContext cbc;
+        private string data;
+        private string type;
+        private string url;
 
         public CallbackContext()
         {
-            this.cbc = new Growl.Connector.CallbackContext();
         }
 
         public string Data
         {
             get
             {
-                return this.cbc.Data;
+                return this.data;
             }
             set
             {
-                this.cbc.Data = value;
+                this.data = value;
             }
         }
 
@@ -31,20 +32,24 @@ namespace Growl.COM
         {
             get
             {
-                return this.cbc.Type;
+                return this.type;
             }
             set
             {
-                this.cbc.Type = value;
+                this.type = value;
             }
         }
 
-        public void SetUrlCallback(string url, string method)
+        public string Url
         {
-            Growl.Connector.UrlCallbackTarget target = new Growl.Connector.UrlCallbackTarget();
-            target.Url = url;
-            target.Method = method;
-            this.cbc.SetUrlCallbackTarget(target);
+            get
+            {
+                return this.url;
+            }
+            set
+            {
+                this.url = value;
+            }
         }
 
         public string Method;
@@ -53,7 +58,10 @@ namespace Growl.COM
         {
             get
             {
-                return this.cbc;
+                if (!String.IsNullOrEmpty(this.url))
+                    return new Growl.Connector.CallbackContext(this.Url);
+                else
+                    return new Growl.Connector.CallbackContext(this.Data, this.Type);
             }
         }
     }

@@ -10,6 +10,8 @@ namespace Growl.Displays.Toast
 {
     public partial class ToastWindow : NotificationWindow
     {
+        private bool isClosing;
+
         private Brush borderBrush;
 
         public ToastWindow()
@@ -19,16 +21,24 @@ namespace Growl.Displays.Toast
             this.Load += new EventHandler(ToastWindow_Load);
             this.Shown += new EventHandler(ToastWindow_Shown);
             this.FormClosed += new FormClosedEventHandler(ToastWindow_FormClosed);
+            this.AutoClosing += new FormClosingEventHandler(ToastWindow_AutoClosing);
 
             HookUpClickEvents(this, true, true);
 
             this.Animator = new PopupAnimator(this, 400, 150, PopupAnimator.PopupDirection.Up);
 
-            this.AutoClose(4000);
+            this.SetAutoCloseInterval(4000);
+
+            this.PauseWhenMouseOver = true;
 
             this.SetStyle(ControlStyles.DoubleBuffer, true); 
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true); 
             this.SetStyle(ControlStyles.UserPaint, true);
+        }
+
+        void ToastWindow_AutoClosing(object sender, FormClosingEventArgs e)
+        {
+            this.isClosing = true;
         }
 
         void ToastWindow_Load(object sender, EventArgs e)
@@ -82,7 +92,7 @@ namespace Growl.Displays.Toast
         {
             base.SetNotification(n);
 
-            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) this.SetAutoCloseInterval(n.Duration * 1000);
 
             //Image image = n.GetImage();
             Image image = n.Image;

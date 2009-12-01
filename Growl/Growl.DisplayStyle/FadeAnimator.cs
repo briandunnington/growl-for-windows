@@ -8,7 +8,7 @@ namespace Growl.DisplayStyle
     /// <summary>
     /// Provides the behavior for fading a form window in and out
     /// </summary>
-    public class FadeAnimator : IAnimator, IDisposable
+    public class FadeAnimator : AnimatorBase, IDisposable
     {
         /// <summary>
         /// The default interval for the fade timer
@@ -56,11 +56,6 @@ namespace Growl.DisplayStyle
         private bool fadeInComplete;
 
         /// <summary>
-        /// Indicates if the animator is disabled
-        /// </summary>
-        private bool disabled;
-
-        /// <summary>
         /// Creates a new FadeAnimator using the preset default values.
         /// </summary>
         /// <param name="form">The <see cref="NotificationWindow"/> to animate</param>
@@ -88,25 +83,6 @@ namespace Growl.DisplayStyle
             this.fadeInDuration = fadeInDuration;
             this.fadeOutDuration = fadeOutDuration;
             this.finalOpacity = finalOpacity;
-        }
-
-        /// <summary>
-        /// Indicates if the animator is disabled
-        /// </summary>
-        /// <value>
-        /// <c>true</c> - the animator is disabled and should not animate the window;
-        /// <c>false</c> - the animator is enabled and should perform its animations
-        /// </value>
-        public bool Disabled
-        {
-            get
-            {
-                return this.disabled;
-            }
-            set
-            {
-                this.disabled = true;
-            }
         }
 
         /// <summary>
@@ -140,31 +116,44 @@ namespace Growl.DisplayStyle
         void timer_Tick(object sender, EventArgs e)
         {
             this.timer.Stop();
-            bool restart = true;
-            if (this.fadeInComplete)
+
+            if (!this.Disabled)
             {
-                double newOpacity = form.Opacity - this.opacityDelta;
-                if (newOpacity <= 0)
+                bool restart = true;
+                if (this.fadeInComplete)
                 {
-                    newOpacity = 0;
-                    restart = false;
-                    form.Close();
-                    return;
+                    if (!this.form.PauseWhenMouseOver || !this.form.IsMouseOver())
+                    {
+                        double newOpacity = form.Opacity - this.opacityDelta;
+                        if (newOpacity <= 0)
+                        {
+                            newOpacity = 0;
+                            restart = false;
+                            form.Close();
+                            return;
+                        }
+                        form.Opacity = newOpacity;
+                    }
+                    else
+                    {
+                        restart = false;
+                        CancelClosing();
+                        this.form.StartAutoCloseTimer();
+                    }
                 }
-                form.Opacity = newOpacity;
-            }
-            else
-            {
-                double newOpacity = form.Opacity + this.opacityDelta;
-                if (newOpacity >= this.finalOpacity)
+                else
                 {
-                    newOpacity = finalOpacity;
-                    this.fadeInComplete = true;
-                    restart = false;
+                    double newOpacity = form.Opacity + this.opacityDelta;
+                    if (newOpacity >= this.finalOpacity)
+                    {
+                        newOpacity = finalOpacity;
+                        this.fadeInComplete = true;
+                        restart = false;
+                    }
+                    form.Opacity = newOpacity;
                 }
-                form.Opacity = newOpacity;
+                if (restart) this.timer.Start();
             }
-            if(restart) this.timer.Start();
         }
 
         /// <summary>
@@ -191,6 +180,22 @@ namespace Growl.DisplayStyle
             else
             {
                 // let the close continue unobstructed
+            }
+        }
+
+        /// <summary>
+        /// Cancels the closing (and thus, animation) of a display.
+        /// </summary>
+        /// <remarks>
+        /// If the display is not yet closing, this has no effect.
+        /// This only cancels the current animation - if the display is closed again later, a new
+        /// animation may be started.
+        /// </remarks>
+        public override void CancelClosing()
+        {
+            if (this.timer != null)
+            {
+                this.timer.Stop();
             }
         }
 

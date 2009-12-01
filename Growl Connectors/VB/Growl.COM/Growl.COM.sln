@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.COM", "Growl.COM.csproj", "{BA15F566-2275-44FD-832C-55B7027D107C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Connector", "..\..\..\Growl\Growl.Connector\Growl.Connector.csproj", "{19C22138-B905-47BA-9E6E-EF9356907E53}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{BA15F566-2275-44FD-832C-55B7027D107C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA15F566-2275-44FD-832C-55B7027D107C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA15F566-2275-44FD-832C-55B7027D107C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19C22138-B905-47BA-9E6E-EF9356907E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19C22138-B905-47BA-9E6E-EF9356907E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19C22138-B905-47BA-9E6E-EF9356907E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19C22138-B905-47BA-9E6E-EF9356907E53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

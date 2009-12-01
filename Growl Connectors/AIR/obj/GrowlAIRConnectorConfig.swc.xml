@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <flex-config xmlns="http://www.adobe.com/2006/flex-config">
-  <output>D:\_Growl\Growl Connectors\AIR\bin\GrowlAIRConnector.swc</output>
+  <output>D:\CVS\growl-for-windows\Growl Connectors\AIR\bin\GrowlAIRConnector.swc</output>
   <use-network>true</use-network>
   <warnings>true</warnings>
   <benchmark>false</benchmark>
@@ -16,10 +16,10 @@
     <use-resource-bundle-metadata>true</use-resource-bundle-metadata>
     <verbose-stacktraces>false</verbose-stacktraces>
     <source-path>
-      <path-element>D:\_Growl\Growl Connectors\AIR\src</path-element>
+      <path-element>D:\CVS\growl-for-windows\Growl Connectors\AIR\src</path-element>
     </source-path>
     <library-path>
-      <path-element>D:\_Growl\Growl Connectors\AIR\lib\as3crypto.swc</path-element>
+      <path-element>D:\CVS\growl-for-windows\Growl Connectors\AIR\lib\as3crypto.swc</path-element>
     </library-path>
   </compiler>
   <include-classes>

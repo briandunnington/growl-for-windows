@@ -46,6 +46,7 @@ namespace Growl.Displays.Smokestack
             InitializeComponent();
 
             this.Animator = new FadeAnimator(this, 250, 100, 0.8);
+            PauseWhenMouseOver = true;
 
             HookUpClickEvents(this);
 
@@ -67,7 +68,7 @@ namespace Growl.Displays.Smokestack
             {
                 int.TryParse(d, out duration);
             }
-            this.AutoClose(duration);
+            this.SetAutoCloseInterval(duration);
 
             this.SetStyle(ControlStyles.DoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -83,7 +84,7 @@ namespace Growl.Displays.Smokestack
         {
             base.SetNotification(n);
 
-            if(n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) this.SetAutoCloseInterval(n.Duration * 1000);
 
             //this.image = n.GetImage();
             this.image = n.Image;

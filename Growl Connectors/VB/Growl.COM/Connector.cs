@@ -147,10 +147,9 @@ namespace Growl.COM
             if (notification == null)
                 throw new ArgumentException("The notification cannot be null");
 
-            Growl.Connector.Application a = new Growl.Connector.Application(applicationName);
             Growl.Connector.Notification n = notification.UnderlyingNotification;
             Growl.Connector.CallbackContext cbc = (callbackContext != null ? callbackContext.UnderlyingCallbackContext : null);
-            this.growl.Notify(a, n, cbc);
+            this.growl.Notify(n, cbc);
         }
     }
 }

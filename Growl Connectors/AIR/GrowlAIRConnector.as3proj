@@ -73,7 +73,7 @@
   <postBuildCommand alwaysRun="False">"C:\Program Files\Adobe Flex SDK\bin\compc.exe" -load-config+="$(ProjectDir)\obj\GrowlAIRConnectorConfig.swc.xml"
 c:\windows\system32\cmd.exe /k copy "$(OutputDir)\$(ProjectName).swc" "$(ProjectDir)\" /Y
 c:\windows\system32\cmd.exe /k copy "$(OutputDir)\$(ProjectName).swc" "$(ProjectDir)\..\Javascript\lib\" /Y
-"C:\Documents and Settings\brian\Local Settings\Application Data\FlashDevelop\Tools\fdbuild\fdbuild.exe" "D:\_Growl\Growl Connectors\Javascript\GrowlFlashConnector.as3proj" -compiler "C:\Program Files\Adobe Flex SDK" -library "C:\Documents and Settings\brian\Local Settings\Application Data\FlashDevelop\Library"</postBuildCommand>
+"C:\Documents and Settings\brian\Local Settings\Application Data\FlashDevelop\Tools\fdbuild\fdbuild.exe" "D:\CVS\growl-for-windows\Growl Connectors\Javascript\GrowlFlashConnector.as3proj" -compiler "C:\Program Files\Adobe Flex SDK" -library "C:\Documents and Settings\brian\Local Settings\Application Data\FlashDevelop\Library"</postBuildCommand>
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
