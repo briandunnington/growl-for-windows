@@ -1186,7 +1186,7 @@ namespace Growl.Daemon
                         // Start accepting connections
                         socket4.BeginAccept(new AsyncCallback(socket_DidAccept), socket4);
                     }
-                    if (address6 != null)
+                    if (address6 != null && address4 == null)
                     {
                         // Initialize socket
                         socket6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
