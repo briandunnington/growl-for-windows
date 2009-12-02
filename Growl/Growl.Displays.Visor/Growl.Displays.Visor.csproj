@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -63,12 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="VisorSettingsPanel.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>VisorSettingsPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VisorWindow.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>VisorWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -81,5 +82,13 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Visor\$(OutDir)*.*" "$(SolutionDir)\Growl\$(OutDir)Displays\VisorDisplay\" /E /Y /C</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Mono Debug</OutputPath>
+    <DefineConstants>DEBUG;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 </Project>

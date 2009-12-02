@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -75,6 +76,7 @@
     </Compile>
     <Compile Include="User32DLL.cs" />
     <Compile Include="VisualDisplay.cs" />
+    <Compile Include="Mono.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefaultSettingsPanel.resx">
@@ -82,8 +84,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NotificationWindow.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>NotificationWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanelBase.resx">
       <DependentUpon>SettingsPanelBase.cs</DependentUpon>
@@ -106,5 +108,13 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)\Growl.DisplayStyle\bin\Release\*.dll" "$(SolutionDir)\..\Growl Extras\Growl Display SDK\libraries\" /E /Y /C</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Mono Debug</OutputPath>
+    <DefineConstants>DEBUG;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 </Project>

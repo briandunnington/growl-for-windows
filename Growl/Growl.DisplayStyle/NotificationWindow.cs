@@ -199,7 +199,9 @@ namespace Growl.DisplayStyle
             if (!this.allowFocus)
             {
                 // Activate the window that previously had the focus.
+#if !MONO
                 Win32.SetForegroundWindow(this.currentForegroundWindow);
+#endif
             }
         }
 
@@ -303,9 +305,13 @@ namespace Growl.DisplayStyle
         /// </summary>
         public new virtual void Show()
         {
+#if !MONO
             this.currentForegroundWindow = Win32.GetForegroundWindow();
+#endif
             base.Show();
+#if !MONO
             Win32.SetForegroundWindow(this.currentForegroundWindow);
+#endif
             StartAutoCloseTimer();
         }
 

@@ -113,7 +113,9 @@ namespace Growl.Displays.Visor
 
         protected override void OnShown(EventArgs e)
         {
+#if !MONO
             Win32.SetWindowPos(this.Handle, Win32.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, Win32.SWP_NOACTIVATE);
+#endif
             base.OnShown(e);
             SlideIn();
         }

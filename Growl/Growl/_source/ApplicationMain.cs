@@ -85,6 +85,9 @@ namespace Growl
                         elog.Source = source;
                         elog.WriteEntry(logtext, System.Diagnostics.EventLogEntryType.Error);
                         MessageBox.Show(msgtext, "Growl - Fatal Exception", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+#if DEBUG
+						Console.WriteLine(ex.ToString());
+#endif
                     }
                 }
                 else

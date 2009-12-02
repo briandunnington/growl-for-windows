@@ -9,6 +9,7 @@ namespace Growl.DisplayStyle
     /// <summary>
     /// Provides access to structs, constants, and native methods used when calling into the Win32 API
     /// </summary>
+#if !MONO
     public class Win32
     {
         public enum Bool
@@ -127,4 +128,5 @@ namespace Growl.DisplayStyle
         [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
         public static extern bool BitBlt(HandleRef hDC, int x, int y, int nWidth, int nHeight, HandleRef hSrcDC, int xSrc, int ySrc, int dwRop);
     }
+#endif
 }

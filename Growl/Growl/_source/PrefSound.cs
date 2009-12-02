@@ -49,6 +49,7 @@ namespace Growl
             list.Add(None);
 
             // read available sounds from C:\WINDOWS\Media
+#if !MONO
             string systemPath = Environment.GetFolderPath(Environment.SpecialFolder.System);
             string windowsPath = System.IO.Path.GetDirectoryName(systemPath);
             string mediaPath = System.IO.Path.Combine(windowsPath, "Media");
@@ -62,7 +63,7 @@ namespace Growl
                     list.Add(ps);
                 }
             }
-
+#endif
             PrefSound[] arr = list.ToArray();
             return arr;
         }

@@ -28,12 +28,20 @@ namespace Growl.DisplayStyle
             IntPtr hRgn = IntPtr.Zero;
             try
             {
+#if MONO
+				hRgn = Mono.CreateRoundRectRegion(top, left, width, height, xradius, yradius);
+#else
                 hRgn = Win32.CreateRoundRectRgn(top, left, width, height, xradius, yradius);
+#endif
                 r = System.Drawing.Region.FromHrgn(hRgn);
             }
             finally
             {
+#if MONO
+			    hRgn = IntPtr.Zero;			
+#else
                 Win32.DeleteObject(hRgn);
+#endif
             }
             return r;
         }
@@ -70,9 +78,10 @@ namespace Growl.DisplayStyle
                 // 1. Create a compatible DC with screen;
                 // 2. Select the bitmap with 32bpp with alpha-channel in the compatible DC;
                 // 3. Call the UpdateLayeredWindow.
-
+#if !MONO
                 IntPtr screenDc = Win32.GetDC(IntPtr.Zero);
                 IntPtr memDc = Win32.CreateCompatibleDC(screenDc);
+#endif
                 IntPtr hBitmap = IntPtr.Zero;
                 IntPtr oldBitmap = IntPtr.Zero;
 
@@ -113,6 +122,7 @@ namespace Growl.DisplayStyle
                     }
 
                     hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
+#if !MONO
                     oldBitmap = Win32.SelectObject(memDc, hBitmap);
 
                     Win32.Size size = new Win32.Size(bitmap.Width, bitmap.Height);
@@ -125,9 +135,11 @@ namespace Growl.DisplayStyle
                     blend.AlphaFormat = Win32.AC_SRC_ALPHA;
 
                     Win32.UpdateLayeredWindow(form.Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA);
+#endif
                 }
                 finally
                 {
+#if !MONO					
                     Win32.ReleaseDC(IntPtr.Zero, screenDc);
                     if (hBitmap != IntPtr.Zero)
                     {
@@ -135,6 +147,7 @@ namespace Growl.DisplayStyle
                         Win32.DeleteObject(hBitmap);
                     }
                     Win32.DeleteDC(memDc);
+#endif
                 }
             }
         }
@@ -169,12 +182,16 @@ namespace Growl.DisplayStyle
                 using (graphics)
                 {
                     hdc = graphics.GetHdc();
+#if !MONO
                     Win32.SendMessage(new HandleRef(control, control.Handle), 0x317, hdc, (IntPtr)30);
+#endif
                     Graphics graphics2 = Graphics.FromImage(bitmap);
                     using (graphics2)
                     {
                         handle = graphics2.GetHdc();
+#if !MONO
                         Win32.BitBlt(new HandleRef(graphics2, handle), targetBounds.X, targetBounds.Y, width, height, new HandleRef(graphics, hdc), 0, 0, 0xcc0020);
+#endif
                         graphics2.ReleaseHdcInternal(handle);
                     }
                     graphics.ReleaseHdcInternal(hdc);

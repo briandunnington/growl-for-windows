@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -32,27 +33,22 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib" />
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Growl.Daemon\Third Party Assemblies\Mono.Zeroconf.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Growl.Daemon\Third Party Assemblies\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
     <Reference Include="TrackBar, Version=1.0.2486.37933, Culture=neutral, PublicKeyToken=503bf28f63ad27b4">
       <HintPath>lib\TrackBar.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e" Condition="'$(OS)'!='Windows_NT'">
+      <Package>mono-zeroconf</Package>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -149,8 +145,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ListControlItem.cs" />
-    <Compile Include="UI\ListControl_OLD.cs">
-    </Compile>
+    <Compile Include="UI\ListControl_OLD.cs" />
     <Compile Include="UI\MissedNotificationsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,20 +183,20 @@
     <Compile Include="_source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddComputer.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>AddComputer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ChooseForwarding.resx">
       <DependentUpon>ChooseForwarding.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>SplashScreen.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ForwardDestinationSettingsPanel.resx">
       <DependentUpon>ForwardDestinationSettingsPanel.cs</DependentUpon>
@@ -220,37 +215,36 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ForwardDestinationInputs.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>ForwardDestinationInputs.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ForwardListBox.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>ForwardListBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ForwardListView.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>ForwardListView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\HistoryListView.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>HistoryListView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MissedNotificationsWindow.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>MissedNotificationsWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\OnOffButton.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>OnOffButton.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PasswordManagerControl.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>PasswordManagerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="_source\AutoUpdate\UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
@@ -261,22 +255,17 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="_source\Installation\InstallDisplay.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>InstallDisplay.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="UI\PasswordManagerControl.cs">
       <SubType>UserControl</SubType>
@@ -353,41 +342,66 @@
     <Compile Include="_source\WebClientEx.cs">
       <SubType>Component</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Config.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Locker.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Config-Tools.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\My-Computer.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Resources\Network.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\growl-big.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\off_button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\on_button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Clock.png" />
+    <None Include="Resources\Clock2.png" />
+    <None Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <None Include="Resources\growl.png" />
+    <None Include="Resources\growl.ico" />
+    <None Include="Resources\Envelope.png" />
+    <None Include="Resources\proxy.config" />
+    <None Include="Resources\twitter.png" />
+    <None Include="Resources\growl_highlighted.png" />
+    <None Include="Resources\button_bg_dim.png" />
+    <None Include="Resources\other.png" />
+    <None Include="Resources\iphone.png" />
+    <None Include="Resources\internet.png" />
+    <None Include="Resources\windows.png" />
+    <None Include="Resources\mobile.png" />
+    <None Include="Resources\mac.png" />
+    <None Include="Resources\linux.png" />
+    <None Include="Resources\button_remove_dim.png" />
+    <None Include="Resources\button_remove.png" />
+    <None Include="Resources\button_add_dim.png" />
+    <None Include="Resources\button_add.png" />
+    <None Include="Resources\Symbol-Restricted.png" />
+    <None Include="Resources\Symbol-Add.png" />
+    <None Include="Resources\close_red.png" />
+    <None Include="Resources\close_blue.png" />
+    <None Include="Resources\Symbol-Delete.png" />
+    <None Include="Resources\button_bg.png" />
+    <None Include="Resources\generic_application.png" />
+    <None Include="Resources\growl_stopped.ico" />
+    <None Include="Resources\growl_paused.ico" />
+    <None Include="Resources\growl_dim.ico" />
+    <None Include="lib\TrackBar.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Growl.exe.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="icons_license.pdf" />
-    <None Include="Resources\Clock2.png" />
+    <Content Include="growl.ico" />
+    <Content Include="icons\info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="installer.jpg" />
+    <Content Include="SystemBalloonIntercepter.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="license.txt" />
+    <Content Include="release_notes.txt" />
+    <Content Include="update.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Growl.Connector\Growl.Connector.csproj">
@@ -416,51 +430,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="growl.ico" />
-    <Content Include="icons\info.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="installer.jpg" />
-    <None Include="lib\ICSharpCode.SharpZipLib.dll" />
-    <None Include="Resources\growl.png" />
-    <None Include="Resources\growl.ico" />
-    <None Include="Resources\Envelope.png" />
-    <None Include="Resources\proxy.config" />
-    <None Include="Resources\twitter.png" />
-    <Content Include="SystemBalloonIntercepter.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="license.txt" />
-    <Content Include="release_notes.txt" />
-    <None Include="Resources\growl_highlighted.png" />
-    <None Include="Resources\button_bg_dim.png" />
-    <None Include="Resources\other.png" />
-    <None Include="Resources\iphone.png" />
-    <None Include="Resources\internet.png" />
-    <None Include="Resources\windows.png" />
-    <None Include="Resources\mobile.png" />
-    <None Include="Resources\mac.png" />
-    <None Include="Resources\linux.png" />
-    <None Include="Resources\button_remove_dim.png" />
-    <None Include="Resources\button_remove.png" />
-    <None Include="Resources\button_add_dim.png" />
-    <None Include="Resources\button_add.png" />
-    <None Include="Resources\Symbol-Restricted.png" />
-    <None Include="Resources\Symbol-Add.png" />
-    <None Include="Resources\close_red.png" />
-    <None Include="Resources\close_blue.png" />
-    <None Include="Resources\Symbol-Delete.png" />
-    <None Include="Resources\button_bg.png" />
-    <None Include="Resources\generic_application.png" />
-    <None Include="Resources\growl_stopped.ico" />
-    <None Include="Resources\growl_paused.ico" />
-    <None Include="Resources\growl_dim.ico" />
-    <None Include="lib\TrackBar.dll" />
-    <Content Include="update.manifest">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Displays\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -474,5 +443,13 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Mono Debug</OutputPath>
+    <DefineConstants>DEBUG;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 </Project>

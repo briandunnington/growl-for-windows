@@ -99,6 +99,7 @@ namespace Growl
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public bool PreFilterMessage(ref Message m)
         {
+#if !MONO
             if (m.Msg == WM_SIGNALFIRSTINSTANCE && filter)
             {
                 filter = false;
@@ -106,20 +107,35 @@ namespace Growl
                 this.OnAnotherInstanceStarted((int) m.WParam, (int) m.LParam);
                 this.filterTimer.Start();
             }
+#endif
             return false;
         }
 
         #endregion
 
         private IntPtr HWND_BROADCAST = new IntPtr(0xFFFF);
-
+		
+		
+#if !MONO
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
+#else
+		private static bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam)
+		{
+			return true;
+		}
+#endif
 
+#if !MONO
         [DllImport("user32", CharSet=CharSet.Unicode)]
         private static extern int RegisterWindowMessage(string message);
-
+#else
+		private static int RegisterWindowMessage(string message)
+		{
+			return 0;
+		}
+#endif
         #region IDisposable Members
 
         public void Dispose()

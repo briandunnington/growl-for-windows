@@ -644,7 +644,9 @@ namespace Growl.UI
                 position.Offset(0, Cursor.Current.Size.Height - 10);
                 IntPtr handle = (IntPtr)typeof(ToolTip).GetProperty("Handle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(this.tooltip, null);
                 this.tooltip.Show(e.Item.ToolTipText, this, position, this.tooltip.AutoPopDelay);
+#if !MONO
                 Growl.DisplayStyle.Win32.SetWindowPos(handle, Growl.DisplayStyle.Win32.HWND_TOPMOST, 0, 0, 0, 0, Growl.DisplayStyle.Win32.SWP_NOACTIVATE | Growl.DisplayStyle.Win32.SWP_NOMOVE | Growl.DisplayStyle.Win32.SWP_NOSIZE);
+#endif
             }
         }
 

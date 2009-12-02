@@ -97,7 +97,7 @@ namespace Growl
             this.appPath = appPath;
             this.synchronizingObject = synchronizingObject;
 
-            this.historyFolder = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"History\");
+            this.historyFolder = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"History" + System.IO.Path.DirectorySeparatorChar);
             Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(this.historyFolder);
 
             LoadPasswords();
