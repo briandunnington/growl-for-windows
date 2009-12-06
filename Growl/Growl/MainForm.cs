@@ -98,8 +98,9 @@ namespace Growl
                 idleAfterText = String.Format(idleAfterText, "         "); // this leaves space for the textbox
             }
             this.radioButtonIdleAfter.Text = idleAfterText;
+			
         }
-
+		
         # region visual style
 
         void toolbarPanel_Paint(object sender, PaintEventArgs e)
@@ -263,12 +264,24 @@ namespace Growl
             Application.DoEvents();
         }
 
-        internal void ShowForm()
+        private void ShowFormInternal()
         {
             Show();
             WindowState = FormWindowState.Normal;
             this.Activate();
         }
+		
+		internal void ShowForm()
+		{
+			if(this.InvokeRequired)
+			{
+				this.Invoke(new MethodInvoker(()=>{this.ShowFormInternal();}));
+			}
+			else
+			{
+			 	this.ShowFormInternal();
+			}
+		}
 
         private static void SwitchPanel(ToolStripButton c)
         {

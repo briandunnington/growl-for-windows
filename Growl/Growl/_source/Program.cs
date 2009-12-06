@@ -21,7 +21,11 @@ namespace Growl
         private UpdateForm updateForm;
 
         private System.ComponentModel.IContainer components;
+#if !GTK
         private System.Windows.Forms.NotifyIcon notifyIcon;
+#else
+		private Growl.Mono.NotifyIcon notifyIcon;
+#endif
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pauseGrowlToolStripMenuItem;
@@ -60,6 +64,7 @@ namespace Growl
             this.splash = new SplashScreen(true);
             this.splash.ApplicationContextLoaded += new EventHandler(splash_ApplicationContextLoaded);
             base.MainForm = this.splash;
+
         }
 
         void splash_ApplicationContextLoaded(object sender, EventArgs e)
@@ -81,8 +86,11 @@ namespace Growl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-
+#if !GTK
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+#else
+			this.notifyIcon = new Growl.Mono.NotifyIcon(this.mainForm);
+#endif
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseGrowlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,14 +103,7 @@ namespace Growl
 
             this.contextMenu.SuspendLayout();
 
-            // 
-            // notifyIcon
-            // 
-            this.notifyIcon.ContextMenuStrip = this.contextMenu;
-            this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_stopped;
-            this.notifyIcon.Text = Properties.Resources.NotifyIcon_NotRunning;
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
+ 
             // 
             // contextMenu
             // 
@@ -179,6 +180,16 @@ namespace Growl
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 
             this.contextMenu.ResumeLayout();
+
+			// 
+            // notifyIcon
+            // 
+            this.notifyIcon.ContextMenuStrip = this.contextMenu;
+            this.notifyIcon.Icon = global::Growl.Properties.Resources.growl_stopped;
+            this.notifyIcon.Text = Properties.Resources.NotifyIcon_NotRunning;
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
+			
         }
 
         private void BeginInitializeApplication()
@@ -330,8 +341,20 @@ namespace Growl
             }
             this.autoUpdateTimer.Start();
         }
+		
+		internal void ExitApp()
+		{
+			if(this.InvokeRequired)
+			{
+				this.Invoke(new MethodInvoker(()=>{ExitAppInternal();}), new object[]{});
+			}
+			else
+			{
+				this.ExitAppInternal();
+			}
+		}
 
-        internal void ExitApp()
+        private void ExitAppInternal()
         {
             this.StopGrowl();
 
@@ -344,9 +367,14 @@ namespace Growl
                 this.notifyIcon.Visible = false;
                 this.notifyIcon.Dispose();
             }
-
+#if GTK
+			Gdk.Threads.Enter();
+			Gtk.Application.Quit();
+			Gdk.Threads.Leave();
+#endif
             // kill the app
             Application.Exit();
+
         }
 
         internal void AlreadyRunning(int signalFlag, int signalValue)

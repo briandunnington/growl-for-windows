@@ -69,8 +69,22 @@ namespace Growl
 
                         program = new Program();
                         program.ProgramRunning += new EventHandler(program_ProgramRunning);
+
+#if GTK
+
+						System.Threading.ThreadStart gtkRun = new System.Threading.ThreadStart(()=>
+						{
+							if(!GLib.Thread.Supported) GLib.Thread.Init();
+							Gdk.Threads.Init();
+							Gtk.Application.Init();
+							Gtk.Application.Run();
+						});
+						System.Threading.Thread gtkThread = new System.Threading.Thread(gtkRun);
+						gtkThread.Start();
+#endif						
                         app.Run(program);
                         program.Dispose();
+
                     }
                     catch (Exception ex)
                     {
