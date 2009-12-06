@@ -89,7 +89,7 @@ namespace Growl
 #if !GTK
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 #else
-			this.notifyIcon = new Growl.Mono.NotifyIcon(this.mainForm);
+			this.notifyIcon = new Growl.Mono.NotifyIcon();
 #endif
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,7 +198,7 @@ namespace Growl
             this.mainForm = new MainForm();
             IntPtr handle = this.mainForm.Handle;   // this forces the creation of the handle even when the form is not shown
 #if MONO
-            this.mainForm.ShowForm();
+			this.notifyIcon.MainForm = this.mainForm;
 #endif
             this.mainForm.RegisterHotKeys();
 
@@ -277,9 +277,7 @@ namespace Growl
             // start growl (and set button at the same time)
             this.mainForm.OnOffButton.Switched += new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
             this.mainForm.OnOffButton.On = true;
-#if !MONO
             this.mainForm.Hide();
-#endif
 
             this.mainForm.DoneInitializing();
             this.mainForm.UpdateInitializationProgress(Properties.Resources.Loading_Ready, 100);
