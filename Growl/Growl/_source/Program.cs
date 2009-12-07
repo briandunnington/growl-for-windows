@@ -369,9 +369,11 @@ namespace Growl
 			Gdk.Threads.Enter();
 			Gtk.Application.Quit();
 			Gdk.Threads.Leave();
+			System.Environment.Exit(0); //HACK: For some reason GTK doesn't exit
 #endif
             // kill the app
             Application.Exit();
+
 
         }
 
@@ -421,6 +423,10 @@ namespace Growl
         {
             this.pauseGrowlToolStripMenuItem.Visible = (isRunning && !isPaused);
             this.unpauseGrowlToolStripMenuItem.Visible = (isRunning && isPaused);
+#if GTK
+			if(this.pauseGrowlToolStripMenuItem.Tag as Gtk.ImageMenuItem != null) ((Gtk.ImageMenuItem)this.pauseGrowlToolStripMenuItem.Tag).Visible = (isRunning && !isPaused);
+			if(this.unpauseGrowlToolStripMenuItem.Tag as Gtk.ImageMenuItem != null) ((Gtk.ImageMenuItem)this.unpauseGrowlToolStripMenuItem.Tag).Visible = (isRunning && isPaused);
+#endif
 
             if (!isRunning)
             {
@@ -608,6 +614,10 @@ namespace Growl
         {
             this.muteToolStripMenuItem.Visible = !mute;
             this.unmuteToolStripMenuItem.Visible = mute;
+#if GTK
+			if(this.muteToolStripMenuItem.Tag as Gtk.ImageMenuItem != null) ((Gtk.ImageMenuItem)this.muteToolStripMenuItem.Tag).Visible = !mute;
+			if(this.unmuteToolStripMenuItem.Tag as Gtk.ImageMenuItem != null) ((Gtk.ImageMenuItem)this.unmuteToolStripMenuItem.Tag).Visible = mute;
+#endif
             Properties.Settings.Default.MuteAllSounds = mute;
             Properties.Settings.Default.Save();
 
@@ -677,8 +687,7 @@ namespace Growl
                     {
                         this.mainForm.Close();
                         this.mainForm.Dispose();
-                        this.mainForm = null;
-                    }
+					}
 
                     if (this.controller != null) this.controller.Dispose();
 
