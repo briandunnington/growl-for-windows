@@ -419,7 +419,9 @@ namespace Growl.UI
                 this.Columns.AddRange(this.detailColumns);
                 this.imageList.ImageSize = new System.Drawing.Size(16, 16);
                 this.SmallImageList = this.imageList;
+#if !MONO				
                 this.SetSortIcon(this.lvcs.ColumnToSort, this.lvcs.Order);
+#endif
             }
 
             // add items
@@ -490,8 +492,16 @@ namespace Growl.UI
             {
                 groupName = GetDateGroup(pn.Timestamp);
             }
+			
+			bool exists = false;
+			
+			try
+			{
+				exists = this.imageList.Images.ContainsKey(pn.ImageKey);
+			}
+			catch { };
 
-            if (pn.HasImage && !this.imageList.Images.ContainsKey(pn.ImageKey))
+            if (pn.HasImage && !exists)
             {
                 System.Drawing.Image image = pn.Image;
                 if (image != null)
