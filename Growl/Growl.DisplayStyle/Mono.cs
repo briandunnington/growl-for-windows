@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 
 namespace Growl.DisplayStyle
 {
@@ -37,8 +36,5 @@ namespace Growl.DisplayStyle
 
 			return rgn;
 		}
-		
-
 	}
-	
 }
