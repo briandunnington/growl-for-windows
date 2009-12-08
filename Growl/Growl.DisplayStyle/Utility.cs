@@ -29,11 +29,12 @@ namespace Growl.DisplayStyle
             try
             {
 #if MONO
-				hRgn = Mono.CreateRoundRectRegion(top, left, width, height, xradius, yradius);
+				r = Mono.CreateRoundRectRegion(top, left, width, height, xradius, yradius);
 #else
                 hRgn = Win32.CreateRoundRectRgn(top, left, width, height, xradius, yradius);
-#endif
                 r = System.Drawing.Region.FromHrgn(hRgn);
+#endif
+
             }
             finally
             {
