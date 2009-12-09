@@ -99,7 +99,7 @@ namespace Growl
         /// <returns>Full folder path</returns>
         public static string GetDisplayUserSettingsFolder(string displayName)
         {
-            string folder = Growl.CoreLibrary.PathUtility.Combine(UserSettingFolder, String.Format(@"Displays\{0}\", displayName));
+            string folder = Growl.CoreLibrary.PathUtility.Combine(UserSettingFolder, String.Format(@"Displays" + System.IO.Path.DirectorySeparatorChar + "{0}" + System.IO.Path.DirectorySeparatorChar, displayName));
             Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(folder);
             return folder;
         }

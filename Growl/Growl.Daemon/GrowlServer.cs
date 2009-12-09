@@ -204,10 +204,10 @@ namespace Growl.Daemon
 
             this.userFolder = userFolder;
 
-            this.logFolder = PathUtility.Combine(userFolder, @"Log\");
+            this.logFolder = PathUtility.Combine(userFolder, @"Log" + System.IO.Path.DirectorySeparatorChar);
             PathUtility.EnsureDirectoryExists(this.logFolder);
 
-            this.resourceFolder = PathUtility.Combine(userFolder, @"Resources\");
+            this.resourceFolder = PathUtility.Combine(userFolder, @"Resources" + System.IO.Path.DirectorySeparatorChar);
             PathUtility.EnsureDirectoryExists(this.resourceFolder);
 
             this.listenSocket = new AsyncSocket();

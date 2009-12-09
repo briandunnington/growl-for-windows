@@ -39,7 +39,7 @@ namespace Growl.Displays.Standard
                         path = defaultVal.ToString();
                         if (!System.IO.Path.IsPathRooted(path))
                         {
-                            string root = System.IO.Path.Combine(Environment.SystemDirectory, @"..\Media");
+                            string root = System.IO.Path.Combine(Environment.SystemDirectory, @".." + System.IO.Path.DirectorySeparatorChar + "Media");
                             path = System.IO.Path.Combine(root, path);
                         }
                     }

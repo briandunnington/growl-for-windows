@@ -152,7 +152,7 @@ namespace Growl
             // this starts the legacy UDP listeners. it can be disabled via user.config if necessary
             if (!Properties.Settings.Default.DisableLegacySupport)
             {
-                string udpLogFolder = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Log\");
+                string udpLogFolder = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Log" + System.IO.Path.DirectorySeparatorChar);
 
                 // this is for network UDP requests (old Growl network protocol)
                 this.udpListener = new Growl.UDPLegacy.MessageReceiver(Growl.UDPLegacy.MessageReceiver.NETWORK_PORT, this.passwordManager, Properties.Settings.Default.EnableLogging, udpLogFolder);

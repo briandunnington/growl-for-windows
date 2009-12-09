@@ -30,8 +30,8 @@ namespace Growl.Installation
                         string fileName = Path.GetFileName(theEntry.Name);
                         if (fileName != String.Empty)
                         {
-                            string fullPath = directoryName + "\\" + theEntry.Name;
-                            fullPath = fullPath.Replace("\\ ", "\\");
+                            string fullPath = directoryName + System.IO.Path.DirectorySeparatorChar + theEntry.Name;
+                            fullPath = fullPath.Replace( System.IO.Path.DirectorySeparatorChar + " ", System.IO.Path.DirectorySeparatorChar.ToString());
                             string fullDirPath = Path.GetDirectoryName(fullPath);
                             if (!Directory.Exists(fullDirPath)) Directory.CreateDirectory(fullDirPath);
                             FileStream streamWriter = File.Create(fullPath);

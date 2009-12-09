@@ -32,7 +32,7 @@ namespace Growl
 			this.handle = handle;
 
             this.app = new Growl.Connector.Application("Windows");
-            this.app.Icon = System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, @"icons\info.png");
+            this.app.Icon = System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, @"icons" + System.IO.Path.DirectorySeparatorChar + "info.png");
             this.ntBalloon = new NotificationType("balloon", "System Balloons");
             this.growl = new GrowlConnector();
             this.growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
