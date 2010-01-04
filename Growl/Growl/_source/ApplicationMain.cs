@@ -6,11 +6,17 @@ namespace Growl
 {
     static class ApplicationMain
     {
-        public const int SIGNAL_RELOAD_DISPLAYS = 1;
-        public const int SIGNAL_UPDATE_LANGUAGE = 2;
+        [Flags()]
+        internal enum Signal
+        {
+            Silent = 1,
+            ReloadDisplays = 2,
+            UpdateLanguage = 4
+        }
 
         static Program program;
         static bool appIsAlreadyRunning;
+        static bool silentMode;
         static List<InternalNotification> queuedNotifications = new List<InternalNotification>();
 
         /// <summary>
@@ -23,7 +29,7 @@ namespace Growl
             SingleInstanceApplication app = new SingleInstanceApplication("GrowlForWindows");
             using (app)
             {
-                int signalFlag = 0;
+                Signal signalFlag = 0;
                 int signalValue = 0;
                 appIsAlreadyRunning = app.IsAlreadyRunning;
 
@@ -35,38 +41,53 @@ namespace Growl
                     signalFlag = handler.Process(protocolArgument, ref queuedNotifications, ref signalValue);
                 }
 
+                // handle command line options
+                try
+                {
+                    Dictionary<string, Parameter> parameters = new Dictionary<string, Parameter>();
+                    if (args != null)
+                    {
+                        foreach (string arg in args)
+                        {
+                            Parameter p = GetParameterValue(arg);
+                            if (p.Argument != null) parameters.Add(p.Argument, p);
+                        }
+                    }
+
+                    bool enableLogging = false;
+                    if (parameters.ContainsKey("/log"))
+                    {
+                        string log = parameters["/log"].Value.ToLower();
+                        if (log == "true") enableLogging = true;
+                        Properties.Settings.Default.EnableLogging = enableLogging;
+                    }
+                    bool debugMode = false;
+                    if (parameters.ContainsKey("/debug"))
+                    {
+                        string debug = parameters["/debug"].Value.ToLower();
+                        if (debug == "true") debugMode = true;
+                        Utility.DebugMode = debugMode;
+                        if (debugMode) MessageBox.Show("growl is now in debug mode");
+                    }
+                    if (parameters.ContainsKey("/silent"))
+                    {
+                        string silent = parameters["/silent"].Value.ToLower();
+                        if (silent == "true") silentMode = true;
+                        if (silentMode)
+                            signalFlag = signalFlag | Signal.Silent;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // dont fail on bad arguments
+                    Utility.WriteDebugInfo("Bad arguments: " + ex.Message);
+                }
+
                 if (!appIsAlreadyRunning)
                 {
                     app.AnotherInstanceStarted += new SingleInstanceApplication.AnotherInstanceStartedEventHandler(app_AnotherInstanceStarted);
                     try
                     {
-                        // handle command line options
-                        Dictionary<string, Parameter> parameters = new Dictionary<string, Parameter>();
-                        if (args != null)
-                        {
-                            foreach (string arg in args)
-                            {
-                                Parameter p = GetParameterValue(arg);
-                                if(p.Argument != null) parameters.Add(p.Argument, p);
-                            }
-                        }
-
-                        bool enableLogging = false;
-                        if (parameters.ContainsKey("/log"))
-                        {
-                            string log = parameters["/log"].Value.ToLower();
-                            if (log == "true") enableLogging = true;
-                            Properties.Settings.Default.EnableLogging = enableLogging;
-                        }
-                        bool debugMode = false;
-                        if (parameters.ContainsKey("/debug"))
-                        {
-                            string debug = parameters["/debug"].Value.ToLower();
-                            if (debug == "true") debugMode = true;
-                            Utility.DebugMode = debugMode;
-                            if(debugMode) MessageBox.Show("growl is now in debug mode");
-                        }
-
                         program = new Program();
                         program.ProgramRunning += new EventHandler(program_ProgramRunning);
                         app.Run(program);
@@ -90,7 +111,7 @@ namespace Growl
                 else
                 {
                     InternalNotification.SaveToDisk(ref queuedNotifications);
-                    app.SignalFirstInstance(signalFlag, signalValue);
+                    app.SignalFirstInstance((int) signalFlag, signalValue);
                 }
             }
         }
@@ -131,6 +152,18 @@ namespace Growl
             get
             {
                 return (appIsAlreadyRunning || program != null);
+            }
+        }
+
+        static public bool SilentMode
+        {
+            get
+            {
+                return silentMode;
+            }
+            set
+            {
+                silentMode = value;
             }
         }
 

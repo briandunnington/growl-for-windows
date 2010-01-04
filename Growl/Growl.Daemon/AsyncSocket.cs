@@ -1956,15 +1956,18 @@ namespace Growl.Daemon
 
         private bool GetIsSmartConnected(Socket socket)
         {
+            bool connected = false;
             if (socket != null && socket.Connected)
             {
+                connected = socket.Connected;
                 bool blockingState = socket.Blocking;
                 try
                 {
-                    byte[] tmp = new byte[1];
+                    byte[] tmp = new byte[0];
 
                     socket.Blocking = false;
-                    socket.Send(tmp, 0, 0);
+                    int x = socket.Send(tmp, 0, 0);
+                    if (x == 0) connected = false;
                 }
                 catch (SocketException e)
                 {
@@ -1976,17 +1979,16 @@ namespace Growl.Daemon
                     else
                     {
                         // Disconnected
+                        connected = false;
                     }
                 }
                 finally
                 {
                     socket.Blocking = blockingState;
                 }
-
-                return socket.Connected;
             }
 
-            return false;
+            return connected;
         }
 
         public IPAddress RemoteAddress

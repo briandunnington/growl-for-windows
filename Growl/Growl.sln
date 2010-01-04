@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test Server", "Test Server\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Daemon", "Growl.Daemon\Growl.Daemon.csproj", "{6112CD52-1F16-4068-8D16-CB9C5467E8C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Localization.fr-FR", "Growl.Localization.fr-FR\Growl.Localization.fr-FR.csproj", "{7E659A21-065E-4C74-8AE8-26A073649204}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -158,6 +160,12 @@ Global
 		{6112CD52-1F16-4068-8D16-CB9C5467E8C3}.Mono|Any CPU.Build.0 = Mono|Any CPU
 		{6112CD52-1F16-4068-8D16-CB9C5467E8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6112CD52-1F16-4068-8D16-CB9C5467E8C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E659A21-065E-4C74-8AE8-26A073649204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E659A21-065E-4C74-8AE8-26A073649204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E659A21-065E-4C74-8AE8-26A073649204}.Mono|Any CPU.ActiveCfg = Release|Any CPU
+		{7E659A21-065E-4C74-8AE8-26A073649204}.Mono|Any CPU.Build.0 = Release|Any CPU
+		{7E659A21-065E-4C74-8AE8-26A073649204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E659A21-065E-4C74-8AE8-26A073649204}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

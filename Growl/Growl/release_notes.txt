@@ -1,4 +1,20 @@
-v2.0 Final changes
+2.0.2 changes (v2.0.0.2???)
+------------------------------
+- fixed a bug that caused an additional -ERROR response to be sent after the last -OK or -CALLBACK response
+
+
+
+2.0.1 changes (v2.0.0.27)
+------------------------------
+- fixes a bug that caused GfW to not properly shutdown TCP socket connections
+- added support for '/silent:true' command-line switch (suppresses the 'Growl is running' notification)
+- added library support for updating (coalescing) existing notifications (library support only; built-in displays do not offer coalescing at this time)
+- added library support for pausing notifications on mouse hover (library support only; built-in displays do not offer pause-on-hover at this time)
+- Meter display (progress bar)
+- updated AIR/Flash/JS connector to fix a bug when reading bytes from response stream
+- updated VB/COM connector to work with non-typed languages (specifically, VBScript)
+
+2.0 Final changes (v2.0.0.25)
 ------------------------------
 - fixed a regression that caused the same salt value to be used for all encrypted requests
 - smoother animation for many displays, including the built-in Visor and Toast displays

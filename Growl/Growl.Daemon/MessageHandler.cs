@@ -72,6 +72,7 @@ namespace Growl.Daemon
         private const long RESOURCE_HEADER_TAG = 6;
         private const long RESOURCE_TAG = 7;
         private const long ENCRYPTED_HEADERS_TAG = 8;
+        private const long USAGECOMPLETE_TAG = 9;
 
         private const long RESPONSE_SUCCESS_TAG = 97;
         private const long RESPONSE_ERROR_TAG = 98;
@@ -94,6 +95,7 @@ namespace Growl.Daemon
         private const int TIMEOUT_ENCRYPTED_HEADERS = -1;
         private const int TIMEOUT_FLASHPOLICYRESPONSE = -1;
         private const int TIMEOUT_ERROR_RESPONSE = -1;
+        private const int TIMEOUT_USAGECOMPLETE = -1;
 
         /// <summary>
         /// Message logged when a request is only partially read before encountering an error
@@ -1035,7 +1037,10 @@ namespace Growl.Daemon
             if (disconnectAfterWriting)
                 socket.CloseAfterWriting();
             else if (requestComplete)
+            {
+                socket.CloseAfterWriting();
                 OnSocketUsageComplete(socket);
+            }
 
             /* TODO: as3growl testing ONLY
             InitialRead(socket);
@@ -1092,6 +1097,9 @@ namespace Growl.Daemon
         /// <param name="socket">The <see cref="AsyncSocket"/> used in the transaction</param>
         protected void OnSocketUsageComplete(AsyncSocket socket)
         {
+            // kick of one final read so we know when the socket closes
+            socket.Read(TIMEOUT_USAGECOMPLETE, USAGECOMPLETE_TAG);
+
             if (this.SocketUsageComplete != null)
             {
                 this.SocketUsageComplete(socket);

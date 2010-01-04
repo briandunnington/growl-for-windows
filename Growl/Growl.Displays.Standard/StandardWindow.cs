@@ -53,7 +53,15 @@ namespace Growl.Displays.Standard
         void StandardWindow_Load(object sender, EventArgs e)
         {
             // set initial location
-            Screen screen = Screen.FromControl(this);
+            int screenIndex = 0;
+            string s = System.Configuration.ConfigurationManager.AppSettings["ScreenIndex"];
+            if (!String.IsNullOrEmpty(s))
+            {
+                int.TryParse(s, out screenIndex);
+                if (Screen.AllScreens.Length <= screenIndex) screenIndex = 0;
+            }
+
+            Screen screen = Screen.AllScreens[screenIndex];
             int x = screen.WorkingArea.Right - this.Size.Width;
             int y = screen.WorkingArea.Bottom - this.Size.Height;
             this.Location = new Point(x, y);

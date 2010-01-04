@@ -9,7 +9,6 @@ namespace GrowlExtras.OutlookAddIn
     public partial class ThisApplication
     {
         private const string APP_NAME = "Outlook";
-        private const string MENU_BEFORE = "Help";
 
         private Object _helpMenuIndex;
         private Office.CommandBar _menuBar;
@@ -279,7 +278,7 @@ namespace GrowlExtras.OutlookAddIn
         private void BuildMenu()
         {
             _menuBar = this.ActiveExplorer().CommandBars.ActiveMenuBar;
-            _helpMenuIndex = _menuBar.Controls[MENU_BEFORE].Index;
+            _helpMenuIndex = _menuBar.Controls.Count;
 
             _topMenu = (Office.CommandBarPopup)(_menuBar.Controls.Add(Office.MsoControlType.msoControlPopup, Type.Missing, Type.Missing, _helpMenuIndex, true));
             _topMenu.Caption = "Add-in Tasks";

@@ -194,7 +194,8 @@ namespace Growl
             OnStarted();
 
             // send a notification that growl is running
-            SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text);
+            if(!ApplicationMain.SilentMode)
+                SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text);
 
             this.isStarted = started;
 
