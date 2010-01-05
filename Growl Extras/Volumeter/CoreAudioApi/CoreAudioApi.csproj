@@ -1,0 +1,82 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9F1076AA-63DF-4128-9C10-FD65E425C783}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CoreAudioApi</RootNamespace>
+    <AssemblyName>CoreAudioApi</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AudioEndpointVolume.cs" />
+    <Compile Include="AudioEndpointVolumeCallback.cs" />
+    <Compile Include="AudioEndpointVolumeChannel.cs" />
+    <Compile Include="AudioEndpointVolumeChannels.cs" />
+    <Compile Include="AudioEndpointVolumeNotificationDelegate.cs" />
+    <Compile Include="AudioEndpointVolumeStepInformation.cs" />
+    <Compile Include="AudioEndPointVolumeVolumeRange.cs" />
+    <Compile Include="AudioMeterInformation.cs" />
+    <Compile Include="AudioMeterInformationChannels.cs" />
+    <Compile Include="AudioVolumeNotificationData.cs" />
+    <Compile Include="Interfaces\AUDIO_VOLUME_NOTIFICATION_DATA.cs" />
+    <Compile Include="Interfaces\Blob.cs" />
+    <Compile Include="Interfaces\CLSCTX.cs" />
+    <Compile Include="EDataFlow.cs" />
+    <Compile Include="EDeviceState.cs" />
+    <Compile Include="EEndpointHardwareSupport.cs" />
+    <Compile Include="ERole.cs" />
+    <Compile Include="Interfaces\eStgmAccess.cs" />
+    <Compile Include="Interfaces\IAudioEndpointVolume.cs" />
+    <Compile Include="Interfaces\IAudioEndpointVolumeCallback.cs" />
+    <Compile Include="Interfaces\IAudioMeterInformation.cs" />
+    <Compile Include="Interfaces\IMMDevice.cs" />
+    <Compile Include="Interfaces\IMMDeviceCollection.cs" />
+    <Compile Include="Interfaces\IMMDeviceEnumerator.cs" />
+    <Compile Include="Interfaces\IMMEndpoint.cs" />
+    <Compile Include="Interfaces\IPropertyStore.cs" />
+    <Compile Include="MMDeviceCollection.cs" />
+    <Compile Include="PKEY.cs" />
+    <Compile Include="PropertyKey.cs" />
+    <Compile Include="PropVariant.cs" />
+    <Compile Include="MMDevice.cs" />
+    <Compile Include="MMDeviceEnumerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyStore.cs" />
+    <Compile Include="PropertyStoreProperty.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

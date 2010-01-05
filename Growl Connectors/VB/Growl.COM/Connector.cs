@@ -6,6 +6,16 @@ using Growl.Connector;
 
 namespace Growl.COM
 {
+    /// <summary>
+    /// Provides a COM-visible interface for using the standard Growl.Connector .NET library.
+    /// 
+    /// After creating a new instanceof the Connector() class, you *must* call either
+    /// .ConfigureLocal() or .ConfigureRemote to initialize the connection details.
+    /// 
+    /// If you are calling this component from VBScript or another language that does not 
+    /// have strongly-typed variables, you must use the .Register2() method instead of
+    /// the normal .Register()
+    /// </summary>
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [ComSourceInterfaces(typeof(IResponseHandler))]
     public class Connector
@@ -124,6 +134,33 @@ namespace Growl.COM
             }
         }
 
+        /// <summary>
+        /// This method should only be used by VBScript or other languages that do not
+        /// have strongly-typed variables. The objects passed in the <paramref name="items"/>
+        /// array should be NotificationType objects.
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="items"></param>
+        public void Register2(Application application, object[] items)
+        {
+            List<NotificationType> list = new List<NotificationType>();
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                NotificationType nt = items[i] as NotificationType;
+                if (nt != null)
+                {
+                    list.Add(nt);
+                }
+            }
+            NotificationType[] types = list.ToArray();
+            Register(application, ref types);
+        }
+
+        /// <summary>
+        /// NOTE: If you are calling this method from VBScript or another language that
+        /// does not have strongly-typed variables, use Register2() instead.
+        /// </summary>
         public void Register(Application application, ref NotificationType[] notificationTypes)
         {
             if (application == null)

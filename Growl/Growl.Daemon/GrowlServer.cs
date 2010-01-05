@@ -817,7 +817,6 @@ namespace Growl.Daemon
         // -------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------
 
-
         private void LogInfo(String format, params Object[] args)
         {
             String msg = String.Format(format, args);

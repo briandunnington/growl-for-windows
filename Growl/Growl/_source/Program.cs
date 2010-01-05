@@ -277,6 +277,7 @@ namespace Growl
             // start growl (and set button at the same time)
             this.mainForm.OnOffButton.Switched += new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
             this.mainForm.OnOffButton.On = true;
+
             this.mainForm.Hide();
 
             this.mainForm.DoneInitializing();
@@ -379,26 +380,32 @@ namespace Growl
 
         internal void AlreadyRunning(int signalFlag, int signalValue)
         {
-            if(this.controller != null) this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
+            ApplicationMain.Signal signal = (ApplicationMain.Signal)signalFlag;
+            bool silent = ((signal & ApplicationMain.Signal.Silent) == ApplicationMain.Signal.Silent);
+            bool reloadDisplays = ((signal & ApplicationMain.Signal.ReloadDisplays) == ApplicationMain.Signal.ReloadDisplays);
+            bool updateLanguage = ((signal & ApplicationMain.Signal.UpdateLanguage) == ApplicationMain.Signal.UpdateLanguage);
 
-            switch (signalFlag)
+            if(!silent && this.controller != null) 
+                this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
+
+            if(reloadDisplays)
             {
-                case ApplicationMain.SIGNAL_RELOAD_DISPLAYS :
-                    DisplayStyleManager.Load();
-                    if(this.mainForm != null) this.mainForm.BindDisplayList();
-                    break;
-                case ApplicationMain.SIGNAL_UPDATE_LANGUAGE :
-                    // read each subfolder in the app folder and find the one with the matching hash
-                    System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath);
-                    foreach (System.IO.DirectoryInfo directory in di.GetDirectories())
+                DisplayStyleManager.Load();
+                if(this.mainForm != null) this.mainForm.BindDisplayList();
+            }
+
+            if(updateLanguage)
+            {
+                // read each subfolder in the app folder and find the one with the matching hash
+                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath);
+                foreach (System.IO.DirectoryInfo directory in di.GetDirectories())
+                {
+                    if (directory.Name.GetHashCode() == signalValue)
                     {
-                        if (directory.Name.GetHashCode() == signalValue)
-                        {
-                            Properties.Settings.Default.CultureCode = directory.Name;
-                            break;
-                        }
+                        Properties.Settings.Default.CultureCode = directory.Name;
+                        break;
                     }
-                    break;
+                }
             }
         }
 
@@ -687,7 +694,8 @@ namespace Growl
                     {
                         this.mainForm.Close();
                         this.mainForm.Dispose();
-					}
+                        this.mainForm = null;
+                    }
 
                     if (this.controller != null) this.controller.Dispose();
 
