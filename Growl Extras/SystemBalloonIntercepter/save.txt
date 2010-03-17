@@ -1,0 +1,196 @@
+#include "stdafx.h"
+#include <windows.h>
+#include "SystemBalloonIntercepter.h"
+
+HHOOK hookCallWndProc = NULL;
+HHOOK hookCBT = NULL;
+HHOOK hookShell = NULL;
+
+// Store the application instance of this module to pass to hook initialization. This is set in DLLMain().
+HINSTANCE g_appInstance = NULL;
+
+
+typedef void (CALLBACK *HookProc)(int code, WPARAM w, LPARAM l);
+
+static LRESULT CALLBACK CallWndProcHookCallback(int code, WPARAM wparam, LPARAM lparam);
+static LRESULT CALLBACK CBTHookCallback(int code, WPARAM wparam, LPARAM lparam);
+static LRESULT CALLBACK ShellHookCallback(int code, WPARAM wparam, LPARAM lparam);
+
+
+
+/*
+static LRESULT FAR PASCAL SubClassFunc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam);
+static FARPROC lpfnOldWndProc;
+LONG x = SetWindowLongW(trayHwnd, GWL_WNDPROC, (DWORD) func);
+*/
+
+
+
+
+
+
+bool InitializeCallWndProcHook(int threadID, HWND destination)
+{
+	if (g_appInstance == NULL)
+	{
+		return false;
+	}
+
+	UINT msg_sysnot = RegisterWindowMessage("GFW_HOOK_INTERCEPT_SYSNOT");
+	UINT msg_replaced = RegisterWindowMessage("GFW_HOOK_CALLWNDPROC_REPLACED");
+	HWND dstWnd = (HWND)GetProp(GetDesktopWindow(), "GFW_HOOK_HWND_CALLWNDPROC");
+	if (dstWnd != NULL)
+	{
+		PostMessage(dstWnd, msg_replaced, 0, 0);
+	}
+	dstWnd = destination;
+	SetProp(GetDesktopWindow(), "GFW_HOOK_HWND_CALLWNDPROC", dstWnd);
+
+	PostMessage(dstWnd, msg_sysnot, 0, 0);
+
+	// Uncomment these if you want to play with them
+	//hookCBT = SetWindowsHookEx(WH_CBT, (HOOKPROC)CBTHookCallback, g_appInstance, threadID);
+	//hookShell = SetWindowsHookEx(WH_SHELL, (HOOKPROC)ShellHookCallback, g_appInstance, threadID);
+
+	hookCallWndProc = SetWindowsHookEx(WH_CALLWNDPROC, (HOOKPROC)CallWndProcHookCallback, g_appInstance, threadID);
+	return hookCallWndProc != NULL;
+}
+
+void UninitializeCallWndProcHook()
+{
+	if (hookCallWndProc != NULL)
+		UnhookWindowsHookEx(hookCallWndProc);
+	hookCallWndProc = NULL;
+
+	if (hookCBT != NULL)
+		UnhookWindowsHookEx(hookCBT);
+	hookCBT = NULL;
+
+	if (hookShell != NULL)
+		UnhookWindowsHookEx(hookShell);
+	hookShell = NULL;
+}
+
+static LRESULT CALLBACK CallWndProcHookCallback(int code, WPARAM wparam, LPARAM lparam)
+{
+	if (code >= 0)
+	{
+		UINT msg_sysnot = RegisterWindowMessage("GFW_HOOK_INTERCEPT_SYSNOT");
+		UINT msg_replaced = RegisterWindowMessage("GFW_HOOK_CALLWNDPROC_REPLACED");
+		HWND dstWnd = (HWND)GetProp(GetDesktopWindow(), "GFW_HOOK_HWND_CALLWNDPROC");
+
+		PCWPSTRUCT pCwpStruct = (PCWPSTRUCT)lparam;
+		HWND hwnd = pCwpStruct->hwnd;
+		HWND trayHwnd = FindWindow("Shell_TrayWnd", NULL);
+
+		if((UINT) hwnd == (UINT) trayHwnd && pCwpStruct->message == WM_COPYDATA)
+		{
+			PCOPYDATASTRUCT cpData = (PCOPYDATASTRUCT)pCwpStruct->lParam;
+
+            if (cpData->dwData == 1)
+            {
+				DWORD trayCommand = *(DWORD *) (((BYTE *)cpData->lpData) + 4);
+				PNOTIFYICONDATA iconData = (PNOTIFYICONDATA) (((BYTE *)cpData->lpData) + 8);
+
+				BOOL isBalloon = (iconData->uFlags & NIF_INFO);
+				if(isBalloon)
+				{
+					/* Attempt #1 to hide the system balloon - but it is not yet visible at this point, so no dice
+					NOTIFYICONDATA nid;
+					ZeroMemory(&nid, NOTIFYICONDATA_V2_SIZE);
+					nid.cbSize = NOTIFYICONDATA_V2_SIZE;
+					nid.hWnd = iconData->hWnd;
+					nid.uID = iconData->uID;
+					nid.hIcon = iconData->hIcon;
+					nid.uFlags = NIF_INFO;
+					nid.szInfo[0] = 0;
+					Shell_NotifyIcon(NIM_MODIFY, &nid);
+					*/
+
+					/* Attempt #2 to hide the system balloon - same result as above for the same reason
+					iconData->szInfo[0] = 0;
+					Shell_NotifyIcon(NIM_MODIFY, iconData);
+					*/
+
+					// THIS IS THE LINE THAT SENDS A MESSAGE TO GROWL TO TRIGGER THE NOTIFICATION
+					// IT ONLY WORKS ON GROWL BUILDS THAT SUPPORT SYSTEM BALLOONS (WHICH IS JUST MY LOCAL BUILD AT THE MOMENT)
+					pCwpStruct->message = WM_USER + 44;
+
+					return SendMessageW(dstWnd, WM_COPYDATA, 97, (LPARAM)cpData);
+				}
+			}
+		}
+	}
+
+	return CallNextHookEx(hookCallWndProc, code, wparam, lparam);
+}
+
+static LRESULT CALLBACK CBTHookCallback(int code, WPARAM wparam, LPARAM lparam)
+{
+	if(code > 0)
+	{
+		HWND newHwnd = (HWND) wparam;
+		CHAR szClassName[255];
+		GetClassName(newHwnd, szClassName, 255);
+
+		if(code == HCBT_CREATEWND)
+		{
+			OutputDebugString(szClassName);
+
+			if((lstrcmpi(szClassName, TEXT("tooltips_class32")) == 0)
+				|| (lstrcmpi(szClassName, TEXT("tooltips_class")) == 0))
+			{
+				WINDOWINFO pwi;
+				pwi.cbSize = sizeof(PWINDOWINFO);
+				GetWindowInfo(newHwnd, &pwi);
+
+				TCHAR szBuffer[256];
+
+				OutputDebugString("style:");
+				wsprintf(szBuffer, "%lu", pwi.dwStyle);
+				OutputDebugString(szBuffer);
+				OutputDebugString(szClassName);
+				if((pwi.dwStyle & 0x40)) OutputDebugString("THIS WINDOW HAS TTS_BALLOON STYLE");
+				OutputDebugString("----------------------");
+			}
+		}
+	}
+
+	return CallNextHookEx(hookCBT, code, wparam, lparam);
+}
+
+static LRESULT CALLBACK ShellHookCallback(int code, WPARAM wparam, LPARAM lparam)
+{
+	if(code == HSHELL_WINDOWACTIVATED 
+		|| code == HSHELL_WINDOWCREATED
+		|| code == HSHELL_WINDOWREPLACED
+		|| code == HSHELL_RUDEAPPACTIVATED)
+	{
+		HWND newHwnd = (HWND) wparam;
+		CHAR szClassName[255];
+		GetClassName(newHwnd, szClassName, 255);
+
+		OutputDebugString(szClassName);
+
+		/*
+			//if(!lstrcmp(szClassName, "tooltips_class32"))
+			//if(!lstrcmp(szClassName, "UserEventWindow"))
+			//{
+				WINDOWINFO pwi;
+				pwi.cbSize = sizeof(PWINDOWINFO);
+				GetWindowInfo(newHwnd, &pwi);
+
+				TCHAR szBuffer[256];
+
+				OutputDebugString("style:");
+				wsprintf(szBuffer, "%lu", pwi.dwStyle);
+				OutputDebugString(szBuffer);
+				OutputDebugString(szClassName);
+				if((pwi.dwStyle & 0x40)) OutputDebugString("THIS WINDOW HAS TTS_BALLOON STYLE");
+				OutputDebugString("----------------------");
+			//}
+			*/
+	}
+
+	return CallNextHookEx(hookShell, code, wparam, lparam);
+}
