@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -7,16 +7,22 @@ using System.Net.Sockets;
 
 namespace Growl
 {
-    public class CometClient
+    public class CometClient : IDisposable
     {
         public delegate void ResponseReceivedEventHandler(string response);
 
         public event ResponseReceivedEventHandler ResponseReceived;
         public event EventHandler Disconnected;
+        public event EventHandler Connected;
 
-        private string host;
-        private int port;
-        private string path;
+        private object locker = new object();
+        private bool isWaiting;
+        private string url;
+        private int reconnectDelay = 1; // in seconds
+        private DateTime nextReconnectTime = DateTime.MinValue;
+        private int autoResetInterval = 15 * 60 * 1000;
+
+        public readonly string GUID = System.Guid.NewGuid().ToString();
 
         /// <summary>
         /// A collection of active ConnectState objects awaiting the EndConnect callback
@@ -24,112 +30,144 @@ namespace Growl
         private Dictionary<string, ConnectState> connecting = new Dictionary<string, ConnectState>();
 
         /// <summary>
-        /// A collection of active TcpState objects awaiting the EndWrite callback
-        /// </summary>
-        private Dictionary<string, TcpState> writing = new Dictionary<string, TcpState>();
-
-        /// <summary>
         /// A collection of active TcpState objects awaiting the EndRead callback
         /// </summary>
-        private Dictionary<string, TcpState> reading = new Dictionary<string, TcpState>();
+        private Dictionary<string, ResponseState> reading = new Dictionary<string, ResponseState>();
 
 
         public CometClient(string url)
         {
-            Uri uri = new Uri(url);
-            this.host = uri.Host;
-            this.port = uri.Port;
-            this.path = uri.PathAndQuery;
+            this.url = url;
         }
 
         public void Start()
         {
+            Utility.WriteDebugInfo("Comet Client Starting");
+
             ConnectState state = null;
             try
             {
-                // build HTTP request
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("GET {0} HTTP/1.1\r\n", this.path);
-                sb.AppendFormat("Host: {0}\r\n", this.host);
-                sb.Append("User-Agent: Growl for Windows 2.0\r\n");
-                sb.Append("\r\n");
+                if (!this.isWaiting)
+                {
+                    lock (this.locker)
+                    {
+                        if (!this.isWaiting)
+                        {
+                            // well, we arent really waiting yet, but the connecting is considered part of it
+                            // since another attempt should not be made while we are trying this attempt
+                            this.isWaiting = true;
 
-                // send HTTP request
-                string http = sb.ToString();
-                byte[] bytes = Encoding.UTF8.GetBytes(http);
+                            // dont reconnect too quickly or it causes HttpWebRequest exceptions
+                            DateTime now = DateTime.Now;
+                            if (now < this.nextReconnectTime)
+                            {
+                                int wait = (this.nextReconnectTime - now).Milliseconds;
+                                System.Threading.Thread.Sleep(wait);
+                            }
 
-                TcpClient client = new TcpClient();
-                AsyncCallback callback = new AsyncCallback(ConnectCallback);
-                state = new ConnectState(client, bytes);
-                connecting.Add(state.GUID, state);
-                client.BeginConnect(this.host, this.port, callback, state);
+                            // build HTTP request
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.url);
+                            request.AllowWriteStreamBuffering = false;
+                            request.Pipelined = true;
+                            state = new ConnectState(request);
+                            connecting.Add(state.GUID, state);
+                            request.Method = "GET";
+                            request.UserAgent = "notify.io Windows Client";
+                            request.Timeout = this.autoResetInterval;
+
+                            // deal with a bug
+                            request.KeepAlive = false;
+                            request.ServicePoint.MaxIdleTime = this.reconnectDelay * 1000;
+
+                            Utility.WriteDebugInfo("CometClient waiting: TRUE");
+                            HttpWebRequestHelper hwrh = new HttpWebRequestHelper(request);
+                            hwrh.GetResponseAsync(ConnectCallback, state);
+                            
+                            this.OnConnected();
+                        }
+                        else
+                        {
+                            //Utility.WriteLine("already connecting 2");
+                        }
+                    }
+                }
+                else
+                {
+                    //Utility.WriteLine("already connecting 1");
+                }
             }
             catch
             {
+                //Utility.WriteLine("EXCEPTION - CometClient.Start");
+
                 // suppress
-                CleanUpSocket(state);
                 OnDisconnected();
             }
         }
 
-        /// <summary>
-        /// Called once the connection has connected. Begins writing the request.
-        /// </summary>
-        /// <param name="iar">The result of the asynchronous operation.</param>
-        private void ConnectCallback(IAsyncResult iar)
+        public void Stop()
         {
-            ConnectState connectState = null;
-            TcpState tcpState = null;
+            Utility.WriteDebugInfo("Comet Client stopping");
+
             try
             {
-                connectState = (ConnectState)iar.AsyncState;
-                TcpClient client = connectState.Client;
-                byte[] bytes = connectState.Bytes;
-                client.EndConnect(iar);
+                while (this.connecting.Count > 0)
+                {
+                    // this is not the best way to get a single item from a dictionary, but we dont know the key...
+                    foreach (ConnectState state in this.connecting.Values)
+                    {
+                        CleanUpSocket(state);
+                        break;
+                    }
+                }
 
-                NetworkStream stream = client.GetStream();
-                byte[] buffer = new byte[4096];
-                AsyncCallback callback = new AsyncCallback(WriteCallback);
-                tcpState = TcpState.FromConnectState(connectState, stream, buffer);
-                writing.Add(tcpState.GUID, tcpState);
-                stream.BeginWrite(bytes, 0, bytes.Length, callback, tcpState);
+                while (this.reading.Count > 0)
+                {
+                    // this is not the best way to get a single item from a dictionary, but we dont know the key...
+                    foreach (ConnectState state in this.reading.Values)
+                    {
+                        CleanUpSocket(state);
+                        break;
+                    }
+                }
             }
             catch
             {
-                CleanUpSocket(connectState);
-                CleanUpSocket(tcpState);
+                Utility.WriteDebugInfo("EXCEPTION - CometClient.Stop");
+            }
+
+            // OnDisconnect will get called automatically when any open readers are closed, so dont call it here
+        }
+
+        private void ConnectCallback(HttpWebRequest request, HttpWebResponse response, object state)
+        {
+            ConnectState connectState = null;
+            ResponseState responseState = null;
+            try
+            {
+                connectState = (ConnectState) state;
+
+                // Read the response into a Stream object.
+                Stream stream = (Stream)response.GetResponseStream();
+                stream.ReadTimeout = this.autoResetInterval;
+
+                byte[] buffer = new byte[4096];
+                responseState = ResponseState.FromConnectState(connectState, stream, buffer);
+                reading.Add(responseState.GUID, responseState);
+
+                AsyncCallback callback = new AsyncCallback(ReadCallback);
+                stream.BeginRead(responseState.Buffer, 0, responseState.Buffer.Length, callback, responseState);
+                Utility.WriteDebugInfo("CometClient waiting: " + this.isWaiting.ToString());
+            }
+            catch
+            {
+                Utility.WriteDebugInfo("EXCEPTION - CometClient.ConnectCallback");
+
                 OnDisconnected();
             }
             finally
             {
                 if (connectState != null) connecting.Remove(connectState.GUID);
-            }
-        }
-
-        /// <summary>
-        /// Called once the request has been written. Begins reading the response.
-        /// </summary>
-        /// <param name="iar">The result of the asynchronous operation.</param>
-        private void WriteCallback(IAsyncResult iar)
-        {
-            TcpState state = null;
-            try
-            {
-                state = (TcpState)iar.AsyncState;
-                state.Stream.EndWrite(iar);
-
-                AsyncCallback callback = new AsyncCallback(ReadCallback);
-                state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
-                reading.Add(state.GUID, state);
-            }
-            catch
-            {
-                CleanUpSocket(state);
-                OnDisconnected();
-            }
-            finally
-            {
-                if (state != null) writing.Remove(state.GUID);
             }
         }
 
@@ -140,24 +178,24 @@ namespace Growl
         /// <param name="iar">The result of the asynchronous operation.</param>
         private void ReadCallback(IAsyncResult iar)
         {
-            TcpState state = null;
+            ResponseState state = null;
+            string response = null;
 
             try
             {
-                state = (TcpState)iar.AsyncState;
-                int length = state.Stream.EndRead(iar);
+                state = (ResponseState)iar.AsyncState;
+
+                int length = 0;
+                if(state != null && state.Stream != null)
+                    length = state.Stream.EndRead(iar);
 
                 if (length > 0)
                 {
-                    string response = System.Text.Encoding.UTF8.GetString(state.Buffer, 0, length);
+                    response = System.Text.Encoding.UTF8.GetString(state.Buffer, 0, length);
 
-                    // if this is the first response, we need to ignore the HTTP headers
-                    if (!state.HasReceivedData)
-                    {
-                        int index = response.IndexOf("\r\n\r\n");
-                        response = response.Substring(index);
-                        state.HasReceivedData = true;
-                    }
+                    // we dont get the length for some reason, so lets add it
+                    response = String.Format("{0}\r\n{1}", response.Length.ToString("X"), response);
+                    state.HasReceivedData = true;
 
                     state.Response += response.Trim(); ;
 
@@ -167,15 +205,25 @@ namespace Growl
                     // keep listening for more
                     AsyncCallback callback = new AsyncCallback(ReadCallback);
                     state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
+                    this.isWaiting = true;
+                }
+
+                else
+                {
+                    Utility.WriteDebugInfo("Length was zero - this should not happen");
+                    CleanUpSocket(state);
+                    OnDisconnected();
                 }
             }
             catch
             {
-                CleanUpSocket(state);
+                Utility.WriteDebugInfo("EXCEPTION - CometClient.ReadCallback");
+
                 OnDisconnected();
             }
             finally
             {
+                Utility.WriteDebugInfo("CometClient waiting: " + this.isWaiting.ToString());
             }
         }
 
@@ -191,33 +239,29 @@ namespace Growl
                 if (state != null)
                 {
                     if (connecting.ContainsKey(state.GUID)) connecting.Remove(state.GUID);
-                    if (writing.ContainsKey(state.GUID)) writing.Remove(state.GUID);
                     if (reading.ContainsKey(state.GUID)) reading.Remove(state.GUID);
 
-                    if (state.Client != null && state.Client.Client != null)
+                    if (state.Request != null)
                     {
-                        state.Client.Client.Blocking = true;
-                        state.Client.Client.Shutdown(SocketShutdown.Both);
-                        state.Client.Client.Close();
-                        state.Client.Close();
+                        state.Request.Abort();
                     }
 
-                    TcpState tcpState = state as TcpState;
-                    if (tcpState != null)
+                    ResponseState responseState = state as ResponseState;
+                    if (responseState != null)
                     {
-                        if (tcpState.Stream != null)
+                        if (responseState.Stream != null)
                         {
-                            tcpState.Stream.Close();
-                            tcpState.Stream.Dispose();
+                            responseState.Stream.Close();
                         }
-                        tcpState.Stream = null;
+                        responseState.Stream = null;
                     }
 
-                    state.Client = null;
+                    state.Request = null;
                 }
             }
             catch
             {
+                Utility.WriteDebugInfo("CometClient cleanup socket failed");
             }
             state = null;
         }
@@ -232,9 +276,22 @@ namespace Growl
 
         protected void OnDisconnected()
         {
+            this.isWaiting = false;
+            this.nextReconnectTime = DateTime.Now.AddSeconds(this.reconnectDelay);
+
+            Stop();
+
             if (this.Disconnected != null)
             {
                 this.Disconnected(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnConnected()
+        {
+            if (this.Connected != null)
+            {
+                this.Connected(this, EventArgs.Empty);
             }
         }
 
@@ -253,10 +310,9 @@ namespace Growl
             /// </summary>
             /// <param name="client">The <see cref="TcpClient"/> used to make the connection</param>
             /// <param name="bytes">The request bytes to be written</param>
-            public ConnectState(TcpClient client, byte[] bytes)
+            public ConnectState(HttpWebRequest request)
             {
-                this.Client = client;
-                this.Bytes = bytes;
+                this.Request = request;
             }
 
             /// <summary>
@@ -267,24 +323,19 @@ namespace Growl
             /// <summary>
             /// The <see cref="TcpClient"/> used to make the connection
             /// </summary>
-            public TcpClient Client;
-
-            /// <summary>
-            /// The request bytes to be written
-            /// </summary>
-            public byte[] Bytes;
+            public HttpWebRequest Request;
         }
 
         /// <summary>
         /// Contains state information for a connection that has already connected and is either writing
         /// or reading data.
         /// </summary>
-        private class TcpState : ConnectState
+        private class ResponseState : ConnectState
         {
             /// <summary>
             /// Creates a new instance of the class.
             /// </summary>
-            private TcpState()
+            private ResponseState()
             {
             }
 
@@ -292,14 +343,13 @@ namespace Growl
             /// Creates a new instance of the TcpState class from an exisiting <see cref="ConnectState"/>.
             /// </summary>
             /// <param name="cs">The <see cref="ConnectState"/></param>
-            /// <param name="stream">The <see cref="NetworkStream"/> of the connection</param>
+            /// <param name="stream">The <see cref="Stream"/> of the connection</param>
             /// <param name="buffer">The buffer to hold the response</param>
             /// <returns><see cref="TcpState"/></returns>
-            public static TcpState FromConnectState(ConnectState cs, NetworkStream stream, byte[] buffer)
+            public static ResponseState FromConnectState(ConnectState cs, Stream stream, byte[] buffer)
             {
-                TcpState state = new TcpState();
-                state.Client = cs.Client;
-                state.Bytes = cs.Bytes;
+                ResponseState state = new ResponseState();
+                state.Request = cs.Request;
                 state.Stream = stream;
                 state.Buffer = buffer;
                 return state;
@@ -308,7 +358,7 @@ namespace Growl
             /// <summary>
             /// The <see cref="NetworkStream"/> of the connection
             /// </summary>
-            public NetworkStream Stream;
+            public Stream Stream;
 
             /// <summary>
             /// The buffer to hold the response
@@ -322,5 +372,30 @@ namespace Growl
 
             public bool HasReceivedData;
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    Stop();
+                }
+            }
+            catch
+            {
+                // never fail in Dispose
+            }
+        }
+
+        #endregion
     }
 }

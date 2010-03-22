@@ -10,9 +10,9 @@ namespace Growl.UI
 {
     public class ToolbarRenderer : ToolStripProfessionalRenderer
     {
-        int offset = 1;
-        int radius = 12;
-        int borderWidth = 1;
+        //int offset = 1;
+        //int radius = 12;
+        //int borderWidth = 1;
 
         public ToolbarRenderer()
             : base(new GrowlProfessionalColorTable())

@@ -59,6 +59,8 @@ namespace Growl.DisplayStyle
         /// </summary>
         private string settingsDirectory;
 
+        private bool disposed;
+
 
         /// <summary>
         /// Creates a new instance of the class.
@@ -264,6 +266,29 @@ namespace Growl.DisplayStyle
         void SettingsPanelBase_SettingsPanelDeselected(object sender, EventArgs e)
         {
             PersistSettings();
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                this.disposed = true;
+                if (disposing)
+                {
+                    this.SettingsPanelSelected -= new EventHandler(SettingsPanelBase_SettingsPanelSelected);
+                    this.SettingsPanelDeselected -= new EventHandler(SettingsPanelBase_SettingsPanelDeselected);
+
+                    if (components != null)
+                    {
+                        components.Dispose();
+                    }
+                }
+            }
+            base.Dispose(disposing);
         }
     }
 }

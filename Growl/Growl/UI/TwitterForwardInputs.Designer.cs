@@ -30,13 +30,12 @@ namespace Growl.UI
         {
             this.comboBoxMinimumPriority = new System.Windows.Forms.ComboBox();
             this.labelMinimumPriority = new System.Windows.Forms.Label();
-            this.textBoxUsername = new Growl.UI.HighlightTextBox();
+            this.textBoxUsername = new Growl.Destinations.HighlightTextBox();
             this.labelUsername = new System.Windows.Forms.Label();
-            this.textBoxFormat = new Growl.UI.HighlightTextBox();
+            this.textBoxFormat = new Growl.Destinations.HighlightTextBox();
             this.labelFormat = new System.Windows.Forms.Label();
-            this.panelDetails = new System.Windows.Forms.Panel();
             this.checkBoxOnlyWhenIdle = new System.Windows.Forms.CheckBox();
-            this.textBoxPassword = new Growl.UI.HighlightTextBox();
+            this.textBoxPassword = new Growl.Destinations.HighlightTextBox();
             this.labelPassword = new System.Windows.Forms.Label();
             this.panelDetails.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +61,6 @@ namespace Growl.UI
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.HighlightColor = System.Drawing.Color.Red;
             this.textBoxUsername.Location = new System.Drawing.Point(109, 7);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(199, 20);
@@ -81,7 +79,6 @@ namespace Growl.UI
             // 
             // textBoxFormat
             // 
-            this.textBoxFormat.HighlightColor = System.Drawing.Color.Red;
             this.textBoxFormat.Location = new System.Drawing.Point(109, 59);
             this.textBoxFormat.Name = "textBoxFormat";
             this.textBoxFormat.Size = new System.Drawing.Size(199, 20);
@@ -109,10 +106,7 @@ namespace Growl.UI
             this.panelDetails.Controls.Add(this.labelUsername);
             this.panelDetails.Controls.Add(this.textBoxFormat);
             this.panelDetails.Controls.Add(this.labelFormat);
-            this.panelDetails.Location = new System.Drawing.Point(0, 0);
-            this.panelDetails.Name = "panelDetails";
-            this.panelDetails.Size = new System.Drawing.Size(338, 168);
-            this.panelDetails.TabIndex = 7;
+
             // 
             // checkBoxOnlyWhenIdle
             // 
@@ -127,7 +121,6 @@ namespace Growl.UI
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.HighlightColor = System.Drawing.Color.Red;
             this.textBoxPassword.Location = new System.Drawing.Point(109, 33);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(199, 20);
@@ -150,9 +143,7 @@ namespace Growl.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.panelDetails);
             this.Name = "TwitterForwardInputs";
-            this.Controls.SetChildIndex(this.panelDetails, 0);
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
             this.ResumeLayout(false);
@@ -163,12 +154,11 @@ namespace Growl.UI
 
         private System.Windows.Forms.ComboBox comboBoxMinimumPriority;
         private System.Windows.Forms.Label labelMinimumPriority;
-        private HighlightTextBox textBoxUsername;
+        private Growl.Destinations.HighlightTextBox textBoxUsername;
         private System.Windows.Forms.Label labelUsername;
-        private HighlightTextBox textBoxFormat;
+        private Growl.Destinations.HighlightTextBox textBoxFormat;
         private System.Windows.Forms.Label labelFormat;
-        private System.Windows.Forms.Panel panelDetails;
-        private HighlightTextBox textBoxPassword;
+        private Growl.Destinations.HighlightTextBox textBoxPassword;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.CheckBox checkBoxOnlyWhenIdle;
     }

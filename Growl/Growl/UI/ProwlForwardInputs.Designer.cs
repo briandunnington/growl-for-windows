@@ -30,11 +30,10 @@ namespace Growl.UI
         {
             this.comboBoxMinimumPriority = new System.Windows.Forms.ComboBox();
             this.labelMinimumPriority = new System.Windows.Forms.Label();
-            this.textBoxAPIKey = new Growl.UI.HighlightTextBox();
+            this.textBoxAPIKey = new Growl.Destinations.HighlightTextBox();
             this.labelAPIKey = new System.Windows.Forms.Label();
-            this.textBoxDescription = new Growl.UI.HighlightTextBox();
+            this.textBoxDescription = new Growl.Destinations.HighlightTextBox();
             this.labelDescription = new System.Windows.Forms.Label();
-            this.panelDetails = new System.Windows.Forms.Panel();
             this.checkBoxOnlyWhenIdle = new System.Windows.Forms.CheckBox();
             this.panelDetails.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +59,6 @@ namespace Growl.UI
             // 
             // textBoxAPIKey
             // 
-            this.textBoxAPIKey.HighlightColor = System.Drawing.Color.Red;
             this.textBoxAPIKey.Location = new System.Drawing.Point(109, 33);
             this.textBoxAPIKey.Name = "textBoxAPIKey";
             this.textBoxAPIKey.Size = new System.Drawing.Size(199, 20);
@@ -79,7 +77,6 @@ namespace Growl.UI
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.HighlightColor = System.Drawing.Color.Red;
             this.textBoxDescription.Location = new System.Drawing.Point(109, 7);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(199, 20);
@@ -105,10 +102,6 @@ namespace Growl.UI
             this.panelDetails.Controls.Add(this.labelAPIKey);
             this.panelDetails.Controls.Add(this.textBoxDescription);
             this.panelDetails.Controls.Add(this.labelDescription);
-            this.panelDetails.Location = new System.Drawing.Point(0, 0);
-            this.panelDetails.Name = "panelDetails";
-            this.panelDetails.Size = new System.Drawing.Size(338, 168);
-            this.panelDetails.TabIndex = 7;
             // 
             // checkBoxOnlyWhenIdle
             // 
@@ -126,9 +119,7 @@ namespace Growl.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.panelDetails);
             this.Name = "ProwlForwardInputs";
-            this.Controls.SetChildIndex(this.panelDetails, 0);
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
             this.ResumeLayout(false);
@@ -139,11 +130,10 @@ namespace Growl.UI
 
         private System.Windows.Forms.ComboBox comboBoxMinimumPriority;
         private System.Windows.Forms.Label labelMinimumPriority;
-        private HighlightTextBox textBoxAPIKey;
+        private Growl.Destinations.HighlightTextBox textBoxAPIKey;
         private System.Windows.Forms.Label labelAPIKey;
-        private HighlightTextBox textBoxDescription;
+        private Growl.Destinations.HighlightTextBox textBoxDescription;
         private System.Windows.Forms.Label labelDescription;
-        private System.Windows.Forms.Panel panelDetails;
         private System.Windows.Forms.CheckBox checkBoxOnlyWhenIdle;
     }
 }

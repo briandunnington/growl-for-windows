@@ -62,7 +62,6 @@
     <Compile Include="MessageHandler.cs" />
     <Compile Include="Pointer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestInfo.cs" />
     <Compile Include="ResourceCache.cs" />
     <Compile Include="Subscriber.cs" />
     <Compile Include="SubscriberKey.cs" />

@@ -4,15 +4,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Growl.Destinations;
 
 namespace Growl.UI
 {
-    public partial class ForwardDestinationInputs : ForwardDestinationSettingsPanel
+    public partial class ForwardDestinationInputs : DestinationSettingsPanel
     {
         private DetectedService selectedService;
         private bool isBonjour;
         private bool doValidation;
-        private Color highlightColor = Color.FromArgb(254, 250, 184);
         private bool isSubscription;
         private string g;
 
@@ -50,15 +50,10 @@ namespace Growl.UI
             ValidateInputs();
         }
 
-        public override void Initialize(bool isSubscription, ForwardDestinationListItem fdli, ForwardDestination fd)
+        public override void Initialize(bool isSubscription, DestinationListItem fdli, DestinationBase fd)
         {
             this.doValidation = true;
             this.isSubscription = isSubscription;
-
-            this.textBoxDescription.HighlightColor = highlightColor;
-            this.textBoxAddress.HighlightColor = highlightColor;
-            this.textBoxPort.HighlightColor = highlightColor;
-            this.textBoxPassword.HighlightColor = highlightColor;
 
             this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_GNTP);
             this.comboBoxFormat.Items.Add(Properties.Resources.Protocol_Type_UDP);
@@ -102,7 +97,7 @@ namespace Growl.UI
             {
                 this.textBoxDescription.Text = fd.Description;
                 this.comboBoxFormat.Enabled = false;
-                Subscription subscription = fd as Subscription;
+                GNTPSubscription subscription = fd as GNTPSubscription;
                 if (subscription != null)
                 {
                     this.textBoxAddress.Text = subscription.IPAddress;
@@ -150,12 +145,13 @@ namespace Growl.UI
             ValidateInputs();
         }
 
-        public override ForwardDestination Create()
+        public override DestinationBase Create()
         {
-            ForwardDestination fc = null;
+            DestinationBase fc = null;
             if (this.isSubscription)
             {
-                Subscription subscription = new Subscription(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text, Properties.Settings.Default.EnableSubscriptions);
+                GNTPSubscription subscription = new GNTPSubscription(textBoxDescription.Text, true, textBoxAddress.Text, Convert.ToInt32(textBoxPort.Text), textBoxPassword.Text);
+                subscription.Subscribe();
                 fc = subscription;
             }
             else
@@ -163,7 +159,7 @@ namespace Growl.UI
                 if (this.isBonjour)
                 {
                     BonjourForwardDestination bfc = new BonjourForwardDestination(textBoxDescription.Text, true, textBoxPassword.Text);
-                    bfc.Update(selectedService.Service, new GrowlBonjourEventArgs(selectedService.Platform));
+                    bfc.Update(selectedService.Service, new BonjourEventArgs(selectedService.Platform));
                     fc = bfc;
                 }
                 else
@@ -178,16 +174,16 @@ namespace Growl.UI
             return fc;
         }
 
-        public override void Update(ForwardDestination fd)
+        public override void Update(DestinationBase fd)
         {
             if (this.isSubscription)
             {
-                Subscription subscription = fd as Subscription;
+                GNTPSubscription subscription = fd as GNTPSubscription;
                 subscription.Description = this.textBoxDescription.Text;
                 subscription.IPAddress = this.textBoxAddress.Text;
                 subscription.Port = Convert.ToInt32(this.textBoxPort.Text);
                 subscription.Password = this.textBoxPassword.Text;
-                subscription.Update();
+                subscription.Subscribe();
             }
             else
             {

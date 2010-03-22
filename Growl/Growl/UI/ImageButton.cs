@@ -130,6 +130,12 @@ namespace Growl.UI
                     this.disabledImage.Dispose();
                     this.disabledImage = null;
                 }
+
+                if (this.Image != null)
+                {
+                    this.Image.Dispose();
+                    this.Image = null;
+                }
             }
 
             base.Dispose(disposing);

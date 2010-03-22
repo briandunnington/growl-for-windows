@@ -50,6 +50,8 @@ namespace Growl
             }
 
             PrefDuration[] arr = list.ToArray();
+            list.Clear();
+            list = null;
             return arr;
         }
 

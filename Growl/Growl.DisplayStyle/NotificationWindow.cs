@@ -634,7 +634,16 @@ namespace Growl.DisplayStyle
         {
             if (disposing)
             {
-                if (this.displayTimer != null) this.displayTimer.Dispose();
+                this.MouseEnter -= new EventHandler(NotificationWindow_MouseEnter);
+                this.FormClosed -= new FormClosedEventHandler(NotificationWindow_FormClosed);
+                this.Activated -= new EventHandler(NotificationWindow_Activated);
+                this.Shown -= new EventHandler(NotificationWindow_Shown);
+
+                if (this.displayTimer != null)
+                {
+                    this.displayTimer.Tick -= new EventHandler(displayTimer_Tick);
+                    this.displayTimer.Dispose();
+                }
             }
             base.Dispose(disposing);
         }

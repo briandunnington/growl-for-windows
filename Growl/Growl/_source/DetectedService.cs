@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Growl.Destinations;
 using Mono.Zeroconf;
 
 namespace Growl
@@ -8,9 +9,9 @@ namespace Growl
     public class DetectedService : IDisposable
     {
         private IResolvableService service;
-        private ForwardDestinationPlatformType platform;
+        private DestinationPlatformType platform;
 
-        public DetectedService(IResolvableService service, ForwardDestinationPlatformType platform)
+        public DetectedService(IResolvableService service, DestinationPlatformType platform)
         {
             this.service = service;
             this.platform = platform;
@@ -24,7 +25,7 @@ namespace Growl
             }
         }
 
-        public ForwardDestinationPlatformType Platform
+        public DestinationPlatformType Platform
         {
             get
             {
@@ -76,7 +77,7 @@ namespace Growl
             GC.SuppressFinalize(this);
         }
 
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {

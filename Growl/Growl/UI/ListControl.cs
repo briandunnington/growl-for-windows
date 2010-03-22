@@ -12,13 +12,12 @@ namespace Growl.UI
 
         public event EventHandler SelectedIndexChanged;
 
+        private bool disposed;
         private Color foreColor = Color.Black;
         //private int previouslySelectedIndex = -1;
-
-        private string headerText = null;
-        private Font headerFont = null;
-        private int headerHeight = 0;
-
+        private string headerText;
+        private Font headerFont;
+        private int headerHeight;
         private ListBox listbox;
 
         public delegate bool IsDefaultComparerDelegate(object obj);
@@ -95,10 +94,14 @@ namespace Growl.UI
                     ListControlItem item = obj as ListControlItem;
                     if (item != null)
                     {
-                        if (item.RegisteredObject.Icon != null)
+                        Image icon = item.RegisteredObject.GetIcon();
+                        using (icon)
                         {
-                            e.Graphics.DrawImage(item.RegisteredObject.Icon, e.Bounds.X + 1, e.Bounds.Y + 1, IMAGE_SIZE, IMAGE_SIZE);
-                            newX = e.Bounds.Left + IMAGE_SIZE + this.Margin.Right;
+                            if (icon != null)
+                            {
+                                e.Graphics.DrawImage(icon, e.Bounds.X + 1, e.Bounds.Y + 1, IMAGE_SIZE, IMAGE_SIZE);
+                                newX = e.Bounds.Left + IMAGE_SIZE + this.Margin.Right;
+                            }
                         }
                     }
 
@@ -110,18 +113,25 @@ namespace Growl.UI
                     }
 
                     // handle text
+                    bool disposeFont = false;
                     string text = obj.ToString();
                     Font font = e.Font;
                     if (isDefault)
                     {
                         text = text + " [default]";
                         font = new Font(e.Font, FontStyle.Bold);
+                        disposeFont = true;
                     }
                     Rectangle rect = new Rectangle(newX, e.Bounds.Y, e.Bounds.Right - newX, e.Bounds.Height);
                     TextFormatFlags flags = TextFormatFlags.EndEllipsis | TextFormatFlags.NoClipping;
                     TextRenderer.DrawText(e.Graphics, text, font, rect, this.foreColor, flags);
+                    if (disposeFont)
+                    {
+                        font.Dispose();
+                        font = null;
+                    }
 
-                    //Console.WriteLine("drawitem - " + text);
+                    //Utility.WriteLine("drawitem - " + text);
                 }
             }
         }
@@ -242,18 +252,30 @@ namespace Growl.UI
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                if (this.headerFont != null)
+                this.disposed = true;
+                if (disposing)
                 {
-                    this.headerFont.Dispose();
-                    this.headerFont = null;
-                }
+                    this.Resize -= new EventHandler(ListControl2_Resize);
 
-                if (this.listbox != null)
-                {
-                    this.listbox.Dispose();
-                    this.listbox = null;
+                    if (this.headerFont != null)
+                    {
+                        this.headerFont.Dispose();
+                        this.headerFont = null;
+                    }
+
+                    if (this.listbox != null)
+                    {
+                        this.listbox.DrawItem -= new DrawItemEventHandler(ListControl_DrawItem);
+                        this.listbox.ForeColorChanged -= new EventHandler(ListControl_ForeColorChanged);
+                        this.listbox.SelectedIndexChanged -= new EventHandler(listbox_SelectedIndexChanged);
+                        this.listbox.MouseDown -= new MouseEventHandler(listbox_MouseDown);
+                        this.listbox.DoubleClick -= new EventHandler(listbox_DoubleClick);
+
+                        this.listbox.Dispose();
+                        this.listbox = null;
+                    }
                 }
             }
 

@@ -252,7 +252,7 @@ namespace Growl.DisplayStyle
         /// This is generally only applicable to displays that show a visual element,
         /// but all displays must implement the method nonetheless.
         /// </remarks>
-        public abstract event NotificationCallbackEventHandler NotificationClicked;
+        public virtual event NotificationCallbackEventHandler NotificationClicked;
 
         /// <summary>
         /// Fired when the notification is closed (either explicitly by the user, or
@@ -265,7 +265,7 @@ namespace Growl.DisplayStyle
         /// the notification. In this instance, the NotificationClosed event is fired,
         /// not the NotificationClicked event.
         /// </remarks>
-        public abstract event NotificationCallbackEventHandler NotificationClosed;
+        public virtual event NotificationCallbackEventHandler NotificationClosed;
 
         #endregion
 

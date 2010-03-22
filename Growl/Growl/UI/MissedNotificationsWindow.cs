@@ -14,8 +14,8 @@ namespace Growl.UI
     {
         int borderWidth = 1;
         int radius = 16;
-        Image normal = global::Growl.Properties.Resources.close_blue;
-        Image hover = global::Growl.Properties.Resources.close_red;
+        Image normal = Growl.Properties.Resources.close_blue;
+        Image hover = Growl.Properties.Resources.close_red;
 
         public MissedNotificationsWindow()
         {
@@ -32,7 +32,7 @@ namespace Growl.UI
 
             this.historyListView1.GroupBy = HistoryGroupItemsBy.Application;
 
-            this.pictureBox1.Image = global::Growl.Properties.Resources.growl;
+            this.pictureBox1.Image = Growl.FormResources.growl;
             this.pictureBoxClose.Image = normal;
 
             Region r = Growl.DisplayStyle.Utility.CreateRoundedRegion(0, 0, this.Width, this.Height, radius, radius);

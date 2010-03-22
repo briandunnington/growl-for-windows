@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Growl.Destinations;
 
 namespace Growl.UI
 {
@@ -50,7 +51,7 @@ namespace Growl.UI
 
                 string text = obj.ToString();
                 int newX = e.Bounds.X;
-                ForwardDestinationListItem item = obj as ForwardDestinationListItem;
+                DestinationListItem item = obj as DestinationListItem;
                 if (item != null)
                 {
                     if(item.Image != null)
@@ -59,7 +60,7 @@ namespace Growl.UI
                     }
                     newX = e.Bounds.Left + IMAGE_SIZE + this.Margin.Right;
 
-                    text = item.Text;
+                    text = Utility.GetResourceString(item.Text);
                 }
 
                 // handle text
@@ -69,7 +70,7 @@ namespace Growl.UI
             }
         }
 
-        public void AddItem(ForwardDestinationListItem item)
+        public void AddItem(DestinationListItem item)
         {
             this.Items.Add(item);
         }
@@ -118,7 +119,7 @@ namespace Growl.UI
                 i += this.TopIndex;
                 if (this.Items.Count > i)
                 {
-                    ForwardDestinationListItem fli = (ForwardDestinationListItem)this.Items[i];
+                    DestinationListItem fli = (DestinationListItem)this.Items[i];
                     fli.Select();
                 }
             }

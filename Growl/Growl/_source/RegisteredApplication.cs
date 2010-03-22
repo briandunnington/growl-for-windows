@@ -8,12 +8,12 @@ namespace Growl
     [Serializable]
     public class RegisteredApplication : IRegisteredObject
     {
-        private static System.Drawing.Image DefaultIcon = global::Growl.Properties.Resources.generic_application;
+        private static System.Drawing.Image DefaultIcon = Growl.Properties.Resources.generic_application;
 
         private string name;
         private Dictionary<string, RegisteredNotification> notifications;
         private ApplicationPreferences preferences;
-        private System.Drawing.Image icon;
+        private string iconID;
 
         Dictionary<string, string> customTextAttributes = new Dictionary<string, string>();
         Dictionary<string, Resource> customBinaryAttributes = new Dictionary<string, Resource>();
@@ -33,9 +33,10 @@ namespace Growl
             this.preferences = preferences;
             this.customTextAttributes = customTextAttributes;
             this.customBinaryAttributes = customBinaryAttributes;
+            LinkNotifications();
         }
 
-        private void LinkNotifications()
+        internal void LinkNotifications()
         {
             if (!linked)
             {
@@ -58,19 +59,29 @@ namespace Growl
             }
         }
 
-        public System.Drawing.Image Icon
+        public string IconID
         {
             get
             {
-                if (this.icon == null)
-                    return DefaultIcon;
-                else
-                    return this.icon;
+                return this.iconID;
             }
             set
             {
-                this.icon = value;
+                this.iconID = value;
             }
+        }
+
+        public void SetIcon(Resource resource)
+        {
+            this.IconID = ImageCache.Add(this.Name, resource);
+        }
+
+        public System.Drawing.Image GetIcon()
+        {
+            System.Drawing.Image icon = ImageCache.Get(this.Name, this.IconID);
+            if (icon == null)
+                icon = new System.Drawing.Bitmap(DefaultIcon);
+            return icon;
         }
 
         public ApplicationPreferences Preferences

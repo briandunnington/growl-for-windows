@@ -17,7 +17,7 @@ namespace Growl.AutoUpdate
         public event EventHandler DownloadComplete;
         public event UpdateErrorEventHandler UpdateError;
 
-        private WebClientEx checker;
+        private Growl.CoreLibrary.WebClientEx checker;
         private string appPath;
         private string manifestFile;
         private string currentVersion;
@@ -41,7 +41,7 @@ namespace Growl.AutoUpdate
             this.updateLocation = updateLocation;
             this.updateTempFolder = Path.Combine(Utility.UserSettingFolder, UPDATE_FOLDER);
 
-            this.checker = new WebClientEx();
+            this.checker = new Growl.CoreLibrary.WebClientEx();
             checker.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
             checker.DownloadStringCompleted += new DownloadStringCompletedEventHandler(checker_DownloadStringCompleted);
         }
@@ -73,20 +73,26 @@ namespace Growl.AutoUpdate
         {
             if (!e.Cancelled)
             {
-                CheckForUpdateCompleteEventArgs args;
+                CheckForUpdateCompleteEventArgs args = null;
                 bool userInitiated = (bool)e.UserState;
 
                 if (e.Error == null)
                 {
                     this.updatedManifest = Manifest.Parse(e.Result);
-                    args = new CheckForUpdateCompleteEventArgs(this.updatedManifest, this.currentVersion, userInitiated, null);
-                    this.updateAvailable = args.UpdateAvailable;
+                    if (this.updatedManifest != null)
+                    {
+                        args = new CheckForUpdateCompleteEventArgs(this.updatedManifest, this.currentVersion, userInitiated, null);
+                        this.updateAvailable = args.UpdateAvailable;
+                    }
                 }
-                else
+
+                // this could be because e.Error != null or because the Manifest.Parse() failed
+                if(args == null)
                 {
                     UpdateErrorEventArgs errorArgs = new UpdateErrorEventArgs(e.Error, "Growl was unable to determine if a newer version is available. Please try again later.");
                     args = new CheckForUpdateCompleteEventArgs(null, this.currentVersion, userInitiated, errorArgs);
                 }
+
                 this.OnCheckForUpdateComplete(args);
             }
         }
@@ -107,7 +113,7 @@ namespace Growl.AutoUpdate
                 info.SetupFile = Path.Combine(updateTempFolder, "setup.exe");
                 info.Folder = updateTempFolder;
 
-                WebClientEx downloader = new WebClientEx();
+                Growl.CoreLibrary.WebClientEx downloader = new Growl.CoreLibrary.WebClientEx();
                 using (downloader)
                 {
                     downloader.Headers.Add("User-Agent", "Element.AutoUpdate.Updater");
@@ -153,6 +159,12 @@ namespace Growl.AutoUpdate
                 // exit this application
                 ApplicationMain.Program.ExitApp();
             }
+
+            Growl.CoreLibrary.WebClientEx downloader = (Growl.CoreLibrary.WebClientEx)sender;
+            downloader.DownloadProgressChanged -= new DownloadProgressChangedEventHandler(downloader_DownloadProgressChanged);
+            downloader.DownloadFileCompleted -= new AsyncCompletedEventHandler(downloader_DownloadFileCompleted);
+            downloader.Dispose();
+            downloader = null;
         }
 
         protected void OnCheckForUpdateComplete(CheckForUpdateCompleteEventArgs args)
@@ -196,6 +208,7 @@ namespace Growl.AutoUpdate
                 Manifest manifest = Manifest.Parse(xml);
                 this.currentVersion = manifest.Version;
                 this.updateLocation = manifest.UpdateLocation;
+                manifest = null;
             }
         }
 
@@ -221,7 +234,11 @@ namespace Growl.AutoUpdate
                 if (disposing)
                 {
                     if (this.checker != null)
+                    {
+                        this.checker.DownloadStringCompleted -= new DownloadStringCompletedEventHandler(checker_DownloadStringCompleted);
                         this.checker.Dispose();
+                        this.checker = null;
+                    }
                 }
                 this.disposed = true;
             }

@@ -6,7 +6,7 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace Growl.Installation
 {
-    class Unzipper
+    static class Unzipper
     {
         public static void UnZipFiles(string zipFilePath, string outputFolder, bool deleteZipFile)
         {
@@ -17,7 +17,6 @@ namespace Growl.Installation
                 using (s)
                 {
                     ZipEntry theEntry;
-                    string tmpEntry = String.Empty;
                     while ((theEntry = s.GetNextEntry()) != null)
                     {
                         string directoryName = outputFolder;
@@ -28,7 +27,7 @@ namespace Growl.Installation
                         }
 
                         string fileName = Path.GetFileName(theEntry.Name);
-                        if (fileName != String.Empty)
+                        if (!String.IsNullOrEmpty(fileName))
                         {
                             string fullPath = directoryName + "\\" + theEntry.Name;
                             fullPath = fullPath.Replace("\\ ", "\\");

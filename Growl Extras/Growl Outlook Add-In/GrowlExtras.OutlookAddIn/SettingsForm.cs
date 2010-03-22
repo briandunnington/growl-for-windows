@@ -17,6 +17,9 @@ namespace GrowlExtras.OutlookAddIn
             this.checkBoxEnableNewMail.Checked = Properties.Settings.Default.EnableNewMailNotifications;
             this.checkBoxEnableReminders.Checked = Properties.Settings.Default.EnableReminderNotifications;
             this.textBoxPassword.Text = Properties.Settings.Default.Password;
+
+            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            this.labelVersion.Text = "v" + fvi.FileVersion;
         }
 
         private void Button2_Click(object sender, EventArgs e)

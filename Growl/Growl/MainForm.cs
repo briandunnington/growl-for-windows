@@ -5,21 +5,21 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Growl.UI;
+using Growl.Destinations;
 
 
 namespace Growl
 {
     public partial class MainForm : Form
     {
+        private bool initialized;
+        private bool disposed;
         private Controller controller;
         private List<Panel> panels = new List<Panel>();
         private ToolTip historyTrackBarToolTip = new ToolTip();
         private Timer historyTrackBarTimer = new Timer();
+        private PastNotificationManager historyManager = new PastNotificationManager();
 
-        private Keys closeLastKeyCombo;
-        private Keys closeAllKeyCombo;
-        private HotKeyManager closeLastHotKey;
-        private HotKeyManager closeAllHotKey;
 
         public MainForm()
         {
@@ -171,6 +171,15 @@ namespace Growl
 
         internal void InitializePreferences()
         {
+            this.controller = Controller.GetController();
+            this.controller.ApplicationRegistered += new Controller.ApplicationRegisteredDelegate(controller_ApplicationRegistered);
+            this.controller.NotificationReceived += new Controller.NotificationReceivedDelegate(controller_NotificationReceived);
+            this.controller.NotificationPast += new Controller.NotificationPastDelegate(controller_NotificationPast);
+            this.controller.BonjourServiceUpdate += new Controller.BonjourServiceUpdateDelegate(controller_BonjourServiceUpdate);
+            this.controller.ForwardDestinationsUpdated += new EventHandler(controller_ForwardDestinationsUpdated);
+            this.controller.SubscriptionsUpdated += new Controller.SubscriptionsUpdatedDelegate(controller_SubscriptionsUpdated);
+
+
             // GENERAL
             // start (default to running when launched - handled later in Form_Load)
             this.checkBoxAutoStart.Checked = Properties.Settings.Default.AutoStart;
@@ -218,12 +227,15 @@ namespace Growl
             this.historyListView.GroupBy = Properties.Settings.Default.HistorySortBy;
             this.historyListView.NumberOfDays = this.historyDaysTrackBar.Value;
 
-            this.historyListView.PastNotifications = controller.PastNotifications;
+            this.historyManager.LoadPastNotifications();
+            this.historyListView.PastNotifications = this.historyManager.PastNotifications;
             if (this.historyListView.GroupBy == HistoryGroupItemsBy.Application)
                 this.historySortByApplicationRadioButton.Checked = true;
             else
                 this.historySortByDateRadioButton.Checked = true;
             //this.historyListView.Draw();
+            this.historyListView.RedrawStarted += new EventHandler(historyListView_RedrawStarted);
+            this.historyListView.RedrawFinished += new EventHandler(historyListView_RedrawFinished);
 
             // ABOUT
             this.labelAboutGrowlVersion.Text = String.Format(this.labelAboutGrowlVersion.Text, Utility.FileVersionInfo.ProductVersion);
@@ -231,6 +243,26 @@ namespace Growl
             this.labelAboutBuildNumber.Text = String.Format(this.labelAboutBuildNumber.Text, Utility.FileVersionInfo.FileVersion);
             //this.labelAboutBuildNumber.Text = String.Format(this.labelAboutBuildNumber.Text, a.GetName().Version.ToString());
             this.labelAboutBuildNumber.Left = this.labelAboutGrowlVersion.Right + 6;
+        }
+
+        void historyListView_RedrawStarted(object sender, EventArgs args)
+        {
+            this.historyListView.Visible = false;
+        }
+
+        void historyListView_RedrawFinished(object sender, EventArgs args)
+        {
+            this.historyListView.Visible = true;
+        }
+
+        void controller_Stopped(object sender, EventArgs e)
+        {
+            // not used yet
+        }
+
+        void controller_Started(object sender, EventArgs e)
+        {
+            // not used yet
         }
 
         internal void DoneInitializing()
@@ -246,6 +278,8 @@ namespace Growl
             this.panelInitializing.Visible = false;
             SwitchPanel(this.toolbarButtonGeneral);
             this.Refresh();
+
+            this.initialized = true;
         }
 
         private void InitToolbarButtonAndPanel(ToolStripButton tb, Panel panel)
@@ -341,14 +375,14 @@ namespace Growl
                 this.listControlDisplays.Items.Add(display);
             }
 
-            this.listControlDisplays.SelectedIndex = 0;
+            if(this.listControlDisplays.Items.Count > 0) this.listControlDisplays.SelectedIndex = 0;
             this.listControlDisplays.ResumeLayout();
         }
 
         private void BindForwardList()
         {
             this.forwardListView.SuspendLayout();
-            this.forwardListView.Computers = controller.ForwardDestinations;
+            this.forwardListView.Computers = GenericDictionaryToList<string, ForwardDestination, DestinationBase>(controller.ForwardDestinations);
             this.forwardListView.Draw();
             this.forwardListView.ResumeLayout();
             this.buttonRemoveComputer.Enabled = false;
@@ -357,10 +391,27 @@ namespace Growl
         private void BindSubscriptionList()
         {
             this.subscribedListView.SuspendLayout();
-            this.subscribedListView.Computers = controller.Subscriptions;
+            this.subscribedListView.Computers = GenericDictionaryToList<string, Subscription, DestinationBase>(controller.Subscriptions);
             this.subscribedListView.Draw();
             this.subscribedListView.ResumeLayout();
             this.buttonUnsubscribe.Enabled = false;
+        }
+
+        private TReturn[] GenericDictionaryToList<TKey, TValue, TReturn>(Dictionary<TKey, TValue> gd) where TValue : TReturn
+        {
+            if (gd != null && gd.Values != null)
+            {
+                Dictionary<TKey, TValue>.ValueCollection vc = gd.Values;
+                List<TValue> list = new List<TValue>(vc);
+                TValue[] values = list.ToArray();
+                TReturn[] array = new TReturn[values.Length];
+                Array.Copy(values, array, values.Length);
+                return array;
+            }
+            else
+            {
+                return new TReturn[0];
+            }
         }
 
         internal void UpdateState(string text, Color color)
@@ -376,6 +427,20 @@ namespace Growl
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // make sure to save any settings from an open settings panel
+            if (this.panelDisplaySettings.Tag != null)
+            {
+                Growl.DisplayStyle.SettingsPanelBase sp = (Growl.DisplayStyle.SettingsPanelBase)this.panelDisplaySettings.Tag;
+                sp.DeselectPanel();
+            }
+            this.panelDisplaySettingsContainer.Controls.Clear();
+
+            // remember some form information for next time
+            Properties.Settings.Default.FormSize = this.Size;
+            Properties.Settings.Default.FormLocation = this.Location;
+            Properties.Settings.Default.Save();
+
+            /*
             // instead of closing, just hide the form (minimized to system tray)
             if (e.CloseReason == CloseReason.UserClosing)
             {
@@ -397,6 +462,7 @@ namespace Growl
                 Properties.Settings.Default.FormLocation = this.Location;
                 Properties.Settings.Default.Save();
             }
+             * */
         }
 
         internal Controller Controller
@@ -404,10 +470,6 @@ namespace Growl
             get
             {
                 return this.controller;
-            }
-            set
-            {
-                this.controller = value;
             }
         }
 
@@ -445,40 +507,37 @@ namespace Growl
             }
         }
 
-        internal void OnApplicationRegistered(RegisteredApplication ra)
+        void controller_ApplicationRegistered(RegisteredApplication ra)
         {
             BindApplicationList();
-            this.controller.SaveApplicationPrefs();
         }
 
-        internal void OnNotificationReceived(Growl.DisplayStyle.Notification n)
+        void controller_NotificationReceived(Growl.DisplayStyle.Notification n)
         {
             // do nothing for now
         }
 
-        internal void OnNotificationPast(PastNotification pn)
+        void controller_NotificationPast(PastNotification pn)
         {
             this.historyListView.AddNotification(pn);
         }
 
-        internal void OnForwardDestinationsUpdated()
+        void controller_ForwardDestinationsUpdated(object sender, EventArgs e)
         {
             this.BindForwardList();
-            this.controller.SaveForwardPrefs();
         }
 
-        internal void OnBonjourServiceUpdated(BonjourForwardDestination bfc)
+        void controller_BonjourServiceUpdate(BonjourForwardDestination bfc)
         {
             //BindForwardList();
             this.forwardListView.Refresh();
         }
 
-        internal void OnSubscriptionsUpdated(bool countChanged)
+        void controller_SubscriptionsUpdated(bool countChanged)
         {
             if (countChanged)
             {
                 BindSubscriptionList();
-                this.controller.SaveSubsriptionPrefs();
             }
             else
                 this.subscribedListView.Refresh();
@@ -486,8 +545,8 @@ namespace Growl
 
         internal void OnSystemTimeChanged()
         {
-            this.controller.ReloadPastNotifications();
-            this.historyListView.PastNotifications = this.controller.PastNotifications;
+            this.historyManager.ReloadPastNotifications();
+            this.historyListView.PastNotifications = this.historyManager.PastNotifications;
             this.historyListView.Draw();
         }
 
@@ -502,28 +561,77 @@ namespace Growl
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                if (components != null)
+                this.disposed = true;
+
+                if (disposing)
                 {
-                    components.Dispose();
+                    // unregister event handlers
+                    this.toolbarPanel.Paint -= new PaintEventHandler(toolbarPanel_Paint);
+                    this.controller.ApplicationRegistered -= new Controller.ApplicationRegisteredDelegate(controller_ApplicationRegistered);
+                    this.controller.NotificationReceived -= new Controller.NotificationReceivedDelegate(controller_NotificationReceived);
+                    this.controller.NotificationPast -= new Controller.NotificationPastDelegate(controller_NotificationPast);
+                    this.controller.BonjourServiceUpdate -= new Controller.BonjourServiceUpdateDelegate(controller_BonjourServiceUpdate);
+                    this.controller.ForwardDestinationsUpdated -= new EventHandler(controller_ForwardDestinationsUpdated);
+                    this.controller.SubscriptionsUpdated -= new Controller.SubscriptionsUpdatedDelegate(controller_SubscriptionsUpdated);
+                    this.passwordManagerControl1.Updated -= new EventHandler(passwordManagerControl1_Updated);
+                    this.historyTrackBarTimer.Tick -= new EventHandler(historyTrackBarTimer_Tick);
+
+                    this.toolbarButtonGeneral.Click -= new EventHandler(toolbarButton_Click);
+                    this.toolbarButtonApplications.Click -= new EventHandler(toolbarButton_Click);
+                    this.toolbarButtonDisplays.Click -= new EventHandler(toolbarButton_Click);
+                    this.toolbarButtonNetwork.Click -= new EventHandler(toolbarButton_Click);
+                    this.toolbarButtonSecurity.Click -= new EventHandler(toolbarButton_Click);
+                    this.toolbarButtonHistory.Click -= new EventHandler(toolbarButton_Click);
+                    this.toolbarButtonAbout.Click -= new EventHandler(toolbarButton_Click);
+
+                    if (this.listControlDisplays != null)
+                    {
+                        foreach (Display display in this.listControlDisplays.Items)
+                        {
+                            if (display != null)
+                            {
+                                Growl.DisplayStyle.SettingsPanelBase panel = display.SettingsPanel;
+                                if (panel != null)
+                                {
+                                    panel.SettingsChanged -= new EventHandler(panel_SettingsChanged);
+                                }
+                            }
+                        }
+                    }
+
+                    if (components != null)
+                    {
+                        components.Dispose();
+                    }
+
+                    if (historyTrackBarToolTip != null)
+                    {
+                        historyTrackBarToolTip.RemoveAll();
+                        historyTrackBarToolTip.Dispose();
+                        historyTrackBarToolTip = null;
+                    }
+
+                    if (historyTrackBarTimer != null)
+                    {
+                        historyTrackBarTimer.Dispose();
+                        historyTrackBarTimer = null;
+                    }
+
+                    if (this.Icon != null)
+                    {
+                        this.Icon.Dispose();
+                        this.Icon = null;
+                    }
+
+                     Growl.FormResources.ResourceManager.ReleaseAllResources();
+
+                    // deal with pictureboxes
+                    if (this.pictureBox1 != null && this.pictureBox1.Image != null) this.pictureBox1.Image.Dispose();
+                    if (this.pictureBoxApplication != null && this.pictureBoxApplication.Image != null) this.pictureBoxApplication.Image.Dispose();
+                    if (this.pictureBoxApplicationNotification != null && this.pictureBoxApplicationNotification.Image != null) this.pictureBoxApplicationNotification.Image.Dispose();
                 }
-
-                if (historyTrackBarToolTip != null)
-                {
-                    historyTrackBarToolTip.Dispose();
-                    historyTrackBarToolTip = null;
-                }
-
-                if (historyTrackBarTimer != null)
-                {
-                    historyTrackBarTimer.Dispose();
-                    historyTrackBarTimer = null;
-                }
-
-                UnregisterHotKeys();
-
-                //StopInterceptingSystemBalloons();
             }
 
             base.Dispose(disposing);
@@ -637,28 +745,30 @@ namespace Growl
 
         private void buttonClearHistory_Click(object sender, EventArgs e)
         {
-            this.controller.ClearHistory();
+            this.historyManager.ClearHistory();
             this.historyListView.SuspendLayout();
-            this.historyListView.PastNotifications = this.controller.PastNotifications;
+            this.historyListView.PastNotifications = this.historyManager.PastNotifications;
             this.historyListView.Draw();
             this.historyListView.ResumeLayout();
             
             // Normally we shouldnt ever explicitly call GC.Collect(), but since the items in the History
             // view could have been taking up a lot of memory, and this is a user-initiated event that 
             // does not occur frequently, this is an OK place to force a collection.
-            GC.Collect();
+            ApplicationMain.ForceGC();
         }
 
         private void ShowPreferences(IRegisteredObject iro, NotificationPreferences prefs, string text)
         {
-            //this.pictureBoxApplicationNotification.Image = new Bitmap(iro.Icon);
-            this.pictureBoxApplicationNotification.Image = iro.Icon;
+            if (this.pictureBoxApplicationNotification.Image != null) this.pictureBoxApplicationNotification.Image.Dispose();
+            this.pictureBoxApplicationNotification.Image = iro.GetIcon();
+
             this.labelApplicationNotification.Text = text;
 
             this.comboBoxPrefEnabled.DataSource = PrefEnabled.GetList();
             this.comboBoxPrefEnabled.SelectedItem = prefs.PrefEnabled;
             this.comboBoxPrefEnabled.Tag = prefs;
 
+            this.comboBoxPrefDisplay.BeginUpdate();
             this.comboBoxPrefDisplay.Items.Clear();
             this.comboBoxPrefDisplay.Items.Add(Display.Default);
             this.comboBoxPrefDisplay.Items.Add(Display.None);
@@ -668,6 +778,7 @@ namespace Growl
             }
             this.comboBoxPrefDisplay.SelectedItem = prefs.PrefDisplay;
             this.comboBoxPrefDisplay.Tag = prefs;
+            this.comboBoxPrefDisplay.EndUpdate();
 
             this.comboBoxPrefDuration.DataSource = PrefDuration.GetList(true);
             this.comboBoxPrefDuration.SelectedItem = prefs.PrefDuration;
@@ -723,11 +834,12 @@ namespace Growl
             {
                 RegisteredApplication app = (RegisteredApplication)selectedLCI.RegisteredObject;
 
-                //this.pictureBoxApplication.Image = new Bitmap(app.Icon);
-                this.pictureBoxApplication.Image = app.Icon;
+                if (this.pictureBoxApplication.Image != null) this.pictureBoxApplication.Image.Dispose();
+                this.pictureBoxApplication.Image = app.GetIcon();
                 this.labelApplication.Text = app.Name;
 
                 // add a default item to the list
+                this.listControlApplicationNotifications.SuspendLayout();
                 ListControlItem appLCI = new ListControlItem(Properties.Resources.Applications_AllNotifications, app);
                 this.listControlApplicationNotifications.AddItem(appLCI);
 
@@ -736,10 +848,11 @@ namespace Growl
                     ListControlItem lci = new ListControlItem(rn.Name, rn);
                     this.listControlApplicationNotifications.AddItem(lci);
                 }
+                this.listControlApplicationNotifications.ResumeLayout();
 
                 this.listControlApplicationNotifications.SelectedIndex = 0;
 
-                ShowPreferences(appLCI.RegisteredObject, app.Preferences, appLCI.Text);
+                //ShowPreferences(appLCI.RegisteredObject, app.Preferences, appLCI.Text);
                 this.panelSelectedApplication.Visible = true;
                 this.listControlApplicationNotifications.Select();
             }
@@ -782,6 +895,7 @@ namespace Growl
             if (this.panelDisplaySettings.Tag != null && this.panelDisplaySettings.Tag is Growl.DisplayStyle.SettingsPanelBase)
             {
                 Growl.DisplayStyle.SettingsPanelBase sp = (Growl.DisplayStyle.SettingsPanelBase)this.panelDisplaySettings.Tag;
+                sp.SettingsChanged -= new EventHandler(panel_SettingsChanged);
                 sp.DeselectPanel();
             }
             this.panelDisplaySettings.Tag = null;
@@ -796,25 +910,27 @@ namespace Growl
             // show the new panel
             if (this.listControlDisplays.SelectedItem != null)
             {
-                Display display = (Display)this.listControlDisplays.SelectedItem;
-                Growl.DisplayStyle.SettingsPanelBase panel = display.SettingsPanel;
-                if (panel != null)
+                Display display = this.listControlDisplays.SelectedItem as Display;
+                if (display != null)
                 {
-                    panel.Dock = DockStyle.Fill;
-                    panel.Display = display;
-                    panel.SettingsChanged -= new EventHandler(panel_SettingsChanged);
-                    panel.SettingsChanged += new EventHandler(panel_SettingsChanged);
-                    panel.SelectPanel();
-                    this.panelDisplaySettingsContainer.Controls.Add(panel);
-                    this.panelDisplaySettings.Tag = panel;
+                    Growl.DisplayStyle.SettingsPanelBase panel = display.SettingsPanel;
+                    if (panel != null)
+                    {
+                        panel.Dock = DockStyle.Fill;
+                        panel.Display = display;
+                        panel.SettingsChanged += new EventHandler(panel_SettingsChanged);
+                        panel.SelectPanel();
+                        this.panelDisplaySettingsContainer.Controls.Add(panel);
+                        this.panelDisplaySettings.Tag = panel;
 
-                    this.displayStyleNameLabel.Text = display.Name;
-                    this.displayStyleDescriptionLabel.Text = display.Description;
-                    this.displayStyleAuthorLabel.Text = String.Format("{0} {1}", Properties.Resources.Displays_CreatedBy, display.Author);
-                    this.displayStyleWebsiteLabel.Text = display.Website;
-                    this.displayStyleVersionLabel.Text = display.Version;
+                        this.displayStyleNameLabel.Text = display.Name;
+                        this.displayStyleDescriptionLabel.Text = display.Description;
+                        this.displayStyleAuthorLabel.Text = String.Format("{0} {1}", Properties.Resources.Displays_CreatedBy, display.Author);
+                        this.displayStyleWebsiteLabel.Text = display.Website;
+                        this.displayStyleVersionLabel.Text = display.Version;
 
-                    this.panelDisplaySettings.Visible = true;
+                        this.panelDisplaySettings.Visible = true;
+                    }
                 }
             }
         }
@@ -854,12 +970,10 @@ namespace Growl
             if (this.forwardListView.SelectedItems.Count == 1)
             {
                 ListViewItem lvi = this.forwardListView.SelectedItems[0];
+                this.forwardListView.Items.Remove(lvi);
+
                 ForwardDestination fc = (ForwardDestination)lvi.Tag;
-                if (fc != null && this.controller.ForwardDestinations.ContainsKey(fc.Key))
-                {
-                    this.controller.ForwardDestinations.Remove(fc.Key);
-                    this.forwardListView.Items.Remove(lvi);
-                }
+                this.controller.RemoveForwardDestination(fc);
             }
         }
 
@@ -1080,14 +1194,10 @@ namespace Growl
             if (this.subscribedListView.SelectedItems.Count == 1)
             {
                 ListViewItem lvi = this.subscribedListView.SelectedItems[0];
+                this.subscribedListView.Items.Remove(lvi);
+
                 Subscription sub = (Subscription)lvi.Tag;
-                if (sub != null && this.controller.Subscriptions.ContainsKey(sub.Key))
-                {
-                    sub.Kill();
-                    this.controller.Subscriptions.Remove(sub.Key);
-                    this.subscribedListView.Items.Remove(lvi);
-                    sub = null;
-                }
+                this.controller.RemoveSubscription(sub);
             }
         }
 
@@ -1095,11 +1205,6 @@ namespace Growl
         {
             Properties.Settings.Default.EnableSubscriptions = this.checkBoxEnableSubscriptions.Checked;
             Properties.Settings.Default.Save();
-
-            foreach (Subscription subscription in this.controller.Subscriptions.Values)
-            {
-                subscription.Allowed = this.checkBoxEnableSubscriptions.Checked;
-            }
 
             this.subscribedListView.AllDisabled = !Properties.Settings.Default.EnableSubscriptions;
             this.subscribedListView.Refresh();
@@ -1109,6 +1214,11 @@ namespace Growl
             else
             {
                 if (this.subscribedListView.SelectedIndices != null && this.subscribedListView.SelectedIndices.Count > 0) this.buttonUnsubscribe.Enabled = true;
+            }
+
+            if (this.initialized)
+            {
+                SubscriptionManager.Update(this.controller.Subscriptions, Properties.Settings.Default.EnableSubscriptions);
             }
         }
 
@@ -1251,67 +1361,6 @@ namespace Growl
         void passwordManagerControl1_Updated(object sender, EventArgs e)
         {
             this.controller.SavePasswordPrefs();
-        }
-
-        public void RegisterHotKeys()
-        {
-            try
-            {
-                KeysConverter kc = new KeysConverter();
-
-                if (this.closeLastHotKey == null)
-                {
-                    this.closeLastKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseLast);
-                    this.closeLastHotKey = new HotKeyManager(this, this.closeLastKeyCombo);
-                    this.closeLastHotKey.Register();
-                }
-
-                if (this.closeAllHotKey == null)
-                {
-                    this.closeAllKeyCombo = (Keys)kc.ConvertFromString(Properties.Settings.Default.KeyboardShortcutCloseAll);
-                    this.closeAllHotKey = new HotKeyManager(this, this.closeAllKeyCombo);
-                    this.closeAllHotKey.Register();
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public void UnregisterHotKeys()
-        {
-            if (this.closeLastHotKey != null)
-            {
-                this.closeLastHotKey.Dispose();
-                this.closeLastHotKey = null;
-            }
-            if (this.closeAllHotKey != null)
-            {
-                this.closeAllHotKey.Dispose();
-                this.closeAllHotKey = null;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            // check if we got a hot key pressed.
-            if (m.Msg == HotKeyManager.WM_HOTKEY)
-            {
-                // we could get the actual key pressed, but it is easier to just check the id
-                int id = m.WParam.ToInt32();
-
-                if (id == this.closeLastHotKey.ID)
-                    this.controller.CloseLastNotification();
-                else if (id == this.closeAllHotKey.ID)
-                    this.controller.CloseAllOpenNotifications();
-            }
-
-            /* this is for handling intercepted system balloon messages - NOT READY YET
-            if (this.sbi != null)
-                sbi.ProcessWindowMessage(ref m);
-             * */
-
-            base.WndProc(ref m);
         }
 
         /* THIS IS NOT READY FOR RELEASE YET

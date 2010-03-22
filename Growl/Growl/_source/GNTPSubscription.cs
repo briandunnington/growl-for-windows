@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Growl.Connector;
+using Growl.Destinations;
 
 namespace Growl
 {
@@ -21,8 +22,8 @@ namespace Growl
         [NonSerialized]
         private bool disposed;
 
-        public GNTPSubscription(string name, bool enabled, string ipAddress, int port, string password, bool allowed)
-            : base(name, enabled, allowed)
+        public GNTPSubscription(string name, bool enabled, string ipAddress, int port, string password)
+            : base(name, enabled)
         {
             this.ipAddress = ipAddress;
             this.port = port;
@@ -99,18 +100,14 @@ namespace Growl
         {
             get
             {
+                return String.Format("GNTP {0}:{1}", this.ipAddress, this.port);
+
+                /*
                 if (this.Available)
                     return String.Format("GNTP {0}:{1} {2}", this.ipAddress, this.port, (this.AdditionalOnlineDisplayInfo != null ? String.Format("({0})", this.AdditionalOnlineDisplayInfo) : null));
                 else
                     return String.Format("(offline) {0}", (this.AdditionalOfflineDisplayInfo != null ? String.Format("- {0}", this.AdditionalOfflineDisplayInfo) : null));
-            }
-        }
-
-        public override bool EnabledAndAvailable
-        {
-            get
-            {
-                return (base.EnabledAndAvailable && this.Allowed);
+                 * */
             }
         }
 
@@ -130,12 +127,12 @@ namespace Growl
             }
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
-            if (this.Allowed)
+            if (this.Enabled)
             {
                 if (this.subscriberID == null) this.subscriberID = Utility.MachineID;
-                this.AdditionalOfflineDisplayInfo = "connecting...";
+                this.AdditionalDisplayInfo = "connecting...";
                 if (this.sc == null)
                 {
                     Growl.Daemon.Subscriber subscriber = new Growl.Daemon.Subscriber(this.subscriberID, Environment.MachineName, Growl.Connector.GrowlConnector.TCP_PORT);
@@ -153,40 +150,33 @@ namespace Growl
             if (this.sc != null)
             {
                 this.sc.StopRenewing();
+                this.sc.OKResponse -= new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_OKResponse);
+                this.sc.ErrorResponse -= new Growl.Daemon.SubscriptionConnector.ResponseEventHandler(sc_ErrorResponse);
+                this.sc.Dispose();
                 this.sc = null;
             }
         }
 
         void sc_OKResponse(Growl.Daemon.SubscriptionResponse response)
         {
-            if (this.Enabled)
-            {
-                this.AdditionalOfflineDisplayInfo = null;
-                this.AdditionalOnlineDisplayInfo = String.Format("TTL: {0}", response.TTL);
-            }
-            this.Platform = ForwardDestinationPlatformType.FromString(response.PlatformName);
-            this.Available = true;
-            OnStatusChanged();
+            string additionalInfo = (this.Enabled ? String.Format("TTL: {0}", response.TTL) : null);
+            this.Platform = KnownDestinationPlatformType.FromString(response.PlatformName);
+            ChangeStatus(true, additionalInfo);
 
             // if the subscription succeeds, the SubscriptionConnecter will take care of keeping the subscription alive
         }
 
         void sc_ErrorResponse(Growl.Daemon.SubscriptionResponse response)
         {
-            if (this.Enabled)
-            {
-                this.AdditionalOfflineDisplayInfo = (response.ErrorCode == Growl.Connector.ErrorCode.NOT_AUTHORIZED ? "invalid password" : "server unavailable");
-                this.AdditionalOnlineDisplayInfo = null;
-            }
-            this.Available = false;
-            OnStatusChanged();
+            string additionalInfo = (this.Enabled ? (response.ErrorCode == Growl.Connector.ErrorCode.NOT_AUTHORIZED ? "invalid password" : "server unavailable") : null);
+            ChangeStatus(false, additionalInfo);
 
             // if the subscription failed, the SubscriptionConnector will take care of trying to reestablish it
         }
 
         public override DestinationBase Clone()
         {
-            GNTPSubscription clone = new GNTPSubscription(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password, this.Allowed);
+            GNTPSubscription clone = new GNTPSubscription(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password);
             return clone;
         }
 
@@ -204,7 +194,7 @@ namespace Growl
             {
                 if (disposing)
                 {
-                    if (this.sc != null) this.sc.Dispose();
+                    Kill();
                 }
                 this.disposed = true;
             }

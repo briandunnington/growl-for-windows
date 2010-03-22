@@ -125,6 +125,11 @@ namespace Growl.DisplayStyle
                 LayoutManager lm = GetLayoutManager(win);
                 if (lm != null) lm.Remove(win);
             }
+
+            win.AfterLoad -= new EventHandler(win_AfterLoad);
+            win.FormClosed -= new System.Windows.Forms.FormClosedEventHandler(win_FormClosed);
+            win.NotificationClicked -= new NotificationCallbackEventHandler(win_NotificationClicked);
+            win.NotificationClosed -= new NotificationCallbackEventHandler(win_NotificationClosed);
         }
 
         #region IDisplay Members

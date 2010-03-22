@@ -20,11 +20,11 @@
     <Setting Name="DefaultDisplay" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)">Standard</Value>
     </Setting>
-    <Setting Name="HistorySortBy" Provider="Growl.UserSettingsProvider" Type="Growl.UI.HistoryGroupItemsBy" Scope="User">
-      <Value Profile="(Default)">Date</Value>
-    </Setting>
     <Setting Name="HistoryDays" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="HistorySortBy" Provider="Growl.UserSettingsProvider" Type="Growl.UI.HistoryGroupItemsBy" Scope="User">
+      <Value Profile="(Default)">Date</Value>
     </Setting>
     <Setting Name="EnableLogging" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -91,6 +91,9 @@
     </Setting>
     <Setting Name="EmailForwardFromAddress" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)">growl@growlforwindows.com</Value>
+    </Setting>
+    <Setting Name="SettingsVersion" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

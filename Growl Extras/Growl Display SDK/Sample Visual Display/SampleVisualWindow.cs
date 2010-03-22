@@ -36,12 +36,12 @@ namespace Sample_Visual_Display
             HookUpClickEvents(this);
 
             // If you want your notification to automatically close after a set amount of time,
-            // call the AutoClose property to set the duration. The autoclose behavior will
+            // call the SetAutoCloseInterval method to set the duration. The autoclose behavior will
             // automatically trigger any associated Animator to peform any closing animation.
             // Setting the .Sticky property of the notification will override the AutoClose
             // behavior in the default implementation. It is almost always preferred to call
             // this method and let the base class handle the logic for you.
-            this.AutoClose(4000);
+            SetAutoCloseInterval(4000);
         }
 
         void SampleVisualWindow_AfterLoad(object sender, EventArgs e)

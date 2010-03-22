@@ -14,9 +14,9 @@ namespace Growl
     public static class Utility
     {
         private static string userSettingsFolder;
-        private static string userSettingsFolderBeta;
+        private static string commonPluginFolder;
         private static System.Diagnostics.FileVersionInfo fileVersionInfo;
-        private static bool debugMode = false;
+        private static bool debugMode;
         private static object debugLock = new object();
 
         static Utility()
@@ -44,15 +44,20 @@ namespace Growl
             System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
             fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(a.Location);
 
-            string root = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string folder = String.Format(@"Growl" + System.IO.Path.DirectorySeparatorChar + "{0}", a.GetName().Version.ToString());
-            string folderBeta = @"Growl" + System.IO.Path.DirectorySeparatorChar + "2.0b2";
-            userSettingsFolder = System.IO.Path.Combine(root, folder);
-            if (!userSettingsFolder.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString())) userSettingsFolder += System.IO.Path.DirectorySeparatorChar;
-            userSettingsFolderBeta = System.IO.Path.Combine(root, folderBeta);
-            if (!userSettingsFolderBeta.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString())) userSettingsFolderBeta += System.IO.Path.DirectorySeparatorChar;
+            string userroot = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string commonroot = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string subfolder = String.Format(@"Growl" + System.IO.Path.DirectorySeparatorChar + "{0}", a.GetName().Version.ToString());
 
+            userSettingsFolder = System.IO.Path.Combine(userroot, subfolder);
+            if (!userSettingsFolder.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString())) userSettingsFolder += System.IO.Path.DirectorySeparatorChar;
             Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(userSettingsFolder);
+
+            commonPluginFolder = System.IO.Path.Combine(commonroot, subfolder);
+            if (!commonPluginFolder.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString())) commonPluginFolder += System.IO.Path.DirectorySeparatorChar;
+            Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(commonPluginFolder);
+
+            // this allows plugins and other external code to write to the debug file
+            Growl.CoreLibrary.DebugInfo.Write += new Growl.CoreLibrary.DebugInfo.WriteEventHandler(DebugInfo_Write);
         }
 
         /// <summary>
@@ -68,14 +73,14 @@ namespace Growl
         }
 
         /// <summary>
-        /// Gets the full path to folder where all user settings were saved in earlier beta versions.
+        /// Gets the full path to folder where shared plugins are loaded from.
         /// </summary>
         /// <value>Full folder path</value>
-        public static string UserSettingFolderBeta
+        public static string CommonPluginFolder
         {
             get
             {
-                return userSettingsFolderBeta;
+                return commonPluginFolder;
             }
         }
 
@@ -172,10 +177,54 @@ namespace Growl
                     System.IO.StreamWriter w = System.IO.File.AppendText(debugFile);
                     using (w)
                     {
-                        w.WriteLine("{0} {1}", DateTime.Now, info);
+                        w.WriteLine("{0}\t{1}", DateTime.Now, info);
                     }
                 }
+                WriteLine(info);
             }
+        }
+
+        /// <summary>
+        /// Writes debug info to a log file
+        /// </summary>
+        /// <param name="info">The information to log</param>
+        public static void WriteDebugInfo(string format, params object[] parameters)
+        {
+            bool ok = DebugMode;
+
+            // always write debug info in debug builds
+#if (DEBUG)
+            ok = true;
+#endif
+
+            if (ok)
+            {
+                if (parameters == null || parameters.Length == 0)
+                    WriteDebugInfo(format);
+                else
+                    WriteDebugInfo(String.Format(format, parameters));
+            }
+        }
+
+        /// <summary>
+        /// Handles the DebugInfo.Write event
+        /// </summary>
+        /// <param name="info">The info to write to the debug file</param>
+        static void DebugInfo_Write(string info)
+        {
+            WriteDebugInfo(info);
+        }
+
+        /// <summary>
+        /// Just like Console.WriteLine, but only does anything when in debug mode
+        /// </summary>
+        /// <param name="info">The information to log</param>
+        private static void WriteLine(string info)
+        {
+#if (DEBUG)
+            if(info != null)
+                Console.WriteLine(info);
+#endif
         }
     }
 }

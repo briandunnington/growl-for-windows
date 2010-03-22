@@ -17,7 +17,17 @@ namespace Growl.CoreLibrary
         /// <returns><paramref name="name"/> with any invalid characters removed</returns>
         public static string GetSafeFolderName(string name)
         {
-            char[] disallowedChars = Path.GetInvalidPathChars();
+            // Path.GetInvalidPathChars() doesnt contain the actual list of invalid characters, so
+            // we have to use GetInvalidFileNameChars instead
+            char[] disallowedChars = Path.GetInvalidFileNameChars();
+
+            /*
+            // for some reason, '/' is allowed, but we dont want to allow it
+            char[] disallowedChars = new char[invalidChars.Length + 1];
+            Array.Copy(invalidChars, disallowedChars, invalidChars.Length);
+            disallowedChars[invalidChars.Length] = '/';
+            */
+
             return GetSafeName(name, disallowedChars);
         }
 

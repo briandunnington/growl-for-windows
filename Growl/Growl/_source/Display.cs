@@ -11,13 +11,14 @@ using Growl;
 namespace Growl
 {
     [Serializable]
-    public class Display : DefaultablePreference, ISerializable
+    public class Display : DefaultablePreference, ISerializable, IDisposable
     {
         public delegate void NotificationCallbackEventHandler(Growl.Daemon.CallbackInfo cbInfo, Growl.CoreLibrary.CallbackResult result);
         public event NotificationCallbackEventHandler NotificationCallback;
 
         internal static DisplayDefault Default = new DisplayDefault();
         internal static DisplayNone None = new DisplayNone();
+
         private Growl.DisplayStyle.IDisplay display;
         private Dictionary<string, Growl.Daemon.CallbackInfo> notificationsAwaitingCallback;
         private DisplayNotificationCallbackDelegate d = new DisplayNotificationCallbackDelegate();
@@ -67,7 +68,7 @@ namespace Growl
             }
         }
 
-        public virtual void ProcessNotification(DisplayStyle.Notification notification, Growl.Daemon.CallbackInfo cbInfo, Growl.Daemon.RequestInfo requestInfo)
+        public virtual void ProcessNotification(DisplayStyle.Notification notification, Growl.Daemon.CallbackInfo cbInfo, Growl.Connector.RequestInfo requestInfo)
         {
             try
             {
@@ -91,7 +92,7 @@ namespace Growl
         {
             get
             {
-                return DisplayStyleManager.GetSettingsPanel(this.display.DisplayStylePath);
+                return DisplayStyleManager.GetSettingsPanel(this.display.GetType().ToString());
             }
         }
 
@@ -188,13 +189,42 @@ namespace Growl
 
             public object GetRealObject(StreamingContext context)
             {
-                if (this.displayName != null)
-                    return DisplayStyleManager.FindDisplayStyle(this.displayName);
-
-                return null;
+                Display display = DisplayStyleManager.FindDisplayStyle(this.displayName);
+                if (display == null) display = Display.Default;
+                return display;
             }
 
             #endregion
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.display != null)
+                    {
+                        this.display.NotificationClicked -= d.OnNotificationCallback;
+                        this.display.NotificationClosed -= d.OnNotificationCallback;
+                        d.NotificationCallback += new Growl.CoreLibrary.NotificationCallbackEventHandler(display_NotificationCallback);
+                    }
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

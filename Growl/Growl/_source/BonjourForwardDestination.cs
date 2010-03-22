@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Security;
 using System.Security.Permissions;
 using System.Text;
+using Growl.Destinations;
 using Mono.Zeroconf;
 
 namespace Growl
@@ -20,7 +21,7 @@ namespace Growl
             this.serviceName = serviceName;
          }
 
-        private BonjourForwardDestination(string serviceName, ForwardDestinationPlatformType platform, bool enabled, string password) : this(serviceName, enabled, password)
+        private BonjourForwardDestination(string serviceName, DestinationPlatformType platform, bool enabled, string password) : this(serviceName, enabled, password)
         {
             this.Platform = platform;
         }
@@ -45,6 +46,17 @@ namespace Growl
             }
         }
 
+        public override string AddressDisplay
+        {
+            get
+            {
+                if (this.Available)
+                    return base.AddressDisplay;
+                else
+                    return "(offline)";
+            }
+        }
+
         public bool Resolved
         {
             get
@@ -53,7 +65,7 @@ namespace Growl
             }
         }
 
-        public void Update(IResolvableService service, GrowlBonjourEventArgs args)
+        public void Update(IResolvableService service, BonjourEventArgs args)
         {
             if (service != null && service.HostEntry != null)
             {
@@ -75,7 +87,7 @@ namespace Growl
             this.Available = false;
         }
 
-        public override ForwardDestination Clone()
+        public override DestinationBase Clone()
         {
             BonjourForwardDestination clone = new BonjourForwardDestination(this.Description, this.Platform, this.Enabled, this.Password);
             clone.IPAddress = this.IPAddress;
@@ -91,7 +103,7 @@ namespace Growl
         {
             info.SetType(typeof(BonjourForwardDestinationSerializationHelper));
             info.AddValue("serviceName", this.serviceName, typeof(string));
-            info.AddValue("platform", this.Platform, typeof(ForwardDestinationPlatformType));
+            info.AddValue("platform", this.Platform, typeof(DestinationPlatformType));
             info.AddValue("enabled", this.Enabled, typeof(bool));
             info.AddValue("password", this.Password, typeof(string));
         }
@@ -103,7 +115,7 @@ namespace Growl
         private class BonjourForwardDestinationSerializationHelper : IObjectReference
         {
             private string serviceName = null;
-            private ForwardDestinationPlatformType platform = ForwardDestinationPlatformType.Other;
+            private DestinationPlatformType platform = KnownDestinationPlatformType.Other;
             private bool enabled = false;
             private string password = null;
 
@@ -111,8 +123,10 @@ namespace Growl
 
             public object GetRealObject(StreamingContext context)
             {
-                if (this.platform == null) this.platform = ForwardDestinationPlatformType.Other;
-                return new BonjourForwardDestination(this.serviceName, this.platform, this.enabled, this.password);
+                if (this.platform == null) this.platform = KnownDestinationPlatformType.Other;
+                BonjourForwardDestination bfd = new BonjourForwardDestination(this.serviceName, this.platform, this.enabled, this.password);
+                bfd.NotAvailable();
+                return bfd;
             }
 
             #endregion

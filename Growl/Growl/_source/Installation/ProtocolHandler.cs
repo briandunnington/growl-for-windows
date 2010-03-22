@@ -35,9 +35,11 @@ namespace Growl.Installation
                 {
                     case "display":
                         InstallDisplay id = new InstallDisplay();
-                        bool newDisplayLoaded = id.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications);
-                        if (newDisplayLoaded) result = ApplicationMain.Signal.ReloadDisplays;
-                        id.Close();
+                        using (id)
+                        {
+                            bool newDisplayLoaded = id.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications);
+                            if (newDisplayLoaded) result = ApplicationMain.Signal.ReloadDisplays;
+                        }
                         id = null;
                         break;
                     case "extension":
@@ -45,13 +47,37 @@ namespace Growl.Installation
                         break;
                     case "language":
                         InstallLanguage il = new InstallLanguage();
-                        bool languageInstalled = il.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications, ref signalValue);
-                        if (languageInstalled) result = ApplicationMain.Signal.UpdateLanguage;
-                        il.Close();
+                        using (il)
+                        {
+                            bool languageInstalled = il.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications, ref signalValue);
+                            if (languageInstalled) result = ApplicationMain.Signal.UpdateLanguage;
+                        }
                         il = null;
+                        break;
+                    case "forwarder":
+                        InstallForwarder ifwd = new InstallForwarder();
+                        using (ifwd)
+                        {
+                            bool installed = ifwd.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications, ref signalValue);
+                            if (installed) result = ApplicationMain.Signal.ReloadForwarders;
+                        }
+                        ifwd = null;
+                        break;
+                    case "subscriber":
+                        InstallSubscriber isub = new InstallSubscriber();
+                        using (isub)
+                        {
+                            bool installed = isub.LaunchInstaller(data, this.appIsAlreadyRunning, ref queuedNotifications, ref signalValue);
+                            if (installed) result = ApplicationMain.Signal.ReloadSubscribers;
+                        }
+                        isub = null;
                         break;
                 }
             }
+
+            // go silent to suppress the 'Growl is running' notification if another event has occurred
+            if (result > 0) result = result | ApplicationMain.Signal.Silent;
+
             return result;
         }
     }

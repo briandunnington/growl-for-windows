@@ -15,7 +15,6 @@ namespace Growl.UI
         private ToolTip tooltip;
         private int currentTooltipItem = NONE;
         private Growl.Connector.PasswordManager pm;
-        private Color highlightColor = Color.FromArgb(254, 250, 184);
 
         public PasswordManagerControl()
         {
@@ -55,8 +54,6 @@ namespace Growl.UI
 
         private void PasswordManagerControl_Load(object sender, EventArgs e)
         {
-            this.textBoxPassword.HighlightColor = highlightColor;
-            this.textBoxDescription.HighlightColor = highlightColor;
         }
 
         private void passwordListBox_MouseMove(object sender, MouseEventArgs e)
@@ -256,6 +253,7 @@ namespace Growl.UI
 
                 if (this.tooltip != null)
                 {
+                    this.tooltip.RemoveAll();
                     this.tooltip.Dispose();
                     this.tooltip = null;
                 }

@@ -1,12 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Growl.Destinations;
 
 namespace Growl
 {
     public class BonjourForwardDestinationHandler : IForwardDestinationHandler
     {
         #region IForwardDestinationHandler Members
+
+        public string Name
+        {
+            get
+            {
+                return "Bonjour Forwarder";
+            }
+        }
 
         public List<Type> Register()
         {
@@ -15,19 +24,19 @@ namespace Growl
             return list;
         }
 
-        public Growl.UI.ForwardDestinationSettingsPanel GetSettingsPanel(ForwardDestination fd)
+        public Growl.Destinations.DestinationSettingsPanel GetSettingsPanel(DestinationBase db)
         {
             return new Growl.UI.ForwardDestinationInputs();
         }
 
-        public Growl.UI.ForwardDestinationSettingsPanel GetSettingsPanel(ForwardDestinationListItem fdli)
+        public Growl.Destinations.DestinationSettingsPanel GetSettingsPanel(DestinationListItem fdli)
         {
             return new Growl.UI.ForwardDestinationInputs();
         }
 
-        public List<ForwardDestinationListItem> GetListItems()
+        public List<DestinationListItem> GetListItems()
         {
-            List<ForwardDestinationListItem> list = new List<ForwardDestinationListItem>();
+            List<DestinationListItem> list = new List<DestinationListItem>();
             Controller controller = Controller.GetController();
             if (controller != null)
             {

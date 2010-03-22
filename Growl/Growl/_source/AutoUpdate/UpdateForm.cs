@@ -102,5 +102,28 @@ namespace Growl.AutoUpdate
         {
             this.Close();
         }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (this.updater != null)
+                {
+                    this.updater.DownloadProgressChanged -= new ProgressChangedEventHandler(updater_DownloadProgressChanged);
+                    this.updater.DownloadComplete -= new EventHandler(updater_DownloadComplete);
+                    this.updater.UpdateError -= new UpdateErrorEventHandler(updater_UpdateError);
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }

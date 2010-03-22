@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Growl.UDPLegacy;
+using Growl.Destinations;
 
 namespace Growl
 {
     [Serializable]
-    public class UDPForwardDestination : ForwardDestination
+    public class UDPForwardDestination : Growl.Destinations.ForwardDestination
     {
         private string ipAddress;
         private int port;
@@ -72,20 +73,24 @@ namespace Growl
         {
             get
             {
+                return String.Format("UDP {0}:{1}", this.ipAddress, this.port);
+
+                /*
                 if (this.Available)
                     return String.Format("UDP {0}:{1} {2}", this.ipAddress, this.port, (this.AdditionalOnlineDisplayInfo != null ? String.Format("({0})", this.AdditionalOnlineDisplayInfo) : null));
                 else
                     return String.Format("(offline) {0}", (this.AdditionalOfflineDisplayInfo != null ? String.Format("- {0}", this.AdditionalOfflineDisplayInfo) : null));
+                 * */
             }
         }
 
-        public override ForwardDestination Clone()
+        public override DestinationBase Clone()
         {
             UDPForwardDestination clone = new UDPForwardDestination(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password);
             return clone;
         }
 
-        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
+        public override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Connector.RequestInfo requestInfo, bool isIdle)
         {
             Growl.UDPLegacy.NotificationType[] types = new Growl.UDPLegacy.NotificationType[notificationTypes.Count];
             for (int i = 0; i < notificationTypes.Count; i++)
@@ -99,7 +104,7 @@ namespace Growl
             netgrowl.Register(ref types);
         }
 
-        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
+        public override void ForwardNotification(Growl.Connector.Notification notification, Growl.Connector.CallbackContext callbackContext, Growl.Connector.RequestInfo requestInfo, bool isIdle, ForwardedNotificationCallbackHandler callbackFunction)
         {
             Growl.UDPLegacy.NotificationType nt = new Growl.UDPLegacy.NotificationType(notification.Name, true);
             Growl.UDPLegacy.MessageSender netgrowl = new Growl.UDPLegacy.MessageSender(this.IPAddress, this.Port, notification.ApplicationName, this.Password);

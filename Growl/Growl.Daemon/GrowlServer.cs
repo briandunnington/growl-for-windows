@@ -211,6 +211,7 @@ namespace Growl.Daemon
             PathUtility.EnsureDirectoryExists(this.resourceFolder);
 
             this.listenSocket = new AsyncSocket();
+            this.listenSocket.AllowMultithreadedCallbacks = true; // VERY IMPORTANT: if we dont set this, async socket events will silently be swallowed by the AsyncSocket class
             listenSocket.DidAccept += new AsyncSocket.SocketDidAccept(listenSocket_DidAccept);
             //listenSocket.DidDisconnect += new AsyncSocket.SocketDidDisconnect(listenSocket_DidDisconnect);
 
@@ -746,14 +747,32 @@ namespace Growl.Daemon
             {
                 if (this.connectedHandlers.ContainsKey(sender))
                 {
-                    this.connectedHandlers[sender] = null;
+                    MessageHandler mh = this.connectedHandlers[sender];
                     this.connectedHandlers.Remove(sender);
-                }
-                if (this.connectedSockets.Contains(sender))
-                {
-                    ConnectedSocket cs = this.connectedSockets[sender];
-                    this.connectedSockets.Remove(sender);
-                    cs = null;
+
+                    if (this.connectedSockets.Contains(sender))
+                    {
+                        ConnectedSocket cs = this.connectedSockets[sender];
+                        this.connectedSockets.Remove(sender);
+
+                        if (cs.Socket != null)
+                        {
+                            cs.Socket.DidClose -= new AsyncSocket.SocketDidClose(newSocket_DidClose);
+                            cs.Socket.DidRead -= new AsyncSocket.SocketDidRead(mh.SocketDidRead);
+                            cs.Socket.DidWrite -= new AsyncSocket.SocketDidWrite(mh.SocketDidWrite);
+                        }
+
+                        cs = null;
+                    }
+
+                    if (mh != null)
+                    {
+                        mh.MessageParsed -= new MessageHandler.MessageHandlerMessageParsedEventHandler(mh_MessageParsed);
+                        mh.Error -= new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
+                        mh.SocketUsageComplete -= new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
+                    }
+
+                    mh = null;
                 }
 
                 sender = null;
@@ -870,8 +889,27 @@ namespace Growl.Daemon
             {
                 try
                 {
-                    if (this.socketCleanupTimer != null) this.socketCleanupTimer.Close();
-                    if (this.bonjour != null) this.bonjour.Dispose();
+                    Stop();
+
+                    if (this.listenSocket != null)
+                    {
+                        this.listenSocket.DidAccept -= new AsyncSocket.SocketDidAccept(listenSocket_DidAccept);
+                        this.listenSocket = null;
+                    }
+
+                    if (this.socketCleanupTimer != null)
+                    {
+                        this.socketCleanupTimer.Elapsed -= new System.Timers.ElapsedEventHandler(socketCleanupTimer_Elapsed);
+                        this.socketCleanupTimer.Close();
+                        this.socketCleanupTimer.Dispose();
+                        this.socketCleanupTimer = null;
+                    }
+
+                    if (this.bonjour != null)
+                    {
+                        this.bonjour.Dispose();
+                        this.bonjour = null;
+                    }
                 }
                 catch
                 {

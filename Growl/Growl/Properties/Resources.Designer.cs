@@ -398,6 +398,15 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscribe to Growl notifications\non another machine.
+        /// </summary>
+        internal static string AddSubscription_AddGNTP {
+            get {
+                return ResourceManager.GetString("AddSubscription_AddGNTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Any Priority].
         /// </summary>
         internal static string AddTwitter_AnyPriority {
@@ -568,34 +577,6 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap button_add {
-            get {
-                object obj = ResourceManager.GetObject("button_add", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap button_add_dim {
-            get {
-                object obj = ResourceManager.GetObject("button_add_dim", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap button_bg {
-            get {
-                object obj = ResourceManager.GetObject("button_bg", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap button_bg_dim {
-            get {
-                object obj = ResourceManager.GetObject("button_bg_dim", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -659,20 +640,6 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap button_remove {
-            get {
-                object obj = ResourceManager.GetObject("button_remove", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap button_remove_dim {
-            get {
-                object obj = ResourceManager.GetObject("button_remove_dim", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
@@ -709,20 +676,6 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Clock {
-            get {
-                object obj = ResourceManager.GetObject("Clock", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Clock2 {
-            get {
-                object obj = ResourceManager.GetObject("Clock2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap close_blue {
             get {
                 object obj = ResourceManager.GetObject("close_blue", resourceCulture);
@@ -733,20 +686,6 @@ namespace Growl.Properties {
         internal static System.Drawing.Bitmap close_red {
             get {
                 object obj = ResourceManager.GetObject("close_red", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Config {
-            get {
-                object obj = ResourceManager.GetObject("Config", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Config_Tools {
-            get {
-                object obj = ResourceManager.GetObject("Config-Tools", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -877,9 +816,9 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Envelope {
+        internal static System.Drawing.Bitmap email {
             get {
-                object obj = ResourceManager.GetObject("Envelope", resourceCulture);
+                object obj = ResourceManager.GetObject("email", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -912,6 +851,96 @@ namespace Growl.Properties {
         internal static string FailedToStart_Message_UDP {
             get {
                 return ResourceManager.GetString("FailedToStart_Message_UDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin &apos;{0}&apos; is already installed..
+        /// </summary>
+        internal static string ForwarderInstaller_AlreadyInstalled {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_AlreadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; is invalid.\n\nThe plugin could not be installed..
+        /// </summary>
+        internal static string ForwarderInstaller_BadDefinitionFile {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_BadDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The installation of the plugin was cancelled.\n\nThe plugin was not installed..
+        /// </summary>
+        internal static string ForwarderInstaller_DownloadCancelled {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_DownloadCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while downloading the plugin files.\n\nThe plugin was not installed..
+        /// </summary>
+        internal static string ForwarderInstaller_DownloadError {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Forwarder Plugin.
+        /// </summary>
+        internal static string ForwarderInstaller_FormTitle {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_FormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The plugin &apos;{0}&apos; was installed successfully..
+        /// </summary>
+        internal static string ForwarderInstaller_InstalledText {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_InstalledText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Plugin Installed.
+        /// </summary>
+        internal static string ForwarderInstaller_InstalledTitle {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_InstalledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing plugin....
+        /// </summary>
+        internal static string ForwarderInstaller_Installing {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_Installing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; does not exist.\n\nThe plugin could not be installed..
+        /// </summary>
+        internal static string ForwarderInstaller_NonexistentDefinitionFile {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_NonexistentDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}.
+        /// </summary>
+        internal static string ForwarderInstaller_Prompt {
+            get {
+                return ResourceManager.GetString("ForwarderInstaller_Prompt", resourceCulture);
             }
         }
         
@@ -1012,31 +1041,10 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap growl {
-            get {
-                object obj = ResourceManager.GetObject("growl", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap growl_big {
-            get {
-                object obj = ResourceManager.GetObject("growl-big", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Icon growl_dim {
             get {
                 object obj = ResourceManager.GetObject("growl_dim", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap growl_highlighted {
-            get {
-                object obj = ResourceManager.GetObject("growl_highlighted", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1433,13 +1441,6 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Locker {
-            get {
-                object obj = ResourceManager.GetObject("Locker", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap mac {
             get {
                 object obj = ResourceManager.GetObject("mac", resourceCulture);
@@ -1459,20 +1460,6 @@ namespace Growl.Properties {
         internal static System.Drawing.Bitmap mobile {
             get {
                 object obj = ResourceManager.GetObject("mobile", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap My_Computer {
-            get {
-                object obj = ResourceManager.GetObject("My-Computer", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Network {
-            get {
-                object obj = ResourceManager.GetObject("Network", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1603,16 +1590,9 @@ namespace Growl.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap off_button {
+        internal static System.Drawing.Bitmap notifyio {
             get {
-                object obj = ResourceManager.GetObject("off_button", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap on_button {
-            get {
-                object obj = ResourceManager.GetObject("on_button", resourceCulture);
+                object obj = ResourceManager.GetObject("notifyio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1798,6 +1778,13 @@ namespace Growl.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap rss {
+            get {
+                object obj = ResourceManager.GetObject("rss", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Allow network notifications.
         /// </summary>
@@ -1912,6 +1899,96 @@ namespace Growl.Properties {
         internal static string SplashScreen_Version {
             get {
                 return ResourceManager.GetString("SplashScreen_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin &apos;{0}&apos; is already installed..
+        /// </summary>
+        internal static string SubscriberInstaller_AlreadyInstalled {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_AlreadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; is invalid.\n\nThe plugin could not be installed..
+        /// </summary>
+        internal static string SubscriberInstaller_BadDefinitionFile {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_BadDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The installation of the plugin was cancelled.\n\nThe plugin was not installed..
+        /// </summary>
+        internal static string SubscriberInstaller_DownloadCancelled {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_DownloadCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while downloading the plugin files.\n\nThe plugin was not installed..
+        /// </summary>
+        internal static string SubscriberInstaller_DownloadError {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Subscriber Plugin.
+        /// </summary>
+        internal static string SubscriberInstaller_FormTitle {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_FormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The plugin &apos;{0}&apos; was installed successfully..
+        /// </summary>
+        internal static string SubscriberInstaller_InstalledText {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_InstalledText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Plugin Installed.
+        /// </summary>
+        internal static string SubscriberInstaller_InstalledTitle {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_InstalledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing plugin....
+        /// </summary>
+        internal static string SubscriberInstaller_Installing {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_Installing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The definition file &apos;{0}&apos; does not exist.\n\nThe plugin could not be installed..
+        /// </summary>
+        internal static string SubscriberInstaller_NonexistentDefinitionFile {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_NonexistentDefinitionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}.
+        /// </summary>
+        internal static string SubscriberInstaller_Prompt {
+            get {
+                return ResourceManager.GetString("SubscriberInstaller_Prompt", resourceCulture);
             }
         }
         

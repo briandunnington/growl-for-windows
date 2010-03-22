@@ -35,29 +35,6 @@ namespace Growl.Displays.Smokestack
             e.Graphics.DrawImage(global::Growl.Displays.Smokestack.Properties.Resources.overlay, this.overlayPosition);
         }
 
-        /*
-        private SmokestackDisplay.Location GetLocationFromSetting()
-        {
-            SmokestackDisplay.Location location = SmokestackDisplay.Location.TopRight;
-            Dictionary<string, object> settings = this.GetSettings();
-            if (settings != null && settings.ContainsKey(SmokestackDisplay.SETTING_DISPLAYLOCATION))
-            {
-                try
-                {
-                    object val = settings[SmokestackDisplay.SETTING_DISPLAYLOCATION];
-                    if (val is SmokestackDisplay.Location)
-                    {
-                        location = (SmokestackDisplay.Location)val;
-                    }
-                }
-                catch
-                {
-                }
-            }
-            return location;
-        }
-         * */
-
         private Point GetLocation()
         {
             Point p = TOP_RIGHT;

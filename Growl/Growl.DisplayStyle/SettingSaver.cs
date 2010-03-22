@@ -32,7 +32,8 @@ namespace Growl.DisplayStyle
         /// <param name="fileName">The name of the file</param>
         public SettingSaver(string filePath, string fileName)
         {
-            this.path = filePath + fileName;
+            this.path = System.IO.Path.Combine(filePath, fileName);
+            Growl.CoreLibrary.PathUtility.EnsureDirectoryExists(filePath);
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace Growl.DisplayStyle
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(String.Format("Failed to load settings from '{0}' - {1}", this.path, ex.Message));
+                Growl.CoreLibrary.DebugInfo.WriteLine(String.Format("Failed to load settings from '{0}' - {1}", this.path, ex.Message));
             }
             return settings;
         }
@@ -131,13 +132,16 @@ namespace Growl.DisplayStyle
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(stream, obj);
+                formatter = null;
                 int length = Convert.ToInt32(stream.Length);
                 byte[] buffer = new byte[length];
                 stream.Position = 0;
                 stream.Read(buffer, 0, length);
                 serializedObject = Convert.ToBase64String(buffer);
                 stream.Close();
+                buffer = null;
             }
+            stream = null;
             return serializedObject;
         }
 
@@ -155,13 +159,19 @@ namespace Growl.DisplayStyle
 
             object obj = null;
             byte[] bytes = Convert.FromBase64String(serializedObject);
-            MemoryStream stream = new MemoryStream(bytes);
-            using (stream)
+            if (bytes != null && bytes.Length > 0)
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                obj = formatter.Deserialize(stream);
-                stream.Close();
+                MemoryStream stream = new MemoryStream(bytes);
+                using (stream)
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    obj = formatter.Deserialize(stream);
+                    stream.Close();
+                    formatter = null;
+                }
+                stream = null;
             }
+            bytes = null;
             return obj;
         }
     }

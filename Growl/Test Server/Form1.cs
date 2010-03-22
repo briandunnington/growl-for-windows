@@ -65,13 +65,13 @@ namespace Test_Server
             }
         }
 
-        Growl.Daemon.SubscriptionResponse server_SubscribeReceived(Growl.Daemon.Subscriber subscriber, Growl.Daemon.RequestInfo requestInfo)
+        Growl.Daemon.SubscriptionResponse server_SubscribeReceived(Growl.Daemon.Subscriber subscriber, Growl.Connector.RequestInfo requestInfo)
         {
             Growl.Daemon.SubscriptionResponse r = new Growl.Daemon.SubscriptionResponse(300);
             return r;
         }
 
-        Response server_NotifyReceived(Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo)
+        Response server_NotifyReceived(Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Connector.RequestInfo requestInfo)
         {
             Response response = new Response();
 
@@ -95,7 +95,7 @@ namespace Test_Server
             return response;
         }
 
-        Response server_RegisterReceived(Growl.Connector.Application application, List<NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo)
+        Response server_RegisterReceived(Growl.Connector.Application application, List<NotificationType> notificationTypes, Growl.Connector.RequestInfo requestInfo)
         {
             if (requestInfo.PreviousReceivedHeaders.Count < 0)  // change to a positive number to forward
             {

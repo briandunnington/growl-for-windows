@@ -389,7 +389,13 @@ namespace Growl.DisplayStyle
         {
             if (disposing)
             {
-                if (this._form != null) this._form.Dispose();
+                if (this._form != null)
+                {
+                    this._form.VisibleChanged -= new EventHandler(Form_VisibleChanged);
+                    this._form.Closing -= new CancelEventHandler(Form_Closing);
+                    this._form.Dispose();
+                    this._form = null;
+                }
             }
         }
 

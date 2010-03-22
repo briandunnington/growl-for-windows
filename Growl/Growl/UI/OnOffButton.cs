@@ -82,11 +82,11 @@ namespace Growl.UI
 
             if (this.on)
             {
-                this.Image = global::Growl.Properties.Resources.on_button;
+                this.Image = Growl.FormResources.on_button;
             }
             else
             {
-                this.Image = global::Growl.Properties.Resources.off_button;
+                this.Image = Growl.FormResources.off_button;
             }
         }
     }

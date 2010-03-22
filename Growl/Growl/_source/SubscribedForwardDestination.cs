@@ -5,6 +5,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Text;
 using Growl.Connector;
+using Growl.Destinations;
 
 namespace Growl
 {
@@ -29,26 +30,26 @@ namespace Growl
         private System.Timers.Timer timer;
 
         public SubscribedForwardDestination(Growl.Daemon.Subscriber subscriber, int ttl)
-            : this(subscriber.Name, true, subscriber.IPAddress, subscriber.Port, subscriber.Key.Password, ForwardDestinationPlatformType.FromString(subscriber.PlatformName), ttl)
+            : this(subscriber.Name, true, subscriber.IPAddress, subscriber.Port, subscriber.Key.Password, KnownDestinationPlatformType.FromString(subscriber.PlatformName), ttl)
         {
-            this.Key = subscriber.ID;
+            base.Key = subscriber.ID;
             this.hashAlgorithm = subscriber.Key.HashAlgorithm;
             this.encryptionAlgorithm = subscriber.Key.EncryptionAlgorithm;
         }
 
-        private SubscribedForwardDestination(string name, bool enabled, string ipAddress, int port, string password, ForwardDestinationPlatformType platform, int ttl, bool available)
+        private SubscribedForwardDestination(string name, bool enabled, string ipAddress, int port, string password, DestinationPlatformType platform, int ttl, bool available)
             : this(name, enabled, ipAddress, port, password, platform, ttl)
         {
             // this is only used by the .Clone method to create an instance with no timer or key information
         }
 
-        private SubscribedForwardDestination(string name, bool enabled, string ipAddress, int port, string password, ForwardDestinationPlatformType platform, int ttl)
+        private SubscribedForwardDestination(string name, bool enabled, string ipAddress, int port, string password, DestinationPlatformType platform, int ttl)
             : base(name, enabled, ipAddress, port, password)
         {
-            this.Platform = platform;
+            base.Platform = platform;
             this.available = true;
             this.ttl = ttl;
-            this.AdditionalOnlineDisplayInfo = "subscribed";
+            base.AdditionalDisplayInfo = "subscribed";
 
             this.Renew();
         }
@@ -118,7 +119,7 @@ namespace Growl
             }
         }
 
-        public override ForwardDestination Clone()
+        public override DestinationBase Clone()
         {
             SubscribedForwardDestination clone = new SubscribedForwardDestination(this.Description, this.Enabled, this.IPAddress, this.Port, this.Password, this.Platform, this.TTL, this.Available);
             return clone;
@@ -138,8 +139,12 @@ namespace Growl
             {
                 if (disposing)
                 {
-                    if(this.timer != null)
+                    if (this.timer != null)
+                    {
+                        this.timer.Elapsed -= new System.Timers.ElapsedEventHandler(timer_Elapsed);
                         this.timer.Dispose();
+                        this.timer = null;
+                    }
                 }
                 this.disposed = true;
             }

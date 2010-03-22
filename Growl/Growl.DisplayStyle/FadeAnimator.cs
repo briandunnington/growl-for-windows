@@ -218,8 +218,20 @@ namespace Growl.DisplayStyle
         {
             if (disposing)
             {
-                if (this.timer != null) this.timer.Dispose();
-                if (this.form != null) this.form.Dispose();
+                if (this.timer != null)
+                {
+                    this.timer.Tick -= new EventHandler(timer_Tick);
+                    this.timer.Dispose();
+                    this.timer = null;
+                }
+
+                if (this.form != null)
+                {
+                    this.form.BeforeShown -= new EventHandler(form_BeforeShown);
+                    this.form.AutoClosing -= new FormClosingEventHandler(form_AutoClosing);
+                    this.form.Dispose();
+                    this.form = null;
+                }
             }
         }
 

@@ -73,8 +73,12 @@ namespace GrowlExtras.OutlookAddIn
                             if (obj is Outlook.MailItem)
                             {
                                 Outlook.MailItem message = (Outlook.MailItem)obj;
-                                string body = message.Body.Replace("\r\n", "\n");
-                                body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
+                                string body = message.Body;
+                                if (!String.IsNullOrEmpty(body))
+                                {
+                                    body = body.Replace("\r\n", "\n");
+                                    body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
+                                }
 
                                 // just saving this for future reference
                                 //Outlook.MAPIFolder folder = message.Parent as Outlook.MAPIFolder;
@@ -98,8 +102,12 @@ namespace GrowlExtras.OutlookAddIn
                             else if (obj is Outlook.MeetingItem)
                             {
                                 Outlook.MeetingItem message = (Outlook.MeetingItem)obj;
-                                string body = message.Body.Replace("\r\n", "\n");
-                                body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
+                                string body = message.Body;
+                                if (!String.IsNullOrEmpty(body))
+                                {
+                                    body = body.Replace("\r\n", "\n");
+                                    body = (body.Length > 50 ? body.Substring(0, 50) + "..." : body);
+                                }
 
                                 title = message.Subject;
                                 if (!String.IsNullOrEmpty(title)) title = title.Trim();

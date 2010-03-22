@@ -30,14 +30,13 @@ namespace Growl.UI
         {
             this.comboBoxFormat = new System.Windows.Forms.ComboBox();
             this.labelFormat = new System.Windows.Forms.Label();
-            this.textBoxAddress = new Growl.UI.HighlightTextBox();
+            this.textBoxAddress = new Growl.Destinations.HighlightTextBox();
             this.labelAddress = new System.Windows.Forms.Label();
-            this.textBoxDescription = new Growl.UI.HighlightTextBox();
+            this.textBoxDescription = new Growl.Destinations.HighlightTextBox();
             this.labelDescription = new System.Windows.Forms.Label();
-            this.panelDetails = new System.Windows.Forms.Panel();
-            this.textBoxPassword = new Growl.UI.HighlightTextBox();
+            this.textBoxPassword = new Growl.Destinations.HighlightTextBox();
             this.labelPassword = new System.Windows.Forms.Label();
-            this.textBoxPort = new Growl.UI.HighlightTextBox();
+            this.textBoxPort = new Growl.Destinations.HighlightTextBox();
             this.labelPort = new System.Windows.Forms.Label();
             this.panelDetails.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +62,6 @@ namespace Growl.UI
             // 
             // textBoxAddress
             // 
-            this.textBoxAddress.HighlightColor = System.Drawing.Color.Red;
             this.textBoxAddress.Location = new System.Drawing.Point(109, 33);
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(199, 20);
@@ -82,7 +80,6 @@ namespace Growl.UI
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.HighlightColor = System.Drawing.Color.Red;
             this.textBoxDescription.Location = new System.Drawing.Point(109, 7);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(199, 20);
@@ -111,14 +108,9 @@ namespace Growl.UI
             this.panelDetails.Controls.Add(this.labelAddress);
             this.panelDetails.Controls.Add(this.textBoxDescription);
             this.panelDetails.Controls.Add(this.labelDescription);
-            this.panelDetails.Location = new System.Drawing.Point(0, 0);
-            this.panelDetails.Name = "panelDetails";
-            this.panelDetails.Size = new System.Drawing.Size(338, 168);
-            this.panelDetails.TabIndex = 7;
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.HighlightColor = System.Drawing.Color.Red;
             this.textBoxPassword.Location = new System.Drawing.Point(109, 85);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(199, 20);
@@ -138,7 +130,6 @@ namespace Growl.UI
             // 
             // textBoxPort
             // 
-            this.textBoxPort.HighlightColor = System.Drawing.Color.Red;
             this.textBoxPort.Location = new System.Drawing.Point(109, 59);
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(199, 20);
@@ -160,9 +151,7 @@ namespace Growl.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.panelDetails);
             this.Name = "ForwardDestinationInputs";
-            this.Controls.SetChildIndex(this.panelDetails, 0);
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
             this.ResumeLayout(false);
@@ -173,14 +162,13 @@ namespace Growl.UI
 
         private System.Windows.Forms.ComboBox comboBoxFormat;
         private System.Windows.Forms.Label labelFormat;
-        private HighlightTextBox textBoxAddress;
+        private Growl.Destinations.HighlightTextBox textBoxAddress;
         private System.Windows.Forms.Label labelAddress;
-        private HighlightTextBox textBoxDescription;
+        private Growl.Destinations.HighlightTextBox textBoxDescription;
         private System.Windows.Forms.Label labelDescription;
-        private System.Windows.Forms.Panel panelDetails;
-        private HighlightTextBox textBoxPassword;
+        private Growl.Destinations.HighlightTextBox textBoxPassword;
         private System.Windows.Forms.Label labelPassword;
-        private HighlightTextBox textBoxPort;
+        private Growl.Destinations.HighlightTextBox textBoxPort;
         private System.Windows.Forms.Label labelPort;
     }
 }

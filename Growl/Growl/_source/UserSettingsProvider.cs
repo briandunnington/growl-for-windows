@@ -13,7 +13,6 @@ namespace Growl
         private const string USER_SETTINGS_SECTION_NAME = "userSettings";
         string path = SettingSaver.GetPath("user.config");
         string pathBackup = SettingSaver.GetPath("user.config.bak");
-        string pathAlt = SettingSaver.GetPathAlt("user.config");
         XmlEscaper escaper;
 
         public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
@@ -94,6 +93,7 @@ namespace Growl
                     clientSettings.Settings.Add(se);
                 }
                 config.Save();
+                config = null;
             }
             catch
             {
@@ -119,7 +119,7 @@ namespace Growl
             config = null;
             string[] files;
             if (tryAlternates)
-                files = new string[] { this.FileName, this.BackupFileName, this.pathAlt };
+                files = new string[] { this.FileName, this.BackupFileName };
             else
                 files = new string[] { this.FileName };
 
@@ -178,6 +178,7 @@ namespace Growl
                 {
                     serializedValue = Convert.ToBase64String(inArray);
                 }
+                inArray = null;
             }
             if (serializedValue == null)
             {
@@ -218,6 +219,7 @@ namespace Growl
                         innerXml = this.Escaper.Unescape(innerXml);
                     }
                     spv.SerializedValue = innerXml;
+                    innerXml = null;
                 }
                 else if (property.DefaultValue != null)
                 {

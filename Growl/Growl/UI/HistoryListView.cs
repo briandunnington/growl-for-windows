@@ -8,6 +8,9 @@ namespace Growl.UI
 {
     public class HistoryListView : ListView
     {
+        public EventHandler RedrawStarted;
+        public EventHandler RedrawFinished;
+
         private const int DEFAULT_NUMBER_OF_DAYS = 7;
         public const int MIN_NUMBER_OF_DAYS = 1;
         public const int MAX_NUMBER_OF_DAYS = 7;
@@ -15,12 +18,11 @@ namespace Growl.UI
         private const int SCROLLBAR_WIDTH = 26;
         private const string DATETIME_COMPARISON_INDICATOR = "datetime";
 
-        private string filter = null;
+        private string filter;
         private HistoryGroupItemsBy groupBy = HistoryGroupItemsBy.Date;
         private int numberOfDays;
         private List<PastNotification> pastNotifications;
-        private ImageList imageList;
-        private List<string> dateGroups;
+        private ListViewGroup[] dateGroups;
         private bool useCustomToolTips;
         private ToolTip tooltip = new ToolTip();
         private DateTime currentEndOfToday;
@@ -39,11 +41,6 @@ namespace Growl.UI
 
             this.View = View.Tile;
 
-            this.imageList = new ImageList();
-            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imageList.ImageSize = new System.Drawing.Size(48, 48);
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-
             this.OwnerDraw = true;
             this.DoubleBuffered = true;
 
@@ -51,14 +48,14 @@ namespace Growl.UI
             this.Scrollable = true;
             this.ShowItemToolTips = true;
             this.LabelWrap = false;
-            this.LargeImageList = this.imageList;
-            this.SmallImageList = this.imageList;
             this.UseCompatibleStateImageBehavior = false;
+            this.ListViewItemSorter = null;
 
             this.numberOfDays = DEFAULT_NUMBER_OF_DAYS;
 
             this.Resize += new EventHandler(HistoryListView_Resize);
             this.DrawItem += new DrawListViewItemEventHandler(HistoryListView_DrawItem);
+            this.DrawSubItem += new DrawListViewSubItemEventHandler(HistoryListView_DrawSubItem);
             this.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(HistoryListView_DrawColumnHeader);
             this.ColumnClick += new ColumnClickEventHandler(HistoryListView_ColumnClick);
 
@@ -128,33 +125,86 @@ namespace Growl.UI
             e.DrawDefault = true;
         }
 
+        void HistoryListView_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            // draw the background and focus rectangle for selected and non-selected states
+            if ((e.ItemState & ListViewItemStates.Selected) != 0)
+            {
+                e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, e.Bounds);
+                e.DrawFocusRectangle(e.Item.Bounds);
+            }
+            else
+            {
+                //e.DrawBackground();
+                //e.DrawFocusRectangle(e.Item.Bounds);
+            }
+
+            // if this is the first column, we want to draw an icon as well
+            int newX = e.Bounds.Left;
+            if (e.ColumnIndex == 0)
+            {
+                // draw the icon
+                newX = newX + 20;
+                PastNotification pn = (PastNotification)e.Item.Tag;
+                if (pn != null)
+                {
+                    System.Drawing.Image img = PastNotificationManager.GetImage(pn);
+                    using (img)
+                    {
+                        if (img != null)
+                        {
+                            int x = e.Bounds.Left + 2;
+                            int y = e.Bounds.Top;
+                            e.Graphics.DrawImage(img, new System.Drawing.Rectangle(x, y, 16, 16));
+                        }
+                    }
+                }
+            }
+
+            // draw text
+            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(newX, e.Bounds.Top, e.Bounds.Right - newX, e.Item.Font.Height);
+            System.Drawing.StringFormat sf = new System.Drawing.StringFormat();
+            sf.Trimming = System.Drawing.StringTrimming.EllipsisCharacter;
+            sf.FormatFlags = System.Drawing.StringFormatFlags.NoClip;
+            System.Drawing.SolidBrush foreBrush = new System.Drawing.SolidBrush(e.Item.ForeColor);
+            using (foreBrush)
+            {
+                TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.EndEllipsis | TextFormatFlags.LeftAndRightPadding;
+                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, rect, e.SubItem.ForeColor, System.Drawing.Color.Transparent, flags);
+            }
+        }
+
         void HistoryListView_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
             if (this.View == View.Tile)
             {
                 // draw the background and focus rectangle for selected and non-selected states
-                if ((e.State & ListViewItemStates.Selected) != 0)
+                if ((e.State & ListViewItemStates.Focused) == ListViewItemStates.Focused)
                 {
                     e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, e.Bounds);
                     e.DrawFocusRectangle();
-                }
-                else
+                 }
+                else if(e.State > 0)
                 {
                     e.DrawBackground();
                     e.DrawFocusRectangle();
                 }
 
                 // draw icon
+                PastNotification pn = (PastNotification) e.Item.Tag;
                 int newX = e.Bounds.Left;
-                System.Drawing.Image img = this.imageList.Images[e.Item.ImageKey];
-                using (img)
+                if (pn != null)
                 {
-                    if (img != null)
+                    System.Drawing.Image img = PastNotificationManager.GetImage(pn);
+                    using (img)
                     {
-                        int x = e.Bounds.Left;
-                        int y = e.Bounds.Top;
-                        e.Graphics.DrawImage(img, x, y);
-                        newX = e.Bounds.Left + img.Width + this.Margin.Right;
+                        if (img != null)
+                        {
+                            int x = e.Bounds.Left;
+                            int y = e.Bounds.Top;
+                            e.Graphics.DrawImage(img, x, y);
+                            newX = e.Bounds.Left + img.Width + this.Margin.Right;
+                        }
                     }
                 }
 
@@ -194,7 +244,7 @@ namespace Growl.UI
             }
             else
             {
-                e.DrawDefault = true;
+                // DO NOT call e.DrawDefault or the DrawSubItem event will not be fired
             }
         }
 
@@ -266,208 +316,159 @@ namespace Growl.UI
 
         public void AddNotification(PastNotification pn)
         {
-            string groupName = pn.Notification.ApplicationName;
-            if (this.groupBy == HistoryGroupItemsBy.Date)
-            {
-                groupName = GetDateGroup(pn.Timestamp);
-            }
-
             this.pastNotifications.Add(pn);
-            /*
-            ListViewGroup group = this.Groups[groupName];
-            if (group != null && group.Items.Count > 1)
-            {
-                // add item to group
-                AddItem(pn);
-            }
-            else
-            {
-                // redraw the entire control
-                this.Draw();
-            }
-             * */
+
             this.Draw();
         }
 
         public void Draw()
         {
-            this.SuspendLayout();
+            //--DateTime st = DateTime.Now;
+            //--Console.WriteLine("HLV.Draw() Start: {0}", st.Ticks);
 
-            // apply any filtering
-            List<PastNotification> filteredList = ApplyFilter();
+            if (this.RedrawStarted != null)
+                this.RedrawStarted(this, EventArgs.Empty);
 
-            // clear everything
-            this.Columns.Clear();
-            this.Groups.Clear();
+            this.BeginUpdate();
+
+            // clear everything first
             this.Items.Clear();
-            this.imageList.Images.Clear();
+            this.Groups.Clear();
 
-            // go through notifications, purge old ones and prep valid ones
-            List<string> groupNames = new List<string>();
-            List<PastNotification> validNotifications = new List<PastNotification>();
-            List<PastNotification> invalidNotifications = new List<PastNotification>();
-            if (filteredList != null)
+            //--Console.WriteLine("HLV.Draw() 0.5: {0}", (DateTime.Now - st).TotalSeconds);
+
+            if (this.pastNotifications != null)
             {
-                foreach (PastNotification pn in filteredList)
-                {
-                    if (IsInDateRange(pn.Timestamp))
-                    {
-                        if (this.groupBy == HistoryGroupItemsBy.Application)
-                        {
-                            if (!groupNames.Contains(pn.Notification.ApplicationName))
-                                groupNames.Add(pn.Notification.ApplicationName);
-                        }
+                // create groups
+                List<string> groupNames = new List<string>();
+                //--Console.WriteLine("HLV.Draw() 1.0: {0}", (DateTime.Now - st).TotalSeconds);
+                if (this.groupBy == HistoryGroupItemsBy.Date)
+                    this.Groups.AddRange(this.dateGroups);
+                //--Console.WriteLine("HLV.Draw() 2.2: {0}", (DateTime.Now - st).TotalSeconds);
 
-                        /*
-                        if (pn.HasImage && !this.imageList.Images.ContainsKey(pn.ImageKey))
-                        {
-                            //System.Drawing.Image image = pn.Notification.GetImage();
-                            System.Drawing.Image image = pn.Image;
-                            if (image != null)
-                                this.imageList.Images.Add(pn.ImageKey, image);
-                        }
-                         * */
-
-                        validNotifications.Add(pn);
-                    }
-                    else
-                    {
-                        invalidNotifications.Add(pn);
-                    }
-                }
-            }
-
-            // remove invalid entries //TODO: maybe move this out into some kind of scheduled timer process
-            DateTime cutoff = DateTime.Now.AddDays(-MAX_NUMBER_OF_DAYS).Date;
-            foreach (PastNotification pn in invalidNotifications)
-            {
-                if (pn.Timestamp < cutoff)
-                    this.pastNotifications.Remove(pn);
-            }
-            invalidNotifications.Clear();
-            invalidNotifications = null;
-
-            // handle date group names
-            if (this.groupBy == HistoryGroupItemsBy.Date)
-            {
-                groupNames.AddRange(this.dateGroups);
-            }
-
-            // create groups
-            foreach (string groupName in groupNames)
-            {
-                this.Groups.Add(groupName, groupName);
-            }
-
-            if (this.View != View.Details) this.View = View.Tile;
-
-            // prepare view layouts
-            if (this.View == View.Tile)
-            {
-                this.View = System.Windows.Forms.View.Tile;
-
-                if (this.tileColumns == null)
-                {
-                    ColumnHeader titleHeader = new ColumnHeader();
-                    ColumnHeader textHeader = new ColumnHeader();
-                    ColumnHeader appNameHeader = new ColumnHeader();
-                    this.tileColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader };
-                }
-
-                this.Columns.AddRange(this.tileColumns);
-                this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-                this.imageList.ImageSize = new System.Drawing.Size(48, 48);
-                this.LargeImageList = this.imageList;
-            }
-            else if (this.View == View.Details)
-            {
-                this.View = System.Windows.Forms.View.Details;
-
-                if (detailColumns == null)
-                {
-                    int w = 80;
-                    int y = 60;
-                    int x = (this.Width - (w * 2) - y - SCROLLBAR_WIDTH) / 2;
-                    //int x = (this.Width - (w * 3) - SCROLLBAR_WIDTH);
-
-                    ColumnHeader titleHeader = new ColumnHeader();
-                    titleHeader.Name = "TITLE";
-                    titleHeader.Text = Properties.Resources.History_Columns_Title;
-                    titleHeader.Width = x;
-                    ColumnHeader textHeader = new ColumnHeader();
-                    textHeader.Name = "TEXT";
-                    textHeader.Text = Properties.Resources.History_Columns_Text;
-                    textHeader.Width = x;
-                    ColumnHeader appNameHeader = new ColumnHeader();
-                    appNameHeader.Name = "APPLICATION";
-                    appNameHeader.Text = Properties.Resources.History_Columns_Application;
-                    appNameHeader.Width = w;
-                    ColumnHeader dateHeader = new ColumnHeader();
-                    dateHeader.Name = "TIMESTAMP";
-                    dateHeader.Text = Properties.Resources.History_Columns_Timestamp;
-                    dateHeader.Width = w;
-                    dateHeader.Tag = DATETIME_COMPARISON_INDICATOR;
-                    ColumnHeader originHeader = new ColumnHeader();
-                    originHeader.Name = "ORIGIN";
-                    originHeader.Text = Properties.Resources.History_Columns_Origin;
-                    originHeader.Width = y;
-
-                    this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader, originHeader };
-                }
-
-                this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
-                this.Columns.AddRange(this.detailColumns);
-                this.imageList.ImageSize = new System.Drawing.Size(16, 16);
-                this.SmallImageList = this.imageList;
-                this.SetSortIcon(this.lvcs.ColumnToSort, this.lvcs.Order);
-            }
-
-            // add items
-            List<ListViewItem> lviList = new List<ListViewItem>();
-            foreach (PastNotification pn in validNotifications)
-            {
-                lviList.Add(CreateItem(pn));
-            }
-            lviList.Sort(this.lvcs);
-            this.Items.AddRange(lviList.ToArray());
-
-            // handle empty groups
-            foreach (ListViewGroup group in this.Groups)
-            {
-                if (group.Items.Count == 0)
-                {
-                    string[] items = new string[this.Columns.Count];
-                    items[0] = Properties.Resources.History_NoNotificationsForDate;
-                    ListViewItem lvi = new ListViewItem(items, group);
-                    this.Items.Add(lvi);
-                }
-            }
-
-            this.ResumeLayout();
-        }
-
-        private List<PastNotification> ApplyFilter()
-        {
-            if (!String.IsNullOrEmpty(this.filter))
-            {
-                List<PastNotification> filteredList = new List<PastNotification>();
+                // go through notifications, purge old ones and prep valid ones
+                bool applyFilter = !String.IsNullOrEmpty(this.filter);
+                List<ListViewItem> lviList = new List<ListViewItem>();
                 foreach (PastNotification pn in this.pastNotifications)
                 {
-                    if (StringContains(pn.Notification.ApplicationName, this.filter)
-                        || StringContains(pn.Notification.Title, this.filter)
-                        || StringContains(pn.Notification.Description, this.filter)
-                        || StringContains(pn.Notification.OriginMachineName, this.filter)
-                        )
+                    // filter by keyword
+                    if (applyFilter)
                     {
-                        filteredList.Add(pn);
+                        string val = String.Format("{0}|{1}|{2}|{3}", pn.Notification.ApplicationName, pn.Notification.Title, pn.Notification.Description, pn.Notification.OriginMachineName);
+                        if (!StringContains(val, this.filter)) continue;
+                    }
+
+                    // filter by date range
+                    if (!IsInDateRange(pn.Timestamp)) continue;
+
+                    // anything else?
+
+                    // if we made it here, the notification is good to show.
+                    // handle application groups (MUST be done before caling CreateItem)
+                    if (this.groupBy == HistoryGroupItemsBy.Application)
+                    {
+                        if (!groupNames.Contains(pn.Notification.ApplicationName))
+                        {
+                            groupNames.Add(pn.Notification.ApplicationName);
+                            this.Groups.Add(pn.Notification.ApplicationName, pn.Notification.ApplicationName);
+                        }
+                    }
+
+                    lviList.Add(CreateItem(pn));
+                }
+                //--Console.WriteLine("HLV.Draw() 1: {0}", (DateTime.Now - st).TotalSeconds);
+
+                // prepare view layouts
+                if (this.View != View.Details) this.View = View.Tile;
+                //--Console.WriteLine("HLV.Draw() 1.1: {0}", (DateTime.Now - st).TotalSeconds);
+                if (this.View == View.Tile)
+                {
+                    this.View = System.Windows.Forms.View.Tile;
+
+                    if (this.tileColumns == null)
+                    {
+                        ColumnHeader titleHeader = new ColumnHeader();
+                        ColumnHeader textHeader = new ColumnHeader();
+                        ColumnHeader appNameHeader = new ColumnHeader();
+                        this.tileColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader };
+                    }
+
+                    this.Columns.Clear();
+                    this.Columns.AddRange(this.tileColumns);
+                    this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+                }
+                else if (this.View == View.Details)
+                {
+                    this.View = System.Windows.Forms.View.Details;
+
+                    if (detailColumns == null)
+                    {
+                        int w = 80;
+                        int y = 60;
+                        int x = (this.Width - (w * 2) - y - SCROLLBAR_WIDTH) / 2;
+                        //int x = (this.Width - (w * 3) - SCROLLBAR_WIDTH);
+
+                        ColumnHeader titleHeader = new ColumnHeader();
+                        titleHeader.Name = "TITLE";
+                        titleHeader.Text = Properties.Resources.History_Columns_Title;
+                        titleHeader.Width = x;
+                        ColumnHeader textHeader = new ColumnHeader();
+                        textHeader.Name = "TEXT";
+                        textHeader.Text = Properties.Resources.History_Columns_Text;
+                        textHeader.Width = x;
+                        ColumnHeader appNameHeader = new ColumnHeader();
+                        appNameHeader.Name = "APPLICATION";
+                        appNameHeader.Text = Properties.Resources.History_Columns_Application;
+                        appNameHeader.Width = w;
+                        ColumnHeader dateHeader = new ColumnHeader();
+                        dateHeader.Name = "TIMESTAMP";
+                        dateHeader.Text = Properties.Resources.History_Columns_Timestamp;
+                        dateHeader.Width = w;
+                        dateHeader.Tag = DATETIME_COMPARISON_INDICATOR;
+                        ColumnHeader originHeader = new ColumnHeader();
+                        originHeader.Name = "ORIGIN";
+                        originHeader.Text = Properties.Resources.History_Columns_Origin;
+                        originHeader.Width = y;
+
+                        this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader, originHeader };
+                    }
+
+                    this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
+                    this.Columns.Clear();
+                    this.Columns.AddRange(this.detailColumns);
+                    this.SetSortIcon(this.lvcs.ColumnToSort, this.lvcs.Order);
+                }
+
+                //--Console.WriteLine("HLV.Draw() 2: {0}", (DateTime.Now - st).TotalSeconds);
+
+                // add items
+                lviList.Sort(this.lvcs);
+                //--Console.WriteLine("HLV.Draw() 3: {0}", (DateTime.Now - st).TotalSeconds);
+                this.Items.AddRange(lviList.ToArray());
+                //--Console.WriteLine("HLV.Draw() 4: {0}", (DateTime.Now - st).TotalSeconds);
+
+                // handle empty groups
+                foreach (ListViewGroup group in this.Groups)
+                {
+                    if (group.Items.Count == 0)
+                    {
+                        string[] items = new string[this.Columns.Count];
+                        items[0] = Properties.Resources.History_NoNotificationsForDate;
+                        ListViewItem lvi = new ListViewItem(items, group);
+                        this.Items.Add(lvi);
                     }
                 }
-                return filteredList;
             }
-            else
-            {
-                return this.pastNotifications;
-            }
+
+            this.EndUpdate();
+
+            if (this.RedrawFinished != null)
+                this.RedrawFinished(this, EventArgs.Empty);
+
+
+            //--DateTime et = DateTime.Now;
+            //--Console.WriteLine("HLV.Draw() End: {0}", et.Ticks);
+            //--Console.WriteLine("HLV.Draw() Elapsed: {0}", (et - st).TotalSeconds);
         }
 
         private static bool StringContains(string str1, string str2)
@@ -483,19 +484,14 @@ namespace Growl.UI
 
         private ListViewItem CreateItem(PastNotification pn)
         {
-            System.Diagnostics.Debug.Assert(!this.InvokeRequired, "InvokeRequired");
-
-            string groupName = pn.Notification.ApplicationName;
+            ListViewGroup group = null;
             if (this.groupBy == HistoryGroupItemsBy.Date)
             {
-                groupName = GetDateGroup(pn.Timestamp);
+                group = GetDateGroup(pn.Timestamp);
             }
-
-            if (pn.HasImage && !this.imageList.Images.ContainsKey(pn.ImageKey))
+            else
             {
-                System.Drawing.Image image = pn.Image;
-                if (image != null)
-                    this.imageList.Images.Add(pn.ImageKey, image);
+                group = this.Groups[pn.Notification.ApplicationName];
             }
 
             string title = Escape(pn.Notification.Title);
@@ -506,8 +502,9 @@ namespace Growl.UI
             string tooltip = String.Format("{0}\r\n{1}\r\n{4}: {2}\r\n{5}: {3}", pn.Notification.Title, pn.Notification.Description, tooltipAppNameappName, pn.Timestamp.ToString(), Properties.Resources.LiteralString_ReceivedFrom, Properties.Resources.LiteralString_ReceivedAt);
 
             string[] items = new string[] { title, text, appName, pn.Timestamp.ToString(), origin };
-            ListViewItem lvi = new ListViewItem(items, pn.ImageKey, this.Groups[groupName]);
+            ListViewItem lvi = new ListViewItem(items, group);
             lvi.ToolTipText = tooltip;
+            lvi.Tag = pn;
             return lvi;
         }
 
@@ -521,13 +518,13 @@ namespace Growl.UI
                 return false;
         }
 
-        private string GetDateGroup(DateTime timestamp)
+        private ListViewGroup GetDateGroup(DateTime timestamp)
         {
             UpdateEndOfToday();
 
             TimeSpan ts = this.currentEndOfToday - timestamp;
             int days = ts.Days;
-            if (days >= 0 && days < this.dateGroups.Count)
+            if (days >= 0 && days < this.dateGroups.Length)
                 return this.dateGroups[days];
             else
                 return null;
@@ -535,7 +532,7 @@ namespace Growl.UI
 
         private void GenerateDateGroups()
         {
-            this.dateGroups = new List<string>();
+            this.dateGroups = new ListViewGroup[this.NumberOfDays];
 
             DateTime today = DateTime.Now.Date;
             for (int i = 0; i < this.NumberOfDays; i++)
@@ -552,7 +549,7 @@ namespace Growl.UI
                 if (i == 0) name = Properties.Resources.LiteralString_Today;
                 else if (i == 1) name = Properties.Resources.LiteralString_Yesterday;
 
-                this.dateGroups.Add(name);
+                this.dateGroups[i] = new ListViewGroup(name, name);
             }
         }
 
@@ -588,7 +585,6 @@ namespace Growl.UI
                 this.isResizing = true;
                 try
                 {
-
                     if (this.View == View.Tile)
                     {
                         int parentWidth = this.Size.Width - SCROLLBAR_WIDTH; // account for scrollbar
@@ -613,10 +609,8 @@ namespace Growl.UI
                             int columnWidth = SCROLLBAR_WIDTH;
                             foreach (ColumnHeader ch in this.Columns)
                             {
-                                Console.WriteLine("Column Width: " + ch.Width.ToString());
                                 columnWidth += ch.Width;
                             }
-                            Console.WriteLine("Column Total Width: " + columnWidth.ToString() + " - Total Width: " + this.Width.ToString());
                             if(columnWidth < this.Width)
                                 ShowScrollBar(this.Handle, 0, false);
                         }
@@ -681,14 +675,9 @@ namespace Growl.UI
         {
             if (disposing)
             {
-                if (this.imageList != null)
-                {
-                    this.imageList.Dispose();
-                    this.imageList = null;
-                }
-
                 if (this.tooltip != null)
                 {
+                    this.tooltip.RemoveAll();
                     this.tooltip.Dispose();
                     this.tooltip = null;
                 }

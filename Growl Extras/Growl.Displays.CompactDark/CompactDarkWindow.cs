@@ -27,7 +27,7 @@ namespace Growl.Displays.CompactDark
             this.Animator = new FadeAnimator(this);
 
             HookUpClickEvents(this);
-            this.AutoClose(4000);
+            SetAutoCloseInterval(4000);
         }
 
         void CompactDarkWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -51,7 +51,7 @@ namespace Growl.Displays.CompactDark
         {
             base.SetNotification(n);
 
-            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) SetAutoCloseInterval(n.Duration * 1000);
 
             this.applicationNameLabel.Text = n.ApplicationName;
             this.titleLabel.Text = n.Title;

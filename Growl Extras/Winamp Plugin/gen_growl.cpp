@@ -118,6 +118,14 @@ int init() {
 	_getcwd(CurrentPath, _MAX_PATH);
 	strcat (CurrentPath, "\\..\\Plugins\\winamp.png");
 
+    // if the buffer is too small on XP/2k the null is omitted, so we will make sure there is one
+	if (GetModuleFileNameA(NULL, CurrentPath, _MAX_PATH) == _MAX_PATH)
+	   CurrentPath[_MAX_PATH - 1] = '\0';
+	char *lastSlash = strrchr(CurrentPath, '\\');
+	if (lastSlash != NULL)
+	   *lastSlash = '\0';
+	strcat(CurrentPath, "\\Plugins\\winamp.png");
+
     return 0;
 }
 

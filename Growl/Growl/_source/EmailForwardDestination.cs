@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Growl.Destinations;
 
 namespace Growl
 {
     [Serializable]
-    public class EmailForwardDestination : ForwardDestination
+    public class EmailForwardDestination : Growl.Destinations.ForwardDestination
     {
         private string to;
         private SMTPConfiguration smtpConfig;
@@ -19,7 +20,7 @@ namespace Growl
             this.smtpConfig = (smtpConfig != null ? smtpConfig : SMTPConfiguration.Local);
             this.minimumPriority = minimumPriority;
             this.onlyWhenIdle = onlyWhenIdle;
-            this.Platform = ForwardDestinationPlatformType.Email;
+            this.Platform = KnownDestinationPlatformType.Email;
         }
 
         public string To
@@ -111,31 +112,40 @@ namespace Growl
             }
         }
 
-        public override ForwardDestination Clone()
+        public override DestinationBase Clone()
         {
             EmailForwardDestination clone = new EmailForwardDestination(this.Description, this.Enabled, this.To, this.SMTPConfiguration, this.MinimumPriority, this.OnlyWhenIdle);
             return clone;
         }
 
-        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
+        public override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Connector.RequestInfo requestInfo, bool isIdle)
         {
             // IGNORE REGISTRATION NOTIFICATIONS
+            requestInfo.SaveHandlingInfo("Forwarding to Email cancelled - Application Registrations are not forwarded.");
         }
 
-        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
+        public override void ForwardNotification(Growl.Connector.Notification notification, Growl.Connector.CallbackContext callbackContext, Growl.Connector.RequestInfo requestInfo, bool isIdle, ForwardedNotificationCallbackHandler callbackFunction)
         {
             bool send = true;
 
             // if a minimum priority is set, check that
             if (this.MinimumPriority != null && this.MinimumPriority.HasValue && notification.Priority < this.MinimumPriority.Value)
+            {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarding to Email ({0}) cancelled - Notification priority must be at least '{1}' (was actually '{2}').", this.Description, this.MinimumPriority.Value.ToString(), notification.Priority.ToString()));
                 send = false;
+            }
 
             // if only sending when idle, check that
             if (this.OnlyWhenIdle && !isIdle)
+            {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarding to Email ({0}) cancelled - Currently only configured to forward when idle", this.Description));
                 send = false;
+            }
 
             if (send)
             {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarded to Email '{0}' - Minimum Priority:'{1}', Actual Priority:'{2}'", this.Description, (this.MinimumPriority != null && this.MinimumPriority.HasValue ? this.MinimumPriority.Value.ToString() : "<any>"), notification.Priority.ToString()));
+
                 string format = "Application: {0}\r\n\r\n{1}\r\n\r\n{2}\r\n\r\nSent From: {3} - {4}";
                 string message = String.Format(format, notification.ApplicationName, notification.Title, notification.Text, notification.MachineName, DateTime.Now.ToString());
                 Send(notification.ApplicationName, notification.Title, notification.Priority, message);

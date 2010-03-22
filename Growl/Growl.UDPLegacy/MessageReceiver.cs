@@ -10,7 +10,7 @@ namespace Growl.UDPLegacy
     /// Represents a client that can listen for and receive Growl-style notifications,
     /// parse the information received, and pass on the events to application code.
     /// </summary>
-    public class MessageReceiver
+    public class MessageReceiver : IDisposable
     {
         /// <summary>
         /// Event handler for the <see cref="RegistrationReceived"/> event
@@ -155,7 +155,12 @@ namespace Growl.UDPLegacy
         {
             try
             {
-                if (this.udp != null) this.udp.Stop();
+                if (this.udp != null)
+                {
+                    this.udp.PacketReceived -= new UdpListener.PacketHandler(udp_PacketReceived);
+                    this.udp.Stop();
+                    this.udp.Dispose();
+                }
                 this.udp = null;
             }
             catch
@@ -375,5 +380,35 @@ namespace Growl.UDPLegacy
                 // suppress logging exceptions
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    if (this.udp != null)
+                    {
+                        this.udp.PacketReceived -= new UdpListener.PacketHandler(udp_PacketReceived);
+                        this.udp.Dispose();
+                        this.udp = null;
+                    }
+                }
+                catch
+                {
+                    // suppress
+                }
+            }
+        }
+
+        #endregion
     }
 }

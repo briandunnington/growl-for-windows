@@ -64,7 +64,12 @@ namespace Growl
                 SettingSaver ss = new SettingSaver(FILENAME);
                 List<InternalNotification> notificationFromDisk = (List<InternalNotification>)ss.Load();
                 if (notifications == null) notifications = new List<InternalNotification>();
-                if (notificationFromDisk != null) notifications.AddRange(notificationFromDisk);
+                if (notificationFromDisk != null)
+                {
+                    notifications.AddRange(notificationFromDisk);
+                    notificationFromDisk.Clear();
+                    notificationFromDisk = null;
+                }
                 System.IO.File.Delete(ss.Path);
                 ss = null;
             }

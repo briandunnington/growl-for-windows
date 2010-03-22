@@ -98,7 +98,7 @@ namespace Growl.Daemon
                 }
                 catch(Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(String.Format("Bonjour service not published - {0}", ex.Message));
+                    Growl.CoreLibrary.DebugInfo.WriteLine(String.Format("Bonjour service not published - {0}", ex.Message));
                     this.isStarted = false;
                 }
             }
@@ -113,6 +113,7 @@ namespace Growl.Daemon
             {
                 if (this.service != null) this.service.Dispose();
                 this.service = null;
+                this.isStarted = false;
             }
         }
 

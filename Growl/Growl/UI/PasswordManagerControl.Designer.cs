@@ -24,8 +24,8 @@ namespace Growl.UI
             this.labelDescriptionBox = new System.Windows.Forms.Label();
             this.labelPasswordBox = new System.Windows.Forms.Label();
             this.labelInstructions = new System.Windows.Forms.Label();
-            this.textBoxDescription = new Growl.UI.HighlightTextBox();
-            this.textBoxPassword = new Growl.UI.HighlightTextBox();
+            this.textBoxDescription = new Growl.Destinations.HighlightTextBox();
+            this.textBoxPassword = new Growl.Destinations.HighlightTextBox();
             this.buttonCancel = new Growl.UI.ButtonEx();
             this.buttonSave = new Growl.UI.ButtonEx();
             this.buttonRemovePassword = new Growl.UI.ImageButton();
@@ -118,7 +118,6 @@ namespace Growl.UI
             // 
             this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDescription.HighlightColor = System.Drawing.Color.Red;
             this.textBoxDescription.Location = new System.Drawing.Point(5, 134);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(184, 23);
@@ -129,7 +128,6 @@ namespace Growl.UI
             // 
             this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPassword.HighlightColor = System.Drawing.Color.Red;
             this.textBoxPassword.Location = new System.Drawing.Point(5, 88);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(184, 23);
@@ -183,9 +181,9 @@ namespace Growl.UI
             // buttonRemovePassword
             // 
             this.buttonRemovePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRemovePassword.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonRemovePassword.DisabledImage = Growl.FormResources.button_remove_dim;
             this.buttonRemovePassword.Enabled = false;
-            this.buttonRemovePassword.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonRemovePassword.Image = Growl.FormResources.button_remove;
             this.buttonRemovePassword.Location = new System.Drawing.Point(36, 187);
             this.buttonRemovePassword.Margin = new System.Windows.Forms.Padding(0);
             this.buttonRemovePassword.Name = "buttonRemovePassword";
@@ -198,8 +196,8 @@ namespace Growl.UI
             // buttonAddPassword
             // 
             this.buttonAddPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonAddPassword.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonAddPassword.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonAddPassword.DisabledImage = Growl.FormResources.button_add_dim;
+            this.buttonAddPassword.Image = Growl.FormResources.button_add;
             this.buttonAddPassword.Location = new System.Drawing.Point(0, 187);
             this.buttonAddPassword.Margin = new System.Windows.Forms.Padding(0);
             this.buttonAddPassword.Name = "buttonAddPassword";
@@ -242,8 +240,8 @@ namespace Growl.UI
         private System.Windows.Forms.Panel editPanel;
         private ButtonEx buttonCancel;
         private ButtonEx buttonSave;
-        private HighlightTextBox textBoxPassword;
-        private HighlightTextBox textBoxDescription;
+        private Growl.Destinations.HighlightTextBox textBoxPassword;
+        private Growl.Destinations.HighlightTextBox textBoxDescription;
         private System.Windows.Forms.Label labelInstructions;
         private System.Windows.Forms.Label labelDescriptionBox;
         private System.Windows.Forms.Label labelPasswordBox;

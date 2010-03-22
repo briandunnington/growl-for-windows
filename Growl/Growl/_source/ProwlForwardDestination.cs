@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Runtime.Serialization;
+using Growl.Destinations;
 
 namespace Growl
 {
@@ -20,7 +22,7 @@ namespace Growl
             this.apiKey = apiKey;
             this.minimumPriority = minimumPriority;
             this.onlyWhenIdle = onlyWhenIdle;
-            this.Platform = ForwardDestinationPlatformType.IPhone;
+            this.Platform = KnownDestinationPlatformType.IPhone;
         }
 
         public string APIKey
@@ -82,13 +84,13 @@ namespace Growl
             }
         }
 
-        public override ForwardDestination Clone()
+        public override DestinationBase Clone()
         {
             ProwlForwardDestination clone = new ProwlForwardDestination(this.Description, this.Enabled, this.APIKey, this.MinimumPriority, this.OnlyWhenIdle);
             return clone;
         }
 
-        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
+        public override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Connector.RequestInfo requestInfo, bool isIdle)
         {
             // IGNORE REGISTRATION NOTIFICATIONS (since we have no way of filtering out already-registered apps at this point)
             //Send(application.Name, Properties.Resources.SystemNotification_AppRegistered_Title, String.Format(Properties.Resources.SystemNotification_AppRegistered_Text, application.Name));
@@ -96,9 +98,11 @@ namespace Growl
             requestInfo.SaveHandlingInfo("Forwarding to Prowl cancelled - Application Registrations are not forwarded.");
         }
 
-        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
+        public override void ForwardNotification(Growl.Connector.Notification notification, Growl.Connector.CallbackContext callbackContext, Growl.Connector.RequestInfo requestInfo, bool isIdle, ForwardedNotificationCallbackHandler callbackFunction)
         {
             bool send = true;
+
+            if (requestInfo == null) requestInfo = new Growl.Connector.RequestInfo();
 
             // if a minimum priority is set, check that
             if (this.MinimumPriority != null && this.MinimumPriority.HasValue && notification.Priority < this.MinimumPriority.Value)
@@ -116,6 +120,8 @@ namespace Growl
 
             if (send)
             {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarded to Prowl '{0}' - Minimum Priority:'{1}', Actual Priority:'{2}'", this.Description, (this.MinimumPriority != null && this.MinimumPriority.HasValue ? this.MinimumPriority.Value.ToString() : "<any>"), notification.Priority.ToString()));
+
                 string text = notification.Text;
 
                 /* NOT YET
@@ -159,14 +165,11 @@ namespace Growl
 
                 // prepare the WebClient
                 Uri uri = new Uri(URL);
-                WebClientEx wc = new WebClientEx();
+                Growl.CoreLibrary.WebClientEx wc = new Growl.CoreLibrary.WebClientEx();
                 using (wc)
                 {
                     wc.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
                     wc.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
-
-
-
 
                     // do it
                     try
@@ -183,7 +186,7 @@ namespace Growl
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Utility.WriteDebugInfo(ex.ToString());
             }
         }
     }

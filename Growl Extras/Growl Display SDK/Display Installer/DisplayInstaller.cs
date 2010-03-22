@@ -27,7 +27,7 @@ namespace Display_Installer
 
             // detect if/where growl is installed
             Growl.CoreLibrary.Detector detector = new Growl.CoreLibrary.Detector();
-            if (detector.IsAvailable)
+            if (detector.IsInstalled)
             {
                 // growl was detected - read the Display folder location
                 string displayFolder = Path.Combine(detector.DisplaysFolder, folderName);

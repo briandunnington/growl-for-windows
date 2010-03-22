@@ -1,12 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Growl.Destinations;
 
 namespace Growl
 {
     public class ProwlForwardDestinationHandler : IForwardDestinationHandler
     {
         #region IForwardDestinationHandler Members
+
+        public string Name
+        {
+            get
+            {
+                return "Prowl";
+            }
+        }
 
         public List<Type> Register()
         {
@@ -15,20 +24,20 @@ namespace Growl
             return list;
         }
 
-        public Growl.UI.ForwardDestinationSettingsPanel GetSettingsPanel(ForwardDestination fd)
+        public Growl.Destinations.DestinationSettingsPanel GetSettingsPanel(DestinationBase fd)
         {
             return new Growl.UI.ProwlForwardInputs();
         }
 
-        public Growl.UI.ForwardDestinationSettingsPanel GetSettingsPanel(ForwardDestinationListItem fdli)
+        public Growl.Destinations.DestinationSettingsPanel GetSettingsPanel(DestinationListItem fdli)
         {
             return new Growl.UI.ProwlForwardInputs();
         }
 
-        public List<ForwardDestinationListItem> GetListItems()
+        public List<DestinationListItem> GetListItems()
         {
-            ForwardDestinationListItem item = new ForwardDestinationListItem(Properties.Resources.AddComputer_AddProwl, ForwardDestinationPlatformType.IPhone.Icon, this);
-            List<ForwardDestinationListItem> list = new List<ForwardDestinationListItem>();
+            ForwardDestinationListItem item = new ForwardDestinationListItem(Properties.Resources.AddComputer_AddProwl, KnownDestinationPlatformType.IPhone.GetIcon(), this);
+            List<DestinationListItem> list = new List<DestinationListItem>();
             list.Add(item);
             return list;
         }

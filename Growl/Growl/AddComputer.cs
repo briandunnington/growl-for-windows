@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Growl.UI;
+using Growl.Destinations;
 
 namespace Growl
 {
@@ -12,8 +13,8 @@ namespace Growl
     {
         private Controller controller;
         private bool isSubscription;
-        private ForwardDestinationSettingsPanel settingsPanel;
-        private ForwardDestination fdEdit;
+        private DestinationSettingsPanel settingsPanel;
+        private DestinationBase dbEdit;
 
         public AddComputer()
         {
@@ -29,19 +30,23 @@ namespace Growl
             : this()
         {
             this.isSubscription = isSubscription;
-            if (this.isSubscription)
-            {
-                IForwardDestinationHandler handler = ForwardDestinationManager.GetHandler(typeof(Subscription));
-                ShowInputs(null, handler);
-            }
         }
 
-        public AddComputer(ForwardDestination fd)
+        public AddComputer(DestinationBase db)
             : this()
         {
-            this.fdEdit = fd;
-            if (fd is Subscription) this.isSubscription = true;
-            IForwardDestinationHandler handler = ForwardDestinationManager.GetHandler(fd);
+            this.dbEdit = db;
+            if (db is Subscription) this.isSubscription = true;
+
+            IDestinationHandler handler = null;
+            if (isSubscription)
+            {
+                handler = SubscriptionManager.GetHandler(db);
+            }
+            else
+            {
+                handler = ForwardDestinationManager.GetHandler(db);
+            }
             ShowInputs(null, handler);
         }
 
@@ -49,38 +54,47 @@ namespace Growl
         {
             this.BackColor = Color.FromArgb(240, 240, 240);
 
-            List<ForwardDestinationListItem> list = ForwardDestinationManager.GetListItems();
-            foreach (ForwardDestinationListItem fdli in list)
+            List<DestinationListItem> list = null;
+            if (this.isSubscription)
             {
-                fdli.Selected += new EventHandler(fdli_Selected);
-                this.bonjourListBox1.AddItem(fdli);
+                list = SubscriptionManager.GetListItems();
+                
+                this.Text = Properties.Resources.AddComputer_FormTitle_Subscriptions;
+            }
+            else
+            {
+                list = ForwardDestinationManager.GetListItems();
             }
 
-            if (this.isSubscription) this.Text = Properties.Resources.AddComputer_FormTitle_Subscriptions;
+            foreach (DestinationListItem dli in list)
+            {
+                dli.Selected += new EventHandler(dli_Selected);
+                this.bonjourListBox1.AddItem(dli);
+            }
         }
 
-        void fdli_Selected(object sender, EventArgs e)
+        void dli_Selected(object sender, EventArgs e)
         {
-            ForwardDestinationListItem fdli = (ForwardDestinationListItem)sender;
-            ShowInputs(fdli);
+            DestinationListItem dli = (DestinationListItem)sender;
+            ShowInputs(dli);
         }
 
-        private void ShowInputs(ForwardDestinationListItem fdli)
+        private void ShowInputs(DestinationListItem dli)
         {
-            ShowInputs(fdli, fdli.Handler);
+            ShowInputs(dli, dli.Handler);
         }
 
-        private void ShowInputs(ForwardDestinationListItem fdli, IForwardDestinationHandler handler)
+        private void ShowInputs(DestinationListItem dli, IDestinationHandler handler)
         {
             this.panelBonjour.Visible = false;
             this.panelDetails.Visible = true;
 
-            ForwardDestinationSettingsPanel panel = handler.GetSettingsPanel(this.fdEdit);
+            DestinationSettingsPanel panel = handler.GetSettingsPanel(this.dbEdit);
             this.settingsPanel = panel;
-            panel.ValidChanged += new ForwardDestinationSettingsPanel.ValidChangedEventHandler(panel_ValidChanged);
+            panel.ValidChanged += new DestinationSettingsPanel.ValidChangedEventHandler(panel_ValidChanged);
             this.panelDetails.Controls.Add(panel);
             panel.Visible = true;
-            panel.Initialize(this.isSubscription, fdli, this.fdEdit);
+            panel.Initialize(this.isSubscription, dli, this.dbEdit);
 
             this.buttonSave.Visible = true;
         }
@@ -90,10 +104,10 @@ namespace Growl
             this.buttonSave.Enabled = isValid;
         }
 
-        internal void Initialize(Controller controller, ForwardDestination fdEdit, bool isSubscription)
+        internal void Initialize(Controller controller, DestinationBase dbEdit, bool isSubscription)
         {
             this.controller = controller;
-            this.fdEdit = fdEdit;
+            this.dbEdit = dbEdit;
             this.isSubscription = isSubscription;
         }
 
@@ -109,22 +123,33 @@ namespace Growl
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (this.fdEdit != null)
+            if (this.dbEdit != null)
             {
-                this.settingsPanel.Update(this.fdEdit);
+                try
+                {
+                    this.settingsPanel.Update(this.dbEdit);
+                }
+                catch
+                {
+                    Utility.WriteDebugInfo(String.Format("EXCEPTION: '{0}' Update() failed", this.dbEdit.Description));
+                }
             }
             else
             {
-                ForwardDestination fd = this.settingsPanel.Create();
+                DestinationBase db = null;
+                try
+                {
+                    db = this.settingsPanel.Create();
+                }
+                catch
+                {
+                    Utility.WriteDebugInfo("EXCEPTION: Create() forward destination or subscription failed");
+                }
+
                 if (this.isSubscription)
-                {
-                    Subscription subscription = (Subscription)fd;
-                    this.controller.AddSubscription(subscription);
-                }
+                    this.controller.AddSubscription((Subscription)db);
                 else
-                {
-                    this.controller.AddForwardDestination(fd);
-                }
+                    this.controller.AddForwardDestination((ForwardDestination)db);
             }
             this.Close();
         }
@@ -140,6 +165,19 @@ namespace Growl
                 if (components != null)
                 {
                     components.Dispose();
+                }
+
+                if (this.settingsPanel != null)
+                {
+                    this.settingsPanel.ValidChanged -= new DestinationSettingsPanel.ValidChangedEventHandler(panel_ValidChanged);
+                }
+
+                if (this.bonjourListBox1.Items != null)
+                {
+                    foreach (DestinationListItem dli in this.bonjourListBox1.Items)
+                    {
+                        dli.Selected -= new EventHandler(dli_Selected);
+                    }
                 }
 
                 if (this.settingsPanel != null)

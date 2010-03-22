@@ -264,7 +264,12 @@ namespace Growl.Daemon
             {
                 try
                 {
-                    if (this.timer != null) this.timer.Close();
+                    if (this.timer != null)
+                    {
+                        this.timer.Elapsed -= new System.Timers.ElapsedEventHandler(timer_Elapsed);
+                        this.timer.Close();
+                        this.timer = null;
+                    }
                 }
                 catch
                 {

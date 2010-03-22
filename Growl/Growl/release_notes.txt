@@ -1,7 +1,30 @@
-2.0.2 changes (v2.0.0.2???)
+2.0.2 changes (v2.0.2.8)
 ------------------------------
+- improved initial startup time (should be <1 second for a standard installation)
+- reduced memory usage, both during normal operation and cumulatively after GfW has been running for a long time
+     (both of the above were partially an indirect result of decoupling the History from the main operation of the application)
+- loads of code cleanup (removing event handlers, better Dispose() operations, etc)
+- improved tab icons (less jaggy)
+- added support for data: URIs in *-Icon headers
+- added support for Forwarder and Subscriber plugins
+- added notify.io integration (via Subscriptions)
+- removed hidden splash screen (found the root cause of the bug that was requiring it)
+- improved debug information gathering
+- made a change so that registrations/notifications are no longer forwarded if they are disabled
+- changed auto-update check interval from 4 hours to 24 hours
 - fixed a bug that caused an additional -ERROR response to be sent after the last -OK or -CALLBACK response
-
+- fixed a bug that could cause loss of application preferences if specified display is no longer available
+- fixed a bug that could cause the (supposed to be hidden) splash screen to appear and hang the app
+- fixed a bug that could cause GfW to crash if the response to a check for update is missing or malformed
+- fixed a bug that prevented GfW from detecting when Bonjour-based forwards went offline (https://bugzilla.novell.com/show_bug.cgi?id=430732)
+- released Webhook Forwarder plugin
+- released RSS/Atom Feed Subscription plugin
+IMPORTANT UPGRADE NOTES: 
+- All history items will be cleared when upgrading to this version due to a change in how history notifications are serialized to disk
+- Additional displays will no longer be loaded from the program folder (ex: c:\Program Files\Growl\Displays); all additional displays must be installed in the one of the following locations:
+    User's personal folder: %USERPROFILE%\Local Settings\Application Data\Growl\2.0.0.0\Displays\
+    AllUser's folder: %ALLUSERSPROFILE%\Application Data\Growl\2.0.0.0\Displays\
+  (If the same display is found in both locations, the display in the user's personal folder takes precedence.)
 
 
 2.0.1 changes (v2.0.0.27)

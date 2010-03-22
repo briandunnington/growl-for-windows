@@ -68,9 +68,5 @@ namespace Growl
         public override void CloseLastNotification()
         {
         }
-
-        public override event Growl.CoreLibrary.NotificationCallbackEventHandler NotificationClicked;
-
-        public override event Growl.CoreLibrary.NotificationCallbackEventHandler NotificationClosed;
     }
 }

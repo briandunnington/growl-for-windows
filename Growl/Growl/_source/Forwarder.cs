@@ -8,25 +8,18 @@ namespace Growl
 {
     internal class Forwarder : GrowlConnector
     {
-        public delegate void ForwardedNotificationCallbackHandler(Growl.Connector.Response response, Growl.Connector.CallbackData callbackData, CallbackInfo callbackInfo);
-        public event ForwardedNotificationCallbackHandler ForwardedNotificationCallback;
+        [field: NonSerialized]
+        public event Growl.Destinations.ForwardDestination.ForwardedNotificationCallbackHandler ForwardedNotificationCallback;
 
         public Forwarder(string password, string hostname, int port, RequestInfo requestInfo)
             : base(password, hostname, port)
         {
             this.RequestInfo = requestInfo;
-        }
-
-        public Forwarder(string password, string hostname, int port, RequestInfo requestInfo, CallbackInfo callbackInfo)
-            : this(password, hostname, port, requestInfo)
-        {
-            this.CallbackInfo = callbackInfo;
-
             this.NotificationCallback += new CallbackEventHandler(Forwarder_NotificationCallback);
         }
 
+
         public RequestInfo RequestInfo;
-        public CallbackInfo CallbackInfo;
 
         protected override bool OnBeforeSend(Growl.Connector.MessageBuilder mb)
         {
@@ -44,17 +37,17 @@ namespace Growl
             return base.OnBeforeSend(mb);
         }
 
-        protected void OnForwardedNotificationCallback(Growl.Connector.Response response, Growl.Connector.CallbackData callbackData, CallbackInfo callbackInfo)
+        protected void OnForwardedNotificationCallback(Growl.Connector.Response response, Growl.Connector.CallbackData callbackData)
         {
             if (this.ForwardedNotificationCallback != null)
             {
-                this.ForwardedNotificationCallback(response, callbackData, callbackInfo);
+                this.ForwardedNotificationCallback(response, callbackData);
             }
         }
 
         void Forwarder_NotificationCallback(Response response, CallbackData callbackData)
         {
-            this.OnForwardedNotificationCallback(response, callbackData, this.CallbackInfo);
+            this.OnForwardedNotificationCallback(response, callbackData);
         }
     }
 }

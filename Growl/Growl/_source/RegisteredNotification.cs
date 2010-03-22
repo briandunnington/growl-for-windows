@@ -10,7 +10,7 @@ namespace Growl
     {
         private string name;
         private NotificationPreferences preferences;
-        private System.Drawing.Image icon;
+        private string iconID;
 
         Dictionary<string, string> customTextAttributes = new Dictionary<string, string>();
         Dictionary<string, Resource> customBinaryAttributes = new Dictionary<string, Resource>();
@@ -49,6 +49,9 @@ namespace Growl
             set
             {
                 this.ra = value;
+
+                // this would be better if this lived somewhere else, but this works for now
+                LegacyDeserializers.ApplicationsSerializationSurrogate.UpdateTemporaryNotificationImage(this);
             }
         }
 
@@ -60,19 +63,34 @@ namespace Growl
             }
         }
 
-        public System.Drawing.Image Icon
+        public string IconID
         {
             get
             {
-                if (this.icon == null)
-                    return this.ra.Icon;
-                else
-                    return this.icon;
+                return this.iconID;
             }
             set
             {
-                this.icon = value;
+                this.iconID = value;
             }
+        }
+
+        public void SetIcon(Resource resource)
+        {
+            SetIcon(resource, this.ApplicationName);
+        }
+
+        public void SetIcon(Resource resource, string applicationName)
+        {
+            this.IconID = ImageCache.Add(applicationName, resource);
+        }
+
+        public System.Drawing.Image GetIcon()
+        {
+            System.Drawing.Image icon = ImageCache.Get(this.ApplicationName, this.IconID);
+            if (icon == null)
+                icon = this.ra.GetIcon();
+            return icon;
         }
 
         public NotificationPreferences Preferences

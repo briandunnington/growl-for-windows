@@ -80,6 +80,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)\Growl.Displays.Visor\$(OutDir)*.*" "$(SolutionDir)\Growl\$(OutDir)Displays\VisorDisplay\" /E /Y /C</PostBuildEvent>
+    <PostBuildEvent>REM xcopy "$(SolutionDir)\Growl.Displays.Visor\$(OutDir)*.*" "$(SolutionDir)\Growl\$(OutDir)Displays\VisorDisplay\" /E /Y /C</PostBuildEvent>
   </PropertyGroup>
 </Project>

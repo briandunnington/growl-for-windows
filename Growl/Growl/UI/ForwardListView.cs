@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using Growl.Destinations;
 
 namespace Growl.UI
 {
@@ -12,28 +13,12 @@ namespace Growl.UI
         private const int CHECKBOX_SIZE = 16;
         private const int CHECKBOX_PADDING = 10;
 
-        private ImageList imageList;
-        private Dictionary<string, ForwardDestination> computers;
+        private DestinationBase[] computers;
         private bool allDisabled = true;
 
         public ForwardListView()
         {
             InitializeComponent();
-
-            this.imageList = new ImageList();
-            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imageList.ImageSize = new System.Drawing.Size(48, 48);
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            // add default platform type icons
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Windows.Name, ForwardDestinationPlatformType.Windows.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Mac.Name, ForwardDestinationPlatformType.Mac.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Linux.Name, ForwardDestinationPlatformType.Linux.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Internet.Name, ForwardDestinationPlatformType.Internet.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.IPhone.Name, ForwardDestinationPlatformType.IPhone.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Mobile.Name, ForwardDestinationPlatformType.Mobile.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Email.Name, ForwardDestinationPlatformType.Email.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Twitter.Name, ForwardDestinationPlatformType.Twitter.Icon);
-            this.imageList.Images.Add(ForwardDestinationPlatformType.Other.Name, ForwardDestinationPlatformType.Other.Icon);
 
             this.HoverSelection = false;
 
@@ -48,7 +33,6 @@ namespace Growl.UI
                 addressHeader});
 
             this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.LargeImageList = this.imageList;
             this.MultiSelect = false;
             this.UseCompatibleStateImageBehavior = false;
             this.View = System.Windows.Forms.View.Tile;
@@ -71,7 +55,7 @@ namespace Growl.UI
                     int y = info.Item.Bounds.Y + CHECKBOX_PADDING;
                     if (e.X > CHECKBOX_PADDING && e.X < (CHECKBOX_PADDING + CHECKBOX_SIZE) && e.Y > y && e.Y < (y + CHECKBOX_SIZE))
                     {
-                        ForwardDestination fc = (ForwardDestination)info.Item.Tag;
+                        DestinationBase fc = (DestinationBase)info.Item.Tag;
                         fc.Enabled = !fc.Enabled;
                         this.Refresh();
                     }
@@ -87,10 +71,11 @@ namespace Growl.UI
                 System.Drawing.Rectangle bounds = new System.Drawing.Rectangle(e.Bounds.X + checkBoxAreaWidth, e.Bounds.Top, e.Bounds.Width - checkBoxAreaWidth, e.Bounds.Height);
 
                 // update information
-                ForwardDestination fc = (ForwardDestination)e.Item.Tag;
+                DestinationBase fc = (DestinationBase)e.Item.Tag;
                 string display = Escape(fc.Display);
                 string address = Escape(fc.AddressDisplay);
-                string tooltip = String.Format("{0}\r\n{1}", fc.Display, fc.AddressDisplay);
+                string additional = Escape(fc.AdditionalDisplayInfo);
+                string tooltip = String.Format("{0}\r\n{1}{2}", fc.Display, fc.AddressDisplay, (!String.IsNullOrEmpty(fc.AdditionalDisplayInfo) ? String.Format("\r\n{0}", fc.AdditionalDisplayInfo) : null));
                 e.Item.ToolTipText = tooltip;
                 // NOTE: dont set the .Text or .SubItem properties here - it causes an erratic exception
 
@@ -120,23 +105,28 @@ namespace Growl.UI
 
                 // draw icon
                 int newX = bounds.X;
-                //System.Drawing.Image img = this.imageList.Images[e.Item.ImageKey];
-                System.Drawing.Image img = this.imageList.Images[fc.Platform.Name];
-                if (img != null)
+                DestinationBase db = e.Item.Tag as DestinationBase;
+                if (db != null)
                 {
-                    int x = bounds.X;
-                    int y = bounds.Top;
-                    if(drawEnabled)
-                        e.Graphics.DrawImage(img, x, y);
-                    else
-                        ControlPaint.DrawImageDisabled(e.Graphics, img, x, y, System.Drawing.Color.Transparent);
-                    newX += img.Width + this.Margin.Right;
-                    img.Dispose();
+                    System.Drawing.Image img = db.GetIcon();
+                    if (img != null)
+                    {
+                        int x = bounds.X;
+                        int y = bounds.Top;
+                        if (drawEnabled)
+                            e.Graphics.DrawImage(img, new System.Drawing.Rectangle(x, y, img.Width, img.Height));
+                        else
+                            ControlPaint.DrawImageDisabled(e.Graphics, img, x, y, System.Drawing.Color.Transparent);
+                        newX += img.Width + this.Margin.Right;
+                    }
                 }
+
+                // offset the text vertically a bit so it lines up with the icon better
+                System.Drawing.RectangleF rect = new System.Drawing.RectangleF(newX, bounds.Top, bounds.Right - newX, e.Item.Font.Height);
+                rect.Offset(0, 4);
 
                 // draw main text
                 System.Drawing.Color textColor = (drawEnabled ? e.Item.ForeColor : System.Drawing.Color.FromArgb(System.Drawing.SystemColors.GrayText.ToArgb()));
-                System.Drawing.RectangleF rect = new System.Drawing.RectangleF(newX, bounds.Top, bounds.Right - newX, e.Item.Font.Height);
                 System.Drawing.StringFormat sf = new System.Drawing.StringFormat();
                 sf.Trimming = System.Drawing.StringTrimming.EllipsisCharacter;
                 sf.FormatFlags = System.Drawing.StringFormatFlags.NoClip;
@@ -150,23 +140,26 @@ namespace Growl.UI
                         sf);
                 }
 
-                // draw subitems
+                // draw additional information text
                 System.Drawing.Color subColor = System.Drawing.Color.FromArgb(System.Drawing.SystemColors.GrayText.ToArgb());
                 System.Drawing.SolidBrush subBrush = new System.Drawing.SolidBrush(subColor);
                 using (subBrush)
                 {
-                    for (int i = 1; i < this.Columns.Count; i++)
-                    {
-                        if (i < e.Item.SubItems.Count)
-                        {
-                            rect.Offset(0, e.Item.Font.Height);
-                            e.Graphics.DrawString(address,
-                                e.Item.Font,
-                                subBrush,
-                                rect,
-                                sf);
-                        }
-                    }
+                    // draw address display (line 2)
+                    rect.Offset(0, e.Item.Font.Height);
+                    e.Graphics.DrawString(address,
+                        e.Item.Font,
+                        subBrush,
+                        rect,
+                        sf);
+
+                    // draw additional display (line 3)
+                    rect.Offset(0, e.Item.Font.Height);
+                    e.Graphics.DrawString(additional,
+                        e.Item.Font,
+                        subBrush,
+                        rect,
+                        sf);
                 }
 
                 // draw checkbox
@@ -195,7 +188,7 @@ namespace Growl.UI
             }
         }
 
-        public Dictionary<string, ForwardDestination> Computers
+        public DestinationBase[] Computers
         {
             get
             {
@@ -204,18 +197,6 @@ namespace Growl.UI
             set
             {
                 this.computers = value;
-            }
-        }
-
-        internal ImageList ImageList
-        {
-            get
-            {
-                return this.imageList;
-            }
-            set
-            {
-                this.imageList = value;
             }
         }
 
@@ -231,7 +212,7 @@ namespace Growl.UI
             // add items
             lock (this.computers)   // this isnt ideal, but it prevents the edge case where a subscriber comes online while we are trying to Draw
             {
-                foreach (ForwardDestination fc in this.computers.Values)
+                foreach (DestinationBase fc in this.computers)
                 {
                     AddItem(fc);
                 }
@@ -240,7 +221,7 @@ namespace Growl.UI
             this.ResumeLayout();
         }
 
-        private void AddItem(ForwardDestination fc)
+        private void AddItem(DestinationBase fc)
         {
             string display = Escape(fc.Display);
             string address = Escape(fc.AddressDisplay);
@@ -253,7 +234,7 @@ namespace Growl.UI
             this.Items.Add(lvi);
         }
 
-        private bool ShouldDrawEnabled(ForwardDestination fd)
+        private bool ShouldDrawEnabled(DestinationBase fd)
         {
             if (!this.allDisabled && fd.Enabled)
                 return true;
@@ -264,8 +245,11 @@ namespace Growl.UI
         private static string Escape(string input)
         {
             string output = input;
-            output = output.Replace("...", "..");
-            output = output.Replace("\n", " - ");
+            if (input != null)
+            {
+                output = output.Replace("...", "..");
+                output = output.Replace("\n", " - ");
+            }
             return output;
         }
 
@@ -304,11 +288,7 @@ namespace Growl.UI
         {
             if (disposing)
             {
-                if (this.imageList != null)
-                {
-                    this.imageList.Dispose();
-                    this.imageList = null;
-                }
+
             }
 
             base.Dispose(disposing);

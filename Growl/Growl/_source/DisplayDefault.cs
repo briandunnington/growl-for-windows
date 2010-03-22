@@ -88,7 +88,7 @@ namespace Growl
             this.realDisplay.CloseLastNotification();
         }
 
-        public override void ProcessNotification(Growl.DisplayStyle.Notification notification, Growl.Daemon.CallbackInfo cbInfo, Growl.Daemon.RequestInfo requestInfo)
+        public override void ProcessNotification(Growl.DisplayStyle.Notification notification, Growl.Daemon.CallbackInfo cbInfo, Growl.Connector.RequestInfo requestInfo)
         {
             this.realDisplay.ProcessNotification(notification, cbInfo, requestInfo);
         }

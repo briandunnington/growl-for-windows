@@ -64,6 +64,8 @@ namespace Growl
             }
 
             PrefSound[] arr = list.ToArray();
+            list.Clear();
+            list = null;
             return arr;
         }
 

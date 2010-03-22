@@ -20,8 +20,6 @@ namespace Growl.Connector
         /// <summary>
         /// Subscribes a client to Growl notifications
         /// </summary>
-        SUBSCRIBE,
-
-        POLL
+        SUBSCRIBE
     }
 }

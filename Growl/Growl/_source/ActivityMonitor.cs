@@ -86,7 +86,6 @@ namespace Growl
         public void PauseApplication()
         {
             if (!this.isPaused) this.OnWentIdle(new ActivityMonitorEventArgs(ActivityMonitorEventReason.ApplicationPaused));
-            //StopTimer();    // dont check for idle while paused
             Stop();
             this.isPaused = true;
         }
@@ -94,7 +93,6 @@ namespace Growl
         public void UnpauseApplication()
         {
             if (this.isPaused) this.ResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.ApplicationUnpaused));
-            //StartTimer();   // start checking for idle again
             Start();
             this.isPaused = false;
         }
@@ -163,8 +161,13 @@ namespace Growl
                 {
                     try
                     {
-                        if (this.timer != null) this.timer.Dispose();
-                        SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+                        if (this.timer != null)
+                        {
+                            this.timer.Elapsed -= new System.Timers.ElapsedEventHandler(timer_Elapsed);
+                            this.timer.Dispose();
+                            this.timer = null;
+                        }
+                        SystemEvents.SessionSwitch -= new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
                     }
                     catch
                     {
@@ -188,13 +191,13 @@ namespace Growl
         private void StartTimer()
         {
             this.timer.Start();
-            Console.WriteLine("idle timer started. updating every {0} seconds", this.idleAfterSeconds);
+            Utility.WriteDebugInfo("idle timer started. updating every {0} seconds", this.idleAfterSeconds);
         }
 
         private void StopTimer()
         {
             if (this.timer != null) this.timer.Stop();
-            Console.WriteLine("idle timer stopped.");
+            Utility.WriteDebugInfo("idle timer stopped.");
         }
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -236,14 +239,14 @@ namespace Growl
                 this.isLocked = true;
                 StopTimer();    // dont check for idle while locked
                 this.OnWentIdle(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopLocked));
-                //Console.WriteLine("locked");
+                Utility.WriteDebugInfo("system locked");
             }
             else if (e.Reason == SessionSwitchReason.SessionUnlock)
             {
                 this.ResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopUnlocked));
                 this.isLocked = false;
                 MaybeStartTimer();   // start checking for idle again
-                //Console.WriteLine("unlocked");
+                Utility.WriteDebugInfo("system unlocked");
             }
         }
 

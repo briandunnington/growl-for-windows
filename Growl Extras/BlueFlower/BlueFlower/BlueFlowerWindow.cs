@@ -32,7 +32,7 @@ namespace BlueFlower
 
             HookUpClickEvents(this);
 
-            AutoClose(4000);
+            SetAutoCloseInterval(4000);
         }
 
         void BlueFlowerWindow_Load(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace BlueFlower
         {
             base.SetNotification(n);
 
-            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) SetAutoCloseInterval(n.Duration * 1000);
 
             this.pictureBox1.Image = n.Image;
 

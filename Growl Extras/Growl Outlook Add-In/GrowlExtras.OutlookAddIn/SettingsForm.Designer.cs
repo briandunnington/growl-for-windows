@@ -35,6 +35,7 @@ namespace GrowlExtras.OutlookAddIn
             this.checkBoxEnableReminders = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -117,6 +118,16 @@ namespace GrowlExtras.OutlookAddIn
             this.textBoxPassword.TabIndex = 0;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
+            // labelVersion
+            // 
+            this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVersion.Location = new System.Drawing.Point(126, -2);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(99, 13);
+            this.labelVersion.TabIndex = 13;
+            this.labelVersion.Text = "v[1.0]";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // SettingsForm
             // 
             this.AcceptButton = this.Button1;
@@ -124,6 +135,7 @@ namespace GrowlExtras.OutlookAddIn
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.Button2;
             this.ClientSize = new System.Drawing.Size(229, 170);
+            this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Button2);
@@ -152,6 +164,7 @@ namespace GrowlExtras.OutlookAddIn
         private System.Windows.Forms.CheckBox checkBoxEnableReminders;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.Label labelVersion;
 
     }
 }

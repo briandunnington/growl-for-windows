@@ -5,46 +5,46 @@ namespace Growl
 {
 	public class LoadedDisplayStyle
 	{
-		private DisplayLoader displayLoader;
+		private IDisplay display;
 
-		public LoadedDisplayStyle(DisplayLoader displayLoader)
+		public LoadedDisplayStyle(IDisplay display)
 		{
-            this.displayLoader = displayLoader;
+            this.display = display;
 		}
 
 		public string FriendlyName
 		{
 			get
 			{
-				return this.Display.Name;
+				return this.display.Name;
 			}
 		}
 
         public void SetGrowlApplicationPath(string path)
         {
-            this.Display.GrowlApplicationPath = path;
+            this.display.GrowlApplicationPath = path;
         }
 
         public void SetDisplayStylePath(string path)
         {
-            this.Display.DisplayStylePath = path;
+            this.display.DisplayStylePath = path;
         }
 
 		public void Load()
 		{
-            this.Display.Load();
+            this.display.Load();
 		}
 
 		public void Unload()
 		{
-			this.Display.Unload();
+            this.display.Unload();
 		}
 
 		public IDisplay Display
 		{
 			get
 			{
-				return this.displayLoader.Display;
+                return this.display;
 			}
 		}
 	}

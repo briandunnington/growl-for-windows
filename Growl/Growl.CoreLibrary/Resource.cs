@@ -21,10 +21,13 @@ namespace Growl.CoreLibrary
         private BinaryData data;
 
         /// <summary>
-        /// The image bytes, regardless of type (url or binary). This is used as sort of a cache for images that need to be downloaded.
+        /// The actual Image, regardless of type (url or binary). This is used as sort of a cache for images that need to be downloaded.
         /// </summary>
-        private byte[] imageBytes;
+        private Image image;
 
+        /// <summary>
+        /// Indicates if the Resource has already been converted into an Image (used to reduce repetitive conversions)
+        /// </summary>
         private bool alreadyConvertedResource;
 
         /// <summary>
@@ -148,6 +151,21 @@ namespace Growl.CoreLibrary
         }
 
         /// <summary>
+        /// Gets the unique identifier of this resource
+        /// </summary>
+        /// <returns>string</returns>
+        public string GetKey()
+        {
+            if (this.IsRawData)
+                return this.Data.ID;
+            else
+            {
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(this.Url);
+                return BinaryData.GenerateID(bytes);
+            }
+        }
+
+        /// <summary>
         /// Converts the value of a string URL to a <see cref="Resource"/>
         /// </summary>
         /// <param name="val">The URL</param>
@@ -174,6 +192,7 @@ namespace Growl.CoreLibrary
         /// <returns><see cref="Resource"/></returns>
         static public implicit operator Resource(Image image)
         {
+            if (image == null) return null;
             BinaryData data = new BinaryData(ImageConverter.ImageToBytes(image));
             return new Resource(data);
         }
@@ -213,16 +232,16 @@ namespace Growl.CoreLibrary
                 {
                     if (resource.IsRawData)
                     {
-                        resource.imageBytes = resource.Data.Data;
+                        resource.image = ImageConverter.ImageFromBytes(resource.data.Data);
                     }
                     else if (resource.IsUrl)
                     {
-                        System.Drawing.Image image = ImageConverter.ImageFromUrl(resource.Url);
-                        resource.imageBytes = ImageConverter.ImageToBytes(image);
+                        resource.image = ImageConverter.ImageFromUrl(resource.Url);
                     }
                     resource.alreadyConvertedResource = true;
                 }
-                return ImageConverter.ImageFromBytes(resource.imageBytes);
+                if(resource.image != null)
+                    return new Bitmap(resource.image);
             }
             return null;
         }

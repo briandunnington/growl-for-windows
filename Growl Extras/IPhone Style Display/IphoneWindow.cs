@@ -33,7 +33,7 @@ namespace IphoneStyle
 
             HookUpClickEvents(this);
 
-            AutoClose(4000);
+            SetAutoCloseInterval(4000);
         }
 
         void IphoneWindow_Load(object sender, EventArgs e)
@@ -68,11 +68,11 @@ namespace IphoneStyle
             this.location = location;
         }
 
-        public void SetNotification(Notification n)
+        public override void SetNotification(Notification n)
         {
             base.SetNotification(n);
 
-            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) SetAutoCloseInterval(n.Duration * 1000);
 
             this.pictureBox1.Image = n.Image;
 

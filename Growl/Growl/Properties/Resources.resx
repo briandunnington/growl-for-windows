@@ -118,36 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="growl-big" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl-big.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Config-Tools" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Config-Tools.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="My-Computer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\My-Computer.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Locker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Locker.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Config" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Config.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="off_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\off_button.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="on_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\on_button.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Clock.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Network" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Network.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Clock2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Clock2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="growl_dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\growl_dim.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -160,65 +130,14 @@
   <data name="generic_application" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\generic_application.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_bg.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="close_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\close_blue.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="close_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\close_red.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_add.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button_add_dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_add_dim.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button_remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_remove.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button_remove_dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_remove_dim.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="internet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\internet.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iphone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="linux" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\linux.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mac" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mac.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mobile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mobile.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="other" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\other.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="windows" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windows.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button_bg_dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_bg_dim.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="growl_highlighted" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl_highlighted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="growl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\growl.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="growl_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\growl.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Envelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Envelope.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="proxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\proxy.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -1026,5 +945,122 @@ to Twitter</value>
   <data name="LanguageInstaller_Prompt" xml:space="preserve">
     <value>Do you want to install the language pack for the following language:  {0}\n\nNOTE: Users running Vista or Windows 7 must have administrator privileges to install language packs.</value>
     <comment>Language Pack installer: displayed when a click-to-install link is clicked. {0} is the name of the language</comment>
+  </data>
+  <data name="internet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\internet.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\iphone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="linux" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\linux.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mac" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\mac.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mobile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\mobile.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\other.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rss" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rss.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="windows" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\windows.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="email" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\email.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AddSubscription_AddGNTP" xml:space="preserve">
+    <value>Subscribe to Growl notifications\non another machine</value>
+    <comment>Add subscription form: click to subscribe to Growl notifications</comment>
+  </data>
+  <data name="notifyio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\notifyio.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ForwarderInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Plugin '{0}' is already installed.</value>
+    <comment>Forwarder installer: message shown if a plugin is already installed when attempting to install again</comment>
+  </data>
+  <data name="ForwarderInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe plugin could not be installed.</value>
+    <comment>Forwarder installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="ForwarderInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the plugin was cancelled.\n\nThe plugin was not installed.</value>
+    <comment>Forwarder installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="ForwarderInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the plugin files.\n\nThe plugin was not installed.</value>
+    <comment>Forwarder installer: message shown if the download of the plugin files fails for any reason</comment>
+  </data>
+  <data name="ForwarderInstaller_FormTitle" xml:space="preserve">
+    <value>Install Forwarder Plugin</value>
+    <comment>Forwarder installer: form title</comment>
+  </data>
+  <data name="ForwarderInstaller_Installing" xml:space="preserve">
+    <value>Installing plugin...</value>
+    <comment>Forwarder installer: displayed while the plugin is being installed</comment>
+  </data>
+  <data name="ForwarderInstaller_InstalledText" xml:space="preserve">
+    <value>The plugin '{0}' was installed successfully.</value>
+    <comment>Forwarder installer: text of the notification shown when a new plugin is installed. {0} is the name of the installed plugin.</comment>
+  </data>
+  <data name="ForwarderInstaller_InstalledTitle" xml:space="preserve">
+    <value>New Plugin Installed</value>
+    <comment>Forwarder installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="ForwarderInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe plugin could not be installed.</value>
+    <comment>Forwarder installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="ForwarderInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <comment>Forwarder installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="SubscriberInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Plugin '{0}' is already installed.</value>
+    <comment>Subscriber installer: message shown if a plugin is already installed when attempting to install again</comment>
+  </data>
+  <data name="SubscriberInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe plugin could not be installed.</value>
+    <comment>Subscriber installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="SubscriberInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the plugin was cancelled.\n\nThe plugin was not installed.</value>
+    <comment>Subscriber installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="SubscriberInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the plugin files.\n\nThe plugin was not installed.</value>
+    <comment>Subscriber installer: message shown if the download of the plugin files fails for any reason</comment>
+  </data>
+  <data name="SubscriberInstaller_FormTitle" xml:space="preserve">
+    <value>Install Subscriber Plugin</value>
+    <comment>Subscriber installer: form title</comment>
+  </data>
+  <data name="SubscriberInstaller_Installing" xml:space="preserve">
+    <value>Installing plugin...</value>
+    <comment>Subscriber installer: displayed while the plugin is being installed</comment>
+  </data>
+  <data name="SubscriberInstaller_InstalledText" xml:space="preserve">
+    <value>The plugin '{0}' was installed successfully.</value>
+    <comment>Subscriber installer: text of the notification shown when a new plugin is installed. {0} is the name of the installed plugin.</comment>
+  </data>
+  <data name="SubscriberInstaller_InstalledTitle" xml:space="preserve">
+    <value>New Plugin Installed</value>
+    <comment>Subscriber installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="SubscriberInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe plugin could not be installed.</value>
+    <comment>Subscriber installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="SubscriberInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <comment>Subscriber installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
   </data>
 </root>

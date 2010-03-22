@@ -46,6 +46,9 @@ namespace Growl.Displays.Standard
 
         void StandardWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            this.Load -= new EventHandler(StandardWindow_Load);
+            this.FormClosed -= new FormClosedEventHandler(StandardWindow_FormClosed);
+
             if(this.pictureBox1.Image != null)
                 this.pictureBox1.Image.Dispose();
         }

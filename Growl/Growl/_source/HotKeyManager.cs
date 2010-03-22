@@ -15,10 +15,10 @@ namespace Growl
         private IntPtr hWnd;
         private Keys keys;
 
-        public HotKeyManager(Form form, Keys keys)
+        public HotKeyManager(IntPtr handle, Keys keys)
         {
-            this.hWnd = form.Handle;
-            this.id = this.GetHashCode();
+            this.hWnd = handle;
+            this.id = base.GetHashCode();
             this.keys = keys;
         }
 
@@ -63,8 +63,11 @@ namespace Growl
         }
 
         [DllImport("user32.dll", SetLastError = true)]
+        [return:MarshalAs(UnmanagedType.Bool)]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, KeyModifier fsModifiers, Keys vk);
+
         [DllImport("user32.dll", SetLastError = true)]
+        [return:MarshalAs(UnmanagedType.Bool)]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         #region IDisposable Members

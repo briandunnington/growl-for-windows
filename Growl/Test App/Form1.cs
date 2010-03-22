@@ -34,11 +34,12 @@ namespace Test_App
             this.app = new Growl.Connector.Application("SurfWriter");
             //app.Icon = "http://atomicbride.com/Apple.gif";
             //app.Icon = "http://www.thetroyers.com/images/Apple_Logo.jpg";
-            app.Icon = @"c:\apple.png";
+            //app.Icon = @"c:\apple.png";
             //app.Icon = Properties.Resources.Apple;
             //app.CustomTextAttributes.Add("Creator", "Apple Software");
             //app.CustomTextAttributes.Add("Application-ID", "08d6c05a21512a79a1dfeb9d2a8f262f");
             //app.CustomBinaryAttributes.Add("Sound", "http://fake.net/app.wav");
+            app.Icon = @"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1JREFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jqch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0vr4MkhoXe0rZigAAAABJRU5ErkJggg==";
 
 
             Growl.CoreLibrary.Detector detector = new Detector();

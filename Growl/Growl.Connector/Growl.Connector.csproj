@@ -80,6 +80,7 @@
     <Compile Include="Priority.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestData.cs" />
+    <Compile Include="RequestInfo.cs" />
     <Compile Include="RequestType.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="ResponseType.cs" />

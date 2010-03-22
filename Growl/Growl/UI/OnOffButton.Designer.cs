@@ -33,7 +33,7 @@ namespace Growl.UI
             // 
             // OnOffButton
             // 
-            this.Image = global::Growl.Properties.Resources.off_button;
+            this.Image = Growl.FormResources.off_button;
             this.Size = new System.Drawing.Size(94, 27);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);

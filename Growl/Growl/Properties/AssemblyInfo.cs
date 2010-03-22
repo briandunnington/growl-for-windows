@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
@@ -12,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("element code project")]
-[assembly: AssemblyCopyright("Copyright © element code project 2009")]
+[assembly: AssemblyCopyright("Copyright © element code project 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,8 +21,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a0717663-71c3-408d-8188-92322b232dae")]
-
+[assembly: Guid("d84ed0b4-be4c-4785-9ba6-b855889e0576")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,6 +31,6 @@ using System.Resources;
 //      Revision
 //
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.27")]
-[assembly: AssemblyInformationalVersion("2.0.1")]
+[assembly: AssemblyFileVersion("2.0.2.9")]
+[assembly: AssemblyInformationalVersion("2.0.2")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]

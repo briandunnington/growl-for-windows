@@ -46,12 +46,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64.cs" />
     <Compile Include="BinaryData.cs" />
     <Compile Include="CallbackResult.cs" />
+    <Compile Include="DebugInfo.cs" />
     <Compile Include="Detector.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="NotificationCallbackDelegate.cs" />
@@ -60,6 +63,9 @@
     <Compile Include="PathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
+    <Compile Include="WebClientEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Growl.CoreLibrary.pfx" />

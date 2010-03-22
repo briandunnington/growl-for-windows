@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Mono.Zeroconf;
+using Growl.Destinations;
 
 namespace Growl
 {
@@ -11,12 +12,13 @@ namespace Growl
     /// </summary>
     public class Bonjour : IDisposable
     {
-        public delegate void NetServiceFoundEventHandler(Bonjour sender, IResolvableService service, GrowlBonjourEventArgs args);
+        public delegate void NetServiceFoundEventHandler(Bonjour sender, IResolvableService service, BonjourEventArgs args);
         public delegate void NetServiceRemovedEventHandler(Bonjour sender, IResolvableService service);
         public event NetServiceFoundEventHandler ServiceFound;
         public event NetServiceRemovedEventHandler ServiceRemoved;
 
-        private static bool isSupported;
+        // since we are providing our own mDNS, Bonjour is always supported
+        private static bool isSupported = true;
 
 
         /// <summary>
@@ -34,12 +36,6 @@ namespace Growl
         /// </summary>
         private Dictionary<string, DetectedService> servicesFound = new Dictionary<string, DetectedService>();
 
-        static Bonjour()
-        {
-            // since we are providing our own mDNS, Bonjour is always supported
-            isSupported = true;
-        }
-
 
         /// <summary>
         /// Starts the service browser that monitors for other Bonjour services.
@@ -53,12 +49,18 @@ namespace Growl
                     this.serviceBrowser = new ServiceBrowser();
                     this.serviceBrowser.ServiceAdded += new ServiceBrowseEventHandler(serviceBrowser_ServiceAdded);
                     this.serviceBrowser.ServiceRemoved += new ServiceBrowseEventHandler(serviceBrowser_ServiceRemoved);
-                    this.serviceBrowser.Browse(Growl.Daemon.GrowlServer.BONJOUR_SERVICE_TYPE, null);
+                    
+                    // BUG WORKAROUND: The ZeroConf library has a bug in it where AddressProtocol.Any eventually
+                    // tries to do something with an IPv6 request and the call never returns. In practice, this causes
+                    // the detection of service removals to never be triggered. As a temporary fix, we have to 
+                    // explicitly specify IPv4 for now. 
+                    this.serviceBrowser.Browse(AddressProtocol.IPv4, Growl.Daemon.GrowlServer.BONJOUR_SERVICE_TYPE, null);
+                    
                     this.isStarted = true;
                 }
                 catch(Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(String.Format("Bonjour service browser not started - {0}", ex.Message));
+                    Utility.WriteDebugInfo(String.Format("Bonjour service browser not started - {0}", ex.Message));
                     isStarted = false;
                 }
             }
@@ -67,13 +69,13 @@ namespace Growl
         void serviceBrowser_ServiceAdded(object o, ServiceBrowseEventArgs args)
         {
             IResolvableService service = args.Service;
-            Console.WriteLine(String.Format("Bonjour service detected: {0}", service.Name));
+            Utility.WriteDebugInfo(String.Format("Bonjour service detected: {0}", service.Name));
 
             // check if we simply found ourself or another service
             bool isSelf = IsOwnInstance(service);
             if (!isSelf)
             {
-                Console.WriteLine(String.Format("Bonjour Growl service detected: {0}", service.Name));
+                Utility.WriteDebugInfo(String.Format("Bonjour Growl service detected: {0}", service.Name));
 
                 service.Resolved += new ServiceResolvedEventHandler(service_Resolved);
                 service.Resolve();
@@ -83,8 +85,9 @@ namespace Growl
         void service_Resolved(object o, ServiceResolvedEventArgs args)
         {
             IResolvableService service = args.Service;
+            service.Resolved -= new ServiceResolvedEventHandler(service_Resolved);
 
-            ForwardDestinationPlatformType fcPlatform = ForwardDestinationPlatformType.Other;
+            DestinationPlatformType fcPlatform = KnownDestinationPlatformType.Other;
             if (service.TxtRecord != null)
             {
                 foreach (TxtRecordItem record in service.TxtRecord)
@@ -92,12 +95,12 @@ namespace Growl
                     if (record.Key == "platform")
                     {
                         string platform = record.ValueString;
-                        fcPlatform = ForwardDestinationPlatformType.FromString(platform);
+                        fcPlatform = KnownDestinationPlatformType.FromString(platform);
                         break;
                     }
                 }
             }
-            GrowlBonjourEventArgs e = new GrowlBonjourEventArgs(fcPlatform);
+            BonjourEventArgs e = new BonjourEventArgs(fcPlatform);
 
             this.OnServiceFound(service, e);
         }
@@ -106,7 +109,7 @@ namespace Growl
         {
             IResolvableService service = args.Service;
 
-            Console.WriteLine("Bonjour service removed: {0}", service.Name);
+            Utility.WriteDebugInfo("Bonjour service removed: {0}", service.Name);
 
             service.Resolved -= service_Resolved;
 
@@ -169,7 +172,7 @@ namespace Growl
             }
         }
 
-        protected void OnServiceFound(IResolvableService service, GrowlBonjourEventArgs args)
+        protected void OnServiceFound(IResolvableService service, BonjourEventArgs args)
         {
             if (!servicesFound.ContainsKey(service.Name))
             {
@@ -220,14 +223,20 @@ namespace Growl
             GC.SuppressFinalize(this);
         }
 
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
                 try
                 {
                     Stop();
-                    if (this.serviceBrowser != null) this.serviceBrowser.Dispose();
+                    if (this.serviceBrowser != null)
+                    {
+                        this.serviceBrowser.ServiceAdded -= new ServiceBrowseEventHandler(serviceBrowser_ServiceAdded);
+                        this.serviceBrowser.ServiceRemoved -= new ServiceBrowseEventHandler(serviceBrowser_ServiceRemoved);
+                        this.serviceBrowser.Dispose();
+                        this.serviceBrowser = null;
+                    }
                 }
                 catch
                 {

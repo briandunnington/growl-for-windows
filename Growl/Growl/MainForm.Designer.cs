@@ -16,41 +16,6 @@ namespace Growl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Today", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Yesterday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Tuesday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Monday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Sunday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Saturday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Friday", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
-            "(No notifications for this date)",
-            "",
-            ""}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelGeneral = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -138,6 +103,7 @@ namespace Growl
             this.contextMenuStripSubscriptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editSubscriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unsubscribeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelHistoryListViewBacker = new System.Windows.Forms.Panel();
             this.toolbarPanel = new Growl.UI.CustomPanel();
             this.toolStrip1 = new Growl.UI.Toolbar();
             this.toolbarButtonGeneral = new System.Windows.Forms.ToolStripButton();
@@ -839,7 +805,7 @@ namespace Growl
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::Growl.Properties.Resources.growl_big;
+            this.pictureBox1.Image = global::Growl.FormResources.growl_big;
             this.pictureBox1.Location = new System.Drawing.Point(311, 24);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
@@ -945,6 +911,7 @@ namespace Growl
             this.panelHistory.Controls.Add(this.historyDaysGroupBox);
             this.panelHistory.Controls.Add(this.historySortByGroupBox);
             this.panelHistory.Controls.Add(this.historyListView);
+            this.panelHistory.Controls.Add(this.panelHistoryListViewBacker);
             this.panelHistory.Location = new System.Drawing.Point(0, 70);
             this.panelHistory.Name = "panelHistory";
             this.panelHistory.Size = new System.Drawing.Size(663, 304);
@@ -1173,6 +1140,18 @@ namespace Growl
             this.unsubscribeToolStripMenuItem.Text = "Unsubscribe";
             this.unsubscribeToolStripMenuItem.Click += new System.EventHandler(this.unsubscribeToolStripMenuItem_Click);
             // 
+            // panelHistoryListViewBacker
+            // 
+            this.panelHistoryListViewBacker.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelHistoryListViewBacker.BackColor = System.Drawing.Color.White;
+            this.panelHistoryListViewBacker.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelHistoryListViewBacker.Location = new System.Drawing.Point(196, 5);
+            this.panelHistoryListViewBacker.Name = "panelHistoryListViewBacker";
+            this.panelHistoryListViewBacker.Size = new System.Drawing.Size(460, 289);
+            this.panelHistoryListViewBacker.TabIndex = 9;
+            // 
             // toolbarPanel
             // 
             this.toolbarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -1214,7 +1193,7 @@ namespace Growl
             // toolbarButtonGeneral
             // 
             this.toolbarButtonGeneral.AutoSize = false;
-            this.toolbarButtonGeneral.Image = global::Growl.Properties.Resources.Config_Tools;
+            this.toolbarButtonGeneral.Image = global::Growl.FormResources.tab_general;
             this.toolbarButtonGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonGeneral.Name = "toolbarButtonGeneral";
             this.toolbarButtonGeneral.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1225,7 +1204,7 @@ namespace Growl
             // toolbarButtonApplications
             // 
             this.toolbarButtonApplications.AutoSize = false;
-            this.toolbarButtonApplications.Image = global::Growl.Properties.Resources.Config;
+            this.toolbarButtonApplications.Image = global::Growl.FormResources.tab_applications;
             this.toolbarButtonApplications.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonApplications.Name = "toolbarButtonApplications";
             this.toolbarButtonApplications.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1236,7 +1215,7 @@ namespace Growl
             // toolbarButtonDisplays
             // 
             this.toolbarButtonDisplays.AutoSize = false;
-            this.toolbarButtonDisplays.Image = global::Growl.Properties.Resources.My_Computer;
+            this.toolbarButtonDisplays.Image = global::Growl.FormResources.tab_displays;
             this.toolbarButtonDisplays.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonDisplays.Name = "toolbarButtonDisplays";
             this.toolbarButtonDisplays.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1247,7 +1226,7 @@ namespace Growl
             // toolbarButtonNetwork
             // 
             this.toolbarButtonNetwork.AutoSize = false;
-            this.toolbarButtonNetwork.Image = global::Growl.Properties.Resources.Network;
+            this.toolbarButtonNetwork.Image = global::Growl.FormResources.tab_network;
             this.toolbarButtonNetwork.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonNetwork.Name = "toolbarButtonNetwork";
             this.toolbarButtonNetwork.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1258,7 +1237,7 @@ namespace Growl
             // toolbarButtonSecurity
             // 
             this.toolbarButtonSecurity.AutoSize = false;
-            this.toolbarButtonSecurity.Image = global::Growl.Properties.Resources.Locker;
+            this.toolbarButtonSecurity.Image = global::Growl.FormResources.tab_security;
             this.toolbarButtonSecurity.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonSecurity.Name = "toolbarButtonSecurity";
             this.toolbarButtonSecurity.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1269,7 +1248,7 @@ namespace Growl
             // toolbarButtonHistory
             // 
             this.toolbarButtonHistory.AutoSize = false;
-            this.toolbarButtonHistory.Image = global::Growl.Properties.Resources.Clock2;
+            this.toolbarButtonHistory.Image = global::Growl.FormResources.tab_history;
             this.toolbarButtonHistory.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonHistory.Name = "toolbarButtonHistory";
             this.toolbarButtonHistory.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1280,7 +1259,7 @@ namespace Growl
             // toolbarButtonAbout
             // 
             this.toolbarButtonAbout.AutoSize = false;
-            this.toolbarButtonAbout.Image = global::Growl.Properties.Resources.growl;
+            this.toolbarButtonAbout.Image = global::Growl.FormResources.growl;
             this.toolbarButtonAbout.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonAbout.Name = "toolbarButtonAbout";
             this.toolbarButtonAbout.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
@@ -1312,48 +1291,12 @@ namespace Growl
             this.historyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.historyListView.BackColor = System.Drawing.Color.White;
             this.historyListView.Filter = null;
             this.historyListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.historyListView.FullRowSelect = true;
             this.historyListView.GroupBy = Growl.UI.HistoryGroupItemsBy.Date;
-            listViewGroup1.Header = "Today";
-            listViewGroup1.Name = "Today";
-            listViewGroup2.Header = "Yesterday";
-            listViewGroup2.Name = "Yesterday";
-            listViewGroup3.Header = "Tuesday";
-            listViewGroup3.Name = "Tuesday";
-            listViewGroup4.Header = "Monday";
-            listViewGroup4.Name = "Monday";
-            listViewGroup5.Header = "Sunday";
-            listViewGroup5.Name = "Sunday";
-            listViewGroup6.Header = "Saturday";
-            listViewGroup6.Name = "Saturday";
-            listViewGroup7.Header = "Friday";
-            listViewGroup7.Name = "Friday";
-            this.historyListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3,
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6,
-            listViewGroup7});
             this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem1.Group = listViewGroup1;
-            listViewItem2.Group = listViewGroup2;
-            listViewItem3.Group = listViewGroup3;
-            listViewItem4.Group = listViewGroup4;
-            listViewItem5.Group = listViewGroup5;
-            listViewItem6.Group = listViewGroup6;
-            listViewItem7.Group = listViewGroup7;
-            this.historyListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7});
             this.historyListView.LabelWrap = false;
             this.historyListView.Location = new System.Drawing.Point(196, 5);
             this.historyListView.MultiSelect = false;
@@ -1407,9 +1350,9 @@ namespace Growl
             // 
             // buttonUnsubscribe
             // 
-            this.buttonUnsubscribe.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonUnsubscribe.DisabledImage = global::Growl.FormResources.button_remove_dim;
             this.buttonUnsubscribe.Enabled = false;
-            this.buttonUnsubscribe.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonUnsubscribe.Image = global::Growl.FormResources.button_remove;
             this.buttonUnsubscribe.Location = new System.Drawing.Point(379, 225);
             this.buttonUnsubscribe.Margin = new System.Windows.Forms.Padding(0);
             this.buttonUnsubscribe.Name = "buttonUnsubscribe";
@@ -1421,8 +1364,8 @@ namespace Growl
             // 
             // buttonSubscribe
             // 
-            this.buttonSubscribe.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonSubscribe.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonSubscribe.DisabledImage = global::Growl.FormResources.button_add_dim;
+            this.buttonSubscribe.Image = global::Growl.FormResources.button_add;
             this.buttonSubscribe.Location = new System.Drawing.Point(343, 225);
             this.buttonSubscribe.Margin = new System.Windows.Forms.Padding(0);
             this.buttonSubscribe.Name = "buttonSubscribe";
@@ -1436,6 +1379,7 @@ namespace Growl
             // 
             this.subscribedListView.AllDisabled = true;
             this.subscribedListView.Computers = null;
+            this.subscribedListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.subscribedListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.subscribedListView.LabelWrap = false;
             this.subscribedListView.Location = new System.Drawing.Point(339, 38);
@@ -1453,9 +1397,9 @@ namespace Growl
             // 
             // buttonRemoveComputer
             // 
-            this.buttonRemoveComputer.DisabledImage = global::Growl.Properties.Resources.button_remove_dim;
+            this.buttonRemoveComputer.DisabledImage = global::Growl.FormResources.button_remove_dim;
             this.buttonRemoveComputer.Enabled = false;
-            this.buttonRemoveComputer.Image = global::Growl.Properties.Resources.button_remove;
+            this.buttonRemoveComputer.Image = global::Growl.FormResources.button_remove;
             this.buttonRemoveComputer.Location = new System.Drawing.Point(59, 225);
             this.buttonRemoveComputer.Margin = new System.Windows.Forms.Padding(0);
             this.buttonRemoveComputer.Name = "buttonRemoveComputer";
@@ -1467,8 +1411,8 @@ namespace Growl
             // 
             // buttonAddComputer
             // 
-            this.buttonAddComputer.DisabledImage = global::Growl.Properties.Resources.button_add_dim;
-            this.buttonAddComputer.Image = global::Growl.Properties.Resources.button_add;
+            this.buttonAddComputer.DisabledImage = global::Growl.FormResources.button_add_dim;
+            this.buttonAddComputer.Image = global::Growl.FormResources.button_add;
             this.buttonAddComputer.Location = new System.Drawing.Point(23, 225);
             this.buttonAddComputer.Margin = new System.Windows.Forms.Padding(0);
             this.buttonAddComputer.Name = "buttonAddComputer";
@@ -1482,7 +1426,7 @@ namespace Growl
             // 
             this.forwardListView.AllDisabled = true;
             this.forwardListView.Computers = null;
-            this.forwardListView.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.forwardListView.Font = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.forwardListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.forwardListView.LabelWrap = false;
             this.forwardListView.Location = new System.Drawing.Point(16, 38);
@@ -1582,14 +1526,14 @@ namespace Growl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 373);
             this.Controls.Add(this.toolbarPanel);
-            this.Controls.Add(this.panelAbout);
-            this.Controls.Add(this.panelSecurity);
             this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
             this.Controls.Add(this.panelGeneral);
             this.Controls.Add(this.panelDisplays);
+            this.Controls.Add(this.panelAbout);
+            this.Controls.Add(this.panelSecurity);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -1760,5 +1704,6 @@ namespace Growl
         private System.Windows.Forms.ToolStripMenuItem unsubscribeToolStripMenuItem;
         private System.Windows.Forms.GroupBox historyFilterGroupBox;
         private System.Windows.Forms.TextBox historyFilterTextBox;
+        private System.Windows.Forms.Panel panelHistoryListViewBacker;
     }
 }

@@ -11,24 +11,40 @@ namespace Growl
         {
             Silent = 1,
             ReloadDisplays = 2,
-            UpdateLanguage = 4
+            UpdateLanguage = 4,
+            HandleListenUrl = 8,
+            ReloadForwarders = 16,
+            ReloadSubscribers = 32
         }
 
         static Program program;
         static bool appIsAlreadyRunning;
         static bool silentMode;
+        static bool loggingEnabled;
         static List<InternalNotification> queuedNotifications = new List<InternalNotification>();
+
+        public static DateTime st;
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        [STAThread()]
         static void Main(string[] args)
         {
+            //System.Diagnostics.Debugger.Launch();
+
+            st = DateTime.Now;
             Application.SetCompatibleTextRenderingDefault(false);
 
             SingleInstanceApplication app = new SingleInstanceApplication("GrowlForWindows");
             using (app)
             {
+                // register support for data: uris
+                DataWebRequest.Register();
+
+                // set global (default) proxy info
+                ProxyHelper.SetProxy();
+
                 Signal signalFlag = 0;
                 int signalValue = 0;
                 appIsAlreadyRunning = app.IsAlreadyRunning;
@@ -54,12 +70,10 @@ namespace Growl
                         }
                     }
 
-                    bool enableLogging = false;
                     if (parameters.ContainsKey("/log"))
                     {
                         string log = parameters["/log"].Value.ToLower();
-                        if (log == "true") enableLogging = true;
-                        Properties.Settings.Default.EnableLogging = enableLogging;
+                        if (log == "true") loggingEnabled = true;
                     }
                     bool debugMode = false;
                     if (parameters.ContainsKey("/debug"))
@@ -76,6 +90,17 @@ namespace Growl
                         if (silentMode)
                             signalFlag = signalFlag | Signal.Silent;
                     }
+                    string listenUrlFile = null;
+                    if (parameters.ContainsKey("/listenurl")) listenUrlFile = parameters["/listenurl"].Value;
+                    else if (args != null && args.Length == 1) listenUrlFile = args[0];
+                    if(!String.IsNullOrEmpty(listenUrlFile))
+                    {
+                        string filename = String.Format("{0}.ListenUrl", System.IO.Path.GetFileNameWithoutExtension(listenUrlFile));    // we have to do this since Firefox will rename the temp file to file.ListenUrl-X.txt
+                        string dest = System.IO.Path.Combine(Utility.UserSettingFolder, filename);
+                        System.IO.File.Copy(listenUrlFile, dest, true);
+                        signalFlag = signalFlag | Signal.HandleListenUrl;
+                        signalFlag = signalFlag | Signal.Silent;    // go silent to suppress the 'Growl is running' notification
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -85,19 +110,34 @@ namespace Growl
 
                 if (!appIsAlreadyRunning)
                 {
-                    app.AnotherInstanceStarted += new SingleInstanceApplication.AnotherInstanceStartedEventHandler(app_AnotherInstanceStarted);
                     try
                     {
                         program = new Program();
                         program.ProgramRunning += new EventHandler(program_ProgramRunning);
+                        program.Run();
+                        app.AnotherInstanceStarted += new SingleInstanceApplication.AnotherInstanceStartedEventHandler(app_AnotherInstanceStarted);
                         app.Run(program);
+                        app.AnotherInstanceStarted -= new SingleInstanceApplication.AnotherInstanceStartedEventHandler(app_AnotherInstanceStarted);
+                        program.ProgramRunning -= new EventHandler(program_ProgramRunning);
                         program.Dispose();
+                        program = null;
                     }
                     catch (Exception ex)
                     {
-                        string source = "Growl";
-                        string logtext = String.Format("{0}\r\n\r\n{1}", ex.Message, ex.StackTrace);
+                        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                        Exception e = ex;
+                        while (e != null)
+                        {
+                            sb.AppendFormat("{0}\r\n\r\n{1}\r\n\r\n", e.Message, e.StackTrace);
+                            e = e.InnerException;
+                        }
+                        string logtext = sb.ToString();
+
                         string msgtext = "Growl encountered a fatal error and cannot continue.\r\n\r\nPlease see the Event Viewer for details.";
+                        Utility.WriteDebugInfo(msgtext);
+                        Utility.WriteDebugInfo(logtext);
+
+                        string source = "Growl";
                         if (!System.Diagnostics.EventLog.SourceExists(source))
                         {
                             System.Diagnostics.EventLog.CreateEventSource(source, "Application");
@@ -111,40 +151,27 @@ namespace Growl
                 else
                 {
                     InternalNotification.SaveToDisk(ref queuedNotifications);
-                    app.SignalFirstInstance((int) signalFlag, signalValue);
+                    app.SignalFirstInstance((int)signalFlag, signalValue);
                 }
             }
+            app.Dispose();
+            app = null;
         }
 
         static void program_ProgramRunning(object sender, EventArgs e)
         {
-            HandleSystemNotifications();
+            program.HandleSystemNotifications(ref queuedNotifications);
+            program.HandleListenUrls();
         }
 
         static void app_AnotherInstanceStarted(int signalFlag, int signalValue)
         {
-            // show notification that growl is already running...
-            Console.WriteLine("INSTANCE: growl is already running");
-
-            program.AlreadyRunning(signalFlag, signalValue);
-
-            HandleSystemNotifications();
-        }
-
-        static void HandleSystemNotifications()
-        {
-            InternalNotification.ReadFromDisk(ref queuedNotifications);
-            if (queuedNotifications != null)
+            Utility.WriteDebugInfo("INSTANCE: growl is already running");
+            if (program != null)
             {
-                foreach (InternalNotification n in queuedNotifications)
-                {
-                    Display display = (n.Display != null ? DisplayStyleManager.FindDisplayStyle(n.Display) : null);
-                    program.SendSystemNotification(n.Title, n.Text, display);
-                }
-
-                queuedNotifications.Clear();
+                program.AlreadyRunning(signalFlag, signalValue);
+                program.HandleSystemNotifications();
             }
-            queuedNotifications = null;
         }
 
         static public bool HasProgramLaunchedYet
@@ -167,12 +194,34 @@ namespace Growl
             }
         }
 
+        static public bool LoggingEnabled
+        {
+            get
+            {
+                bool enabled = (loggingEnabled || Properties.Settings.Default.EnableLogging);
+
+// always enable logging in debug builds
+#if (DEBUG)
+                enabled = true;
+#endif
+
+                return enabled;
+            }
+        }
+
         static public Program Program
         {
             get
             {
                 return program;
             }
+        }
+
+        static public void ForceGC()
+        {
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers(); // this method may block while it runs the finalizers
+            System.GC.Collect();
         }
 
         private static Parameter GetParameterValue(string argument)

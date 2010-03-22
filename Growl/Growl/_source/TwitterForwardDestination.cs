@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Growl.Destinations;
 
 namespace Growl
 {
     [Serializable]
-    public class TwitterForwardDestination : ForwardDestination
+    public class TwitterForwardDestination : Growl.Destinations.ForwardDestination
     {
         public static string DefaultFormat = String.Format("{0}: {1} - {2}", PLACEHOLDER_APPNAME, PLACEHOLDER_TITLE, PLACEHOLDER_TEXT);
 
@@ -29,7 +30,7 @@ namespace Growl
             this.format = (String.IsNullOrEmpty(format) ? TwitterForwardDestination.DefaultFormat : format);
             this.minimumPriority = minimumPriority;
             this.onlyWhenIdle = onlyWhenIdle;
-            this.Platform = ForwardDestinationPlatformType.Twitter;
+            this.Platform = KnownDestinationPlatformType.Twitter;
         }
 
         public override string Description
@@ -127,19 +128,19 @@ namespace Growl
             }
         }
 
-        public override ForwardDestination Clone()
+        public override DestinationBase Clone()
         {
             TwitterForwardDestination clone = new TwitterForwardDestination(this.Description, this.Enabled, this.Username, this.Password, this.Format, this.MinimumPriority, this.OnlyWhenIdle);
             return clone;
         }
 
-        internal override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Daemon.RequestInfo requestInfo, bool isIdle)
+        public override void ForwardRegistration(Growl.Connector.Application application, List<Growl.Connector.NotificationType> notificationTypes, Growl.Connector.RequestInfo requestInfo, bool isIdle)
         {
             // IGNORE REGISTRATION NOTIFICATIONS
             requestInfo.SaveHandlingInfo("Forwarding to Twitter cancelled - Application Registrations are not forwarded.");
         }
 
-        internal override void ForwardNotification(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Daemon.RequestInfo requestInfo, bool isIdle, Forwarder.ForwardedNotificationCallbackHandler callbackFunction)
+        public override void ForwardNotification(Growl.Connector.Notification notification, Growl.Connector.CallbackContext callbackContext, Growl.Connector.RequestInfo requestInfo, bool isIdle, ForwardedNotificationCallbackHandler callbackFunction)
         {
             bool send = true;
 
@@ -159,13 +160,15 @@ namespace Growl
 
             if (send)
             {
+                requestInfo.SaveHandlingInfo(String.Format("Forwarded to Twitter '{0}' - Minimum Priority:'{1}', Actual Priority:'{2}'", this.Description, (this.MinimumPriority != null && this.MinimumPriority.HasValue ? this.MinimumPriority.Value.ToString() : "<any>"), notification.Priority.ToString()));
+
                 string message = this.format;
                 message = message.Replace(PLACEHOLDER_APPNAME, notification.ApplicationName);
                 message = message.Replace(PLACEHOLDER_TITLE, notification.Title);
                 message = message.Replace(PLACEHOLDER_TEXT, notification.Text);
                 message = message.Replace(PLACEHOLDER_PRIORITY, PrefPriority.GetFriendlyName(notification.Priority));
                 message = message.Replace(PLACEHOLDER_SENDER, notification.MachineName);
-                //Console.WriteLine(message);
+                //Utility.WriteLine(message);
 
                 // trim
                 if (message.Length > 140) message = message.Substring(0, 140);
@@ -178,7 +181,7 @@ namespace Growl
 
         private void SendAsync(object state)
         {
-             try
+            try
             {
                 byte[] data = (byte[])state;
 
@@ -188,106 +191,29 @@ namespace Growl
                 string encodedCredentials = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(credentials));
                 string authorizationHeaderValue = String.Format("Basic {0}", encodedCredentials);
 
-                WebClientEx wex = new WebClientEx();
-                wex.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
-                wex.Headers.Add(System.Net.HttpRequestHeader.Authorization, authorizationHeaderValue);
-                wex.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
+                Growl.CoreLibrary.WebClientEx wc = new Growl.CoreLibrary.WebClientEx();
+                wc.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Growl for Windows/2.0");
+                wc.Headers.Add(System.Net.HttpRequestHeader.Authorization, authorizationHeaderValue);
+                wc.Headers.Add(System.Net.HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
 
-                try
+                using (wc)
                 {
-                    byte[] bytes = wex.UploadData(url, "POST", data);
-                    string response = System.Text.Encoding.ASCII.GetString(bytes);
-                    Utility.WriteDebugInfo(String.Format("Twitter forwarding response: {0}", response));
+                    try
+                    {
+                        byte[] bytes = wc.UploadData(url, "POST", data);
+                        string response = System.Text.Encoding.ASCII.GetString(bytes);
+                        Utility.WriteDebugInfo(String.Format("Twitter forwarding response: {0}", response));
+                    }
+                    catch (Exception ex)
+                    {
+                        Utility.WriteDebugInfo(String.Format("Twitter forwarding failed: {0}", ex.Message));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Utility.WriteDebugInfo(String.Format("Twitter forwarding failed: {0}", ex.Message));
-                }
-
-  
-
-                 /*
-                System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
-                request.ServicePoint.Expect100Continue = false;
-                request.ServicePoint.MaxIdleTime = 1000;
-                request.KeepAlive = false;
-                request.ProtocolVersion = System.Net.HttpVersion.Version10;
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.UserAgent = "Growl for Windows/2.0";
-                request.Headers.Add("Authorization", authorizationHeaderValue);
-                request.ContentLength = bytes.Length;
-
-                System.IO.Stream requestStream = request.GetRequestStream();
-                using (requestStream)
-                {
-                    requestStream.Write(bytes, 0, bytes.Length);
-                }
-
-                System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
-                System.IO.Stream responseStream = response.GetResponseStream();
-                using (responseStream)
-                {
-                    byte[] responseBytes = responseStream.r
-                }
-
-                AsyncCallback requestCallback = new AsyncCallback(EndGetRequestStream);
-                State state = new State(request, bytes);
-                request.BeginGetRequestStream(requestCallback, state);
-                  * */
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utility.WriteDebugInfo(ex.ToString());
             }
         }
-
-        /*
-        private void EndGetRequestStream(IAsyncResult iar)
-        {
-            try
-            {
-                State state = (State)iar.AsyncState;
-                System.Net.HttpWebRequest request = state.Request;
-                byte[] bytes = state.Bytes;
-                System.IO.Stream requestStream = request.EndGetRequestStream(iar);
-                using (requestStream)
-                {
-                    requestStream.Write(bytes, 0, bytes.Length);
-                }
-
-                AsyncCallback callback = new AsyncCallback(EndGetResponse);
-                request.BeginGetResponse(callback, request);
-            }
-            catch
-            {
-            }
-        }
-
-        private void EndGetResponse(IAsyncResult iar)
-        {
-            try
-            {
-                System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)iar.AsyncState;
-                System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.EndGetResponse(iar);
-                response.Close();
-            }
-            catch
-            {
-            }
-        }
-
-        private class State
-        {
-            public State(System.Net.HttpWebRequest request, byte[] bytes)
-            {
-                this.Request = request;
-                this.Bytes = bytes;
-            }
-
-            public System.Net.HttpWebRequest Request;
-            public byte[] Bytes;
-        }
-         * */
     }
 }

@@ -54,8 +54,12 @@ namespace Scripty
                         sb.AppendFormat(" -{0} \"{1}\"", item.Key, item.Value);
                     }
                 }
+
                 string arguments = sb.ToString();
-                System.Diagnostics.Process.Start(filename, arguments);
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(filename, arguments);
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                System.Diagnostics.Process.Start(psi);
             }
         }
 

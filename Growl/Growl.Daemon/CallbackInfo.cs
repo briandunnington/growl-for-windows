@@ -13,6 +13,17 @@ namespace Growl.Daemon
     public class CallbackInfo
     {
         /// <summary>
+        /// Handles the <see cref="CallbackInfo.ForwardedNotificationCallback"/> event
+        /// </summary>
+        public delegate void ForwardedNotificationCallbackHandler(Growl.Connector.Response response, Growl.Connector.CallbackData callbackData, CallbackInfo callbackInfo);
+
+        /// <summary>
+        /// Occurs when a forwarded notification triggers a callback from the forwarded destination
+        /// </summary>
+        [field: NonSerialized]
+        public event ForwardedNotificationCallbackHandler ForwardedNotificationCallback;
+
+        /// <summary>
         /// The callback context from the request
         /// </summary>
         private CallbackContext context;
@@ -168,5 +179,20 @@ namespace Growl.Daemon
             return data;
         }
          * */
+
+        /// <summary>
+        /// Handles the callback from a forwarder.
+        /// </summary>
+        /// <param name="response">The <see cref="Response"/> from the forwarder</param>
+        /// <param name="callbackData">The <see cref="CallbackData"/></param>
+        public void HandleCallbackFromForwarder(Response response, CallbackData callbackData)
+        {
+            this.RequestInfo.SaveHandlingInfo(String.Format("Was responded to on {0} - Action: {1}", response.MachineName, callbackData.Result));
+
+            if (this.ForwardedNotificationCallback != null)
+            {
+                this.ForwardedNotificationCallback(response, callbackData, this);
+            }
+        }
     }
 }

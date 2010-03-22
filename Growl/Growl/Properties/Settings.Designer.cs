@@ -104,19 +104,6 @@ namespace Growl.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Date")]
-        public global::Growl.UI.HistoryGroupItemsBy HistorySortBy {
-            get {
-                return ((global::Growl.UI.HistoryGroupItemsBy)(this["HistorySortBy"]));
-            }
-            set {
-                this["HistorySortBy"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("7")]
         public int HistoryDays {
             get {
@@ -124,6 +111,19 @@ namespace Growl.Properties {
             }
             set {
                 this["HistoryDays"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Date")]
+        public global::Growl.UI.HistoryGroupItemsBy HistorySortBy {
+            get {
+                return ((global::Growl.UI.HistoryGroupItemsBy)(this["HistorySortBy"]));
+            }
+            set {
+                this["HistorySortBy"] = value;
             }
         }
         
@@ -410,6 +410,19 @@ namespace Growl.Properties {
             }
             set {
                 this["EmailForwardFromAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SettingsVersion {
+            get {
+                return ((int)(this["SettingsVersion"]));
+            }
+            set {
+                this["SettingsVersion"] = value;
             }
         }
     }

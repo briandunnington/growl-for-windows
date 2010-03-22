@@ -102,7 +102,7 @@ namespace Growl
             if (m.Msg == WM_SIGNALFIRSTINSTANCE && filter)
             {
                 filter = false;
-                //Console.WriteLine(m.ToString());
+                //Utility.WriteLine(m.ToString());
                 this.OnAnotherInstanceStarted((int) m.WParam, (int) m.LParam);
                 this.filterTimer.Start();
             }
@@ -134,8 +134,18 @@ namespace Growl
             {
                 if (disposing)
                 {
-                    if(this.mutex != null) this.mutex.Close();
-                    if(this.filterTimer != null) this.filterTimer.Dispose();
+                    if (this.mutex != null)
+                    {
+                        this.mutex.Close();
+                        this.mutex = null;
+                    }
+
+                    if (this.filterTimer != null)
+                    {
+                        this.filterTimer.Elapsed -= new System.Timers.ElapsedEventHandler(filterTimer_Elapsed);
+                        this.filterTimer.Dispose();
+                        this.filterTimer = null;
+                    }
                 }
                 this.disposed = true;
             }

@@ -29,18 +29,20 @@ namespace Growl.Displays.Standard
             try
             {
                 key = Registry.CurrentUser.OpenSubKey(keyName, false);
-
-                // get filename, if any
-                if (key != null)
+                using (key)
                 {
-                    object defaultVal = key.GetValue(null);
-                    if (defaultVal != null)
+                    // get filename, if any
+                    if (key != null)
                     {
-                        path = defaultVal.ToString();
-                        if (!System.IO.Path.IsPathRooted(path))
+                        object defaultVal = key.GetValue(null);
+                        if (defaultVal != null)
                         {
-                            string root = System.IO.Path.Combine(Environment.SystemDirectory, @"..\Media");
-                            path = System.IO.Path.Combine(root, path);
+                            path = defaultVal.ToString();
+                            if (!System.IO.Path.IsPathRooted(path))
+                            {
+                                string root = System.IO.Path.Combine(Environment.SystemDirectory, @"..\Media");
+                                path = System.IO.Path.Combine(root, path);
+                            }
                         }
                     }
                 }
@@ -48,11 +50,6 @@ namespace Growl.Displays.Standard
             catch
             {
                 path = null;
-            }
-            finally
-            {
-                // close keys
-                key.Close();
             }
 
             return path;

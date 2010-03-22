@@ -12,10 +12,10 @@ namespace Growl.Installation
 {
     public partial class InstallDisplay : Form
     {
-        private const string USER_AGENT = "Growl for Windows - Display AutoInstaller";
+        private const string USER_AGENT = "Growl for Windows - AutoInstaller";
         private const string TEMP_FOLDER = "__temp";
 
-        private WebClientEx wc;
+        private Growl.CoreLibrary.WebClientEx wc;
         private string uri;
         private bool appIsAlreadyRunning;
         private string tempFolder;
@@ -23,7 +23,7 @@ namespace Growl.Installation
         private System.Threading.AutoResetEvent are = new System.Threading.AutoResetEvent(false);
         private DownloadProgressChangedEventArgs progress;
         private object progress_lock = new object();
-        private string errorMessage = null;
+        private string errorMessage;
 
         public InstallDisplay()
         {
@@ -48,7 +48,7 @@ namespace Growl.Installation
 
             try
             {
-                this.wc = new WebClientEx();
+                this.wc = new Growl.CoreLibrary.WebClientEx();
                 wc.Headers.Add("User-Agent", USER_AGENT);
 
                 byte[] data = wc.DownloadData(this.uri);
@@ -79,10 +79,6 @@ namespace Growl.Installation
 
                         wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
                         wc.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
-
-                        //System.Threading.ParameterizedThreadStart pts = new System.Threading.ParameterizedThreadStart(StartDownload);
-                        //System.Threading.Thread t = new System.Threading.Thread(pts);
-                        //t.Start(info);
 
                         StartDownload(info);
 
@@ -153,7 +149,6 @@ namespace Growl.Installation
 
         private void StartDownload(object obj)
         {
-            System.Diagnostics.Debug.WriteLine("sd thread: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             DisplayInfo info = (DisplayInfo)obj;
             this.wc.DownloadFileAsync(new Uri(info.PackageUrl), info.LocalZipFileLocation, info);
         }
@@ -249,6 +244,14 @@ namespace Growl.Installation
         {
             if (disposing)
             {
+                if (this.wc != null)
+                {
+                    wc.DownloadProgressChanged -= new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
+                    wc.DownloadFileCompleted -= new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
+                    wc.Dispose();
+                    wc = null;
+                }
+
                 if (this.mre != null) mre.Close();
                 if (this.are != null) are.Close();
                 if (this.components != null) components.Dispose();

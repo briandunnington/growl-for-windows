@@ -14,21 +14,31 @@ namespace Growl.AutoUpdate
 
         public static Manifest Parse(string data)
         {
-            XmlDocument xml = new XmlDocument();
-            xml.LoadXml(data);
+            Manifest manifest = null;
 
-            XmlElement root = xml.DocumentElement;
-            XmlElement versionNode = root["version"];
-            XmlElement requiredNode = root["required"];
-            XmlElement updateLocationNode = root["updateLocation"];
-            XmlElement installerLocationNode = root["installerLocation"];
+            try
+            {
+                XmlDocument xml = new XmlDocument();
+                xml.LoadXml(data);
 
-            string version = versionNode.InnerText;
-            bool required = Convert.ToBoolean(requiredNode.InnerText);
-            string updateLocation = updateLocationNode.InnerText;
-            string installerLocation = installerLocationNode.InnerText;
+                XmlElement root = xml.DocumentElement;
+                XmlElement versionNode = root["version"];
+                XmlElement requiredNode = root["required"];
+                XmlElement updateLocationNode = root["updateLocation"];
+                XmlElement installerLocationNode = root["installerLocation"];
 
-            Manifest manifest = new Manifest(version, required, updateLocation, installerLocation);
+                string version = versionNode.InnerText;
+                bool required = Convert.ToBoolean(requiredNode.InnerText);
+                string updateLocation = updateLocationNode.InnerText;
+                string installerLocation = installerLocationNode.InnerText;
+
+                manifest = new Manifest(version, required, updateLocation, installerLocation);
+            }
+            catch
+            {
+                // this handles malformed xml (including times when html is returned instead, such as 404 or 500 errors)
+            }
+
             return manifest;
         }
 

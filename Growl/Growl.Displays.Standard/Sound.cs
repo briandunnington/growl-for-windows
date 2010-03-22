@@ -5,10 +5,11 @@ using System.Text;
 
 namespace Growl.Displays.Standard
 {
-    internal class Sound
+    internal class Sound : IDisposable
     {
         SoundPlayer sp;
         private bool canPlay;
+        private bool disposed;
 
         public Sound(string systemSoundAlias)
         {
@@ -39,5 +40,32 @@ namespace Growl.Displays.Standard
                 this.sp.Play();
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    if (this.sp != null)
+                    {
+                        this.sp.LoadCompleted -= new System.ComponentModel.AsyncCompletedEventHandler(sp_LoadCompleted);
+                        this.sp.Dispose();
+                        this.sp = null;
+                    }
+                }
+                this.disposed = true;
+            }
+        }
+
+        #endregion
     }
 }

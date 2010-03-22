@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Growl.UI;
+using Growl.Destinations;
 
 namespace Growl
 {
@@ -34,14 +35,29 @@ namespace Growl
             {
                 if (this.controller.ForwardDestinations != null && this.controller.ForwardDestinations.Count > 0)
                 {
-                    Dictionary<string, ForwardDestination> computers = new Dictionary<string,ForwardDestination>();
+                    /*
+                    Dictionary<string, DestinationBase> computers = new Dictionary<string, DestinationBase>();
                     foreach (ForwardDestination fc in this.controller.ForwardDestinations.Values)
                     {
                         bool enabled = this.prefs.PrefForwardCustomList.Contains(fc.Key);
-                        ForwardDestination clone = fc.Clone();
+                        DestinationBase clone = fc.Clone();
                         clone.Key = fc.Key;
                         clone.Enabled = enabled;
                         computers.Add(clone.Description, clone);
+                    }
+                    this.forwardListView1.Computers = computers;
+                    this.forwardListView1.Draw();
+                     * */
+
+                    DestinationBase[] computers = new DestinationBase[this.controller.ForwardDestinations.Count];
+                    int i = 0;
+                    foreach (ForwardDestination fc in this.controller.ForwardDestinations.Values)
+                    {
+                        bool enabled = this.prefs.PrefForwardCustomList.Contains(fc.Key);
+                        DestinationBase clone = fc.Clone();
+                        clone.Key = fc.Key;
+                        clone.Enabled = enabled;
+                        computers[i++] = clone;
                     }
                     this.forwardListView1.Computers = computers;
                     this.forwardListView1.Draw();
@@ -78,7 +94,7 @@ namespace Growl
         private void buttonSave_Click(object sender, EventArgs e)
         {
             List<string> computers = new List<string>();
-            foreach (ForwardDestination fc in this.forwardListView1.Computers.Values)
+            foreach (ForwardDestination fc in this.forwardListView1.Computers)
             {
                 if (fc.Enabled) computers.Add(fc.Key);
             }

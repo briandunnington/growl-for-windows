@@ -453,6 +453,7 @@ namespace Growl.Daemon
         /// <returns>Always returns <c>true</c></returns>
         bool socket_DidReadTimeout(AsyncSocket sender)
         {
+            sender.DidReadTimeout -= new AsyncSocket.SocketDidReadTimeout(socket_DidReadTimeout);
             WriteError(sender, ErrorCode.TIMED_OUT, ErrorDescription.TIMED_OUT);
             return true;
         }

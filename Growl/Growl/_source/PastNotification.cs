@@ -10,81 +10,15 @@ namespace Growl
     [Serializable]
     public class PastNotification : IComparable, IDisposable
     {
-        [NonSerialized]
-        private static Dictionary<string, System.Drawing.Image> imageList = new Dictionary<string, System.Drawing.Image>();
-
         private DateTime timestamp;
         private Growl.DisplayStyle.NotificationLite notification;
-        private string imageKey;
-        private System.Drawing.Image image;
+        private string imageFile;
 
-        public PastNotification(Growl.DisplayStyle.Notification notification, DateTime timestamp)
+        internal PastNotification(Growl.DisplayStyle.NotificationLite nl, DateTime timestamp, string imageFile)
         {
-            Growl.DisplayStyle.NotificationLite notificationLite = Growl.DisplayStyle.NotificationLite.Clone(notification);
-
-            System.Drawing.Image image = null;
-            string imageKey = null;
-            if (notification.Image != null && notification.Image.IsSet)
-            {
-                if (notification.Image.IsRawData)
-                {
-                    byte[] hash = Growl.Connector.Cryptography.ComputeHash(notification.Image.Data.Data, Growl.Connector.Cryptography.HashAlgorithmType.MD5);
-                    imageKey = Growl.Connector.Cryptography.HexEncode(hash);
-                }
-                else
-                {
-                    imageKey = Growl.Connector.Cryptography.ComputeHash(notification.Image.Url, Growl.Connector.Cryptography.HashAlgorithmType.MD5);
-                }
-
-                if (!imageList.ContainsKey(imageKey))
-                {
-                    lock (imageList)
-                    {
-                        System.Drawing.Image originalImage = (System.Drawing.Image)notification.Image;
-                        if (originalImage != null)
-                        {
-                            image = GenerateThumbnail(originalImage, 48, 48);
-                            imageList.Add(imageKey, image);
-                        }
-                    }
-                }
-                else
-                {
-                    image = imageList[imageKey];
-                }
-            }
-
-            this.notification = Growl.DisplayStyle.NotificationLite.Clone(notification);
+            this.notification = nl;
             this.timestamp = timestamp;
-            this.imageKey = imageKey;
-            this.image = image;
-        }
-
-        private System.Drawing.Image GenerateThumbnail(System.Drawing.Image originalImage, int newWidth, int newHeight)
-        {
-            System.Drawing.Bitmap bmpResized = new System.Drawing.Bitmap(newWidth, newHeight);
-            lock (bmpResized)
-            {
-                System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmpResized);
-                using (g)
-                {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-                    g.DrawImage(
-                        originalImage,
-                        new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmpResized.Size),
-                        new System.Drawing.Rectangle(System.Drawing.Point.Empty, originalImage.Size),
-                        System.Drawing.GraphicsUnit.Pixel);
-                }
-            }
-            return bmpResized;
-        }
-
-        public DateTime Timestamp
-        {
-            get
-            {
-                return this.timestamp;
-            }
+            this.imageFile = imageFile;
         }
 
         public Growl.DisplayStyle.NotificationLite Notification
@@ -95,40 +29,28 @@ namespace Growl
             }
         }
 
+        public DateTime Timestamp
+        {
+            get
+            {
+                return this.timestamp;
+            }
+        }
+
         public bool HasImage
         {
             get
             {
-                return (this.Image != null);
+                return !String.IsNullOrEmpty(this.ImageFile);
             }
         }
 
-        public string ImageKey
+        public string ImageFile
         {
             get
             {
-                return this.imageKey;
+                return this.imageFile;
             }
-        }
-
-        public System.Drawing.Image Image
-        {
-            get
-            {
-                return this.image;
-            }
-        }
-
-        internal void LinkImage()
-        {
-            // add for later use
-            if (!imageList.ContainsKey(this.imageKey))
-                imageList.Add(this.imageKey, this.image);
-        }
-
-        internal static void ClearImageList()
-        {
-            imageList.Clear();
         }
 
         #region IComparable Members
@@ -154,8 +76,7 @@ namespace Growl
         {
             if (disposing)
             {
-                if (this.image != null)
-                    this.image.Dispose();
+
             }
         }
 

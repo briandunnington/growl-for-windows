@@ -4,13 +4,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Growl.Destinations;
 
 namespace Growl.UI
 {
-    public partial class ProwlForwardInputs : ForwardDestinationSettingsPanel
+    public partial class ProwlForwardInputs : DestinationSettingsPanel
     {
         private bool doValidation;
-        private Color highlightColor = Color.FromArgb(254, 250, 184);
 
         public ProwlForwardInputs()
         {
@@ -33,12 +33,9 @@ namespace Growl.UI
             ValidateInputs();
         }
 
-         public override void Initialize(bool isSubscription, ForwardDestinationListItem fdli, ForwardDestination fd)
+         public override void Initialize(bool isSubscription, DestinationListItem fdli, DestinationBase fd)
         {
             this.doValidation = true;
-
-            this.textBoxDescription.HighlightColor = highlightColor;
-            this.textBoxAPIKey.HighlightColor = highlightColor;
 
             PrefPriority[] priorityChoices = PrefPriority.GetList(false);
             this.comboBoxMinimumPriority.Items.Add(Properties.Resources.AddProwl_AnyPriority);
@@ -71,7 +68,7 @@ namespace Growl.UI
             this.textBoxDescription.Focus();
         }
 
-        public override ForwardDestination Create()
+        public override DestinationBase Create()
         {
             Growl.Connector.Priority? priority = null;
             PrefPriority prefPriority = this.comboBoxMinimumPriority.SelectedItem as PrefPriority;
@@ -81,7 +78,7 @@ namespace Growl.UI
             return pfd;
         }
 
-        public override void Update(ForwardDestination fd)
+        public override void Update(DestinationBase fd)
         {
             ProwlForwardDestination pfd = fd as ProwlForwardDestination;
             if (pfd != null)

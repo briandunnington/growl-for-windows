@@ -1,12 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Growl.Destinations;
 
 namespace Growl
 {
     public class GNTPSubscriptionHandler : ISubscriptionHandler
     {
         #region ISubscriptionHandler Members
+
+        public string Name
+        {
+            get
+            {
+                return "GNTP Subscription";
+            }
+        }
 
         public List<Type> Register()
         {
@@ -15,19 +24,19 @@ namespace Growl
             return list;
         }
 
-        public Growl.UI.DestinationSettingsPanel GetSettingsPanel(DestinationBase db)
+        public Growl.Destinations.DestinationSettingsPanel GetSettingsPanel(DestinationBase db)
         {
             return new Growl.UI.ForwardDestinationInputs();
         }
 
-        public Growl.UI.DestinationSettingsPanel GetSettingsPanel(DestinationListItem fdli)
+        public Growl.Destinations.DestinationSettingsPanel GetSettingsPanel(DestinationListItem fdli)
         {
             return new Growl.UI.ForwardDestinationInputs();
         }
 
         public List<DestinationListItem> GetListItems()
         {
-            SubscriptionListItem item = new SubscriptionListItem(@"Subscribe to Growl notifications on another machine", ForwardDestinationPlatformType.Other.Icon, this);  // TODO: LOCAL: LOCALIZE:
+            SubscriptionListItem item = new SubscriptionListItem(Growl.Properties.Resources.AddSubscription_AddGNTP, KnownDestinationPlatformType.Other.GetIcon(), this);  // TODO: LOCAL: LOCALIZE:
             List<DestinationListItem> list = new List<DestinationListItem>();
             list.Add(item);
             return list;
