@@ -6,7 +6,7 @@ using Growl.DisplayStyle;
 
 namespace Growl.Displays.Toast
 {
-    public class ToastDisplay : VisualDisplay
+    public class ToastDisplay : MultiMonitorVisualDisplay
     {
         private Queue<ToastWindow> queuedNotifications = new Queue<ToastWindow>();
         private bool isVisible = false;
@@ -46,6 +46,7 @@ namespace Growl.Displays.Toast
         protected override void HandleNotification(Notification notification, string displayName)
         {
             ToastWindow win = new ToastWindow();
+            win.Tag = this;
             win.FormClosed += new FormClosedEventHandler(win_FormClosed);
             win.SetNotification(notification);
 

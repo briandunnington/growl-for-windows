@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace StickyNote
 {
-    public class StickyNoteDisplay : VisualDisplay
+    public class StickyNoteDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -65,6 +65,7 @@ namespace StickyNote
         protected override void HandleNotification(Notification notification, string displayName)
         {
             StickyNoteWindow win = new StickyNoteWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

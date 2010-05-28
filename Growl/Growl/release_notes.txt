@@ -1,3 +1,13 @@
+2.0.3 changes (v2.0.3.4)
+------------------------------
+- added support for multiple monitors (Display SDK, built-in displays, and most additional displays)
+- added ability to allow LAN requests (same subnet) to be exempt from having to provide passwords
+- fixed a bug in GrowlConnector that caused intermittent notification loss (both from app and when forwarding over GNTP)
+- fixed a bug that caused the activity monitor (idle checking) to not start correctly if the settings form was never loaded
+- fixed Twitter forwarding regression (Expect100Continue header)
+- released Boxcar forwarding plugin
+
+
 2.0.2 changes (v2.0.2.8)
 ------------------------------
 - improved initial startup time (should be <1 second for a standard installation)

@@ -17,11 +17,15 @@ namespace Growl.Displays.Visor
         private int endY = 0;
         private int duration = 2500;
 
+        Screen screen;
+
         public VisorWindow()
         {
             InitializeComponent();
 
             this.Load += new EventHandler(VisorWindow_Load);
+
+            this.PauseWhenMouseOver = true;
 
             HookUpClickEvents(this, true, true);
 
@@ -36,16 +40,13 @@ namespace Growl.Displays.Visor
 
         void VisorWindow_Load(object sender, EventArgs e)
         {
-            // set size
-            Screen screen = Screen.FromControl(this);
-            
-            int screenX = screen.Bounds.Width;
-            int w = screenX;
-            this.Width = w;
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            this.screen = d.GetPreferredDisplay();
 
-            //int screenY = screen.Bounds.Height;
-            //int h = (int)Math.Round(0.1 * screenY);
-            //this.Height = h;
+            // set size & location
+            this.Width = screen.Bounds.Width;
+            this.Location = screen.Bounds.Location;
 
             // set initial opacity
             this.Opacity = 0.90;
@@ -106,13 +107,13 @@ namespace Growl.Displays.Visor
             this.descriptionLabel.ForeColor = textColor;
             this.applicationNameLabel.ForeColor = textColor;
             this.applicationNameLabel.Width = this.Width;
-
-            // set initial location
-            this.Location = new Point(0, -this.Height + 10);  // the extra 10 is so that at least part of the form is on the screen initially, otherwise the opacity goes all screwy
         }
 
         protected override void OnShown(EventArgs e)
         {
+            // set initial location
+            this.Location = new Point(this.Location.X, this.Location.Y - this.Height + 10);    // the extra 10 is so that at least part of the form is on the screen initially, otherwise the opacity goes all screwy
+
             Win32.SetWindowPos(this.Handle, Win32.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, Win32.SWP_NOACTIVATE);
             base.OnShown(e);
             SlideIn();
@@ -121,8 +122,7 @@ namespace Growl.Displays.Visor
         private void SlideIn()
         {
             this.startY = this.Location.Y;
-            //this.endY = this.Location.Y + this.Height;
-            this.endY = 0;
+            this.endY = screen.Bounds.Top;
 
             // start sliding the window in
             this.slideInTimer.Interval = 10;

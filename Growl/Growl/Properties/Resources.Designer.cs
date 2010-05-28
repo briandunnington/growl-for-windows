@@ -60,6 +60,69 @@ namespace Growl.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap _1 {
+            get {
+                object obj = ResourceManager.GetObject("_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _2 {
+            get {
+                object obj = ResourceManager.GetObject("_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _3 {
+            get {
+                object obj = ResourceManager.GetObject("_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _4 {
+            get {
+                object obj = ResourceManager.GetObject("_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _5 {
+            get {
+                object obj = ResourceManager.GetObject("_5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _6 {
+            get {
+                object obj = ResourceManager.GetObject("_6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _7 {
+            get {
+                object obj = ResourceManager.GetObject("_7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _8 {
+            get {
+                object obj = ResourceManager.GetObject("_8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _9 {
+            get {
+                object obj = ResourceManager.GetObject("_9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to (build: {0}).
         /// </summary>
@@ -353,6 +416,24 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        internal static string AddNotifyIO_NameLabel {
+            get {
+                return ResourceManager.GetString("AddNotifyIO_NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outlet Url:.
+        /// </summary>
+        internal static string AddNotifyIO_OutletUrlLabel {
+            get {
+                return ResourceManager.GetString("AddNotifyIO_OutletUrlLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Any Priority].
         /// </summary>
         internal static string AddProwl_AnyPriority {
@@ -403,6 +484,15 @@ namespace Growl.Properties {
         internal static string AddSubscription_AddGNTP {
             get {
                 return ResourceManager.GetString("AddSubscription_AddGNTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscribe to notify.io outlet.
+        /// </summary>
+        internal static string AddSubscription_AddNotifyIO {
+            get {
+                return ResourceManager.GetString("AddSubscription_AddNotifyIO", resourceCulture);
             }
         }
         
@@ -813,6 +903,33 @@ namespace Growl.Properties {
         internal static string Displays_FindMore {
             get {
                 return ResourceManager.GetString("Displays_FindMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identify....
+        /// </summary>
+        internal static string Displays_MultiMonitor_Identify {
+            get {
+                return ResourceManager.GetString("Displays_MultiMonitor_Identify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitor.
+        /// </summary>
+        internal static string Displays_MultiMonitor_Monitor {
+            get {
+                return ResourceManager.GetString("Displays_MultiMonitor_Monitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primary.
+        /// </summary>
+        internal static string Displays_MultiMonitor_Primary {
+            get {
+                return ResourceManager.GetString("Displays_MultiMonitor_Primary", resourceCulture);
             }
         }
         
@@ -1325,6 +1442,15 @@ namespace Growl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to invalid url.
+        /// </summary>
+        internal static string LiteralString_InvalidUrl {
+            get {
+                return ResourceManager.GetString("LiteralString_InvalidUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Received At.
         /// </summary>
         internal static string LiteralString_ReceivedAt {
@@ -1348,6 +1474,24 @@ namespace Growl.Properties {
         internal static string LiteralString_Seconds {
             get {
                 return ResourceManager.GetString("LiteralString_Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to connecting....
+        /// </summary>
+        internal static string LiteralString_Status_Connecting {
+            get {
+                return ResourceManager.GetString("LiteralString_Status_Connecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to reconnecting....
+        /// </summary>
+        internal static string LiteralString_Status_Reconnecting {
+            get {
+                return ResourceManager.GetString("LiteralString_Status_Reconnecting", resourceCulture);
             }
         }
         
@@ -1460,6 +1604,13 @@ namespace Growl.Properties {
         internal static System.Drawing.Bitmap mobile {
             get {
                 object obj = ResourceManager.GetObject("mobile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap multiplemonitors {
+            get {
+                object obj = ResourceManager.GetObject("multiplemonitors", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1594,6 +1745,15 @@ namespace Growl.Properties {
             get {
                 object obj = ResourceManager.GetObject("notifyio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web Notification.
+        /// </summary>
+        internal static string NotifyIO_NotificationType {
+            get {
+                return ResourceManager.GetString("NotifyIO_NotificationType", resourceCulture);
             }
         }
         
@@ -1854,6 +2014,15 @@ namespace Growl.Properties {
         internal static string Security_PasswordManager_Title {
             get {
                 return ResourceManager.GetString("Security_PasswordManager_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Require password for LAN apps.
+        /// </summary>
+        internal static string Security_RequirePasswordLANApps {
+            get {
+                return ResourceManager.GetString("Security_RequirePasswordLANApps", resourceCulture);
             }
         }
         

@@ -10,6 +10,7 @@ namespace Growl.UI
     public class ForwardListView : ListView
     {
         private const int DEFAULT_TILE_HEIGHT = 56;
+        private const int IMAGE_SIZE = 48;
         private const int CHECKBOX_SIZE = 16;
         private const int CHECKBOX_PADDING = 10;
 
@@ -109,6 +110,20 @@ namespace Growl.UI
                 if (db != null)
                 {
                     System.Drawing.Image img = db.GetIcon();
+                    
+                    // size
+                    if (img.Width > IMAGE_SIZE)
+                    {
+                        System.Drawing.Image resized = new System.Drawing.Bitmap(IMAGE_SIZE, IMAGE_SIZE);
+                        System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(resized);
+                        using (g)
+                        {
+                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                            g.DrawImage(img, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
+                        }
+                        img = resized;
+                    }
+
                     if (img != null)
                     {
                         int x = bounds.X;
@@ -117,7 +132,7 @@ namespace Growl.UI
                             e.Graphics.DrawImage(img, new System.Drawing.Rectangle(x, y, img.Width, img.Height));
                         else
                             ControlPaint.DrawImageDisabled(e.Graphics, img, x, y, System.Drawing.Color.Transparent);
-                        newX += img.Width + this.Margin.Right;
+                        newX += IMAGE_SIZE + this.Margin.Right;
                     }
                 }
 

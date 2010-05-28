@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace IphoneStyle
 {
-    public class IphoneDisplay : VisualDisplay
+    public class IphoneDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -65,6 +65,7 @@ namespace IphoneStyle
         protected override void HandleNotification(Notification notification, string displayName)
         {
             IphoneWindow win = new IphoneWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

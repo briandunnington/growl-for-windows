@@ -45,6 +45,7 @@
     <format>yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK</format>
     <format>yyyy'-'MM'-'dd'T'HH':'mm':'sszzz</format>
     <format>yyyy'-'MM'-'dd'T'HH':'mm':'ss zzz</format>
+    <format>yyyy'-'MM'-'dd'T'HH':'mm':'ssK</format>
   </formats>
   <timezones>
     <timezone abbr="UT">+00:00</timezone>

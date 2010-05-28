@@ -57,7 +57,7 @@ namespace Scripty
 
                 string arguments = sb.ToString();
                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(filename, arguments);
-                psi.UseShellExecute = false;
+                psi.UseShellExecute = true; // this has to be true in order to run documents (.bat files specifically) - otherwise, only .exes can be launched
                 psi.CreateNoWindow = true;
                 System.Diagnostics.Process.Start(psi);
             }

@@ -66,6 +66,7 @@ namespace Growl
             this.checkBoxAllowWebNotifications.Text = Properties.Resources.Security_AllowWebNotifications;
             this.checkBoxAllowNetworkNotifications.Text = Properties.Resources.Security_AllowNetworkNotifications;
             this.checkBoxRequireLocalPassword.Text = Properties.Resources.Security_RequirePasswordLocalApps;
+            this.checkBoxRequireLANPassword.Text = Properties.Resources.Security_RequirePasswordLANApps;
             this.editToolStripMenuItem.Text = Properties.Resources.Network_EditComputer;
             this.removeComputerToolStripMenuItem.Text = Properties.Resources.Network_RemoveComputer;
 
@@ -165,8 +166,6 @@ namespace Growl
                 int y = Screen.PrimaryScreen.WorkingArea.Bottom - this.Height;
                 this.Location = new Point(x, y);
             }
-
-            //StartInterceptingSystemBalloons();
         }
 
         internal void InitializePreferences()
@@ -203,6 +202,7 @@ namespace Growl
 
             // SECURITY
             this.checkBoxRequireLocalPassword.Checked = this.controller.RequireLocalPassword;
+            this.checkBoxRequireLANPassword.Checked = this.controller.RequireLANPassword;
             this.checkBoxAllowNetworkNotifications.Checked = this.controller.AllowNetworkNotifications;
             this.checkBoxAllowWebNotifications.Checked = this.controller.AllowWebNotifications;
             this.checkBoxAllowSubscriptions.Checked = this.controller.AllowSubscriptions;
@@ -370,12 +370,18 @@ namespace Growl
 
             this.listControlDisplays.SuspendLayout();
             this.listControlDisplays.Items.Clear();
+            bool selected = false;
             foreach (Display display in list.Values)
             {
                 this.listControlDisplays.Items.Add(display);
+                if (!selected && defaultDisplayComparer(display))
+                {
+                    this.listControlDisplays.SelectedIndex = this.listControlDisplays.Items.Count - 1;
+                    selected = true;
+                }
             }
 
-            if(this.listControlDisplays.Items.Count > 0) this.listControlDisplays.SelectedIndex = 0;
+            if(!selected && this.listControlDisplays.Items.Count > 0) this.listControlDisplays.SelectedIndex = 0;
             this.listControlDisplays.ResumeLayout();
         }
 
@@ -754,6 +760,7 @@ namespace Growl
             // Normally we shouldnt ever explicitly call GC.Collect(), but since the items in the History
             // view could have been taking up a lot of memory, and this is a user-initiated event that 
             // does not occur frequently, this is an OK place to force a collection.
+            Utility.WriteDebugInfo("History cleared. Force GC to clean up LOH");
             ApplicationMain.ForceGC();
         }
 
@@ -929,6 +936,10 @@ namespace Growl
                         this.displayStyleWebsiteLabel.Text = display.Website;
                         this.displayStyleVersionLabel.Text = display.Version;
 
+                        // deal with multiple monitor support
+                        this.pictureBoxMultipleMonitors.Tag = display;
+                        this.pictureBoxMultipleMonitors.Visible = display.SupportsMultipleMonitors;
+
                         this.panelDisplaySettings.Visible = true;
                     }
                 }
@@ -1043,6 +1054,11 @@ namespace Growl
         private void checkBoxRequireLocalPassword_CheckedChanged(object sender, EventArgs e)
         {
             this.controller.RequireLocalPassword = this.checkBoxRequireLocalPassword.Checked;
+        }
+
+        private void checkBoxRequireLANPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            this.controller.RequireLANPassword = this.checkBoxRequireLANPassword.Checked;
         }
 
         private void checkBoxAllowNetworkNotifications_CheckedChanged(object sender, EventArgs e)
@@ -1363,24 +1379,98 @@ namespace Growl
             this.controller.SavePasswordPrefs();
         }
 
-        /* THIS IS NOT READY FOR RELEASE YET
-        SystemBalloonIntercepter sbi = null;
-        private void StartInterceptingSystemBalloons()
+        private void pictureBoxMultipleMonitors_MouseDown(object sender, MouseEventArgs e)
         {
-            StopInterceptingSystemBalloons();
-
-            this.sbi = new SystemBalloonIntercepter(this.Handle);
-            sbi.Start();
-        }
-
-        private void StopInterceptingSystemBalloons()
-        {
-            if (sbi != null)
+            // clean up any previous items in the list
+            this.contextMenuStripMultipleMonitors.Hide();
+            if (this.contextMenuStripMultipleMonitors.Items != null)
             {
-                this.sbi.Stop();
-                this.sbi = null;
+                while (this.contextMenuStripMultipleMonitors.Items.Count > 0)
+                {
+                    ToolStripItem tsi = this.contextMenuStripMultipleMonitors.Items[0];
+                    this.contextMenuStripMultipleMonitors.Items.RemoveAt(0);
+                    tsi.Click -= monitorItem_Click;
+                    tsi.Click -= identifyItem_Click;
+                    tsi.Dispose();
+                }
+            }
+            this.contextMenuStripMultipleMonitors.Items.Clear();
+
+            // show the options
+            if(e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
+            {
+                Display d = (Display)this.pictureBoxMultipleMonitors.Tag;
+                string selectedDeviceName = this.controller.GetPreferredDeviceForDisplay(d);
+
+                // add items
+                bool anyChecked = false;
+                Screen[] screens = Screen.AllScreens;
+                for (int i = 0; i < screens.Length; i++)
+                {
+                    Screen screen = screens[i];
+                    string deviceName = Growl.DisplayStyle.MultipleMonitorHelper.GetDeviceName(screen);
+                    string displayName = (screen.Primary ? Properties.Resources.Displays_MultiMonitor_Primary : String.Format("{0} {1}", Properties.Resources.Displays_MultiMonitor_Monitor, i + 1));
+                    string text = String.Format("{0} - {1}", i + 1, displayName);
+                    ToolStripMenuItem item = new ToolStripMenuItem(text);
+                    item.Tag = deviceName;
+                    item.Click += new EventHandler(monitorItem_Click);
+                    item.Checked = (deviceName == selectedDeviceName);
+                    if (item.Checked) anyChecked = true;
+                    this.contextMenuStripMultipleMonitors.Items.Add(item);
+                }
+
+                /*
+                // TODO: FAKE: add one fake monitor for testing
+                ToolStripMenuItem fake = new ToolStripMenuItem("9 - Fake Monitor");
+                fake.Tag = "FAKE";
+                fake.Click += new EventHandler(monitorItem_Click);
+                fake.Checked = ("FAKE" == selectedDeviceName);
+                if (fake.Checked) anyChecked = true;
+                this.contextMenuStripMultipleMonitors.Items.Add(fake);
+                 * */
+
+                // if no explicit setting was found, default to the primary monitor
+                if (!anyChecked) ((ToolStripMenuItem)this.contextMenuStripMultipleMonitors.Items[0]).Checked = true;
+
+                ToolStripSeparator sep = new ToolStripSeparator();
+                this.contextMenuStripMultipleMonitors.Items.Add(sep);
+                ToolStripMenuItem identifyItem = new ToolStripMenuItem(Properties.Resources.Displays_MultiMonitor_Identify);
+                identifyItem.Click += new EventHandler(identifyItem_Click);
+                this.contextMenuStripMultipleMonitors.Items.Add(identifyItem);
+
+                this.contextMenuStripMultipleMonitors.Show(this.pictureBoxMultipleMonitors, e.Location);
             }
         }
-         * */
+
+        void identifyItem_Click(object sender, EventArgs e)
+        {
+            Screen[] screens = Screen.AllScreens;
+            for (int i = 0; i < screens.Length; i++)
+            {
+                Screen screen = screens[i];
+                MonitorIdentifier tf2 = new MonitorIdentifier();
+                tf2.Show(screen, i + 1);
+            }
+        }
+
+        void monitorItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            string selectedDeviceName = null;
+            foreach (ToolStripItem tsi in this.contextMenuStripMultipleMonitors.Items)
+            {
+                ToolStripMenuItem tsmi = tsi as ToolStripMenuItem;
+                if(tsmi != null)
+                {
+                    bool selected = (item == tsmi);
+                    if (selected) selectedDeviceName = tsmi.Tag.ToString();
+                    tsmi.Checked = selected;
+                }
+            }
+
+            // notify the display of the user's choice and save the setting
+            Display d = (Display)this.pictureBoxMultipleMonitors.Tag;
+            this.controller.SetPreferredDeviceForDisplay(d, selectedDeviceName);
+        }
     }
 }

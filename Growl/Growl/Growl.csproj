@@ -75,6 +75,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MonitorIdentifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MonitorIdentifier.Designer.cs">
+      <DependentUpon>MonitorIdentifier.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -277,6 +283,7 @@
     <Compile Include="_source\CometClient.cs" />
     <Compile Include="_source\Controller.cs" />
     <Compile Include="_source\DataWebRequest.cs" />
+    <Compile Include="_source\DisplaySetting.cs" />
     <Compile Include="_source\DisposableResourceManager.cs" />
     <Compile Include="_source\EmailForwardDestination.cs" />
     <Compile Include="_source\EmailForwardDestinationHandler.cs" />
@@ -551,6 +558,16 @@
     <Content Include="release_notes.txt" />
     <None Include="Resources\growl1.png" />
     <None Include="Resources\notifyio.png" />
+    <None Include="Resources\1.png" />
+    <None Include="Resources\2.png" />
+    <None Include="Resources\3.png" />
+    <None Include="Resources\4.png" />
+    <None Include="Resources\5.png" />
+    <None Include="Resources\6.png" />
+    <None Include="Resources\7.png" />
+    <None Include="Resources\8.png" />
+    <None Include="Resources\9.png" />
+    <None Include="Resources\multiplemonitors.png" />
     <Content Include="update.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

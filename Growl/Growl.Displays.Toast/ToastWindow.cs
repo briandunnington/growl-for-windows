@@ -43,7 +43,9 @@ namespace Growl.Displays.Toast
 
         void ToastWindow_Load(object sender, EventArgs e)
         {
-            Screen screen = Screen.FromControl(this);
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            Screen screen = d.GetPreferredDisplay();
             int x = screen.WorkingArea.Right - this.Size.Width;
             int y = screen.WorkingArea.Bottom - this.Size.Height;
             this.Location = new Point(x, y);

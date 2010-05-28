@@ -110,15 +110,15 @@ namespace Growl.Displays.Smokestack
 
         private void DoBeforeShow()
         {
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            Screen screen = d.GetPreferredDisplay();
+
             // set initial location
-            Screen screen = Screen.FromControl(this);
-            int x = screen.WorkingArea.Width - this.Width;
-            int y = screen.WorkingArea.Height;
-            this.leftXLocation = 0;
-            this.rightXLocation = x;
-            this.topYLocation = 0;
-            this.bottomYLocation = y;
-            this.DesktopLocation = new Point(x, y);
+            this.leftXLocation = screen.WorkingArea.Left;
+            this.rightXLocation = screen.WorkingArea.Right - this.Width;
+            this.topYLocation = screen.WorkingArea.Top;
+            this.bottomYLocation = screen.WorkingArea.Bottom - this.Height;
 
             this.width = this.Width;
             this.height = this.Height - arrowSize;
@@ -128,7 +128,7 @@ namespace Growl.Displays.Smokestack
                 case SmokestackDisplay.Location.TopLeft :
                     borderTopOffset = arrowSize;
 
-                    this.DesktopLocation = new Point(this.leftXLocation, this.topYLocation);
+                    this.Location = new Point(this.leftXLocation, this.topYLocation);
                     arrowBrush = new SolidBrush(color1);
                     arrowLeft = arrowOffset;
                     arrowTop = 0;
@@ -140,7 +140,7 @@ namespace Growl.Displays.Smokestack
                     points = new Point[] { tl1, tl2, tl3, tl1 };
                     break;
                 case SmokestackDisplay.Location.BottomLeft:
-                    this.DesktopLocation = new Point(this.leftXLocation, this.bottomYLocation - this.Height);
+                    this.Location = new Point(this.leftXLocation, this.bottomYLocation);
                     arrowBrush = new SolidBrush(color2);
                     arrowLeft = arrowOffset;
                     arrowTop = height - 1;
@@ -152,7 +152,7 @@ namespace Growl.Displays.Smokestack
                     points = new Point[] { bl1, bl2, bl3, bl1 };
                     break;
                 case SmokestackDisplay.Location.BottomRight:
-                    this.DesktopLocation = new Point(this.rightXLocation, this.bottomYLocation - this.Height);
+                    this.Location = new Point(this.rightXLocation, this.bottomYLocation);
                     arrowBrush = new SolidBrush(color2);
                     arrowLeft = width - arrowOffset - arrowSize - arrowSize;
                     arrowTop = height - 1;
@@ -166,7 +166,7 @@ namespace Growl.Displays.Smokestack
                 default : // TopRight
                     borderTopOffset = arrowSize;
 
-                    this.DesktopLocation = new Point(this.rightXLocation, this.topYLocation);
+                    this.Location = new Point(this.rightXLocation, this.topYLocation);
                     arrowBrush = new SolidBrush(color1);
                     arrowLeft = width - arrowOffset - arrowSize - arrowSize;
                     arrowTop = 0;

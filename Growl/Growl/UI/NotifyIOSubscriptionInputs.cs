@@ -17,8 +17,8 @@ namespace Growl.UI
             InitializeComponent();
 
             // localize text
-            this.labelDescription.Text = "Name";    //TODO: //LOCAL: //LOCALIZE:
-            this.labelOutletUrl.Text = "Outlet Url";
+            this.labelDescription.Text = Properties.Resources.AddNotifyIO_NameLabel;
+            this.labelOutletUrl.Text = Properties.Resources.AddNotifyIO_OutletUrlLabel;
         }
 
         private void textBoxDescription_TextChanged(object sender, EventArgs e)

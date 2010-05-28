@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace Meter
 {
-    public class MeterDisplay : VisualDisplay
+    public class MeterDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -81,6 +81,7 @@ namespace Meter
             if (!replace)
             {
                 MeterWindow win = new MeterWindow();
+                win.Tag = this;
                 win.SetNotification(notification);
                 win.SetDisplayLocation(GetLocationFromSetting());
                 this.Show(win);

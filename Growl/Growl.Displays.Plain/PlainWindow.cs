@@ -24,6 +24,8 @@ namespace Growl.Displays.Plain
             this.BackColor = Color.White;
             this.ForeColor = Color.FromArgb(51, 51, 51);
 
+            this.PauseWhenMouseOver = true;
+
             this.AfterLoad += new EventHandler(PlainWindow_AfterLoad);
 
             this.Animator = new FadeAnimator(this);
@@ -139,29 +141,29 @@ namespace Growl.Displays.Plain
 
         private void DoBeforeShow()
         {
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            Screen screen = d.GetPreferredDisplay();
+
             // set initial location
-            Screen screen = Screen.FromControl(this);
-            int x = screen.WorkingArea.Width - this.Width;
-            int y = screen.WorkingArea.Height;
-            this.leftXLocation = 0;
-            this.rightXLocation = x;
-            this.topYLocation = 0;
-            this.bottomYLocation = y;
-            this.DesktopLocation = new Point(x, y);
+            this.leftXLocation = screen.WorkingArea.Left;
+            this.rightXLocation = screen.WorkingArea.Right - this.Width;
+            this.topYLocation = screen.WorkingArea.Top;
+            this.bottomYLocation = screen.WorkingArea.Bottom - this.Height;
 
             switch (location)
             {
                 case PlainDisplay.Location.TopLeft:
-                    this.DesktopLocation = new Point(this.leftXLocation, this.topYLocation);
+                    this.Location = new Point(this.leftXLocation, this.topYLocation);
                     break;
                 case PlainDisplay.Location.BottomLeft:
-                    this.DesktopLocation = new Point(this.leftXLocation, this.bottomYLocation - this.Height);
+                    this.Location = new Point(this.leftXLocation, this.bottomYLocation);
                     break;
                 case PlainDisplay.Location.BottomRight:
-                    this.DesktopLocation = new Point(this.rightXLocation, this.bottomYLocation - this.Height);
+                    this.Location = new Point(this.rightXLocation, this.bottomYLocation);
                     break;
                 default: // TopRight
-                    this.DesktopLocation = new Point(this.rightXLocation, this.topYLocation);
+                    this.Location = new Point(this.rightXLocation, this.topYLocation);
                     break;
             }
         }

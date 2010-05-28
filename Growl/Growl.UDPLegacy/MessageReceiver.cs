@@ -87,6 +87,11 @@ namespace Growl.UDPLegacy
         protected bool requireLocalPassword;
 
         /// <summary>
+        /// Indicates if LAN requests must supply a valid password
+        /// </summary>
+        protected bool requireLANPassword;
+
+        /// <summary>
         /// Indicates if messages from remote machines should be allowed or not
         /// </summary>
         protected bool allowNetworkNotifications;
@@ -140,8 +145,9 @@ namespace Growl.UDPLegacy
                     this.udp.Start();
                     this.isRunning = true;
                 }
-                catch
+                catch(Exception ex)
                 {
+                    DebugInfo.WriteLine(String.Format("UDP Listener failed to start on port {0}: {1}", this.Port, ex.ToString()));
                     this.isRunning = false;
                 }
             }
@@ -211,6 +217,29 @@ namespace Growl.UDPLegacy
         }
 
         /// <summary>
+        /// Indicates if LAN applications must supply a password.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> - LAN applications must supply a password;
+        /// <c>false</c> - LAN applications do not need to supply a password
+        /// </value>
+        /// <remarks>
+        /// Network applications normally must always supply a password, but applications on the LAN 
+        /// (same subnet) can be exempted.
+        /// </remarks>
+        public bool RequireLANPassword
+        {
+            get
+            {
+                return this.requireLANPassword;
+            }
+            set
+            {
+                this.requireLANPassword = value;
+            }
+        }
+
+        /// <summary>
         /// Indicates if network (non-local) requests are allowed.
         /// </summary>
         /// <value>
@@ -247,7 +276,8 @@ namespace Growl.UDPLegacy
         /// <param name="bytes">The raw packet data</param>
         /// <param name="receivedFrom">The host that sent the packet</param>
         /// <param name="isLocal">Indicates if the request came from the local machine</param>
-        protected virtual void udp_PacketReceived(byte[] bytes, string receivedFrom, bool isLocal)
+        /// <param name="isLAN">Indicates if the request came from the LAN</param>
+        protected virtual void udp_PacketReceived(byte[] bytes, string receivedFrom, bool isLocal, bool isLAN)
         {
             // if this is a network request and we dont allow them, stop here
             if (!isLocal && !this.AllowNetworkNotifications)
@@ -262,9 +292,13 @@ namespace Growl.UDPLegacy
                 int protocolVersion = (int)bytes[0];
                 PacketType packetType = (PacketType)bytes[1];
 
+                bool passwordRequired = true;
+                if (isLocal && !this.RequireLocalPassword) passwordRequired = false;
+                else if (isLAN && !this.RequireLANPassword) passwordRequired = false;
+
                 if (packetType == PacketType.Registration)
                 {
-                    RegistrationPacket rp = RegistrationPacket.FromPacket(bytes, this.passwordManager, isLocal, this.requireLocalPassword);
+                    RegistrationPacket rp = RegistrationPacket.FromPacket(bytes, this.passwordManager, passwordRequired);
                     if (rp != null)
                     {
                         this.OnRegistrationPacketReceived(rp, receivedFrom);
@@ -287,7 +321,7 @@ namespace Growl.UDPLegacy
                 }
                 else if (packetType == PacketType.Notification)
                 {
-                    NotificationPacket np = NotificationPacket.FromPacket(bytes, this.passwordManager, isLocal, this.requireLocalPassword);
+                    NotificationPacket np = NotificationPacket.FromPacket(bytes, this.passwordManager, passwordRequired);
                     if (np != null)
                     {
                         this.OnNotificationPacketReceived(np, receivedFrom);

@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace Degree
 {
-    public class DegreeDisplay : VisualDisplay
+    public class DegreeDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -65,6 +65,7 @@ namespace Degree
         protected override void HandleNotification(Notification notification, string displayName)
         {
             DegreeWindow win = new DegreeWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

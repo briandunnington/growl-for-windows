@@ -36,7 +36,7 @@ namespace Growl
 
         public List<DestinationListItem> GetListItems()
         {
-            SubscriptionListItem item = new SubscriptionListItem(Growl.Properties.Resources.AddSubscription_AddGNTP, KnownDestinationPlatformType.Other.GetIcon(), this);  // TODO: LOCAL: LOCALIZE:
+            SubscriptionListItem item = new SubscriptionListItem(Growl.Properties.Resources.AddSubscription_AddGNTP, KnownDestinationPlatformType.Other.GetIcon(), this);
             List<DestinationListItem> list = new List<DestinationListItem>();
             list.Add(item);
             return list;

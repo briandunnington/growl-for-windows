@@ -201,6 +201,7 @@ namespace Growl
                 // are read from files on disk, they usually end up on the Large Object Heap. LOH objects
                 // only get collected in Gen2 collections, so we want to do this here before the app
                 // really gets going to clean up our initialization process.
+                Utility.WriteDebugInfo("Program loaded. Force GC to clean up LOH");
                 ApplicationMain.ForceGC();
 
                 // auto updater
@@ -265,6 +266,7 @@ namespace Growl
                 // Normally we shouldnt ever explicitly call GC.Collect(), but since the form can use a 
                 // relatively large amount of memory for the UI components, we want to make sure that is
                 // all freed when the form is closed.
+                Utility.WriteDebugInfo("Form closed. Force GC to clean up LOH");
                 ApplicationMain.ForceGC();
             }
         }

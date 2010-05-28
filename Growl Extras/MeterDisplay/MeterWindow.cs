@@ -28,7 +28,6 @@ namespace Meter
         {
             InitializeComponent();
 
-            this.Load += new EventHandler(MeterWindow_Load);
             this.AfterLoad += new EventHandler(MeterWindow_AfterLoad);
             this.AutoClosing += new FormClosingEventHandler(MeterWindow_AutoClosing);
 
@@ -36,15 +35,6 @@ namespace Meter
 
             SetAutoCloseInterval(duration);
             PauseWhenMouseOver = true;
-        }
-
-        void MeterWindow_Load(object sender, EventArgs e)
-        {
-            // set initial location
-            Screen screen = Screen.FromControl(this);
-            int x = screen.WorkingArea.Right - this.Size.Width;
-            int y = screen.WorkingArea.Bottom - this.Size.Height;
-            this.Location = new Point(x, y);
         }
 
         void MeterWindow_AfterLoad(object sender, EventArgs e)
@@ -167,29 +157,29 @@ namespace Meter
 
         private void DoBeforeShow()
         {
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            Screen screen = d.GetPreferredDisplay();
+
             // set initial location
-            Screen screen = Screen.FromControl(this);
-            int x = screen.WorkingArea.Width - this.Width;
-            int y = screen.WorkingArea.Height;
-            this.leftXLocation = 0;
-            this.rightXLocation = x;
-            this.topYLocation = 0;
-            this.bottomYLocation = y;
-            this.DesktopLocation = new Point(x, y);
+            this.leftXLocation = screen.WorkingArea.Left;
+            this.rightXLocation = screen.WorkingArea.Right - this.Width;
+            this.topYLocation = screen.WorkingArea.Top;
+            this.bottomYLocation = screen.WorkingArea.Bottom - this.Height;
 
             switch (location)
             {
                 case MeterDisplay.Location.TopLeft:
-                    this.DesktopLocation = new Point(this.leftXLocation, this.topYLocation);
+                    this.Location = new Point(this.leftXLocation, this.topYLocation);
                     break;
                 case MeterDisplay.Location.BottomLeft:
-                    this.DesktopLocation = new Point(this.leftXLocation, this.bottomYLocation - this.Height);
+                    this.Location = new Point(this.leftXLocation, this.bottomYLocation);
                     break;
                 case MeterDisplay.Location.BottomRight:
-                    this.DesktopLocation = new Point(this.rightXLocation, this.bottomYLocation - this.Height);
+                    this.Location = new Point(this.rightXLocation, this.bottomYLocation);
                     break;
                 default: // TopRight
-                    this.DesktopLocation = new Point(this.rightXLocation, this.topYLocation);
+                    this.Location = new Point(this.rightXLocation, this.topYLocation);
                     break;
             }
         }

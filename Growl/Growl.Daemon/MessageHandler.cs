@@ -163,9 +163,9 @@ namespace Growl.Daemon
         private byte[] iv;
 
         /// <summary>
-        /// Indicates if the request originated on the local machine or not
+        /// Indicates if the request must supply a password
         /// </summary>
-        private bool isLocal = false;
+        private bool passwordRequired = true;
 
         /// <summary>
         /// Contains all of the data from the request that has already been read
@@ -286,18 +286,17 @@ namespace Growl.Daemon
         /// </summary>
         /// <param name="serverName">Name of the server</param>
         /// <param name="passwordManager">A list of valid passwords</param>
-        /// <param name="isLocal">Indicates if the request originated on the local machine or not</param>
+        /// <param name="isLocal">Indicates if the request must contain a password</param>
         /// <param name="logFolder">The path to the folder where log files are written</param>
         /// <param name="loggingEnabled">Indicates if logging is enabled or not</param>
-        /// <param name="requireLocalPassword">Indicates if local requests must supply a password (normally, local requests are not required to supply a password)</param>
         /// <param name="allowNetworkNotifications">Indicates if notifications from remote machines are allowed</param>
         /// <param name="allowFlash">Indicates if notifications from Flash clients are allowed</param>
         /// <param name="allowSubscriptions">Indicates if clients are allowed to subscribe to notifications from this server</param>
-        public MessageHandler(string serverName, PasswordManager passwordManager, bool isLocal, string logFolder, bool loggingEnabled, bool requireLocalPassword, bool allowNetworkNotifications, bool allowFlash, bool allowSubscriptions)
+        public MessageHandler(string serverName, PasswordManager passwordManager, bool passwordRequired, string logFolder, bool loggingEnabled, bool allowNetworkNotifications, bool allowFlash, bool allowSubscriptions)
         {
             this.serverName = serverName;
             this.passwordManager = passwordManager;
-            this.isLocal = isLocal;
+            this.passwordRequired = passwordRequired;
             this.logFolder = logFolder;
             this.loggingEnabled = loggingEnabled;
             this.requireLocalPassword = requireLocalPassword;
@@ -441,6 +440,11 @@ namespace Growl.Daemon
             this.callbackInfo = new CallbackInfo();
             this.requestInfo = new RequestInfo();
 
+            // log where this notification came from
+            bool isLocal = System.Net.IPAddress.IsLoopback(socket.RemoteAddress);
+            bool isLAN = Growl.CoreLibrary.IPUtilities.IsInSameSubnet(socket.LocalAddress, socket.RemoteAddress);
+            this.requestInfo.SaveHandlingInfo(String.Format("Notification Origin: {0} [{1}]", socket.RemoteAddress.ToString(), (isLocal ? "LOCAL MACHINE" : (isLAN ? "LAN - same subnet" : "REMOTE NETWORK"))));
+
             socket.DidReadTimeout += new AsyncSocket.SocketDidReadTimeout(socket_DidReadTimeout);
 
             socket.Read(1, TIMEOUT_INITIALREAD, ACCEPT_TAG);
@@ -518,7 +522,7 @@ namespace Growl.Daemon
                 else if (tag == GNTP_IDENTIFIER_TAG)
                 {
                     string line = alreadyReceived.ToString();
-                    Match match = ParseGNTPHeaderLine(line, this.isLocal);
+                    Match match = ParseGNTPHeaderLine(line, this.passwordRequired);
 
                     if (match.Success)
                     {
@@ -544,13 +548,14 @@ namespace Growl.Daemon
 
                                     bool authorized = false;
                                     // Any of the following criteria require a password:
-                                    //    1. the request did not originate on the local machine
+                                    //    1. the request did not originate on the local machine or LAN
+                                    //    2. the request came from the LAN, but LAN passwords are required
                                     //    2. it is a SUBSCRIBE request (all subscriptions require a password)
                                     //    3. the user's preferences require even local requests to supply a password
                                     // Additionally, even if a password is not required, it will be validated if the 
                                     // sending appplication includes one
                                     string errorDescription = ErrorDescription.INVALID_KEY;
-                                    if (!this.isLocal || this.directive == RequestType.SUBSCRIBE || this.requireLocalPassword || !String.IsNullOrEmpty(keyHash))
+                                    if (this.passwordRequired || this.directive == RequestType.SUBSCRIBE || !String.IsNullOrEmpty(keyHash))
                                     {
                                         if (String.IsNullOrEmpty(keyHash))
                                         {
@@ -1111,12 +1116,12 @@ namespace Growl.Daemon
         /// Parses the GNTP header line.
         /// </summary>
         /// <param name="line">The GNTP header</param>
-        /// <param name="isLocal">Indicates if the request originated on the local machine.</param>
+        /// <param name="passwordRequired">Indicates if the request must contain a password</param>
         /// <returns></returns>
-        private static Match ParseGNTPHeaderLine(string line, bool isLocal)
+        private static Match ParseGNTPHeaderLine(string line, bool passwordRequired)
         {
             Match match = null;
-            if (isLocal)
+            if (!passwordRequired)
             {
                 // key not required
                 match = regExMessageHeader_Local.Match(line);

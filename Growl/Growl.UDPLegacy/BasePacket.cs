@@ -96,11 +96,10 @@ namespace Growl.UDPLegacy
         /// </summary>
         /// <param name="bytes">The packets data</param>
         /// <param name="passwordManager">The receiving client's list of passwords</param>
-        /// <param name="isLocal">Indicates if the request came from the local machine</param>
-        /// <param name="requireLocalPassword">Indicates if local requests must supply a valid password</param>
+        /// <param name="passwordRequired">Indicates if the request must supply a valid password</param>
         /// <param name="password">Returns the matching password if found; null otherwise</param>
         /// <returns><c>true</c> if the password matches, <c>false</c> otherwise</returns>
-        protected static bool IsPasswordValid(byte[] bytes, PasswordManager passwordManager, bool isLocal, bool requireLocalPassword, out string password)
+        protected static bool IsPasswordValid(byte[] bytes, PasswordManager passwordManager, bool passwordRequired, out string password)
         {
             password = null;
 
@@ -118,9 +117,9 @@ namespace Growl.UDPLegacy
             {
                 validPasswords.Enqueue(item.Key);
             }
-            // if the request is from the local machine, then
-            // we can also try no (blank) password if allowed
-            if (isLocal && !requireLocalPassword) validPasswords.Enqueue(String.Empty);
+            // if the request does not require a password, then
+            // we can also try no (blank) password
+            if (!passwordRequired) validPasswords.Enqueue(String.Empty);
 
             while(validPasswords.Count > 0)
             {

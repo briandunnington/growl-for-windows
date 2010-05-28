@@ -30,7 +30,8 @@ namespace Growl.UDPLegacy
         /// <param name="bytes">The raw packet data</param>
         /// <param name="receivedFrom">The host that sent the message</param>
         /// <param name="isLocal">Indicates if the request came from the local machine</param>
-        public delegate void PacketHandler(byte[] bytes, string receivedFrom, bool isLocal);
+        /// <param name="isLAN">Indicates if the request came from the LAN</param>
+        public delegate void PacketHandler(byte[] bytes, string receivedFrom, bool isLocal, bool isLAN);
         /// <summary>
         /// Fires when a message is received
         /// </summary>
@@ -94,14 +95,20 @@ namespace Growl.UDPLegacy
                 AsyncCallback callback = (AsyncCallback)((UdpState)(ar.AsyncState)).Callback;
 
                 byte[] bytes = udp.EndReceive(ar, ref endpoint);
+
+                IPAddress localAddress = IPAddress.Loopback;
+                IPEndPoint localEndpoint = (IPEndPoint)udp.Client.LocalEndPoint;
+                if (localEndpoint != null) localAddress = localEndpoint.Address;
+
                 bool isLocal = IPAddress.IsLoopback(endpoint.Address);
+                bool isLAN = Growl.CoreLibrary.IPUtilities.IsInSameSubnet(localAddress, endpoint.Address);
                 string receivedFrom = endpoint.ToString();
 
                 // start listening again
                 udp.BeginReceive(callback, ar.AsyncState);
 
                 // bubble up the event
-                if (this.PacketReceived != null) this.PacketReceived(bytes, receivedFrom, isLocal);
+                if (this.PacketReceived != null) this.PacketReceived(bytes, receivedFrom, isLocal, isLAN);
             }
             catch
             {

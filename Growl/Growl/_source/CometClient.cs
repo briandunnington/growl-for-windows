@@ -14,6 +14,7 @@ namespace Growl
         public event ResponseReceivedEventHandler ResponseReceived;
         public event EventHandler Disconnected;
         public event EventHandler Connected;
+        public event EventHandler InvalidUrl;
 
         private object locker = new object();
         private bool isWaiting;
@@ -66,7 +67,20 @@ namespace Growl
                             }
 
                             // build HTTP request
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.url);
+                            HttpWebRequest request = null;
+
+                            // this handles cases where the url is not only malformed, but unacceptable to HttpWebRequest (not http or https, for example)
+                            // in these cases, we dont want to fire OnDisconnected because clients that are set to auto-reconnect will end up in an endless loop
+                            try
+                            {
+                                request = (HttpWebRequest)WebRequest.Create(this.url);
+                            }
+                            catch
+                            {
+                                OnInvalidUrl();
+                                return;
+                            }
+
                             request.AllowWriteStreamBuffering = false;
                             request.Pipelined = true;
                             state = new ConnectState(request);
@@ -292,6 +306,14 @@ namespace Growl
             if (this.Connected != null)
             {
                 this.Connected(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnInvalidUrl()
+        {
+            if (this.InvalidUrl != null)
+            {
+                this.InvalidUrl(this, EventArgs.Empty);
             }
         }
 

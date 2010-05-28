@@ -170,14 +170,13 @@ namespace Growl.UDPLegacy
         /// </summary>
         /// <param name="bytes">The raw packet data</param>
         /// <param name="passwordManager">The list of client passwords</param>
-        /// <param name="isLocal">Indicates if the request came from the local machine</param>
-        /// <param name="requireLocalPassword">Indicates if local requests must supply a valid password</param>
+        /// <param name="passwordRequired">Indicates if the request must supply a valid password</param>
         /// <returns><see cref="NotificationPacket"/></returns>
         /// <remarks>
         /// If the client password does not match the password used to validate the sent notification,
         /// or if the packet is malformed in any way, a <c>null</c> object will be returned.
         /// </remarks>
-        public static NotificationPacket FromPacket(byte[] bytes, PasswordManager passwordManager, bool isLocal, bool requireLocalPassword)
+        public static NotificationPacket FromPacket(byte[] bytes, PasswordManager passwordManager, bool passwordRequired)
         {
             NotificationPacket np = null;
 
@@ -186,7 +185,7 @@ namespace Growl.UDPLegacy
             {
                 // check md5 hash first
                 string password = null;
-                bool valid = BasePacket.IsPasswordValid(bytes, passwordManager, isLocal, requireLocalPassword, out password);
+                bool valid = BasePacket.IsPasswordValid(bytes, passwordManager, passwordRequired, out password);
                 if (!valid)
                     return np;
 

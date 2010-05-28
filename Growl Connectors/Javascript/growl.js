@@ -16,15 +16,15 @@ Growl = function(){
     }
     
     function oncallbackInternal(notificationID, action, context, type, timestamp) {}
+    function onokInternal() {}
     function onerrorInternal(response) {}
+    function onsecurityerrorInternal(){}
 
     return {
         oncallback : oncallbackInternal,
         onerror : onerrorInternal,
-        
-        onok : function(){
-            //alert("ok");
-        },
+        onok : onokInternal,
+        onsecurityerror : onsecurityerrorInternal,
 
         onready : function(){
             swf = document.getElementById(swfID);
@@ -48,8 +48,10 @@ Growl = function(){
             if(config && config.passwordHashAlgorithm) passwordHashAlgorithm = config.passwordHashAlgorithm;
             if(config && config.encryptionAlgorithm) encryptionAlgorithm = config.encryptionAlgorithm;
             if(config && config.oncallback) Growl.oncallback = config.oncallback;
+            if(config && config.onok) Growl.onok = config.onok;
             if(config && config.onerror) Growl.onerror = config.onerror;
             if(config && config.onready2) Growl.onready2 = config.onready2;
+            if(config && config.onnotrunning) Growl.onsecurityerror = config.onnotrunning;
 
             if(!containerID){
                 var container = document.createElement("div");

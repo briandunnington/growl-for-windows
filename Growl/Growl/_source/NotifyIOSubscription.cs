@@ -37,7 +37,7 @@ namespace Growl
 
         private void InitializeSender()
         {
-            this.nt = new NotificationType("notification", "Web Notification");
+            this.nt = new NotificationType("notification", Properties.Resources.NotifyIO_NotificationType); // DONT localize the actual type name, just the display name
         }
 
         public override string Key
@@ -74,14 +74,21 @@ namespace Growl
             {
                 Kill();
 
-                ChangeStatus(false, "connecting....");
+                ChangeStatus(false, Properties.Resources.LiteralString_Status_Connecting);
 
                 this.listener = new NotifyIOListener(this.OutletUrl, null);
+                this.listener.InvalidUrl += new EventHandler(listener_InvalidUrl);
                 this.listener.Connected += new EventHandler(listener_Connected);
                 this.listener.Disconnected += new EventHandler(listener_Disconnected);
                 this.listener.NotificationReceived += new EventHandler<NotifyIOListener.NotificationReceivedEventArgs>(listener_NotificationReceived);
                 this.listener.Start();
             }
+        }
+
+        void listener_InvalidUrl(object sender, EventArgs e)
+        {
+            string additionalInfo = (this.Enabled ? Properties.Resources.LiteralString_InvalidUrl : null);
+            ChangeStatus(false, additionalInfo);
         }
 
         void listener_NotificationReceived(object sender, NotifyIOListener.NotificationReceivedEventArgs e)
@@ -95,7 +102,7 @@ namespace Growl
             System.Threading.Thread.Sleep(500);
 
             // send notification
-            Notification n = new Notification(app.Name, this.nt.Name, "", Fixup(e.Title, "Web Notification"), Fixup(e.Text));
+            Notification n = new Notification(app.Name, this.nt.Name, "", Fixup(e.Title, Properties.Resources.NotifyIO_NotificationType), Fixup(e.Text));
             n.Icon = e.Icon;
             n.Sticky = e.Sticky;
             CallbackContext c = null;
@@ -108,7 +115,7 @@ namespace Growl
 
         void listener_Disconnected(object sender, EventArgs e)
         {
-            string additionalInfo = (this.Enabled ? "reconnecting...." : null);
+            string additionalInfo = (this.Enabled ? Properties.Resources.LiteralString_Status_Reconnecting : null);
             ChangeStatus(false, additionalInfo);
         }
 
@@ -122,6 +129,7 @@ namespace Growl
         {
             if (this.listener != null)
             {
+                this.listener.InvalidUrl -= new EventHandler(listener_InvalidUrl);
                 this.listener.Connected -= new EventHandler(listener_Connected);
                 this.listener.Disconnected -= new EventHandler(listener_Disconnected);
                 this.listener.NotificationReceived -= new EventHandler<NotifyIOListener.NotificationReceivedEventArgs>(listener_NotificationReceived);

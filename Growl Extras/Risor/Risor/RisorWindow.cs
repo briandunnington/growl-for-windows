@@ -17,7 +17,8 @@ namespace Growl.Displays.Risor
         private int startY = 0;
         private int endY = 0;
         private int duration = 2500;
-        private int screenHeight = 0;
+
+        Screen screen;
 
         public RisorWindow()
         {
@@ -38,14 +39,13 @@ namespace Growl.Displays.Risor
 
         void RisorWindow_Load(object sender, EventArgs e)
         {
-            // set size
-            Screen screen = Screen.FromControl(this);
-            
-            int screenX = screen.Bounds.Width;
-            int w = screenX;
-            this.Width = w;
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            this.screen = d.GetPreferredDisplay();
 
-            this.screenHeight = screen.Bounds.Height;
+            // set size & location
+            this.Width = screen.Bounds.Width;
+            this.Location = new Point(this.Location.X, this.screen.Bounds.Bottom - 10);    // the extra 10 is so that at least part of the form is on the screen initially, otherwise the opacity goes all screwy
 
             // set initial opacity
             this.Opacity = 0.90;
@@ -58,7 +58,7 @@ namespace Growl.Displays.Risor
 
         void slideInTimer_Tick(object sender, EventArgs e)
         {
-            bool result = MoveWindow(-2, this.endY, false);
+            bool result = MoveWindow(-3, this.endY, false);
             if (result)
             {
                 this.slideInTimer.Stop();
@@ -73,7 +73,7 @@ namespace Growl.Displays.Risor
 
         void slideOutTimer_Tick(object sender, EventArgs e)
         {
-            bool result = MoveWindow(3, this.startY, true);
+            bool result = MoveWindow(4, this.startY, true);
             if (result)
             {
                 this.slideOutTimer.Stop();
@@ -110,9 +110,6 @@ namespace Growl.Displays.Risor
 
         protected override void OnShown(EventArgs e)
         {
-            // set initial location
-            this.Location = new Point(0, this.screenHeight - 10);  // the extra 10 is so that at least part of the form is on the screen initially, otherwise the opacity goes all screwy
-
             Win32.SetWindowPos(this.Handle, Win32.HWND_TOPMOST, this.Location.X, this.Location.Y, this.Width, this.Height, Win32.SWP_NOACTIVATE);
             base.OnShown(e);
             SlideIn();
@@ -121,7 +118,7 @@ namespace Growl.Displays.Risor
         private void SlideIn()
         {
             this.startY = this.Location.Y;
-            this.endY = this.screenHeight - this.Height;
+            this.endY = this.screen.Bounds.Bottom - this.Height;
 
             // start sliding the window in
             this.slideInTimer.Interval = 10;

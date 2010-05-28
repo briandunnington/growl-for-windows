@@ -7,7 +7,7 @@ using Growl.DisplayStyle;
 
 namespace Growl.Displays.Risor
 {
-    public class RisorDisplay : VisualDisplay
+    public class RisorDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_BGCOLOR = "BackgroundColor";
         public const string SETTING_BG_EMERGENCY = "BG_Emergency";
@@ -76,6 +76,7 @@ namespace Growl.Displays.Risor
         protected override void HandleNotification(Notification notification, string displayName)
         {
             RisorWindow win = new RisorWindow();
+            win.Tag = this;
             win.BackColor = GetBackgroundColorFromPriority(notification.Priority);
             win.SetNotification(notification);
 

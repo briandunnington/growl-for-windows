@@ -60,21 +60,6 @@ namespace Growl.Connector
         private Cryptography.SymmetricAlgorithmType encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
 
         /// <summary>
-        /// A collection of active ConnectState objects awaiting the EndConnect callback
-        /// </summary>
-        private Dictionary<string, ConnectState> connecting = new Dictionary<string, ConnectState>();
-
-        /// <summary>
-        /// A collection of active TcpState objects awaiting the EndWrite callback
-        /// </summary>
-        private Dictionary<string, TcpState> writing = new Dictionary<string, TcpState>();
-
-        /// <summary>
-        /// A collection of active TcpState objects awaiting the EndRead callback
-        /// </summary>
-        private Dictionary<string, TcpState> reading = new Dictionary<string, TcpState>();
-
-        /// <summary>
         /// Creates a new instance of the class, using the default hostname and port,
         /// with no password.
         /// </summary>
@@ -212,228 +197,160 @@ namespace Growl.Connector
         }
 
         /// <summary>
-        /// Constructs the actual message and sends it to Growl
+        /// Sends the request and handles any responses
         /// </summary>
-        /// <param name="mb">The <see cref="MessageBuilder"/> used to construct the message</param>
-        /// <param name="del">The <see cref="ResponseReceivedEventHandler"/> that represents the method that will handle the response</param>
-        /// <param name="waitForCallback"><c>true</c> if the connection should wait for a callback;<c>false</c> otherwise</param>
+        /// <param name="mb">The <see cref="MessageBuilder"/> used to contruct the request</param>
+        /// <param name="del">The <see cref="ResponseReceivedEventHandler"/> for handling the response</param>
+        /// <param name="waitForCallback"><c>true</c> to wait for a callback;<c>false</c> otherwise</param>
         protected void Send(MessageBuilder mb, ResponseReceivedEventHandler del, bool waitForCallback)
         {
-            ConnectState state = null;
-
-            // do some of this *outside* the try...catch so we can just throw an exception if the error occurs
+            // do some of this *before* we spin up a new thread so we can just throw an exception if the error occurs
             // *before* we even send the request (like when generating the message bytes)
             bool doSend = this.OnBeforeSend(mb);
             if (doSend)
             {
-                TcpClient client = new TcpClient();
                 byte[] bytes = mb.GetBytes();
                 mb = null;
 
-                // anything else that happens will be the result of Growl not being available, so we just want
-                // to suppress any subsequent exceptions
+                // start a new thread for the network connection stuff
+                ConnectionState cs = new ConnectionState(bytes, del, waitForCallback);
+                ParameterizedThreadStart pts = new ParameterizedThreadStart(SendAsync);
+                Thread t = new Thread(pts);
+                t.Start(cs);
+            }
+        }
+
+        /// <summary>
+        /// Sends the request on a background thread.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <remarks>
+        /// Using the built-in async methods (Begin*/End*) results in flakey behavior.
+        /// Using the synchronous methods in another thread avoids the issue.
+        /// </remarks>
+        private void SendAsync(object obj)
+        {
+            TcpClient client = null;
+            NetworkStream stream = null;
+
+            try
+            {
+                ConnectionState cs = (ConnectionState)obj;
+                byte[] bytes = cs.Bytes;
+                ResponseReceivedEventHandler del = cs.Delegate;
+                bool waitForCallback = cs.WaitForCallback;
+
+                // connect
                 try
                 {
-                    AsyncCallback callback = new AsyncCallback(ConnectCallback);
-                    state = new ConnectState(client, bytes, del, waitForCallback);
-                    connecting.Add(state.GUID, state);
-                    client.BeginConnect(this.hostname, this.port, callback, state);
+                    client = new TcpClient();
+                    client.Connect(this.hostname, this.port);
+                }
+                catch (Exception ex)
+                {
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE));
+                }
+
+                // write
+                try
+                {
+                    stream = client.GetStream();
+                    stream.Write(bytes, 0, bytes.Length);
+                }
+                catch (Exception ex)
+                {
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.WRITE_FAILURE));
+                }
+
+                // read
+                try
+                {
+                    string response = String.Empty;
+                    byte[] buffer = new byte[4096];
+                    while (!response.EndsWith(EOM, StringComparison.InvariantCulture))
+                    {
+                        int length = stream.Read(buffer, 0, buffer.Length);
+                        if (length > 0)
+                        {
+                            response += System.Text.Encoding.UTF8.GetString(buffer, 0, length);
+                        }
+                    }
+                    del(response);
+
+                    // wait for callback
+                    if (waitForCallback)
+                    {
+                        response = String.Empty;
+                        buffer = new byte[4096];
+
+                        while (!response.EndsWith(EOM, StringComparison.InvariantCulture))
+                        {
+                            int length = stream.Read(buffer, 0, buffer.Length);
+                            if (length > 0)
+                            {
+                                response += System.Text.Encoding.UTF8.GetString(buffer, 0, length);
+                            }
+                        }
+                        del(response);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.READ_FAILURE));
+                }
+            }
+            catch (Exception ex)
+            {
+                Growl.CoreLibrary.DebugInfo.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (client != null && client.Client != null)
+                    {
+                        client.Client.Blocking = true;
+                        try { client.Client.Shutdown(SocketShutdown.Both); }
+                        catch { }
+                        client.Client.Close();
+                        client.Close();
+                    }
+
+                    if (stream != null)
+                    {
+                        stream.Close();
+                        stream.Dispose();
+                        stream = null;
+                    }
+
+                    client = null;
                 }
                 catch
                 {
                     // suppress
-                    // could mean growl is not installed, not running, wrong address, etc
-                    CleanUpSocket(state);
-                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE));
                 }
             }
         }
 
-        /// <summary>
-        /// Called once the connection has connected. Begins writing the request.
-        /// </summary>
-        /// <param name="iar">The result of the asynchronous operation.</param>
-        private void ConnectCallback(IAsyncResult iar)
-        {
-            ConnectState connectState = null;
-            TcpState tcpState = null;
-            try
-            {
-                connectState = (ConnectState)iar.AsyncState;
-                TcpClient client = connectState.Client;
-                byte[] bytes = connectState.Bytes;
-                client.EndConnect(iar);
-
-                NetworkStream stream = client.GetStream();
-                byte[] buffer = new byte[4096];
-                AsyncCallback callback = new AsyncCallback(WriteCallback);
-                tcpState = TcpState.FromConnectState(connectState, stream, buffer);
-                writing.Add(tcpState.GUID, tcpState);
-                stream.BeginWrite(bytes, 0, bytes.Length, callback, tcpState);
-            }
-            catch
-            {
-                CleanUpSocket(connectState);
-                CleanUpSocket(tcpState);
-                OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE));
-            }
-            finally
-            {
-                if (connectState != null) connecting.Remove(connectState.GUID);
-            }
-        }
 
         /// <summary>
-        /// Called once the request has been written. Begins reading the response.
+        /// Contains state information for a connection.
         /// </summary>
-        /// <param name="iar">The result of the asynchronous operation.</param>
-        private void WriteCallback(IAsyncResult iar)
-        {
-            TcpState state = null;
-            try
-            {
-                state = (TcpState)iar.AsyncState;
-                state.Stream.EndWrite(iar);
-
-                AsyncCallback callback = new AsyncCallback(ReadCallback);
-                state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
-                reading.Add(state.GUID, state);
-            }
-            catch
-            {
-                CleanUpSocket(state);
-                OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.WRITE_FAILURE));
-            }
-            finally
-            {
-                if (state != null) writing.Remove(state.GUID);
-            }
-        }
-
-        /// <summary>
-        /// Called once the response has been read. If the transaction is complete, the connection is closed.
-        /// If there is an outstanding callback, the connection waits to read it before closing.
-        /// </summary>
-        /// <param name="iar">The result of the asynchronous operation.</param>
-        private void ReadCallback(IAsyncResult iar)
-        {
-            TcpState state = null;
-            bool waitForCallback = false;
-            bool moreData = false;
-            try
-            {
-                state = (TcpState)iar.AsyncState;
-                int length = state.Stream.EndRead(iar);
-
-                if (length > 0)
-                {
-                    string response = System.Text.Encoding.UTF8.GetString(state.Buffer, 0, length);
-                    state.Response += response;
-
-                    // keep waiting for more data if this wasnt the end of the message
-                    if (!state.Response.EndsWith(EOM, StringComparison.InvariantCulture))
-                    {
-                        moreData = true;
-                        AsyncCallback callback = new AsyncCallback(ReadCallback);
-                        state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
-                    }
-                    else
-                    {
-
-                        if (state.Delegate != null)
-                            state.Delegate(state.Response);
-
-                        // wait for callback data
-                        if (state.WaitForCallback)
-                        {
-                            waitForCallback = true;
-                            state.WaitForCallback = false;
-                            state.Buffer = new byte[4096];
-                            state.Response = String.Empty;
-                            AsyncCallback callback = new AsyncCallback(ReadCallback);
-                            state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, callback, state);
-                            return;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                CleanUpSocket(state);
-                OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.READ_FAILURE));
-            }
-            finally
-            {
-                if (state != null && !waitForCallback && !moreData)
-                {
-                    CleanUpSocket(state);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Cleans up any connection-related objects when the connection is no longer needed
-        /// (either closed intentionally or encounters an exception)
-        /// </summary>
-        /// <param name="state">The <see cref="ConnectState"/> state information</param>
-        private void CleanUpSocket(ConnectState state)
-        {
-            try
-            {
-                if (state != null)
-                {
-                    if (connecting.ContainsKey(state.GUID)) connecting.Remove(state.GUID);
-                    if (writing.ContainsKey(state.GUID)) writing.Remove(state.GUID);
-                    if (reading.ContainsKey(state.GUID)) reading.Remove(state.GUID);
-
-                    if (state.Client != null && state.Client.Client != null)
-                    {
-                        state.Client.Client.Blocking = true;
-                        try { state.Client.Client.Shutdown(SocketShutdown.Both); } catch { }
-                        state.Client.Client.Close();
-                        state.Client.Close();
-                    }
-
-                    TcpState tcpState = state as TcpState;
-                    if (tcpState != null)
-                    {
-                        if (tcpState.Stream != null)
-                        {
-                            tcpState.Stream.Close();
-                            tcpState.Stream.Dispose();
-                        }
-                        tcpState.Stream = null;
-                    }
-                    
-                    state.Client = null;
-                }
-            }
-            catch
-            {
-            }
-            state = null;
-        }
-
-        /// <summary>
-        /// Contains state information for a connection that is in the process of connecting.
-        /// </summary>
-        private class ConnectState
+        private class ConnectionState
         {
             /// <summary>
             /// Creates a new instance of the class.
             /// </summary>
-            protected ConnectState() { }
+            protected ConnectionState() { }
 
             /// <summary>
             /// Creates a new instance of the class.
             /// </summary>
-            /// <param name="client">The <see cref="TcpClient"/> used to make the connection</param>
             /// <param name="bytes">The request bytes to be written</param>
             /// <param name="del">The <see cref="ResponseReceivedEventHandler"/> method to call to handle the response</param>
             /// <param name="waitForCallback"><c>true</c> if the connection should wait for a callback;<c>false</c> otherwise</param>
-            public ConnectState(TcpClient client, byte[] bytes, ResponseReceivedEventHandler del, bool waitForCallback)
+            public ConnectionState(byte[] bytes, ResponseReceivedEventHandler del, bool waitForCallback)
             {
-                this.Client = client;
                 this.Bytes = bytes;
                 this.Delegate = del;
                 this.WaitForCallback = waitForCallback;
@@ -443,11 +360,6 @@ namespace Growl.Connector
             /// Uniquely identifies this instance
             /// </summary>
             public readonly string GUID = System.Guid.NewGuid().ToString();
-
-            /// <summary>
-            /// The <see cref="TcpClient"/> used to make the connection
-            /// </summary>
-            public TcpClient Client;
 
             /// <summary>
             /// The request bytes to be written
@@ -463,54 +375,6 @@ namespace Growl.Connector
             /// Indicates if the connection should wait for a callback after receiving the initial response.
             /// </summary>
             public bool WaitForCallback = false;
-        }
-
-        /// <summary>
-        /// Contains state information for a connection that has already connected and is either writing
-        /// or reading data.
-        /// </summary>
-        private class TcpState : ConnectState
-        {
-            /// <summary>
-            /// Creates a new instance of the class.
-            /// </summary>
-            private TcpState()
-            {
-            }
-
-            /// <summary>
-            /// Creates a new instance of the TcpState class from an exisiting <see cref="ConnectState"/>.
-            /// </summary>
-            /// <param name="cs">The <see cref="ConnectState"/></param>
-            /// <param name="stream">The <see cref="NetworkStream"/> of the connection</param>
-            /// <param name="buffer">The buffer to hold the response</param>
-            /// <returns><see cref="TcpState"/></returns>
-            public static TcpState FromConnectState(ConnectState cs, NetworkStream stream, byte[] buffer)
-            {
-                TcpState state = new TcpState();
-                state.Client = cs.Client;
-                state.Bytes = cs.Bytes;
-                state.Delegate = cs.Delegate;
-                state.WaitForCallback = cs.WaitForCallback;
-                state.Stream = stream;
-                state.Buffer = buffer;
-                return state;
-            }
-
-            /// <summary>
-            /// The <see cref="NetworkStream"/> of the connection
-            /// </summary>
-            public NetworkStream Stream;
-
-            /// <summary>
-            /// The buffer to hold the response
-            /// </summary>
-            public byte[] Buffer;
-
-            /// <summary>
-            /// Holds the response text
-            /// </summary>
-            public string Response;
         }
     }
 }

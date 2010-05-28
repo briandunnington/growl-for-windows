@@ -51,7 +51,10 @@
     </Compile>
     <Compile Include="FadeAnimator.cs" />
     <Compile Include="IAnimator.cs" />
+    <Compile Include="IDisplayMultipleMonitor.cs" />
     <Compile Include="ISettingsProvider.cs" />
+    <Compile Include="MultiMonitorVisualDisplay.cs" />
+    <Compile Include="MultpleMonitorHelper.cs" />
     <Compile Include="NotificationLite.cs" />
     <Compile Include="PopupAnimator.cs" />
     <Compile Include="Utility.cs" />

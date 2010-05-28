@@ -142,6 +142,69 @@
   <data name="proxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\proxy.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="internet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\internet.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\iphone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="linux" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\linux.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mac" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\mac.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mobile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\mobile.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\other.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rss" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rss.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="windows" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\windows.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="email" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\email.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notifyio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\notifyio.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\8.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\9.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="multiplemonitors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\multiplemonitors.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NotifyIcon_NotRunning" xml:space="preserve">
     <value>Growl (not running)</value>
     <comment>Tooltip for notify icon when Growl is not running</comment>
@@ -946,42 +1009,9 @@ to Twitter</value>
     <value>Do you want to install the language pack for the following language:  {0}\n\nNOTE: Users running Vista or Windows 7 must have administrator privileges to install language packs.</value>
     <comment>Language Pack installer: displayed when a click-to-install link is clicked. {0} is the name of the language</comment>
   </data>
-  <data name="internet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\internet.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\iphone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="linux" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\linux.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mac" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mac.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mobile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mobile.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="other" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\other.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rss" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\rss.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\twitter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="windows" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\windows.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="email" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\email.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="AddSubscription_AddGNTP" xml:space="preserve">
     <value>Subscribe to Growl notifications\non another machine</value>
     <comment>Add subscription form: click to subscribe to Growl notifications</comment>
-  </data>
-  <data name="notifyio" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\notifyio.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ForwarderInstaller_AlreadyInstalled" xml:space="preserve">
     <value>Plugin '{0}' is already installed.</value>
@@ -1062,5 +1092,49 @@ to Twitter</value>
   <data name="SubscriberInstaller_Prompt" xml:space="preserve">
     <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
     <comment>Subscriber installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="Security_RequirePasswordLANApps" xml:space="preserve">
+    <value>Require password for LAN apps</value>
+    <comment>Security tab: checkbox for 'require password for LAN apps'</comment>
+  </data>
+  <data name="Displays_MultiMonitor_Identify" xml:space="preserve">
+    <value>Identify...</value>
+    <comment>Displays tab: 'Identify...' context menu item</comment>
+  </data>
+  <data name="Displays_MultiMonitor_Monitor" xml:space="preserve">
+    <value>Monitor</value>
+    <comment>Displays tab: name of all non-primary monitors</comment>
+  </data>
+  <data name="Displays_MultiMonitor_Primary" xml:space="preserve">
+    <value>Primary</value>
+    <comment>Displays tab: name of the primary monitor</comment>
+  </data>
+  <data name="AddNotifyIO_NameLabel" xml:space="preserve">
+    <value>Name:</value>
+    <comment>Add notify.io form: name label</comment>
+  </data>
+  <data name="AddNotifyIO_OutletUrlLabel" xml:space="preserve">
+    <value>Outlet Url:</value>
+    <comment>Add notify.io form: outlet url label</comment>
+  </data>
+  <data name="AddSubscription_AddNotifyIO" xml:space="preserve">
+    <value>Subscribe to notify.io outlet</value>
+    <comment>Add subscription form: click to subscribe to notify.io notifications</comment>
+  </data>
+  <data name="LiteralString_Status_Connecting" xml:space="preserve">
+    <value>connecting...</value>
+    <comment>The string 'connecting...' (used in network display statuses)</comment>
+  </data>
+  <data name="LiteralString_Status_Reconnecting" xml:space="preserve">
+    <value>reconnecting...</value>
+    <comment>The string 'reconnecting...' (used in network display statuses)</comment>
+  </data>
+  <data name="NotifyIO_NotificationType" xml:space="preserve">
+    <value>Web Notification</value>
+    <comment>Notify.IO notification type</comment>
+  </data>
+  <data name="LiteralString_InvalidUrl" xml:space="preserve">
+    <value>invalid url</value>
+    <comment>The string 'invalid url'</comment>
   </data>
 </root>

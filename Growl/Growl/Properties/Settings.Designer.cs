@@ -425,5 +425,18 @@ namespace Growl.Properties {
                 this["SettingsVersion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(Growl.UserSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RequireLANPassword {
+            get {
+                return ((bool)(this["RequireLANPassword"]));
+            }
+            set {
+                this["RequireLANPassword"] = value;
+            }
+        }
     }
 }

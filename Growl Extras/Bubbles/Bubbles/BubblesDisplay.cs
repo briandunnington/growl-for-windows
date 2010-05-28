@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace Bubbles
 {
-    public class BubblesDisplay : VisualDisplay
+    public class BubblesDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -65,6 +65,7 @@ namespace Bubbles
         protected override void HandleNotification(Notification notification, string displayName)
         {
             BubblesWindow win = new BubblesWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

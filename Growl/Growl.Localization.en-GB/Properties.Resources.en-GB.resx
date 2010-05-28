@@ -873,4 +873,176 @@ to Twitter</value>
     <value>No</value>
     <comment>Any 'No' button</comment>
   </data>
+  <data name="History_Columns_Origin" xml:space="preserve">
+    <value>Origin</value>
+    <comment>History tab: Column header for Origin column</comment>
+  </data>
+  <data name="LanguageInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>The '{0}' language pack is already installed.</value>
+    <comment>Language Pack installer: message shown if a language pack is already installed when attempting to install again. {0} is the name of the language</comment>
+  </data>
+  <data name="LanguageInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe language pack could not be installed.</value>
+    <comment>Language Pack installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="LanguageInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the language pack was cancelled.\n\nThe language pack was not installed.</value>
+    <comment>Language Pack installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="LanguageInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the language pack files.\n\nThe language pack was not installed.</value>
+    <comment>Language Pack installer: message shown if the download of the language pack files fails for any reason</comment>
+  </data>
+  <data name="LanguageInstaller_FormTitle" xml:space="preserve">
+    <value>Install Language Pack</value>
+    <comment>Language Pack installer: form title</comment>
+  </data>
+  <data name="LanguageInstaller_Installing" xml:space="preserve">
+    <value>Installing language pack...</value>
+    <comment>Language Pack installer: displayed while the language pack is being installed</comment>
+  </data>
+  <data name="LanguageInstaller_LanguageInstalledText" xml:space="preserve">
+    <value>The '{0}' language pack was installed successfully.</value>
+    <comment>Language Pack installer: text of the notification shown when a new language pack is installed. {0} is the name of the language.</comment>
+  </data>
+  <data name="LanguageInstaller_RestartRequiredText" xml:space="preserve">
+    <value>You must restart Growl for the changes to take effect.</value>
+    <comment>Language Pack installer: additional text of the notification shown when a new language pack is installed if Growl must be restarted.</comment>
+  </data>
+  <data name="LanguageInstaller_LanguageInstalledTitle" xml:space="preserve">
+    <value>Language Pack Installed</value>
+    <comment>Language Pack installer: title of the notification shown when a new language pack is installed</comment>
+  </data>
+  <data name="LanguageInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe language pack could not be installed.</value>
+    <comment>Language Pack installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="LanguageInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the language pack for the following language:  {0}\n\nNOTE: Users running Vista or Windows 7 must have administrator privileges to install language packs.</value>
+    <comment>Language Pack installer: displayed when a click-to-install link is clicked. {0} is the name of the language</comment>
+  </data>
+  <data name="AddSubscription_AddGNTP" xml:space="preserve">
+    <value>Subscribe to Growl notifications\non another machine</value>
+    <comment>Add subscription form: click to subscribe to Growl notifications</comment>
+  </data>
+  <data name="ForwarderInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Plugin '{0}' is already installed.</value>
+    <comment>Forwarder installer: message shown if a plugin is already installed when attempting to install again</comment>
+  </data>
+  <data name="ForwarderInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe plugin could not be installed.</value>
+    <comment>Forwarder installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="ForwarderInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the plugin was cancelled.\n\nThe plugin was not installed.</value>
+    <comment>Forwarder installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="ForwarderInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the plugin files.\n\nThe plugin was not installed.</value>
+    <comment>Forwarder installer: message shown if the download of the plugin files fails for any reason</comment>
+  </data>
+  <data name="ForwarderInstaller_FormTitle" xml:space="preserve">
+    <value>Install Forwarder Plugin</value>
+    <comment>Forwarder installer: form title</comment>
+  </data>
+  <data name="ForwarderInstaller_Installing" xml:space="preserve">
+    <value>Installing plugin...</value>
+    <comment>Forwarder installer: displayed while the plugin is being installed</comment>
+  </data>
+  <data name="ForwarderInstaller_InstalledText" xml:space="preserve">
+    <value>The plugin '{0}' was installed successfully.</value>
+    <comment>Forwarder installer: text of the notification shown when a new plugin is installed. {0} is the name of the installed plugin.</comment>
+  </data>
+  <data name="ForwarderInstaller_InstalledTitle" xml:space="preserve">
+    <value>New Plugin Installed</value>
+    <comment>Forwarder installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="ForwarderInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe plugin could not be installed.</value>
+    <comment>Forwarder installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="ForwarderInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <comment>Forwarder installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="SubscriberInstaller_AlreadyInstalled" xml:space="preserve">
+    <value>Plugin '{0}' is already installed.</value>
+    <comment>Subscriber installer: message shown if a plugin is already installed when attempting to install again</comment>
+  </data>
+  <data name="SubscriberInstaller_BadDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' is invalid.\n\nThe plugin could not be installed.</value>
+    <comment>Subscriber installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
+  </data>
+  <data name="SubscriberInstaller_DownloadCancelled" xml:space="preserve">
+    <value>The installation of the plugin was cancelled.\n\nThe plugin was not installed.</value>
+    <comment>Subscriber installer: message shown if the download is cancelled by the user</comment>
+  </data>
+  <data name="SubscriberInstaller_DownloadError" xml:space="preserve">
+    <value>An error occurred while downloading the plugin files.\n\nThe plugin was not installed.</value>
+    <comment>Subscriber installer: message shown if the download of the plugin files fails for any reason</comment>
+  </data>
+  <data name="SubscriberInstaller_FormTitle" xml:space="preserve">
+    <value>Install Subscriber Plugin</value>
+    <comment>Subscriber installer: form title</comment>
+  </data>
+  <data name="SubscriberInstaller_Installing" xml:space="preserve">
+    <value>Installing plugin...</value>
+    <comment>Subscriber installer: displayed while the plugin is being installed</comment>
+  </data>
+  <data name="SubscriberInstaller_InstalledText" xml:space="preserve">
+    <value>The plugin '{0}' was installed successfully.</value>
+    <comment>Subscriber installer: text of the notification shown when a new plugin is installed. {0} is the name of the installed plugin.</comment>
+  </data>
+  <data name="SubscriberInstaller_InstalledTitle" xml:space="preserve">
+    <value>New Plugin Installed</value>
+    <comment>Subscriber installer: title of the notification shown when a new display is installed</comment>
+  </data>
+  <data name="SubscriberInstaller_NonexistentDefinitionFile" xml:space="preserve">
+    <value>The definition file '{0}' does not exist.\n\nThe plugin could not be installed.</value>
+    <comment>Subscriber installer: message shown if the definition file could not be found. {0} is the file path</comment>
+  </data>
+  <data name="SubscriberInstaller_Prompt" xml:space="preserve">
+    <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <comment>Subscriber installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
+  </data>
+  <data name="Security_RequirePasswordLANApps" xml:space="preserve">
+    <value>Require password for LAN apps</value>
+    <comment>Security tab: checkbox for 'require password for LAN apps'</comment>
+  </data>
+  <data name="Displays_MultiMonitor_Identify" xml:space="preserve">
+    <value>Identify...</value>
+    <comment>Displays tab: 'Identify...' context menu item</comment>
+  </data>
+  <data name="Displays_MultiMonitor_Monitor" xml:space="preserve">
+    <value>Monitor</value>
+    <comment>Displays tab: name of all non-primary monitors</comment>
+  </data>
+  <data name="Displays_MultiMonitor_Primary" xml:space="preserve">
+    <value>Primary</value>
+    <comment>Displays tab: name of the primary monitor</comment>
+  </data>
+  <data name="AddNotifyIO_NameLabel" xml:space="preserve">
+    <value>Name:</value>
+    <comment>Add notify.io form: name label</comment>
+  </data>
+  <data name="AddNotifyIO_OutletUrlLabel" xml:space="preserve">
+    <value>Outlet Url:</value>
+    <comment>Add notify.io form: outlet url label</comment>
+  </data>
+  <data name="AddSubscription_AddNotifyIO" xml:space="preserve">
+    <value>Subscribe to notify.io outlet</value>
+    <comment>Add subscription form: click to subscribe to notify.io notifications</comment>
+  </data>
+  <data name="LiteralString_Status_Connecting" xml:space="preserve">
+    <value>connecting...</value>
+    <comment>The string 'connecting...' (used in network display statuses)</comment>
+  </data>
+  <data name="LiteralString_Status_Reconnecting" xml:space="preserve">
+    <value>reconnecting...</value>
+    <comment>The string 'reconnecting...' (used in network display statuses)</comment>
+  </data>
+  <data name="NotifyIO_NotificationType" xml:space="preserve">
+    <value>Web Notification</value>
+    <comment>Notify.IO notification type</comment>
+  </data>
 </root>

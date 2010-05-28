@@ -29,7 +29,7 @@ namespace Growl.CoreLibrary
         /// </returns>
         protected override WebRequest GetWebRequest(Uri address)
         {
-            HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
+            WebRequest webrequest = base.GetWebRequest(address);
 
             // log some proxy-related stuff
             string proxyInfo = String.Format("No proxy required to access '{0}'", address.ToString());
@@ -41,9 +41,9 @@ namespace Growl.CoreLibrary
                 proxyInfo = String.Format("Proxy required to access '{0}' - using proxy at '{1}'", address.ToString(), proxyUri.ToString());
 
                 proxyAuthInfo = "Proxy authentication not required or is using default credentials";
-                if (request.Proxy.Credentials != null)
+                if (webrequest.Proxy.Credentials != null)
                 {
-                    NetworkCredential credentials = request.Proxy.Credentials as NetworkCredential;
+                    NetworkCredential credentials = webrequest.Proxy.Credentials as NetworkCredential;
                     if (credentials != null)
                         proxyAuthInfo = String.Format("Proxy authentication required - using username '{0}' and domain '{1}'", credentials.UserName, credentials.Domain);
                 }
@@ -52,11 +52,16 @@ namespace Growl.CoreLibrary
             if (!String.IsNullOrEmpty(proxyAuthInfo)) Growl.CoreLibrary.DebugInfo.WriteLine(proxyAuthInfo);
 
             // deal with a bug related to connections expiring at different times on the client and server
-            request.KeepAlive = false;
-            request.ServicePoint.MaxIdleTime = 1000;
-            //request.ProtocolVersion = HttpVersion.Version10;  // we cant use this with 'Transfer-Encoding: chunked' =(
+            HttpWebRequest request = webrequest as HttpWebRequest;
+            if (request != null)
+            {
+                request.KeepAlive = false;
+                request.ServicePoint.MaxIdleTime = 1000;
+                request.ServicePoint.Expect100Continue = false; // specifically, this is required for Twitter forwarding, but is useful for other things as well
+                //request.ProtocolVersion = HttpVersion.Version10;  // we cant use this with 'Transfer-Encoding: chunked' =(
+            }
 
-            return request;
+            return webrequest;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Growl
 {
     public class NotifyIOListener : IDisposable
     {
+        public event EventHandler InvalidUrl;
         public event EventHandler Connected;
         public event EventHandler Disconnected;
         public event EventHandler<NotificationReceivedEventArgs> NotificationReceived;
@@ -59,6 +60,7 @@ namespace Growl
                 if (this.comet == null)
                 {
                     this.comet = new CometClient(url);
+                    comet.InvalidUrl += new EventHandler(comet_InvalidUrl);
                     comet.Connected += new EventHandler(comet_Connected);
                     comet.Disconnected += new EventHandler(comet_Disconnected);
                     comet.ResponseReceived += new CometClient.ResponseReceivedEventHandler(comet_ResponseReceived);
@@ -74,12 +76,18 @@ namespace Growl
             {
                 this.isStopping = true;
                 this.comet.Stop();
+                this.comet.InvalidUrl -= new EventHandler(comet_InvalidUrl);
                 this.comet.Connected -= new EventHandler(comet_Connected);
                 this.comet.Disconnected -= new EventHandler(comet_Disconnected);
                 this.comet.ResponseReceived -= new CometClient.ResponseReceivedEventHandler(comet_ResponseReceived);
                 this.comet.Dispose();
                 this.comet = null;
             }
+        }
+
+        void comet_InvalidUrl(object sender, EventArgs e)
+        {
+            this.OnInvalidUrl();
         }
 
         void comet_Connected(object sender, EventArgs e)
@@ -99,6 +107,7 @@ namespace Growl
 
         private void StartCometClient(CometClient client, int wait)
         {
+            /*
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 MethodInvoker invoker = new MethodInvoker(delegate()
@@ -113,6 +122,16 @@ namespace Growl
                 client.Stop();
                 client.Start();
             }
+             * */
+
+            System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(StartCometClientAsync), client);
+        }
+
+        private void StartCometClientAsync(object state)
+        {
+            CometClient client = (CometClient)state;
+            client.Stop();
+            client.Start();
         }
 
         void comet_ResponseReceived(string response)
@@ -164,6 +183,24 @@ namespace Growl
             catch
             {
                 // dont fail if the notification could not be handled properly
+            }
+        }
+
+        protected void OnInvalidUrl()
+        {
+            if (this.InvalidUrl != null)
+            {
+                if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
+                {
+                    this.synchronizingObject.Invoke(new MethodInvoker(delegate()
+                    {
+                        OnInvalidUrl();
+                    }), null);
+                }
+                else
+                {
+                    this.InvalidUrl(this, EventArgs.Empty);
+                }
             }
         }
 

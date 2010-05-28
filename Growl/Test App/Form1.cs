@@ -26,10 +26,10 @@ namespace Test_App
             this.growl.NotificationCallback +=new GrowlConnector.CallbackEventHandler(growl_NotificationCallback);
 
             growl.KeyHashAlgorithm = Cryptography.HashAlgorithmType.SHA256;
-            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+            growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
             //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.DES;
             //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.TripleDES;
-            growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
+            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
 
             this.app = new Growl.Connector.Application("SurfWriter");
             //app.Icon = "http://atomicbride.com/Apple.gif";
@@ -157,7 +157,7 @@ namespace Test_App
             nt1.CustomTextAttributes.Add("Language", "English");
             nt1.CustomTextAttributes.Add("Timezone", "PST");
 
-            Notification notification = new Notification(app.Name, nt1.Name, "123456", "You document was published", "File 'c:\\file.txt' was successfully published at 8:57pm.\n\nClick this notification to open the file.\n\nThis is a test of the expanding displays.");
+            Notification notification = new Notification(app.Name, nt1.Name, "123456", "You docu;ment\nwas publi&shed", "File 'c:\\file.txt' was successfully published at 8:57pm.\n\nClick this notification to open the file.\n\nThis is a test of the expanding displays.");
             notification.Sticky = false;
             notification.Priority = Priority.Emergency;
             //notification.Icon = "http://atomicbride.com/Apple.gif";
@@ -271,7 +271,7 @@ namespace Test_App
             //System.IO.File.WriteAllBytes(@"C:\Documents and Settings\brian\Desktop\growl protocol\tests\Request_FlashPolicyRequest.txt", System.Text.Encoding.UTF8.GetBytes("<policy-file-request/>\0"));
 
 
-            string dir = @"C:\Documents and Settings\brian\Desktop\growl protocol\tests\";
+            string dir = @"C:\Documents and Settings\brian\Desktop\growl\growl protocol\tests\";
             string resultsdir = dir + @"results\";
 
             if (System.IO.Directory.Exists(resultsdir))

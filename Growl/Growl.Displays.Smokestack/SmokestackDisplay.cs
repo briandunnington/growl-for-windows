@@ -7,7 +7,7 @@ using Growl.DisplayStyle;
 
 namespace Growl.Displays.Smokestack
 {
-    public class SmokestackDisplay : VisualDisplay
+    public class SmokestackDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -71,6 +71,7 @@ namespace Growl.Displays.Smokestack
         protected override void HandleNotification(Notification notification, string displayName)
         {
             SmokestackWindow win = new SmokestackWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

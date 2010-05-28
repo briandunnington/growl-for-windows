@@ -19,7 +19,7 @@
             font-weight:bold;
             padding:0 20px;
             x-min-width:160px;
-            x-_width:160px;}
+            _width:160px;}
         input, textarea {width:320px;}
         </style>
     </head>
@@ -69,6 +69,8 @@
         </div>
         
         <script type="text/javascript">
+        var isGrowlRunning = false;
+        
         function register(){
             var application = new Growl.Application();
             application.name = "Javascript Example App";
@@ -129,6 +131,7 @@
 
             config.oncallback = cb;
             config.onerror = onerror;
+            config.onok = onok;
             Growl.init(config);
         }
         
@@ -147,6 +150,26 @@
         function onerror(errorCode, errorDescription){
             alert("ERROR:\r\n\r\n" + errorCode + " - " + errorDescription);
         }
+        
+        function onok(){
+            if(!isGrowlRunning){
+                alert("ok");
+                isGrowlRunning = true;
+            }
+        }
+        
+        /*
+        Growl.onconnect = function(){alert("onconnect")};
+		Growl.ondisconnect = function(){alert("ondisconnect")};
+		Growl.ondata = function(){alert("ondata")};
+		Growl.onioerror = function(){alert("onioerror")};
+		Growl.onsecurityerror = function(){alert("onsecurityerror")};
+		Growl.onprogressevent = function(){alert("onprogressevent")};
+		Growl.onok = function(){alert("onok")};
+		Growl.oncallback = function(){alert("oncallback")};
+		Growl.onerror = function(){alert("onerror")};
+		*/
+        
         </script>
     </body>
 </html>

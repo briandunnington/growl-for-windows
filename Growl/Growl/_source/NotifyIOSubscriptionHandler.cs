@@ -36,7 +36,7 @@ namespace Growl
 
         public List<DestinationListItem> GetListItems()
         {
-            SubscriptionListItem item = new SubscriptionListItem("Subscribe to notify.io outlet", KnownDestinationPlatformType.NotifyIO.GetIcon(), this);  // TODO: LOCAL: LOCALIZE:
+            SubscriptionListItem item = new SubscriptionListItem(Utility.GetResourceString(Properties.Resources.AddSubscription_AddNotifyIO), KnownDestinationPlatformType.NotifyIO.GetIcon(), this);
             List<DestinationListItem> list = new List<DestinationListItem>();
             list.Add(item);
             return list;

@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace BlueFlower
 {
-    public class BlueFlowerDisplay : VisualDisplay
+    public class BlueFlowerDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -65,6 +65,7 @@ namespace BlueFlower
         protected override void HandleNotification(Notification notification, string displayName)
         {
             BlueFlowerWindow win = new BlueFlowerWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

@@ -172,6 +172,11 @@ namespace Growl.Daemon
         private bool requireLocalPassword;
 
         /// <summary>
+        /// Indicates if LAN applications must supply the password or not
+        /// </summary>
+        private bool requireLANPassword;
+
+        /// <summary>
         /// Indicates if network (non-local) request are allowed
         /// </summary>
         private bool allowNetworkNotifications = false;
@@ -213,8 +218,8 @@ namespace Growl.Daemon
             this.listenSocket = new AsyncSocket();
             this.listenSocket.AllowMultithreadedCallbacks = true; // VERY IMPORTANT: if we dont set this, async socket events will silently be swallowed by the AsyncSocket class
             listenSocket.DidAccept += new AsyncSocket.SocketDidAccept(listenSocket_DidAccept);
-            //listenSocket.DidDisconnect += new AsyncSocket.SocketDidDisconnect(listenSocket_DidDisconnect);
-
+            //listenSocket.DidClose += new AsyncSocket.SocketDidClose(listenSocket_DidClose);
+ 
             // Initialize list to hold connected sockets
             // We support multiple concurrent connections
             connectedSockets = new ConnectedSocketCollection();
@@ -301,6 +306,29 @@ namespace Growl.Daemon
             set
             {
                 this.requireLocalPassword = value;
+            }
+        }
+
+        /// <summary>
+        /// Indicates if LAN applications must supply a password.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> - LAN applications must supply a password;
+        /// <c>false</c> - LAN applications do not need to supply a password
+        /// </value>
+        /// <remarks>
+        /// Network applications normally must always supply a password, but LAN
+        /// applications can be exempted.
+        /// </remarks>
+        public bool RequireLANPassword
+        {
+            get
+            {
+                return this.requireLANPassword;
+            }
+            set
+            {
+                this.requireLANPassword = value;
             }
         }
 
@@ -473,6 +501,7 @@ namespace Growl.Daemon
 
             // check origin
             bool isLocal = IPAddress.IsLoopback(newSocket.RemoteAddress);
+            bool isLAN = Growl.CoreLibrary.IPUtilities.IsInSameSubnet(newSocket.LocalAddress, newSocket.RemoteAddress);
             if (!this.allowNetworkNotifications && !isLocal)
             {
                 // remote connections not allowed - Should we return a GNTP error response? i think this is better (no reply at all)
@@ -481,9 +510,14 @@ namespace Growl.Daemon
                 return;
             }
 
+            bool passwordRequired = true;
+            if (isLocal && !this.RequireLocalPassword) passwordRequired = false;
+            else if (isLAN && !this.RequireLANPassword) passwordRequired = false;
+
+            // SUPER IMPORTANT
             newSocket.AllowMultithreadedCallbacks = true;
 
-            MessageHandler mh = new MessageHandler(this.serverName, this.passwordManager, isLocal, this.logFolder, this.loggingEnabled, this.requireLocalPassword, this.allowNetworkNotifications, this.allowFlash, this.allowSubscriptions);
+            MessageHandler mh = new MessageHandler(this.serverName, this.passwordManager, passwordRequired, this.logFolder, this.loggingEnabled, this.allowNetworkNotifications, this.allowFlash, this.allowSubscriptions);
             newSocket.DidClose += new AsyncSocket.SocketDidClose(newSocket_DidClose);
             newSocket.DidRead += new AsyncSocket.SocketDidRead(mh.SocketDidRead);
             newSocket.DidWrite += new AsyncSocket.SocketDidWrite(mh.SocketDidWrite);

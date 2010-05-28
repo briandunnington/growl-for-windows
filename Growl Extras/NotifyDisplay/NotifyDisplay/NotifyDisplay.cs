@@ -5,7 +5,7 @@ using Growl.DisplayStyle;
 
 namespace Notify
 {
-    public class NotifyDisplay : VisualDisplay
+    public class NotifyDisplay : MultiMonitorVisualDisplay
     {
         public const string SETTING_DISPLAYLOCATION = "DisplayLocation";
 
@@ -65,6 +65,7 @@ namespace Notify
         protected override void HandleNotification(Notification notification, string displayName)
         {
             NotifyWindow win = new NotifyWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.SetDisplayLocation(GetLocationFromSetting());
             this.Show(win);

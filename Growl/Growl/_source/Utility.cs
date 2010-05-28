@@ -180,7 +180,7 @@ namespace Growl
                         w.WriteLine("{0}\t{1}", DateTime.Now, info);
                     }
                 }
-                WriteLine(info);
+                //WriteLine(info);
             }
         }
 

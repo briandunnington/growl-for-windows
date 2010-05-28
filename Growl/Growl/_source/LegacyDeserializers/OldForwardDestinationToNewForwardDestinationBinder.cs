@@ -25,8 +25,8 @@ namespace Growl.LegacyDeserializers
 
             Type type = Type.GetType(typeName);
 
-            if (type == null)
-                Console.WriteLine("null type");
+            //if (type == null)
+            //    Console.WriteLine("null type");
 
             return type;
         }

@@ -7,7 +7,7 @@ using Growl.DisplayStyle;
 
 namespace Growl.Displays.Standard
 {
-    public class StandardDisplay : VisualDisplay
+    public class StandardDisplay : MultiMonitorVisualDisplay
     {
         public const string DEFAULT_DISPLAY_NAME = "Standard";
         public const string SETTING_COLOR1 = "Color1";
@@ -75,6 +75,7 @@ namespace Growl.Displays.Standard
         protected override void HandleNotification(Notification notification, string displayName)
         {
             StandardWindow win = new StandardWindow();
+            win.Tag = this;
             win.SetNotification(notification);
             win.Color1 = GetColorFromSetting(SETTING_COLOR1, COLOR1);
             win.Color2 = GetColorFromSetting(SETTING_COLOR2, COLOR2);

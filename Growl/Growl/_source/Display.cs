@@ -136,6 +136,23 @@ namespace Growl
             }
         }
 
+        public bool SupportsMultipleMonitors
+        {
+            get
+            {
+                Growl.DisplayStyle.IDisplayMultipleMonitor idmm = this.display as Growl.DisplayStyle.IDisplayMultipleMonitor;
+                if (idmm != null) return true;
+                else return false;
+            }
+        }
+
+        public void SetPreferredDevice(string deviceName)
+        {
+            Growl.DisplayStyle.IDisplayMultipleMonitor idmm = this.display as Growl.DisplayStyle.IDisplayMultipleMonitor;
+            if (idmm != null)
+                idmm.SetPreferredDisplay(deviceName);
+        }
+
         #region ISerializable Members
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]

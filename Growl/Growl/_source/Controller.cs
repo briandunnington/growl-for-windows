@@ -39,6 +39,7 @@ namespace Growl
         private const string FORWARD_COMPUTERS_SETTINGS_FILENAME = "forward.settings";
         private const string PASSWORD_SETTINGS_FILENAME = "passwords.settings";
         private const string SUBSCRIPTIONS_SETTINGS_FILENAME = "subscriptions.settings";
+        private const string DISPLAY_SETTINGS_FILENAME = "display.settings";
 
         private string appPath;
         private System.ComponentModel.ISynchronizeInvoke synchronizingObject;
@@ -68,11 +69,13 @@ namespace Growl
         protected Dictionary<string, RegisteredApplication> applications;
         protected Dictionary<string, ForwardDestination> forwards;
         protected Dictionary<string, Subscription> subscriptions;
+        protected Dictionary<string, DisplaySetting> displaySettings;
 
         private SettingSaver raSettingSaver = new SettingSaver(REGISTERED_APPLICATIONS_SETTINGS_FILENAME);
         private SettingSaver fcSettingSaver = new SettingSaver(FORWARD_COMPUTERS_SETTINGS_FILENAME);
         private SettingSaver pmSettingSaver = new SettingSaver(PASSWORD_SETTINGS_FILENAME);
         private SettingSaver sbSettingSaver = new SettingSaver(SUBSCRIPTIONS_SETTINGS_FILENAME);
+        private SettingSaver dpSettingSaver = new SettingSaver(DISPLAY_SETTINGS_FILENAME);
 
         public static Controller GetController()
         {
@@ -134,6 +137,8 @@ namespace Growl
             this.activityMonitor.WentIdle += new ActivityMonitor.ActivityMonitorEventHandler(activityMonitor_WentIdle);
             this.activityMonitor.ResumedActivity += new ActivityMonitor.ActivityMonitorEventHandler(activityMonitor_ResumedActivity);
             this.activityMonitor.StillActive += new EventHandler(activityMonitor_StillActive);
+            this.activityMonitor.CheckForIdle = Properties.Settings.Default.CheckForIdle;
+            this.activityMonitor.IdleAfterSeconds = Properties.Settings.Default.IdleAfterSeconds;
         }
 
         public bool Start()
@@ -145,10 +150,11 @@ namespace Growl
             this.gntpListener.NotifyReceived += new Growl.Daemon.GrowlServer.NotifyReceivedEventHandler(gntpListener_NotifyReceived);
             this.gntpListener.SubscribeReceived += new Growl.Daemon.GrowlServer.SubscribeReceivedEventHandler(gntpListener_SubscribeReceived);
             this.gntpListener.LoggingEnabled = ApplicationMain.LoggingEnabled;
-            this.gntpListener.AllowFlash = true;
-            this.gntpListener.AllowNetworkNotifications = true;
-            this.gntpListener.AllowSubscriptions = true;
-            this.gntpListener.RequireLocalPassword = false;
+            this.gntpListener.AllowFlash = Properties.Settings.Default.AllowWebNotifications;
+            this.gntpListener.AllowNetworkNotifications = Properties.Settings.Default.AllowNetworkNotifications;
+            this.gntpListener.AllowSubscriptions = Properties.Settings.Default.AllowSubscriptions;
+            this.gntpListener.RequireLocalPassword = Properties.Settings.Default.RequireLocalPassword;
+            this.gntpListener.RequireLANPassword = Properties.Settings.Default.RequireLANPassword;
             started = this.gntpListener.Start();
             if (!started)
             {
@@ -165,8 +171,9 @@ namespace Growl
                 this.udpListener = new Growl.UDPLegacy.MessageReceiver(Growl.UDPLegacy.MessageReceiver.NETWORK_PORT, this.passwordManager, ApplicationMain.LoggingEnabled, udpLogFolder);
                 this.udpListener.RegistrationReceived += new Growl.UDPLegacy.MessageReceiver.RegistrationHandler(udpListener_RegistrationReceived);
                 this.udpListener.NotificationReceived += new Growl.UDPLegacy.MessageReceiver.NotificationHandler(udpListener_NotificationReceived);
-                this.udpListener.AllowNetworkNotifications = true;
-                this.udpListener.RequireLocalPassword = false;
+                this.udpListener.AllowNetworkNotifications = Properties.Settings.Default.AllowNetworkNotifications;
+                this.udpListener.RequireLocalPassword = Properties.Settings.Default.RequireLocalPassword;
+                this.udpListener.RequireLANPassword = Properties.Settings.Default.RequireLANPassword;
                 started = this.udpListener.Start();
                 if (!started)
                 {
@@ -180,7 +187,8 @@ namespace Growl
                 this.udpListenerLocal.RegistrationReceived += new Growl.UDPLegacy.MessageReceiver.RegistrationHandler(udpListener_RegistrationReceived);
                 this.udpListenerLocal.NotificationReceived += new Growl.UDPLegacy.MessageReceiver.NotificationHandler(udpListener_NotificationReceived);
                 this.udpListenerLocal.AllowNetworkNotifications = false;    // always false
-                this.udpListenerLocal.RequireLocalPassword = false;
+                this.udpListenerLocal.RequireLocalPassword = Properties.Settings.Default.RequireLocalPassword;
+                this.udpListenerLocal.RequireLANPassword = Properties.Settings.Default.RequireLANPassword;
                 started = this.udpListenerLocal.Start();
                 if (!started)
                 {
@@ -370,6 +378,27 @@ namespace Growl
                 // fall back to Standard
                 this.growlDefaultDisplay = DisplayStyleManager.AvailableDisplayStyles["Standard"];
             }
+
+            try
+            {
+                this.displaySettings = (Dictionary<string, DisplaySetting>)dpSettingSaver.Load();
+                if (this.displaySettings == null) this.displaySettings = new Dictionary<string, DisplaySetting>();
+                foreach (KeyValuePair<string, DisplaySetting> setting in this.displaySettings)
+                {
+                    string name = setting.Key;
+                    if (!String.IsNullOrEmpty(name) && DisplayStyleManager.AvailableDisplayStyles.ContainsKey(name))
+                    {
+                        Display d = DisplayStyleManager.AvailableDisplayStyles[name];
+                        Utility.WriteDebugInfo("Setting preferred device for '{0}' display to: {1}", d.Name, setting.Value.DeviceName);
+                        d.SetPreferredDevice(setting.Value.DeviceName);
+                    }
+                }
+            }
+            catch
+            {
+                Utility.WriteDebugInfo("EXCEPTION: failed to load common display settings");
+            }
+
             Display.Default.Update(this.growlDefaultDisplay);
         }
 
@@ -609,13 +638,16 @@ namespace Growl
                         List<string> limitToTheseComputers = null;
                         if (rn.ShouldForward(Properties.Settings.Default.AllowForwarding, out limitToTheseComputers))
                         {
+                            // update the icon (in case we used the app's icon or a registered icon, etc)
+                            notification.Icon = n.Image;
+                            notification.Priority = priority;
+
                             // convert urls to binary data
                             if (notification.Icon != null && notification.Icon.IsSet && notification.Icon.IsUrl)
                             {
                                 System.Drawing.Image icon = (Image)notification.Icon;
                                 notification.Icon = icon;
                             }
-                            notification.Priority = priority;
 
                             HandleForwarding(notification, callbackInfo, requestInfo, limitToTheseComputers);
                         }
@@ -1107,6 +1139,37 @@ namespace Growl
             return null;
         }
 
+        public string GetPreferredDeviceForDisplay(Display display)
+        {
+            string deviceName = null;
+            if (this.displaySettings.ContainsKey(display.Name))
+            {
+                deviceName = this.displaySettings[display.Name].DeviceName;
+            }
+            return deviceName;
+        }
+
+        public void SetPreferredDeviceForDisplay(Display display, string deviceName)
+        {
+            if (display != null && !String.IsNullOrEmpty(deviceName))
+            {
+                display.SetPreferredDevice(deviceName);
+
+                if (this.displaySettings.ContainsKey(display.Name))
+                {
+                    this.displaySettings[display.Name].DeviceName = deviceName;
+                }
+                else
+                {
+                    DisplaySetting ds = new DisplaySetting();
+                    ds.DeviceName = deviceName;
+                    this.displaySettings.Add(display.Name, ds);
+                }
+
+                this.dpSettingSaver.Save(this.displaySettings);
+            }
+        }
+
         # region Activity Monitor Event Handlers
 
         void activityMonitor_ResumedActivity(ActivityMonitor.ActivityMonitorEventArgs args)
@@ -1146,7 +1209,9 @@ namespace Growl
         void activityMonitor_StillActive(object sender, EventArgs e)
         {
             if (!paused && !idle)    // really, this should never fire while paused or idle, but just in case
+            {
                 this.missedNotifications.Clear();
+            }
         }
 
         # endregion Activity Monitor Event Handlers
@@ -1480,6 +1545,22 @@ namespace Growl
                 if (this.gntpListener != null) this.gntpListener.RequireLocalPassword = value;
                 if (this.udpListener != null) this.udpListener.RequireLocalPassword = value;
                 if (this.udpListenerLocal != null) this.udpListenerLocal.RequireLocalPassword = value;
+            }
+        }
+
+        public bool RequireLANPassword
+        {
+            get
+            {
+                return Properties.Settings.Default.RequireLANPassword;
+            }
+            set
+            {
+                Properties.Settings.Default.RequireLANPassword = value;
+                Properties.Settings.Default.Save();
+                if (this.gntpListener != null) this.gntpListener.RequireLANPassword = value;
+                if (this.udpListener != null) this.udpListener.RequireLANPassword = value;
+                if (this.udpListenerLocal != null) this.udpListenerLocal.RequireLANPassword = value;
             }
         }
 

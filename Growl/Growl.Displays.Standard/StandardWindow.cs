@@ -27,6 +27,8 @@ namespace Growl.Displays.Standard
             this.Load += new EventHandler(StandardWindow_Load);
             this.FormClosed += new FormClosedEventHandler(StandardWindow_FormClosed);
 
+            this.PauseWhenMouseOver = true;
+
             this.Animator = new FadeAnimator(this, 300, 250, FadeAnimator.MAX_OPACITY);
 
             HookUpClickEvents(this);
@@ -55,6 +57,7 @@ namespace Growl.Displays.Standard
 
         void StandardWindow_Load(object sender, EventArgs e)
         {
+            /*
             // set initial location
             int screenIndex = 0;
             string s = System.Configuration.ConfigurationManager.AppSettings["ScreenIndex"];
@@ -65,6 +68,12 @@ namespace Growl.Displays.Standard
             }
 
             Screen screen = Screen.AllScreens[screenIndex];
+             * */
+
+            // multiple monitor support
+            MultiMonitorVisualDisplay d = (MultiMonitorVisualDisplay)this.Tag;
+            Screen screen = d.GetPreferredDisplay();
+
             int x = screen.WorkingArea.Right - this.Size.Width;
             int y = screen.WorkingArea.Bottom - this.Size.Height;
             this.Location = new Point(x, y);

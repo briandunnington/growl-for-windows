@@ -27,6 +27,7 @@ namespace GrowlExtras.OutlookAddIn
 
             this.NewMailEx += new Microsoft.Office.Interop.Outlook.ApplicationEvents_11_NewMailExEventHandler(ThisApplication_NewMailEx);
             this.Reminder += new Microsoft.Office.Interop.Outlook.ApplicationEvents_11_ReminderEventHandler(ThisApplication_Reminder);
+            this.Reminders.BeforeReminderShow += new Microsoft.Office.Interop.Outlook.ReminderCollectionEvents_BeforeReminderShowEventHandler(Reminders_BeforeReminderShow);
 
             // setup our growl object
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -40,6 +41,27 @@ namespace GrowlExtras.OutlookAddIn
             this.growl.EncryptionAlgorithm = Growl.Connector.Cryptography.SymmetricAlgorithmType.PlainText;
             this.growl.NotificationCallback +=new Growl.Connector.GrowlConnector.CallbackEventHandler(growl_NotificationCallback);
             this.growl.Register(this.application, this.notificationTypes);
+        }
+
+        void Reminders_BeforeReminderShow(ref bool Cancel)
+        {
+            if (Properties.Settings.Default.EnableReminderNotifications)
+            {
+                DateTime now = DateTime.Now;
+
+                foreach (Microsoft.Office.Interop.Outlook.Reminder reminder in this.Reminders)
+                {
+                    if (reminder.NextReminderDate <= now)
+                    {
+                        // try...catch around this
+                        //reminder.Snooze(5);
+
+                        ThisApplication_Reminder(reminder.Item);
+                    }
+                }
+
+                Cancel = true;
+            }
         }
 
         private void ThisApplication_Shutdown(object sender, System.EventArgs e)

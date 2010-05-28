@@ -57,6 +57,7 @@
     <Compile Include="DebugInfo.cs" />
     <Compile Include="Detector.cs" />
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="IPUtilities.cs" />
     <Compile Include="NotificationCallbackDelegate.cs" />
     <Compile Include="NotificationCallbackEventArgs.cs" />
     <Compile Include="NotificationCallbackEventHandler.cs" />
