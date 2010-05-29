@@ -1,3 +1,7 @@
+2.0.3v2 changes (v2.0.3.5)
+------------------------------
+- fixed a but in the IPv6 same-subnet handling
+
 2.0.3 changes (v2.0.3.4)
 ------------------------------
 - added support for multiple monitors (Display SDK, built-in displays, and most additional displays)

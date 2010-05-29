@@ -12,10 +12,24 @@ namespace Growl.CoreLibrary
 
         public static bool IsInSameSubnet(IPAddress localAddress, IPAddress otherAddress)
         {
-            IPAddress subnetMask = GetLocalSubnetMask(localAddress);
-            IPAddress network1 = GetNetworkAddress(localAddress, subnetMask);
-            IPAddress network2 = GetNetworkAddress(otherAddress, subnetMask);
-            return network1.Equals(network2);
+            try
+            {
+                // handle loopback addresses and IPv6 local addresses
+                if (IPAddress.IsLoopback(otherAddress)
+                    || otherAddress.IsIPv6LinkLocal
+                    || otherAddress.IsIPv6SiteLocal)
+                    return true;
+
+                IPAddress subnetMask = GetLocalSubnetMask(localAddress);
+                IPAddress network1 = GetNetworkAddress(localAddress, subnetMask);
+                IPAddress network2 = GetNetworkAddress(otherAddress, subnetMask);
+                return network1.Equals(network2);
+            }
+            catch
+            {
+                DebugInfo.WriteLine(String.Format("Could not determine subnet. Local address: {0} - Remote Address: {1}", localAddress, otherAddress));
+            }
+            return false;
         }
 
         public static IPAddress GetLocalSubnetMask(IPAddress ipaddress)
