@@ -274,6 +274,10 @@ namespace Growl.Connector
                         {
                             response += System.Text.Encoding.UTF8.GetString(buffer, 0, length);
                         }
+                        else
+                        {
+                            break;
+                        }
                     }
                     del(response);
 
@@ -289,6 +293,10 @@ namespace Growl.Connector
                             if (length > 0)
                             {
                                 response += System.Text.Encoding.UTF8.GetString(buffer, 0, length);
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                         del(response);

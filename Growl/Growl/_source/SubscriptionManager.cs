@@ -18,7 +18,6 @@ namespace Growl
         private static string userSubscriberDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Subscribers" + Path.DirectorySeparatorChar);
         private static string commonSubscriberDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.CommonPluginFolder, @"Subscribers" + Path.DirectorySeparatorChar);
 
-        private static Dictionary<string, ISubscriptionHandler> loadedHandlers = new Dictionary<string, ISubscriptionHandler>();
         private static List<ISubscriptionHandler> loadedHandlersList = new List<ISubscriptionHandler>();
         private static Dictionary<string, PluginInfo> loadedPlugins = new Dictionary<string, PluginInfo>();
         private static List<PluginInfo> loadedPluginsList = new List<PluginInfo>();
@@ -157,9 +156,7 @@ namespace Growl
                 if (ish != null)
                 {
                     name = ish.Name;
-                    string typeName = ish.GetType().FullName;
 
-                    loadedHandlers.Add(typeName, ish);
                     loadedHandlersList.Add(ish);
 
                     List<Type> list = ish.Register();

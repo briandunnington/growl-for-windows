@@ -18,7 +18,6 @@ namespace Growl
         private static string userForwarderDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Forwarders" + Path.DirectorySeparatorChar);
         private static string commonForwarderDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.CommonPluginFolder, @"Forwarders" + Path.DirectorySeparatorChar);
 
-        private static Dictionary<string, IForwardDestinationHandler> loadedHandlers = new Dictionary<string, IForwardDestinationHandler>();
         private static List<IForwardDestinationHandler> loadedHandlersList = new List<IForwardDestinationHandler>();
         private static Dictionary<string, PluginInfo> loadedPlugins = new Dictionary<string, PluginInfo>();
         private static List<PluginInfo> loadedPluginsList = new List<PluginInfo>();
@@ -160,9 +159,6 @@ namespace Growl
                 if (fdh != null)
                 {
                     name = fdh.Name;
-                    string typeName = fdh.GetType().FullName;
-
-                    loadedHandlers.Add(typeName, fdh);
                     loadedHandlersList.Add(fdh);
 
                     List<Type> list = fdh.Register();

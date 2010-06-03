@@ -21,7 +21,6 @@ namespace Growl
         private static string userDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.UserSettingFolder, @"Displays" + Path.DirectorySeparatorChar);
         private static string commonDisplayStyleDirectory = Growl.CoreLibrary.PathUtility.Combine(Utility.CommonPluginFolder, @"Displays" + Path.DirectorySeparatorChar);
 
-        private static Dictionary<string, LoadedDisplayStyle> currentlyLoadedDisplayStyles = new Dictionary<string, LoadedDisplayStyle>();
         private static Dictionary<string, SettingsPanelBase> settingsPanels = new Dictionary<string, SettingsPanelBase>();
         private static Dictionary<string, Display> availableDisplays = new Dictionary<string, Display>();
         private static Dictionary<string, PluginInfo> loadedPlugins = new Dictionary<string, PluginInfo>();
@@ -174,7 +173,6 @@ namespace Growl
                     }
 
                     loadedDisplayStyle.Load();
-                    currentlyLoadedDisplayStyles.Add(typeName, loadedDisplayStyle);
 
                     Utility.WriteDebugInfo(String.Format("Display '{0}' was loaded successfully", name));
 
