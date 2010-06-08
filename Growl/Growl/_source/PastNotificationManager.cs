@@ -112,12 +112,15 @@ invalidNotifications = null;
                 using (image)
                 {
                     System.Drawing.Image thumbnail = GenerateThumbnail(image, 48, 48);
-                    using (thumbnail)
+                    if (thumbnail != null)
                     {
-                        string imagefilename = String.Format(@"{0}.img", requestID);
-                        imageFile = Growl.CoreLibrary.PathUtility.Combine(path, imagefilename);
+                        using (thumbnail)
+                        {
+                            string imagefilename = String.Format(@"{0}.img", requestID);
+                            imageFile = Growl.CoreLibrary.PathUtility.Combine(path, imagefilename);
 
-                        thumbnail.Save(imageFile);
+                            thumbnail.Save(imageFile);
+                        }
                     }
                 }
             }
@@ -181,21 +184,25 @@ invalidNotifications = null;
 
         private static System.Drawing.Image GenerateThumbnail(System.Drawing.Image originalImage, int newWidth, int newHeight)
         {
-            System.Drawing.Bitmap bmpResized = new System.Drawing.Bitmap(newWidth, newHeight);
-            lock (bmpResized)
+            if (originalImage != null)
             {
-                System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmpResized);
-                using (g)
+                System.Drawing.Bitmap bmpResized = new System.Drawing.Bitmap(newWidth, newHeight);
+                lock (bmpResized)
                 {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-                    g.DrawImage(
-                        originalImage,
-                        new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmpResized.Size),
-                        new System.Drawing.Rectangle(System.Drawing.Point.Empty, originalImage.Size),
-                        System.Drawing.GraphicsUnit.Pixel);
+                    System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmpResized);
+                    using (g)
+                    {
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+                        g.DrawImage(
+                            originalImage,
+                            new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmpResized.Size),
+                            new System.Drawing.Rectangle(System.Drawing.Point.Empty, originalImage.Size),
+                            System.Drawing.GraphicsUnit.Pixel);
+                    }
                 }
+                return bmpResized;
             }
-            return bmpResized;
+            return null;
         }
     }
 }

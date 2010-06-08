@@ -272,6 +272,11 @@ namespace Growl.Daemon
         /// </summary>
         private AsyncSocket socket;
 
+        /// <summary>
+        /// The text of the request after decryption (null if the request was not originally encrypted)
+        /// </summary>
+        private string decryptedRequest = null;
+
 
         /// <summary>
         /// Type initializer for the MessageHandler class
@@ -935,6 +940,13 @@ namespace Growl.Daemon
                             }
                             w.Write(SEPERATOR);
                             w.Write(this.alreadyReceived.ToString());
+
+                            if (!String.IsNullOrEmpty(this.decryptedRequest))
+                            {
+                                w.Write(SEPERATOR);
+                                w.Write(this.decryptedRequest);
+                            }
+
                             w.Write(SEPERATOR);
                             w.Write(data.ToString());
                             w.Close();
@@ -1190,11 +1202,12 @@ namespace Growl.Daemon
             }
             Buffer.BlockCopy(bytes, 0, encryptedBytes, 0, encryptedBytes.Length);
 
-            //byte[] encryptionKey = this.key.GetEncryptionKey(this.keyHashAlgorithm);
-            //byte[] decryptedBytes = Cryptography.Decrypt(encryptionKey, this.iv, encryptedBytes, this.encryptionAlgorithm);
             byte[] decryptedBytes = this.key.Decrypt(encryptedBytes, this.iv);
 
-            string x = Encoding.UTF8.GetString(decryptedBytes);
+            // log the decrypted data
+#if DEBUG
+            this.decryptedRequest = Encoding.UTF8.GetString(decryptedBytes);
+#endif
 
             System.IO.MemoryStream stream = new System.IO.MemoryStream(decryptedBytes);
             using (stream)
