@@ -1,6 +1,10 @@
 2.0.4 changes (v2.0.4.x)
 ------------------------------
 - fixed a bug in GrowlConnector that could cause a hang if the connection was lost in the middle of receiving a response
+- deprecated instance method GrowlConnector.IsGrowlRunning(); replaced with static GrowlConnector.IsGrowlRunningLocally()
+- updated GrowlConnector Register and Notify methods to accept a user-defined 'state' object that will get passed back in the response events (used to associate responses with requests)
+- updated Growl.Connector.Response class to include RequestData property (that data was formerly inaccessible from the response)
+- improvements to subscriptions to reduce number of renewal requests and updates of the UI
 
 
 2.0.3v2 changes (v2.0.3.5)

@@ -62,17 +62,19 @@ namespace Test_App
             }
         }
 
-        void growl_ErrorResponse(Response response)
+        void growl_ErrorResponse(Response response, object state)
         {
             InvokeWrite("Error - " + response.ErrorCode + " : " + response.ErrorDescription);
         }
 
-        void growl_OKResponse(Response response)
+        void growl_OKResponse(Response response, object state)
         {
+            if (state != null) InvokeWrite(state.ToString());
+
             InvokeWrite("OK - " + response.MachineName);
         }
 
-        void growl_NotificationCallback(Response response, CallbackData callbackContext)
+        void growl_NotificationCallback(Response response, CallbackData callbackContext, object state)
         {
             string s = String.Format("CALLBACK RECEIVED: {0} - {1} - {2} - {3}", callbackContext.NotificationID, callbackContext.Data, callbackContext.Type, callbackContext.Result);
             InvokeWrite(s);
@@ -134,7 +136,7 @@ namespace Test_App
 
             try
             {
-                growl.Register(this.app, types, rd);
+                growl.Register(this.app, types, rd, "some_user_state_data");
                 this.textBox1.Text = "REGISTER sent";
             }
             catch (Exception ex)

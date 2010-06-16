@@ -20,6 +20,9 @@ namespace Growl
         private string subscriberID;
 
         [NonSerialized]
+        private bool isSubscribing = false;
+
+        [NonSerialized]
         private bool disposed;
 
         public GNTPSubscription(string name, bool enabled, string ipAddress, int port, string password)
@@ -129,8 +132,9 @@ namespace Growl
 
         public override void Subscribe()
         {
-            if (this.Enabled)
+            if (this.Enabled && !this.isSubscribing)
             {
+                this.isSubscribing = true;
                 if (this.subscriberID == null) this.subscriberID = Utility.MachineID;
                 this.AdditionalDisplayInfo = "connecting...";
                 if (this.sc == null)
@@ -159,6 +163,7 @@ namespace Growl
 
         void sc_OKResponse(Growl.Daemon.SubscriptionResponse response)
         {
+            this.isSubscribing = false;
             string additionalInfo = (this.Enabled ? String.Format("TTL: {0}", response.TTL) : null);
             this.Platform = KnownDestinationPlatformType.FromString(response.PlatformName);
             ChangeStatus(true, additionalInfo);
@@ -168,6 +173,7 @@ namespace Growl
 
         void sc_ErrorResponse(Growl.Daemon.SubscriptionResponse response)
         {
+            this.isSubscribing = false;
             string additionalInfo = (this.Enabled ? (response.ErrorCode == Growl.Connector.ErrorCode.NOT_AUTHORIZED ? "invalid password" : "server unavailable") : null);
             ChangeStatus(false, additionalInfo);
 

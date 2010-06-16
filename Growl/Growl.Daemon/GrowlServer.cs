@@ -866,27 +866,45 @@ namespace Growl.Daemon
             }
         }
 
-        // -------------------------------------------------------------------------------
-        // -------------------------------------------------------------------------------
-        // -------------------------------------------------------------------------------
 
+        #region Logging
+
+        /// <summary>
+        /// Log an informational message
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The values to log.</param>
         private void LogInfo(String format, params Object[] args)
         {
             String msg = String.Format(format, args);
             Log(LogMessageType.Information, msg);
         }
 
+        /// <summary>
+        /// Log an error message
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The values to log.</param>
         private void LogError(String format, params Object[] args)
         {
             String msg = String.Format(format, args);
             Log(LogMessageType.Error, msg);
         }
 
+        /// <summary>
+        /// Log data received or sent
+        /// </summary>
+        /// <param name="msg">The data to log</param>
         private void LogData(String msg)
         {
             Log(LogMessageType.Data, msg);
         }
 
+        /// <summary>
+        /// Fires the <see cref="ServerMessage"/> event so calling code can handle the logging events
+        /// </summary>
+        /// <param name="type">The type of message being logged.</param>
+        /// <param name="message">The log message.</param>
         private void Log(LogMessageType type, string message)
         {
             if (this.ServerMessage != null)
@@ -895,12 +913,28 @@ namespace Growl.Daemon
             }
         }
 
+        /// <summary>
+        /// The type of log message
+        /// </summary>
         public enum LogMessageType
         {
+            /// <summary>
+            /// Informational
+            /// </summary>
             Information,
+
+            /// <summary>
+            /// Raw data sent or received
+            /// </summary>
             Data,
+
+            /// <summary>
+            /// Error
+            /// </summary>
             Error
         }
+
+        #endregion Logging
 
         #region IDisposable Members
 

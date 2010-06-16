@@ -16,14 +16,16 @@ namespace Growl.Connector
         /// Represents methods that handle Growl responses
         /// </summary>
         /// <param name="response">The <see cref="Response"/> from Growl</param>
-        public delegate void ResponseEventHandler(Response response);
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public delegate void ResponseEventHandler(Response response, object state);
 
         /// <summary>
         /// Represents methods that handle Growl callbacks
         /// </summary>
         /// <param name="response">The <see cref="Response"/> from Growl</param>
         /// <param name="callbackData">The <see cref="CallbackData"/></param>
-        public delegate void CallbackEventHandler(Response response, CallbackData callbackData);
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public delegate void CallbackEventHandler(Response response, CallbackData callbackData, object state);
 
         /// <summary>
         /// Occurs when an 'OK' response is received.
@@ -78,7 +80,27 @@ namespace Growl.Connector
         /// <c>true</c> if Growl is running;
         /// <c>false</c> if Growl is not running;
         /// </returns>
+        /// <remarks>
+        /// This method is deprecated. Use the static IsGrowlRunningLocally() method instead.
+        /// 
+        /// This method only detects if Growl is running on the local machine where this assembly is running. 
+        /// It does not detect if Growl is running on a remote client machine, even if the GrowlConnector instance is 
+        /// configured to point to a remote machine.
+        /// </remarks>
+        [Obsolete("This method only detects if Growl is running on the local machine where this assembly is running. It does not detect if Growl is running on a remote client machine, even if the GrowlConnector instance is configured to point to a remote machine. Use the static IsGrowlRunningLocally() method instead.", false)]
         public bool IsGrowlRunning()
+        {
+            return Growl.CoreLibrary.Detector.DetectIfGrowlIsRunning();
+        }
+
+        /// <summary>
+        /// Detects if Growl is currently running on the local machine.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if Growl is running;
+        /// <c>false</c> if Growl is not running;
+        /// </returns>
+        public static bool IsGrowlRunningLocally()
         {
             return Growl.CoreLibrary.Detector.DetectIfGrowlIsRunning();
         }
@@ -90,7 +112,18 @@ namespace Growl.Connector
         /// <param name="notificationTypes">The <see cref="NotificationType"/>s to register.</param>
         public virtual void Register(Application application, NotificationType[] notificationTypes)
         {
-            Register(application, notificationTypes, null);
+            Register(application, notificationTypes, null, null);
+        }
+
+        /// <summary>
+        /// Registers the specified application and notification types.
+        /// </summary>
+        /// <param name="application">The <see cref="Application"/> to register.</param>
+        /// <param name="notificationTypes">The <see cref="NotificationType"/>s to register.</param>
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public virtual void Register(Application application, NotificationType[] notificationTypes, object state)
+        {
+            Register(application, notificationTypes, null, state);
         }
 
         /// <summary>
@@ -100,6 +133,18 @@ namespace Growl.Connector
         /// <param name="notificationTypes">The <see cref="NotificationType"/>s to register.</param>
         /// <param name="requestData">The <see cref="RequestData"/> containing the additional information.</param>
         public virtual void Register(Application application, NotificationType[] notificationTypes, RequestData requestData)
+        {
+            Register(application, notificationTypes, requestData, null);
+        }
+
+        /// <summary>
+        /// Registers the specified application and notification types and allows for additional request data.
+        /// </summary>
+        /// <param name="application">The <see cref="Application"/> to register.</param>
+        /// <param name="notificationTypes">The <see cref="NotificationType"/>s to register.</param>
+        /// <param name="requestData">The <see cref="RequestData"/> containing the additional information.</param>
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public virtual void Register(Application application, NotificationType[] notificationTypes, RequestData requestData, object state)
         {
             HeaderCollection appHeaders = application.ToHeaders();
             List<HeaderCollection> notifications = new List<HeaderCollection>();
@@ -136,7 +181,7 @@ namespace Growl.Connector
                 mb.AddMessageSection(ms);
             }
 
-            Send(mb, OnResponseReceived, false);
+            Send(mb, OnResponseReceived, false, state);
         }
 
         /// <summary>
@@ -149,13 +194,34 @@ namespace Growl.Connector
         }
 
         /// <summary>
+        /// Sends a notification to Growl.
+        /// </summary>
+        /// <param name="notification">The <see cref="Notification"/> to send.</param>
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public virtual void Notify(Notification notification, object state)
+        {
+            Notify(notification, null, null, state);
+        }
+
+        /// <summary>
         /// Sends a notification to Growl and allows for additional request data.
         /// </summary>
         /// <param name="notification">The <see cref="Notification"/> to send.</param>
         /// <param name="requestData">The <see cref="RequestData"/> containing the additional information.</param>
         public virtual void Notify(Notification notification, RequestData requestData)
         {
-            Notify(notification, null, requestData);
+            Notify(notification, null, requestData, null);
+        }
+
+        /// <summary>
+        /// Sends a notification to Growl and allows for additional request data.
+        /// </summary>
+        /// <param name="notification">The <see cref="Notification"/> to send.</param>
+        /// <param name="requestData">The <see cref="RequestData"/> containing the additional information.</param>
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public virtual void Notify(Notification notification, RequestData requestData, object state)
+        {
+            Notify(notification, null, requestData, state);
         }
 
         /// <summary>
@@ -165,7 +231,29 @@ namespace Growl.Connector
         /// <param name="callbackContext">The <see cref="CallbackContext"/> containing the callback information.</param>
         public virtual void Notify(Notification notification, CallbackContext callbackContext)
         {
-            Notify(notification, callbackContext, null);
+            Notify(notification, callbackContext, null, null);
+        }
+
+        /// <summary>
+        /// Sends a notification to Growl that specifies callback information.
+        /// </summary>
+        /// <param name="notification">The <see cref="Notification"/> to send.</param>
+        /// <param name="callbackContext">The <see cref="CallbackContext"/> containing the callback information.</param>
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public virtual void Notify(Notification notification, CallbackContext callbackContext, object state)
+        {
+            Notify(notification, callbackContext, null, state);
+        }
+
+        /// <summary>
+        /// Sends a notification to Growl that specifies callback information.
+        /// </summary>
+        /// <param name="notification">The <see cref="Notification"/> to send.</param>
+        /// <param name="callbackContext">The <see cref="CallbackContext"/> containing the callback information.</param>
+        /// <param name="requestData">The <see cref="RequestData"/> containing the additional information.</param>
+        public virtual void Notify(Notification notification, CallbackContext callbackContext, RequestData requestData)
+        {
+            Notify(notification, callbackContext, requestData, null);
         }
 
         /// <summary>
@@ -174,7 +262,8 @@ namespace Growl.Connector
         /// <param name="notification">The <see cref="Notification"/> to send.</param>
         /// <param name="callbackContext">The <see cref="CallbackContext"/> containing the callback information.</param>
         /// <param name="requestData">The <see cref="RequestData"/> containing the additional information.</param>
-        public virtual void Notify(Notification notification, CallbackContext callbackContext, RequestData requestData)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        public virtual void Notify(Notification notification, CallbackContext callbackContext, RequestData requestData, object state)
         {
             bool waitForCallback = false;
             HeaderCollection notificationHeaders = notification.ToHeaders();
@@ -209,25 +298,26 @@ namespace Growl.Connector
                 }
             }
 
-            Send(mb, OnResponseReceived, waitForCallback);
+            Send(mb, OnResponseReceived, waitForCallback, state);
         }
 
         /// <summary>
         /// Parses the response and raises the appropriate event
         /// </summary>
         /// <param name="responseText">The raw GNTP response</param>
-        protected override void OnResponseReceived(string responseText)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected override void OnResponseReceived(string responseText, object state)
         {
             CallbackData cd;
             MessageParser mp = new MessageParser();
             Response response = mp.Parse(responseText, out cd);
 
             if (response.IsCallback)
-                this.OnNotificationCallback(response, cd);
+                this.OnNotificationCallback(response, cd, state);
             else if (response.IsOK)
-                this.OnOKResponse(response);
+                this.OnOKResponse(response, state);
             else
-                this.OnErrorResponse(response);
+                this.OnErrorResponse(response, state);
         }
 
         /// <summary>
@@ -237,20 +327,22 @@ namespace Growl.Connector
         /// 3. Read request fails
         /// </summary>
         /// <param name="response">The <see cref="Response"/> that contains information about the failure</param>
-        protected override void OnCommunicationFailure(Response response)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected override void OnCommunicationFailure(Response response, object state)
         {
-            this.OnErrorResponse(response);
+            this.OnErrorResponse(response, state);
         }
 
         /// <summary>
         /// Called when an 'OK' response occurs.
         /// </summary>
         /// <param name="response">The <see cref="Response"/></param>
-        protected void OnOKResponse(Response response)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected void OnOKResponse(Response response, object state)
         {
             if (this.OKResponse != null)
             {
-                this.OKResponse(response);
+                this.OKResponse(response, state);
             }
         }
 
@@ -258,11 +350,12 @@ namespace Growl.Connector
         /// Called when an 'ERROR' response occurs.
         /// </summary>
         /// <param name="response">The <see cref="Response"/></param>
-        protected void OnErrorResponse(Response response)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected void OnErrorResponse(Response response, object state)
         {
             if (this.ErrorResponse != null)
             {
-                this.ErrorResponse(response);
+                this.ErrorResponse(response, state);
             }
         }
 
@@ -271,11 +364,12 @@ namespace Growl.Connector
         /// </summary>
         /// <param name="response">The <see cref="Response"/></param>
         /// <param name="callbackData">The <see cref="CallbackData"/></param>
-        protected void OnNotificationCallback(Response response, CallbackData callbackData)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected void OnNotificationCallback(Response response, CallbackData callbackData, object state)
         {
             if (callbackData != null && callbackData.Data != null && this.NotificationCallback != null)
             {
-                this.NotificationCallback(response, callbackData);
+                this.NotificationCallback(response, callbackData, state);
             }
         }
     }

@@ -48,7 +48,9 @@ namespace Growl.Daemon
         /// </summary>
         private Dictionary<string, string> additionalInfo;
 
-        // TODO: see below
+        /// <summary>
+        /// Represents metadata about a received request such as when it was received, by whom, etc.
+        /// </summary>
         private RequestInfo requestInfo;
 
 
@@ -130,8 +132,20 @@ namespace Growl.Daemon
             }
         }
 
-        // TODO: figure out if this really should be in here or not
-        public RequestInfo RequestInfo;
+        /// <summary>
+        /// Represents metadata about a received request such as when it was received, by whom, etc.
+        /// </summary>
+        public RequestInfo RequestInfo
+        {
+            get
+            {
+                return this.requestInfo;
+            }
+            set
+            {
+                this.requestInfo = value;
+            }
+        }
 
         /// <summary>
         /// Indicates if the server should keep the connection open to perform the callback

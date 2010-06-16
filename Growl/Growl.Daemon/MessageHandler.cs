@@ -123,11 +123,6 @@ namespace Growl.Daemon
         private bool loggingEnabled;
 
         /// <summary>
-        /// Indicates if local requests must supply a password
-        /// </summary>
-        private bool requireLocalPassword;
-
-        /// <summary>
         /// Indicates if remote notifications are allowed
         /// </summary>
         private bool allowNetworkNotifications = false;
@@ -291,7 +286,7 @@ namespace Growl.Daemon
         /// </summary>
         /// <param name="serverName">Name of the server</param>
         /// <param name="passwordManager">A list of valid passwords</param>
-        /// <param name="isLocal">Indicates if the request must contain a password</param>
+        /// <param name="passwordRequired">Indicates if the request must contain a password</param>
         /// <param name="logFolder">The path to the folder where log files are written</param>
         /// <param name="loggingEnabled">Indicates if logging is enabled or not</param>
         /// <param name="allowNetworkNotifications">Indicates if notifications from remote machines are allowed</param>
@@ -304,7 +299,6 @@ namespace Growl.Daemon
             this.passwordRequired = passwordRequired;
             this.logFolder = logFolder;
             this.loggingEnabled = loggingEnabled;
-            this.requireLocalPassword = requireLocalPassword;
             this.allowNetworkNotifications = allowNetworkNotifications;
             this.allowFlash = allowFlash;
             this.allowSubscriptions = allowSubscriptions;

@@ -812,19 +812,26 @@ namespace Growl
         {
             bool alertUser = true;
             int ttl = Properties.Settings.Default.SubscriptionTTL;
-            SubscribedForwardDestination subscribedComputer = new SubscribedForwardDestination(subscriber, ttl);
-            subscribedComputer.Unsubscribed += new SubscribedForwardDestination.SubscribingComputerUnscubscribedEventHandler(sfc_Unsubscribed);
-            if (this.forwards.ContainsKey(subscribedComputer.Key))
+
+            SubscribedForwardDestination subscribedComputer = null;
+            if (this.forwards.ContainsKey(subscriber.ID))
             {
-                ForwardDestination fc = this.forwards[subscribedComputer.Key];
-                SubscribedForwardDestination sfc = fc as SubscribedForwardDestination;
-                if (sfc != null)
+                ForwardDestination fc = this.forwards[subscriber.ID];
+                subscribedComputer = fc as SubscribedForwardDestination;
+                if (subscribedComputer != null)
                 {
-                    subscribedComputer.Enabled = sfc.Enabled;
                     alertUser = false;
                 }
             }
-            AddForwardDestination(subscribedComputer);
+
+            if (subscribedComputer == null)
+            {
+                subscribedComputer = new SubscribedForwardDestination(subscriber, ttl);
+                subscribedComputer.Unsubscribed += new SubscribedForwardDestination.SubscribingComputerUnscubscribedEventHandler(sfc_Unsubscribed);
+                AddForwardDestination(subscribedComputer);
+            }
+
+            subscribedComputer.Renew();
 
             if (alertUser)
             {
@@ -1304,6 +1311,7 @@ namespace Growl
 
         void sfc_Unsubscribed(SubscribedForwardDestination sfc)
         {
+            RemoveForwardDestination(sfc);
             OnForwardDestinationsUpdated();
         }
 

@@ -14,12 +14,20 @@ namespace Growl.Connector
         /// </summary>
         private bool isOK;
 
+        /// <summary>
+        /// Indicates what type of request this is in response to
+        /// </summary>
         private string inResponseTo;
 
         /// <summary>
         /// Contains the callback information and result
         /// </summary>
         private CallbackData callbackData;
+
+        /// <summary>
+        /// Contains the returned <see cref="RequestData"/>
+        /// </summary>
+        private RequestData requestData;
 
         /// <summary>
         /// Creates a new instance of the <see cref="Response"/> class,
@@ -121,6 +129,18 @@ namespace Growl.Connector
         }
 
         /// <summary>
+        /// Gets the <see cref="RequestData"/> associated with this transaction
+        /// </summary>
+        /// <value><see cref="RequestData"/></value>
+        public RequestData RequestData
+        {
+            get
+            {
+                return this.requestData;
+            }
+        }
+
+        /// <summary>
         /// Sets the <see cref="CallbackData"/> for this response
         /// </summary>
         /// <param name="notificationID">The ID of the notification making the callback</param>
@@ -206,6 +226,8 @@ namespace Growl.Connector
                 CallbackData callbackData = CallbackData.FromHeaders(headers);
                 this.callbackData = callbackData;
             }
+
+            this.requestData = RequestData.FromHeaders(headers);
 
             SetInhertiedAttributesFromHeaders(this, headers);
         }

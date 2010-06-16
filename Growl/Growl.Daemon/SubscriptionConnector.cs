@@ -135,14 +135,15 @@ namespace Growl.Daemon
                 mb.AddHeader(header);
             }
 
-            Send(mb, OnResponseReceived, false);
+            Send(mb, OnResponseReceived, false, null);
         }
 
         /// <summary>
         /// Parses the response and raises the appropriate event
         /// </summary>
         /// <param name="responseText">The raw GNTP response</param>
-        protected override void OnResponseReceived(string responseText)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected override void OnResponseReceived(string responseText, object state)
         {
             CallbackData cd;
             HeaderCollection headers;
@@ -180,7 +181,8 @@ namespace Growl.Daemon
         /// 3. Read request fails
         /// </summary>
         /// <param name="response">The <see cref="Response"/> that contains information about the failure</param>
-        protected override void OnCommunicationFailure(Response response)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected override void OnCommunicationFailure(Response response, object state)
         {
             SubscriptionResponse sr = SubscriptionResponse.FromResponse(response, null);
             ResetTimerBasedOnResponse(sr);

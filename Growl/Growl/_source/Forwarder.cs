@@ -45,7 +45,7 @@ namespace Growl
             }
         }
 
-        void Forwarder_NotificationCallback(Response response, CallbackData callbackData)
+        void Forwarder_NotificationCallback(Response response, CallbackData callbackData, object state)
         {
             this.OnForwardedNotificationCallback(response, callbackData);
         }

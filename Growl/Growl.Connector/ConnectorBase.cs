@@ -32,7 +32,8 @@ namespace Growl.Connector
         /// Represents methods that handle the ResponseReceived events
         /// </summary>
         /// <param name="response"></param>
-        protected delegate void ResponseReceivedEventHandler(string response);
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected delegate void ResponseReceivedEventHandler(string response, object state);
 
         /// <summary>
         /// The password used for message authentication and/or encryption
@@ -170,7 +171,8 @@ namespace Growl.Connector
         /// Parses the response and raises the appropriate event
         /// </summary>
         /// <param name="responseText">The raw GNTP response</param>
-        protected abstract void OnResponseReceived(string responseText);
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected abstract void OnResponseReceived(string responseText, object state);
 
         /// <summary>
         /// Occurs when any of the following network conditions occur:
@@ -179,7 +181,8 @@ namespace Growl.Connector
         ///     3. Read request fails
         /// </summary>
         /// <param name="response">The <see cref="Response"/> that contains information about the failure</param>
-        protected abstract void OnCommunicationFailure(Response response);
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected abstract void OnCommunicationFailure(Response response, object state);
 
         /// <summary>
         /// Fired immediately before the message is constructed and set.
@@ -202,7 +205,8 @@ namespace Growl.Connector
         /// <param name="mb">The <see cref="MessageBuilder"/> used to contruct the request</param>
         /// <param name="del">The <see cref="ResponseReceivedEventHandler"/> for handling the response</param>
         /// <param name="waitForCallback"><c>true</c> to wait for a callback;<c>false</c> otherwise</param>
-        protected void Send(MessageBuilder mb, ResponseReceivedEventHandler del, bool waitForCallback)
+        /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+        protected void Send(MessageBuilder mb, ResponseReceivedEventHandler del, bool waitForCallback, object state)
         {
             // do some of this *before* we spin up a new thread so we can just throw an exception if the error occurs
             // *before* we even send the request (like when generating the message bytes)
@@ -213,7 +217,7 @@ namespace Growl.Connector
                 mb = null;
 
                 // start a new thread for the network connection stuff
-                ConnectionState cs = new ConnectionState(bytes, del, waitForCallback);
+                ConnectionState cs = new ConnectionState(bytes, del, waitForCallback, state);
                 ParameterizedThreadStart pts = new ParameterizedThreadStart(SendAsync);
                 Thread t = new Thread(pts);
                 t.Start(cs);
@@ -248,7 +252,7 @@ namespace Growl.Connector
                 }
                 catch (Exception ex)
                 {
-                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE));
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE), cs.UserState);
                 }
 
                 // write
@@ -259,7 +263,7 @@ namespace Growl.Connector
                 }
                 catch (Exception ex)
                 {
-                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.WRITE_FAILURE));
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.WRITE_FAILURE), cs.UserState);
                 }
 
                 // read
@@ -279,7 +283,7 @@ namespace Growl.Connector
                             break;
                         }
                     }
-                    del(response);
+                    del(response, cs.UserState);
 
                     // wait for callback
                     if (waitForCallback)
@@ -299,12 +303,12 @@ namespace Growl.Connector
                                 break;
                             }
                         }
-                        del(response);
+                        del(response, cs.UserState);
                     }
                 }
                 catch (Exception ex)
                 {
-                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.READ_FAILURE));
+                    OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.READ_FAILURE), cs.UserState);
                 }
             }
             catch (Exception ex)
@@ -357,11 +361,13 @@ namespace Growl.Connector
             /// <param name="bytes">The request bytes to be written</param>
             /// <param name="del">The <see cref="ResponseReceivedEventHandler"/> method to call to handle the response</param>
             /// <param name="waitForCallback"><c>true</c> if the connection should wait for a callback;<c>false</c> otherwise</param>
-            public ConnectionState(byte[] bytes, ResponseReceivedEventHandler del, bool waitForCallback)
+            /// <param name="state">An optional state object that will be passed into the response events associated with this request</param>
+            public ConnectionState(byte[] bytes, ResponseReceivedEventHandler del, bool waitForCallback, object state)
             {
                 this.Bytes = bytes;
                 this.Delegate = del;
                 this.WaitForCallback = waitForCallback;
+                this.UserState = state;
             }
 
             /// <summary>
@@ -383,6 +389,11 @@ namespace Growl.Connector
             /// Indicates if the connection should wait for a callback after receiving the initial response.
             /// </summary>
             public bool WaitForCallback = false;
+
+            /// <summary>
+            /// An optional state object that will be passed into the response events associated with this request
+            /// </summary>
+            public object UserState;
         }
     }
 }

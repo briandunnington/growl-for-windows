@@ -51,7 +51,7 @@ namespace Growl
             this.ttl = ttl;
             base.AdditionalDisplayInfo = "subscribed";
 
-            this.Renew();
+            //this.Renew();
         }
 
         public int TTL
@@ -101,6 +101,8 @@ namespace Growl
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             // if the timer ticks, then we did not renew in time
+            this.timer.Stop();
+
             this.available = false;
             this.IPAddress = null;  // this makes the computer unavailable
 
