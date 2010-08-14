@@ -150,7 +150,7 @@ namespace Growl
             this.gntpListener.NotifyReceived += new Growl.Daemon.GrowlServer.NotifyReceivedEventHandler(gntpListener_NotifyReceived);
             this.gntpListener.SubscribeReceived += new Growl.Daemon.GrowlServer.SubscribeReceivedEventHandler(gntpListener_SubscribeReceived);
             this.gntpListener.LoggingEnabled = ApplicationMain.LoggingEnabled;
-            this.gntpListener.AllowFlash = Properties.Settings.Default.AllowWebNotifications;
+            this.gntpListener.AllowWebNotifications = Properties.Settings.Default.AllowWebNotifications;
             this.gntpListener.AllowNetworkNotifications = Properties.Settings.Default.AllowNetworkNotifications;
             this.gntpListener.AllowSubscriptions = Properties.Settings.Default.AllowSubscriptions;
             this.gntpListener.RequireLocalPassword = Properties.Settings.Default.RequireLocalPassword;
@@ -1598,7 +1598,7 @@ namespace Growl
             {
                 Properties.Settings.Default.AllowWebNotifications = value;
                 Properties.Settings.Default.Save();
-                if (this.gntpListener != null) this.gntpListener.AllowFlash = value;
+                if (this.gntpListener != null) this.gntpListener.AllowWebNotifications = value;
             }
         }
 

@@ -47,6 +47,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TrackBar, Version=1.0.2486.37933, Culture=neutral, PublicKeyToken=503bf28f63ad27b4" />
@@ -379,6 +380,7 @@
     <Compile Include="_source\SubscriptionManager.cs" />
     <Compile Include="_source\TwitterForwardDestination.cs" />
     <Compile Include="_source\TwitterForwardDestinationHandler.cs" />
+    <Compile Include="_source\UserAccountControlHelper.cs" />
     <Compile Include="_source\UDPForwardDestination.cs" />
     <Compile Include="_source\UserSettingsProvider.cs" />
     <Compile Include="_source\Utility.cs" />
@@ -553,7 +555,7 @@
     </Content>
     <None Include="lib\TrackBar.dll" />
     <Content Include="installer.jpg" />
-    <Content Include="lib\Newtonsoft.Json.dll" />
+    <None Include="lib\Newtonsoft.Json.dll" />
     <Content Include="license.txt" />
     <Content Include="release_notes.txt" />
     <None Include="Resources\growl1.png" />

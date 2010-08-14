@@ -159,7 +159,7 @@ namespace Test_App
             nt1.CustomTextAttributes.Add("Language", "English");
             nt1.CustomTextAttributes.Add("Timezone", "PST");
 
-            Notification notification = new Notification(app.Name, nt1.Name, "123456", "You docu;ment\nwas publi&shed", "File 'c:\\file.txt' was successfully published at 8:57pm.\n\nClick this notification to open the file.\n\nThis is a test of the expanding displays.");
+            Notification notification = new Notification(app.Name, nt1.Name, "123456", "\u2065 Your docu;ment\nwas publi&shed", "File 'c:\\file.txt' was successfully published at 8:57pm.\n\nClick this notification to open the file.\n\nThis is a test of the expanding displays.");
             notification.Sticky = false;
             notification.Priority = Priority.Emergency;
             //notification.Icon = "http://atomicbride.com/Apple.gif";
@@ -247,7 +247,7 @@ namespace Test_App
             nt1.CustomTextAttributes.Add("Language", "English");
             nt1.CustomTextAttributes.Add("Timezone", "PST");
 
-            Notification notification = new Notification(app.Name, nt1.Name, "123456", "You document was published", @"File 'c:\file.txt' was successfully published at 8:57pm.");
+            Notification notification = new Notification(app.Name, nt1.Name, "123456", "\u2605 Your document was published", @"File 'c:\file.txt' was successfully published at 8:57pm.");
             notification.Sticky = false;
             notification.Priority = Priority.Emergency;
             //notification.Icon = "http://atomicbride.com/Apple.gif";
@@ -371,6 +371,10 @@ namespace Test_App
 
         private void button6_Click(object sender, EventArgs e)
         {
+            Detector detector = new Detector();
+            detector.ShowSettingsWindow();
+
+            /*
             string pass = "testing";
             byte[] salt = Growl.Connector.Cryptography.HexUnencode("bbdf0d5db70ab6f0bf6a18b804a4c3c0");
 
@@ -419,7 +423,7 @@ namespace Test_App
 
             byte[] d = key.Decrypt(g, iv);
             Console.WriteLine(d.Length);
-
+            */
         }
     }
 }

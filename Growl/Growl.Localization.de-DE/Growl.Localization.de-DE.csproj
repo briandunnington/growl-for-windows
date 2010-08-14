@@ -49,6 +49,6 @@
   <PropertyGroup>
     <PostBuildEvent>del "$(ProjectDir)$(OutDir)Growl.dll"
 del "$(ProjectDir)$(OutDir)Growl.pdb"
-xcopy "$(ProjectDir)$(OutDir)*.*" "$(SolutionDir)Growl\$(OutDir)" /E /Y /C</PostBuildEvent>
+REM xcopy "$(ProjectDir)$(OutDir)*.*" "$(SolutionDir)Growl\$(OutDir)" /E /Y /C</PostBuildEvent>
   </PropertyGroup>
 </Project>

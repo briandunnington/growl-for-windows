@@ -112,21 +112,21 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NotifyIcon_NotRunning" xml:space="preserve">
-    <value>Growl (not running)</value>
+    <value>Growl (non avviato)</value>
     <comment>Tooltip for notify icon when Growl is not running</comment>
   </data>
   <data name="About_BuildNumber" xml:space="preserve">
-    <value>(build: {0})</value>
+    <value>(versione: {0})</value>
     <comment>About tab: build number information - Placeholder {0} is the actual build number</comment>
   </data>
   <data name="About_FindInformationLabel" xml:space="preserve">
-    <value>Find displays, extensions, and updates at:</value>
+    <value>Scarica aggiornamenti, display ed estensioni da:</value>
     <comment>About tab: Growl website label</comment>
   </data>
   <data name="About_GrowlVersion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>About tab: name and version - Placeholder {0} is the actual version number</comment>
   </data>
   <data name="About_IconInfoLabel" xml:space="preserve">
-    <value>Icons:</value>
+    <value>Icone:</value>
     <comment>About tab: Icons</comment>
   </data>
   <data name="About_IconInfoLabel2" xml:space="preserve">
@@ -142,36 +142,35 @@
     <comment>About tab: VistaICO label</comment>
   </data>
   <data name="About_OriginalLabel" xml:space="preserve">
-    <value>Original idea, inspiration, and logo:</value>
+    <value>Idea iniziale, ispirazione e logo:</value>
     <comment>About tab: original Growl</comment>
   </data>
   <data name="About_OriginalLabel2" xml:space="preserve">
-    <value>Growl for OSX -</value>
+    <value>Growl per OSX -</value>
     <comment>About tab: Growl for OSX</comment>
   </data>
   <data name="AddComputer_AddressLabel" xml:space="preserve">
-    <value>Hostname:</value>
+    <value>Nome computer:</value>
     <comment>Add Computer form: Address label</comment>
   </data>
   <data name="AddComputer_FormatLabel" xml:space="preserve">
-    <value>Format:</value>
+    <value>Formato:</value>
     <comment>Add Computer form: Format label</comment>
   </data>
   <data name="AddComputer_FormTitle_Forward" xml:space="preserve">
-    <value>Forward Notifications</value>
+    <value>Inoltra le notifiche</value>
     <comment>Add Computer form title - when fowarding</comment>
   </data>
   <data name="AddComputer_FormTitle_Subscriptions" xml:space="preserve">
-    <value>Subscribe to notifications</value>
+    <value>Abbonati alle notifiche</value>
     <comment>Add Computer form title - when subscribing</comment>
   </data>
   <data name="AddComputer_ManualAdd" xml:space="preserve">
-    <value>Click here to manually add a computer
-that is not in this list</value>
+    <value>Clicca qui per aggiungere un computer che non è nella lista</value>
     <comment>Add Computer form: click to add a computer not detected by Bonjour</comment>
   </data>
   <data name="AddComputer_NameLabel" xml:space="preserve">
-    <value>Name:</value>
+    <value>Nome:</value>
     <comment>Add Computer form: Name label</comment>
   </data>
   <data name="AddComputer_PasswordLabel" xml:space="preserve">
@@ -179,15 +178,15 @@ that is not in this list</value>
     <comment>Add Computer form: Password label</comment>
   </data>
   <data name="AddComputer_PortLabel" xml:space="preserve">
-    <value>Port:</value>
+    <value>Porta:</value>
     <comment>Add Computer form: Port label</comment>
   </data>
   <data name="Applications_AllNotifications" xml:space="preserve">
-    <value>(All notifications)</value>
+    <value>(Tutte le notifiche)</value>
     <comment>Applications tab: list item for application-wide preferences</comment>
   </data>
   <data name="Applications_NoAppsRegistered_Title" xml:space="preserve">
-    <value>No Applications Have Registered Yet</value>
+    <value>Nessuna applicazione registrata</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="Applications_Preferences_DisplayLabel" xml:space="preserve">
@@ -195,43 +194,43 @@ that is not in this list</value>
     <comment>Applications tab: display preference label</comment>
   </data>
   <data name="Applications_Preferences_EnabledLabel" xml:space="preserve">
-    <value>Enabled:</value>
+    <value>Abilitata:</value>
     <comment>Applications tab: enabled preference label</comment>
   </data>
   <data name="Applications_Preferences_ForwardingLabel" xml:space="preserve">
-    <value>Forwarding:</value>
+    <value>Inoltro:</value>
     <comment>Applications tab: forwarding preference label</comment>
   </data>
   <data name="Applications_Preferences_PriorityLabel" xml:space="preserve">
-    <value>Priority:</value>
+    <value>Priorità:</value>
     <comment>Applications tab: priority preference label</comment>
   </data>
   <data name="Applications_Preferences_SoundLabel" xml:space="preserve">
-    <value>Sound:</value>
+    <value>Suono:</value>
     <comment>Applications tab: sound preference label</comment>
   </data>
   <data name="Applications_Preferences_StickyLabel" xml:space="preserve">
-    <value>Sticky:</value>
+    <value>Fissa:</value>
     <comment>Applications tab: sticky preference label</comment>
   </data>
   <data name="Applications_RemoveApplication" xml:space="preserve">
-    <value>Remove Application</value>
+    <value>Rimuovi Applicazione</value>
     <comment>Applications tab: 'Remove Applications' context menu item</comment>
   </data>
   <data name="Button_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancella</value>
     <comment>Any 'Cancel' button</comment>
   </data>
   <data name="Button_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Pulisci</value>
     <comment>Any 'Clear' button</comment>
   </data>
   <data name="Button_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Chiudi</value>
     <comment>Any 'Close' button</comment>
   </data>
   <data name="Button_Later" xml:space="preserve">
-    <value>Later</value>
+    <value>Dopo</value>
     <comment>Any 'Later' button</comment>
   </data>
   <data name="Button_OK" xml:space="preserve">
@@ -239,19 +238,19 @@ that is not in this list</value>
     <comment>Any 'OK' button</comment>
   </data>
   <data name="Button_Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>Anteprima</value>
     <comment>Any 'Preview' button</comment>
   </data>
   <data name="Button_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Salva</value>
     <comment>Any 'Save' button</comment>
   </data>
   <data name="Button_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Si</value>
     <comment>Any 'Yes' button</comment>
   </data>
   <data name="ChooseForwarding_FormTitle" xml:space="preserve">
-    <value>Choose Forwarding</value>
+    <value>Scegli l'inoltro</value>
     <comment>Choose Forwarding form title</comment>
   </data>
   <data name="DefaultPreference_Name" xml:space="preserve">
@@ -259,167 +258,167 @@ that is not in this list</value>
     <comment>The name displayed for the '[Default]' preference option</comment>
   </data>
   <data name="FailedToStart_Caption" xml:space="preserve">
-    <value>Growl was unable to start</value>
+    <value>Impossibile avviare Growl</value>
     <comment>MessageBox caption shown if Growl fails to start</comment>
   </data>
   <data name="FailedToStart_Message_GNTP" xml:space="preserve">
-    <value>There is already a listener enabled on Growl's TCP port ({0}).
+    <value>La porta tcp utilizzata da Growl ({0}) è già in uso.
 
-If another version of Growl is already running, please close that version and try again.</value>
+Se c'è un'altra versione di Growl in esecuzione provare a chiuderla e rilanciare Growl.</value>
     <comment>MessageBox text shown if Growl fails to start the GNTP listener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="FailedToStart_Message_UDP" xml:space="preserve">
-    <value>There is already a listener enabled on Growl's legacy UDP port ({0}).
+    <value>La porta udp utilizzata da lle vecchie versioni di Growl ({0}) è già in uso.
 
-If another version of Growl is already running, please close that version and try again.</value>
+Se c'è un'altra versione di Growl in esecuzione provare a chiuderla e rilanciare Growl.</value>
     <comment>MessageBox text shown if Growl fails to start the UDPlistener. Placeholder {0} is the port number.</comment>
   </data>
   <data name="General_ApplicationPaused" xml:space="preserve">
-    <value>Growl is paused</value>
+    <value>Growl è stato messo in pausa</value>
     <comment>General tab: Displayed when Growl is paused</comment>
   </data>
   <data name="General_ApplicationRunning" xml:space="preserve">
-    <value>Growl is running</value>
+    <value>Growl è in esecuzione</value>
     <comment>General tab: Displayed when Growl is running</comment>
   </data>
   <data name="General_ApplicationStopped" xml:space="preserve">
-    <value>Growl is stopped</value>
+    <value>Growl è stato fermato</value>
     <comment>General tab: Displaysed when Growl is stopped</comment>
   </data>
   <data name="General_AutoStart" xml:space="preserve">
-    <value>Automatically start Growl at login</value>
+    <value>Avvia Growl automaticamente al login</value>
     <comment>General tab: auto start checkbox text</comment>
   </data>
   <data name="General_SoundSettings_SoundLabel" xml:space="preserve">
-    <value>Default Sound:</value>
+    <value>Suono predef:</value>
     <comment>General tab: Default Sound label</comment>
   </data>
   <data name="General_SoundSettingsTitle" xml:space="preserve">
-    <value>Sound Settings</value>
+    <value>Impostazione Suoni</value>
     <comment>General tab: Sound Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>Consider me idle after {0} seconds</value>
+    <value>Sono inattivo dopo {0} secondi</value>
     <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
-    <value>Never consider me idle or away</value>
+    <value>Non considerarmi mai inattivo od assente</value>
     <comment>General tab: Radio button text for 'never consider me idle'</comment>
   </data>
   <data name="General_IdleSettingsTitle" xml:space="preserve">
-    <value>Idle Settings</value>
+    <value>Impostazioni Inattività</value>
     <comment>General tab: Idle Settings group box title</comment>
   </data>
   <data name="History_NoNotificationsForDate" xml:space="preserve">
-    <value>(No notifications for this date)</value>
+    <value>(Nessuna notifica in questa data)</value>
     <comment>History tab: shown when sorted by date and the date had no notifications</comment>
   </data>
   <data name="History_NumberOfDaysTitle" xml:space="preserve">
-    <value>Number of Days</value>
+    <value>Numero di Giorni</value>
     <comment>History tab: Number of Days</comment>
   </data>
   <data name="History_SortBy_Application" xml:space="preserve">
-    <value>Application</value>
+    <value>Applicazione</value>
     <comment>History tab: sort by application radio button label</comment>
   </data>
   <data name="History_SortBy_Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Data</value>
     <comment>History tab: sort by date radio button label</comment>
   </data>
   <data name="History_SortByTitle" xml:space="preserve">
-    <value>Group By</value>
+    <value>Ordina Per</value>
     <comment>History tab: Group By</comment>
   </data>
   <data name="LiteralString_Format" xml:space="preserve">
-    <value>format</value>
+    <value>formato</value>
     <comment>The string 'format' (used in forward list view to show protocol format)</comment>
   </data>
   <data name="LiteralString_ReceivedAt" xml:space="preserve">
-    <value>Received At</value>
+    <value>Ricevuto il</value>
     <comment>The string 'Received At' (used in History for each past notification to indicate the date/time the notification was received)</comment>
   </data>
   <data name="LiteralString_ReceivedFrom" xml:space="preserve">
-    <value>Received From</value>
+    <value>Ricevuto da</value>
     <comment>The string 'Received From' (used in History for each past notification item to indicate which application sent the notification)</comment>
   </data>
   <data name="LiteralString_Today" xml:space="preserve">
-    <value>Today</value>
+    <value>Oggi</value>
     <comment>The string 'Today' (used in History view for the current day)</comment>
   </data>
   <data name="LiteralString_Yesterday" xml:space="preserve">
-    <value>Yesterday</value>
+    <value>Ieri</value>
     <comment>ry view for yesterday's date)</comment>
   </data>
   <data name="Loading_ApplicationList" xml:space="preserve">
-    <value>Loading application list...</value>
+    <value>Sto caricando la lista delle applicazioni...</value>
     <comment>Loading progress indicator: Application list</comment>
   </data>
   <data name="Loading_Display" xml:space="preserve">
-    <value>Loading display '{0}' ...</value>
+    <value>Sto caricando il display '{0}' ...</value>
     <comment>Loading progress indicator for a specific display - Placeholder {0} is the display name</comment>
   </data>
   <data name="Loading_Displays" xml:space="preserve">
-    <value>Loading Displays...</value>
+    <value>Carico i display...</value>
     <comment>Loading progress indicator: Displays</comment>
   </data>
   <data name="Loading_History" xml:space="preserve">
-    <value>Loading history...</value>
+    <value>Carico la cronologia...</value>
     <comment>Loading progress indicator: History</comment>
   </data>
   <data name="Loading_Initializing" xml:space="preserve">
-    <value>Initializing...</value>
+    <value>Inizializzazione...</value>
     <comment>Loading progress indicator: Initializing</comment>
   </data>
   <data name="Loading_Preferences" xml:space="preserve">
-    <value>Loading Preferences...</value>
+    <value>Carico le preferenze...</value>
     <comment>Loading progress indicator: Preferences</comment>
   </data>
   <data name="Loading_Ready" xml:space="preserve">
-    <value>Ready</value>
+    <value>Pronto</value>
     <comment>Loading progress indicator: Ready</comment>
   </data>
   <data name="Loading_Starting" xml:space="preserve">
-    <value>Starting Growl...</value>
+    <value>Avvio Growl...</value>
     <comment>Loading progress indicator: Starting</comment>
   </data>
   <data name="Missed_Summary" xml:space="preserve">
-    <value>You missed {0} messages while you were away.</value>
+    <value>Hai ricevuto {0} messaggi mentre eri assente.</value>
     <comment>Missed Notifications Summary: the summary text - Placeholder {0} is the number of notifications missed.</comment>
   </data>
   <data name="Network_ForwardNotifications" xml:space="preserve">
-    <value>Forward notifications to other computers</value>
+    <value>Inoltra le notifiche ad un altro computer</value>
     <comment>Network tab: checkbox text for 'forward notifications to other computers'</comment>
   </data>
   <data name="Network_RemoveComputer" xml:space="preserve">
-    <value>Remove</value>
+    <value>Rimuovi</value>
     <comment>Network tab: 'Remove' context menu item</comment>
   </data>
   <data name="Network_SubscribeToNotifications" xml:space="preserve">
-    <value>Subscribe to notifications from other computers</value>
+    <value>Abbonati alle notifiche da altri computer.</value>
     <comment>Network tab: checkbox text for 'subscribe to notifications from other computers'</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_CheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>Controlla la presenza di aggiornamenti</value>
     <comment>Notify icon context menu: Check for updates</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>Esci</value>
     <comment>Notify icon context menu: Exit</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Pause" xml:space="preserve">
-    <value>Pause Growl</value>
+    <value>Metti Growl in pausa</value>
     <comment>Notify icon context menu: Pause</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Settings" xml:space="preserve">
-    <value>Open Growl</value>
+    <value>Apri Growl</value>
     <comment>Notify icon context menu: Open Growl (formerly Settings)</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Unpause" xml:space="preserve">
-    <value>Unpause Growl</value>
+    <value>Riavvia Growl</value>
     <comment>Notify icon context menu: Unpause</comment>
   </data>
   <data name="NotifyIcon_Paused" xml:space="preserve">
-    <value>Growl (paused)</value>
+    <value>Growl (in pausa)</value>
     <comment>Tooltip for notificy icon when Growl is paused</comment>
   </data>
   <data name="NotifyIcon_Running" xml:space="preserve">
@@ -431,51 +430,51 @@ If another version of Growl is already running, please close that version and tr
     <comment>Enabled Pref: False</comment>
   </data>
   <data name="PrefEnabled_True" xml:space="preserve">
-    <value>True</value>
+    <value>Vero</value>
     <comment>Enabled Pref: True</comment>
   </data>
   <data name="PrefForward_Choose" xml:space="preserve">
-    <value>Choose...</value>
+    <value>Scegli...</value>
     <comment>Forwarding Pref: Choose</comment>
   </data>
   <data name="PrefForward_Never" xml:space="preserve">
-    <value>Don't Forward</value>
+    <value>Non inoltrare</value>
     <comment>Forwarding Pref: Never</comment>
   </data>
   <data name="PrefPriority_Emergency" xml:space="preserve">
-    <value>Emergency</value>
+    <value>Emergenza</value>
     <comment>Priority Pref: Emergency</comment>
   </data>
   <data name="PrefPriority_High" xml:space="preserve">
-    <value>High</value>
+    <value>Alta</value>
     <comment>Priority Pref: High</comment>
   </data>
   <data name="PrefPriority_Low" xml:space="preserve">
-    <value>Low</value>
+    <value>Bassa</value>
     <comment>Priority Pref: Low</comment>
   </data>
   <data name="PrefPriority_Normal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normale</value>
     <comment>Priority Pref: Normal</comment>
   </data>
   <data name="PrefPriority_VeryLow" xml:space="preserve">
-    <value>Very Low</value>
+    <value>Molto bassa</value>
     <comment>Priority Pref: Very Low</comment>
   </data>
   <data name="PrefSound_None" xml:space="preserve">
-    <value>None</value>
+    <value>Nessuna</value>
     <comment>Sound Pref: None</comment>
   </data>
   <data name="PrefSticky_Always" xml:space="preserve">
-    <value>Always</value>
+    <value>Sempre</value>
     <comment>Sticky Pref: Always</comment>
   </data>
   <data name="PrefSticky_Never" xml:space="preserve">
-    <value>Never</value>
+    <value>Mai</value>
     <comment>Sticky Pref: Never</comment>
   </data>
   <data name="PrefSticky_WhenIdle" xml:space="preserve">
-    <value>When Idle</value>
+    <value>Solo se inattivo</value>
     <comment>Sticky Pref: When Idle</comment>
   </data>
   <data name="Protocol_Type_GNTP" xml:space="preserve">
@@ -487,27 +486,27 @@ If another version of Growl is already running, please close that version and tr
     <comment>UDP protocol name (used in forwarding dropdown, etc)</comment>
   </data>
   <data name="Security_AllowNetworkNotifications" xml:space="preserve">
-    <value>Allow network notifications</value>
+    <value>Permetti le notifiche via rete</value>
     <comment>Security tab: checkbox text for 'allow network notificaions'</comment>
   </data>
   <data name="Security_AllowSubscriptions" xml:space="preserve">
-    <value>Allow clients to subscribe to notifications</value>
+    <value>Permette ai client di abbonarsi alle notifiche</value>
     <comment>Security tab: checkbox text for 'allows subscriptions'</comment>
   </data>
   <data name="Security_AllowWebNotifications" xml:space="preserve">
-    <value>Allow notifications from websites</value>
+    <value>Permetti notifiche dai siti web</value>
     <comment>Security tab: checkbox text for 'allow web notifications'</comment>
   </data>
   <data name="Security_PasswordManager_DescriptionLabel" xml:space="preserve">
-    <value>Description:</value>
+    <value>Descrizione:</value>
     <comment>Security tab: Password Manager 'Description' label</comment>
   </data>
   <data name="Security_PasswordManager_Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Modifica</value>
     <comment>Security tab: Password Manager 'Edit' context menu item</comment>
   </data>
   <data name="Security_PasswordManager_Instructions" xml:space="preserve">
-    <value>Enter your password below as well as a short description to identify the password.</value>
+    <value>Inserisci la password ed una descrizione per identificare la password.</value>
     <comment>Security tab: Password Manager instructions</comment>
   </data>
   <data name="Security_PasswordManager_PasswordLabel" xml:space="preserve">
@@ -519,7 +518,7 @@ If another version of Growl is already running, please close that version and tr
     <comment>Security tab: Password Manager title</comment>
   </data>
   <data name="Security_RequirePasswordLocalApps" xml:space="preserve">
-    <value>Require password for local apps</value>
+    <value>Richiedi la password per la applicazioni locali</value>
     <comment>Security tab: checkbox text for 'require password for local apps'</comment>
   </data>
   <data name="SettingsForm_FormTitle" xml:space="preserve">
@@ -527,15 +526,15 @@ If another version of Growl is already running, please close that version and tr
     <comment>Settings form title</comment>
   </data>
   <data name="SplashScreen_Loading" xml:space="preserve">
-    <value>Loading...</value>
+    <value>Caricamento...</value>
     <comment>The loading progress indicator shown on the initial splash screen.</comment>
   </data>
   <data name="SplashScreen_Title" xml:space="preserve">
-    <value>Growl for Windows</value>
+    <value>Growl per Windows</value>
     <comment>The name of the application shown on the initial splash screen</comment>
   </data>
   <data name="SplashScreen_Version" xml:space="preserve">
-    <value>Version: {0}</value>
+    <value>Versione: {0}</value>
     <comment>The version informatino shown on the initial splash screen. Placeholder {0} is the version number.</comment>
   </data>
   <data name="SystemNotification_ApplicationName" xml:space="preserve">
@@ -543,31 +542,31 @@ If another version of Growl is already running, please close that version and tr
     <comment>The application name used for system notifications</comment>
   </data>
   <data name="SystemNotification_AppRegistered_Text" xml:space="preserve">
-    <value>The application '{0}' has registered to send notifications.</value>
+    <value>L'applicazione '{0}' si è registrata per inviare notifiche.</value>
     <comment>Notification text when an application registers. Placeholder {0} is the application name.</comment>
   </data>
   <data name="SystemNotification_AppRegistered_Title" xml:space="preserve">
-    <value>Application Registration</value>
+    <value>Applicazione Registrata</value>
     <comment>The title used for the system notification when an application registers</comment>
   </data>
   <data name="SystemNotification_ClientSubscribed_Text" xml:space="preserve">
-    <value>The client '{0}' has subscribed to received forwarded notifications.</value>
+    <value>Il client '{0}' si è registrato per riceve notifiche.</value>
     <comment>Notification text when a client subscribes to notifications. Placeholder {0} is the subscribing client's name.</comment>
   </data>
   <data name="SystemNotification_ClientSubscribed_Title" xml:space="preserve">
-    <value>Client Subscribed</value>
+    <value>Cliente Registrato</value>
     <comment>The title used for the system notification when a client subscribes to notifications</comment>
   </data>
   <data name="SystemNotification_Preview_Text" xml:space="preserve">
-    <value>This is a preview of the '{0}' display style.</value>
+    <value>Anteprima del display '{0}'.</value>
     <comment>Notification text shown for preview notifications - Placeholder {0} is the actual display name</comment>
   </data>
   <data name="SystemNotification_Preview_Title" xml:space="preserve">
-    <value>Preview Display Style</value>
+    <value>Anteprima Display</value>
     <comment>The title used for preview notifications</comment>
   </data>
   <data name="SystemNotification_Running_Text" xml:space="preserve">
-    <value>Growl is running</value>
+    <value>Growl è in esecuzione</value>
     <comment>Notification text shown when Growl starts</comment>
   </data>
   <data name="SystemNotification_Running_Title" xml:space="preserve">
@@ -575,11 +574,11 @@ If another version of Growl is already running, please close that version and tr
     <comment>The title used for the system notification when Growl starts</comment>
   </data>
   <data name="Toolbar_About" xml:space="preserve">
-    <value>About</value>
+    <value>Su Growl</value>
     <comment>'About' tab title</comment>
   </data>
   <data name="Toolbar_Applications" xml:space="preserve">
-    <value>Applications</value>
+    <value>Applicazioni</value>
     <comment>'Applications' tab title</comment>
   </data>
   <data name="Toolbar_Displays" xml:space="preserve">
@@ -587,154 +586,151 @@ If another version of Growl is already running, please close that version and tr
     <comment>'Displays' tab title</comment>
   </data>
   <data name="Toolbar_General" xml:space="preserve">
-    <value>General</value>
+    <value>Generale</value>
     <comment>'General' tab title</comment>
   </data>
   <data name="Toolbar_History" xml:space="preserve">
-    <value>History</value>
+    <value>Cronologia</value>
     <comment>'History' tab title</comment>
   </data>
   <data name="Toolbar_Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Rete</value>
     <comment>'Network' tab title</comment>
   </data>
   <data name="Toolbar_Security" xml:space="preserve">
-    <value>Security</value>
+    <value>Sicurezza</value>
     <comment>'Security' tab title</comment>
   </data>
   <data name="Updater_DownloadComplete" xml:space="preserve">
-    <value>Download complete. Starting installation...</value>
+    <value>Download completato. Avvio l'installazione...</value>
     <comment>Check for Updates form: displayed when the update has finished downloading and the installation is starting</comment>
   </data>
   <data name="Updater_DownloadingUpdate" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>Scarico l'aggiornamento...</value>
     <comment>Check for Updates form: displayed while an update is downloading</comment>
   </data>
   <data name="Updater_FormTitle" xml:space="preserve">
-    <value>Check for Updates</value>
+    <value>Controlla gli aggiornamenti</value>
     <comment>Check for Updates form title</comment>
   </data>
   <data name="Updater_GrowlIsUpToDate" xml:space="preserve">
-    <value>Growl is up-to-date. Current Version: {1}</value>
+    <value>Growl è aggiornato. La versione corrente è: {1}</value>
     <comment>Check for Updates form: displayed when Growl is up-to-date. Placeholder {0} is any newer version number, {1} is the current up-to-date version number</comment>
   </data>
   <data name="Updater_UpdateAvailable" xml:space="preserve">
-    <value>Version {0} of Growl is available. Would you like to update Growl to the latest version? (Current version: {1})</value>
+    <value>La versione {0} di Growl è disponibile. Vuoi aggiornare Growl? (Versione corrente: {1})</value>
     <comment>Check for Updates form: displayed when an update is available. Placeholder {0} is the newer version number, {1} is the current version number</comment>
   </data>
   <data name="Button_SetAsDefault" xml:space="preserve">
-    <value>Set as Default</value>
+    <value>Imposta predefinita</value>
     <comment>Any 'Set as Default' button</comment>
   </data>
   <data name="Displays_CreatedBy" xml:space="preserve">
-    <value>Author:</value>
+    <value>Autore:</value>
     <comment>Displays tab: created by label</comment>
   </data>
   <data name="General_SoundSettings_MuteLabel" xml:space="preserve">
-    <value>Mute all sounds</value>
+    <value>Escludi tutti i Suoni</value>
     <comment>General tab: mute all sounds label</comment>
   </data>
   <data name="Applications_NoAppsRegistered_Description" xml:space="preserve">
-    <value>When a Growl-enabled application registers to send notifications, it will appear in the list to the left and you will be able to customize its settings.</value>
+    <value>Dopo che una applicazione si è registrata per inviare le notifiche apparirà nella lista a sinistra e sarà possibile personalizzare la configurazione.</value>
     <comment>Applications tab: shown when no applications are registered</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Mute" xml:space="preserve">
-    <value>Mute</value>
+    <value>Silenzioso</value>
     <comment>Notify icon context menu: Mute</comment>
   </data>
   <data name="NotifyIcon_ContextMenu_Unmute" xml:space="preserve">
-    <value>Unmute</value>
+    <value>Riattiva Suoni</value>
     <comment>Notify icon context menu: Unmute</comment>
   </data>
   <data name="Applications_ApplicationListHeader" xml:space="preserve">
-    <value>Application Name</value>
+    <value>Nome Applicazione</value>
     <comment>Applications tab: Header text for applications list box</comment>
   </data>
   <data name="Applications_NotificationListHeader" xml:space="preserve">
-    <value>Notification Type</value>
+    <value>Tipo di notifica</value>
     <comment>Applications tab: Header text for notifications list box</comment>
   </data>
   <data name="Displays_DisplayListHeader" xml:space="preserve">
-    <value>Display Name</value>
+    <value>Nome del Display</value>
     <comment>Displays tab: Header text for displays list box</comment>
   </data>
   <data name="LiteralString_Seconds" xml:space="preserve">
-    <value>seconds</value>
+    <value>secondi</value>
     <comment>The string 'seconds' (Used in Duration preference)</comment>
   </data>
   <data name="Applications_Preferences_DurationLabel" xml:space="preserve">
-    <value>Duration:</value>
+    <value>Durata:</value>
     <comment>Applications tab: duration preference label</comment>
   </data>
   <data name="DisplayInstaller_AlreadyInstalled" xml:space="preserve">
-    <value>Display '{0}' is already installed.</value>
+    <value>Display '{0}' è già installato.</value>
     <comment>Display installer: message shown if a display is already installed when attempting to install again</comment>
   </data>
   <data name="DisplayInstaller_BadDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' is invalid.\n\nThe display could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non è valido.\n\nImpossibile installare il display.</value>
     <comment>Display installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
   </data>
   <data name="DisplayInstaller_DownloadCancelled" xml:space="preserve">
-    <value>The installation of the display was cancelled.\n\nThe display was not installed.</value>
+    <value>L'installazione del display è stata annullata.\n\nIl display non è stato installato.</value>
     <comment>Display installer: message shown if the download is cancelled by the user</comment>
   </data>
   <data name="DisplayInstaller_DownloadError" xml:space="preserve">
-    <value>An error occurred while downloading the display files.\n\nThe display was not installed.</value>
+    <value>Si è verificato un errore scaricando il display.\n\nIl display non è stato installato.</value>
     <comment>Display installer: message shown if the download of the display files fails for any reason</comment>
   </data>
   <data name="DisplayInstaller_FormTitle" xml:space="preserve">
-    <value>Install Display</value>
+    <value>Installa il display</value>
     <comment>Display installer: form title</comment>
   </data>
   <data name="DisplayInstaller_Installing" xml:space="preserve">
-    <value>Installing display...</value>
+    <value>Installazione del display in corso...</value>
     <comment>Display installer: displayed while the display is being installed</comment>
   </data>
   <data name="DisplayInstaller_NewDisplayInstalledText" xml:space="preserve">
-    <value>The display '{0}' was installed successfully.</value>
+    <value>Il display '{0}' è stato installato correttamente.</value>
     <comment>Display installer: text of the notification shown when a new display is installed. {0} is the name of the installed display.</comment>
   </data>
   <data name="DisplayInstaller_NewDisplayInstalledTitle" xml:space="preserve">
-    <value>New Display Installed</value>
+    <value>Un nuovo display è stato installato</value>
     <comment>Display installer: title of the notification shown when a new display is installed</comment>
   </data>
   <data name="DisplayInstaller_NonexistentDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' does not exist.\n\nThe display could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non esiste.\n\nImpossibile installare il display.</value>
     <comment>Display installer: message shown if the definition file could not be found. {0} is the file path</comment>
   </data>
   <data name="DisplayInstaller_Prompt" xml:space="preserve">
-    <value>Do you want to install the following display?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <value>Vuoi installare questo display?\n\nNome: {0}\nAutore: {1}\nDescrizione: {2}</value>
     <comment>Display installer: displayed when a click-to-install link is clicked. {0} is the name of the display, {1} is the author, and {2} is the description</comment>
   </data>
   <data name="Displays_FindMore" xml:space="preserve">
-    <value>Find &amp; install additional displays</value>
+    <value>Cerca ed installa nuovi display</value>
     <comment>Displays tab: text that links to the GFW website to find more displays</comment>
   </data>
   <data name="AddComputer_AddProwl" xml:space="preserve">
-    <value>Click here to forward notifications to
-an iPhone</value>
+    <value>Clicca qui per inoltrare le notifiche ad un iPhone</value>
     <comment>Add computer form: click to forward notification to iphone</comment>
   </data>
   <data name="AddComputer_AddEmail" xml:space="preserve">
-    <value>Click here to forward notifications to
-an email account</value>
+    <value>Clicca qui per inoltrare le notifiche ad un indirizzo email</value>
     <comment>Add computer form: click to add email forwarding</comment>
   </data>
   <data name="AddComputer_AddTwitter" xml:space="preserve">
-    <value>Click here to forward notifications
-to Twitter</value>
+    <value>Clicca qui per inoltrare le notifiche a Twitter</value>
     <comment>Add computer form: click to forward notifications to Twitter</comment>
   </data>
   <data name="AddProwl_AnyPriority" xml:space="preserve">
-    <value>[Any Priority]</value>
+    <value>[Tutte le Priorità]</value>
     <comment>Configure iPhone Forwarding: label for combobox choice for forwarding all notification priorities</comment>
   </data>
   <data name="AddProwl_MinimumPriorityLabel" xml:space="preserve">
-    <value>Only forward when priority is at least:</value>
+    <value>Inoltra solo se la priorità è almeno:</value>
     <comment>Configure iPhone Forwarding: label for minimum priority</comment>
   </data>
   <data name="AddProwl_NameLabel" xml:space="preserve">
-    <value>Description:</value>
+    <value>Descrizione:</value>
     <comment>Configure iPhone Forwarding: 'Description' label</comment>
   </data>
   <data name="AddProwl_APIKeyLabel" xml:space="preserve">
@@ -742,15 +738,15 @@ to Twitter</value>
     <comment>Configure iPhone Forwarding: 'API Key' label</comment>
   </data>
   <data name="AddProwl_OnlyWhenIdle" xml:space="preserve">
-    <value>Only forward when idle or away</value>
+    <value>Inoltra solo se assente o inattivo</value>
     <comment>Configure iphone forwarding: 'only forward when idle' checkbox text</comment>
   </data>
   <data name="AddTwitter_AnyPriority" xml:space="preserve">
-    <value>[Any Priority]</value>
+    <value>[Tutte le Priorità]</value>
     <comment>Configure Twitter Forwarding: label for combobox choice for forwarding all notification priorities</comment>
   </data>
   <data name="AddTwitter_MinimumPriorityLabel" xml:space="preserve">
-    <value>Only forward when priority is at least:</value>
+    <value>Inoltra solo se la priorità è almeno:</value>
     <comment>Configure Twitter Forwarding: label for minimum priority</comment>
   </data>
   <data name="AddTwitter_PasswordLabel" xml:space="preserve">
@@ -762,27 +758,27 @@ to Twitter</value>
     <comment>Configure Twitter Forwarding: 'Username' label</comment>
   </data>
   <data name="AddTwitter_FormatLabel" xml:space="preserve">
-    <value>Format:</value>
+    <value>Formato:</value>
     <comment>Configure Twitter Forwarding: 'Format' label</comment>
   </data>
   <data name="AddTwitter_OnlyWhenIdle" xml:space="preserve">
-    <value>Only forward when idle or away</value>
+    <value>Inoltra solo se assente o inattivo</value>
     <comment>Configure Twitter forwarding: 'only forward when idle' checkbox text</comment>
   </data>
   <data name="LiteralString_Always" xml:space="preserve">
-    <value>Always</value>
+    <value>Sempre</value>
     <comment>The string 'Always'</comment>
   </data>
   <data name="LiteralString_IdleOnly" xml:space="preserve">
-    <value>Idle Only</value>
+    <value>Inattivo solo</value>
     <comment>The string 'Idle Only'</comment>
   </data>
   <data name="Network_EditComputer" xml:space="preserve">
-    <value>Edit</value>
+    <value>Modifica</value>
     <comment>Network tab: 'Edit' context menu item</comment>
   </data>
   <data name="ProwlConfirmation_Text" xml:space="preserve">
-    <value>You have successfully configured Growl to forward notifications to Prowl</value>
+    <value>Hai correttamente configurato Growl per inoltre le notifiche a Prowl.</value>
     <comment>Text of Prowl confirmation notification sent to confirm successful configuration</comment>
   </data>
   <data name="ProwlConfirmation_Title" xml:space="preserve">
@@ -790,31 +786,31 @@ to Twitter</value>
     <comment>Title of Prowl confirmation notification sent to confirm successful configuration</comment>
   </data>
   <data name="AddEmail_AnyPriority" xml:space="preserve">
-    <value>[Any Priority]</value>
+    <value>[Tutte le Priorità]</value>
     <comment>Configure Email Forwarding: label for combobox choice for forwarding all notification priorities</comment>
   </data>
   <data name="AddEmail_MinimumPriorityLabel" xml:space="preserve">
-    <value>Only forward when priority is at least:</value>
+    <value>Inoltra solo se la priorità è almeno:</value>
     <comment>Configure Email Forwarding: label for minimum priority</comment>
   </data>
   <data name="AddEmail_NameLabel" xml:space="preserve">
-    <value>Description:</value>
+    <value>Descrizione:</value>
     <comment>Configure Email Forwarding: 'Description' label</comment>
   </data>
   <data name="AddEmail_EmailAddressLabel" xml:space="preserve">
-    <value>Email Address:</value>
+    <value>Indirizzo Email:</value>
     <comment>Configure Email Forwarding: 'Email Address' label</comment>
   </data>
   <data name="AddEmail_SMTPSettingsLabel" xml:space="preserve">
-    <value>SMTP Settings:</value>
+    <value>Configurazione SMTP:</value>
     <comment>Configure Email Forwarding: 'SMTP Settings' label</comment>
   </data>
   <data name="AddEmail_EditSMTP" xml:space="preserve">
-    <value>edit</value>
+    <value>modifica</value>
     <comment>Configure Email Forwarding: 'edit' link</comment>
   </data>
   <data name="AddEmail_OnlyWhenIdle" xml:space="preserve">
-    <value>Only forward when idle or away</value>
+    <value>Inoltra solo se assente o inattivo</value>
     <comment>Configure Email forwarding: 'only forward when idle' checkbox text</comment>
   </data>
   <data name="AddEmail_SMTPServerLabel" xml:space="preserve">
@@ -822,19 +818,19 @@ to Twitter</value>
     <comment>Configure Email forwarding SMTP Settings: 'Server' label</comment>
   </data>
   <data name="AddEmail_SMTPPortLabel" xml:space="preserve">
-    <value>Port:</value>
+    <value>Porta:</value>
     <comment>Configure Email forwarding SMTP Settings: 'Port' label</comment>
   </data>
   <data name="AddEmail_SMTPUseAuthentication" xml:space="preserve">
-    <value>Use Authentication</value>
+    <value>Usa Autenticazione</value>
     <comment>Configure Email forwarding SMTP Settings: 'Use Authentication' checkbox text</comment>
   </data>
   <data name="AddEmail_SMTPUseSSL" xml:space="preserve">
-    <value>Use SSL</value>
+    <value>Usa SSL</value>
     <comment>Configure Email forwarding SMTP Settings: 'Use SSL' checkbox text</comment>
   </data>
   <data name="AddEmail_SMTPUsernameLabel" xml:space="preserve">
-    <value>Username:</value>
+    <value>Nome utente:</value>
     <comment>Configure Email forwarding SMTP Settings: 'Username' label</comment>
   </data>
   <data name="AddEmail_SMTPPasswordLabel" xml:space="preserve">
@@ -842,31 +838,31 @@ to Twitter</value>
     <comment>Configure Email forwarding SMTP Settings: 'Password' label</comment>
   </data>
   <data name="AddEmail_SMTPDone" xml:space="preserve">
-    <value>done</value>
+    <value>fatto</value>
     <comment>Configure Email forwarding SMTP Settings: 'done' link</comment>
   </data>
   <data name="History_Columns_Application" xml:space="preserve">
-    <value>Application</value>
+    <value>Applicazione</value>
     <comment>History tab: Column header for Application column</comment>
   </data>
   <data name="History_Columns_Text" xml:space="preserve">
-    <value>Text</value>
+    <value>Testo</value>
     <comment>History tab: Column header for Text column</comment>
   </data>
   <data name="History_Columns_Timestamp" xml:space="preserve">
-    <value>Timestamp</value>
+    <value>Istante</value>
     <comment>History tab: Column header for Timestamp column</comment>
   </data>
   <data name="History_Columns_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Titolo</value>
     <comment>History tab: Column header for Title column</comment>
   </data>
   <data name="History_DetailsView" xml:space="preserve">
-    <value>Details View</value>
+    <value>Dettagli</value>
     <comment>History tab: Details View context menu option</comment>
   </data>
   <data name="History_TileView" xml:space="preserve">
-    <value>Tile View</value>
+    <value>Vista Affiancata</value>
     <comment>History tab: Tile View context menu option</comment>
   </data>
   <data name="Button_No" xml:space="preserve">
@@ -874,143 +870,143 @@ to Twitter</value>
     <comment>Any 'No' button</comment>
   </data>
   <data name="History_Columns_Origin" xml:space="preserve">
-    <value>Origin</value>
+    <value>Origine</value>
     <comment>History tab: Column header for Origin column</comment>
   </data>
   <data name="LanguageInstaller_AlreadyInstalled" xml:space="preserve">
-    <value>The '{0}' language pack is already installed.</value>
+    <value>Il linguaggio '{0}' è già installato.</value>
     <comment>Language Pack installer: message shown if a language pack is already installed when attempting to install again. {0} is the name of the language</comment>
   </data>
   <data name="LanguageInstaller_BadDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' is invalid.\n\nThe language pack could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non è valido.\n\nIl linguaggio non è stato installato.</value>
     <comment>Language Pack installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
   </data>
   <data name="LanguageInstaller_DownloadCancelled" xml:space="preserve">
-    <value>The installation of the language pack was cancelled.\n\nThe language pack was not installed.</value>
+    <value>L'installazione del linguaggio è stata annullata.\n\nIl linguaggio non è stato installato.</value>
     <comment>Language Pack installer: message shown if the download is cancelled by the user</comment>
   </data>
   <data name="LanguageInstaller_DownloadError" xml:space="preserve">
-    <value>An error occurred while downloading the language pack files.\n\nThe language pack was not installed.</value>
+    <value>Si è verificato un errore scaricando il linguaggio.\n\nIl linguaggio non è stato installato.</value>
     <comment>Language Pack installer: message shown if the download of the language pack files fails for any reason</comment>
   </data>
   <data name="LanguageInstaller_FormTitle" xml:space="preserve">
-    <value>Install Language Pack</value>
+    <value>Installa Linguaggio</value>
     <comment>Language Pack installer: form title</comment>
   </data>
   <data name="LanguageInstaller_Installing" xml:space="preserve">
-    <value>Installing language pack...</value>
+    <value>Installazione Linguaggio in corso...</value>
     <comment>Language Pack installer: displayed while the language pack is being installed</comment>
   </data>
   <data name="LanguageInstaller_LanguageInstalledText" xml:space="preserve">
-    <value>The '{0}' language pack was installed successfully.</value>
+    <value>Il linguaggio '{0}' è stato installato correttamente.</value>
     <comment>Language Pack installer: text of the notification shown when a new language pack is installed. {0} is the name of the language.</comment>
   </data>
   <data name="LanguageInstaller_RestartRequiredText" xml:space="preserve">
-    <value>You must restart Growl for the changes to take effect.</value>
+    <value>Riavvia Growl per rendere effettive le modifiche.</value>
     <comment>Language Pack installer: additional text of the notification shown when a new language pack is installed if Growl must be restarted.</comment>
   </data>
   <data name="LanguageInstaller_LanguageInstalledTitle" xml:space="preserve">
-    <value>Language Pack Installed</value>
+    <value>Linguaggio Installato</value>
     <comment>Language Pack installer: title of the notification shown when a new language pack is installed</comment>
   </data>
   <data name="LanguageInstaller_NonexistentDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' does not exist.\n\nThe language pack could not be installed.</value>
+    <value>Il file di definizioni '{0}' non esiste.\n\nIl linguaggio non è stato installato.</value>
     <comment>Language Pack installer: message shown if the definition file could not be found. {0} is the file path</comment>
   </data>
   <data name="LanguageInstaller_Prompt" xml:space="preserve">
-    <value>Do you want to install the language pack for the following language:  {0}\n\nNOTE: Users running Vista or Windows 7 must have administrator privileges to install language packs.</value>
+    <value>Vuoi installare il supporto per il linguaggio:  {0}\n\nNB: gli utenti di Windows 7 o Vista devono avere privilegi di amministratore.</value>
     <comment>Language Pack installer: displayed when a click-to-install link is clicked. {0} is the name of the language</comment>
   </data>
   <data name="AddSubscription_AddGNTP" xml:space="preserve">
-    <value>Subscribe to Growl notifications\non another machine</value>
+    <value>Abbonati alle notifiche inviate di un altro computer</value>
     <comment>Add subscription form: click to subscribe to Growl notifications</comment>
   </data>
   <data name="ForwarderInstaller_AlreadyInstalled" xml:space="preserve">
-    <value>Plugin '{0}' is already installed.</value>
+    <value>Il plugin '{0}' è già installato.</value>
     <comment>Forwarder installer: message shown if a plugin is already installed when attempting to install again</comment>
   </data>
   <data name="ForwarderInstaller_BadDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' is invalid.\n\nThe plugin could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non è valido.\n\nimpossiible installare il plugin.</value>
     <comment>Forwarder installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
   </data>
   <data name="ForwarderInstaller_DownloadCancelled" xml:space="preserve">
-    <value>The installation of the plugin was cancelled.\n\nThe plugin was not installed.</value>
+    <value>L'installazione del plugin è stata cancellata.\n\nIl plugin non è stato installato.</value>
     <comment>Forwarder installer: message shown if the download is cancelled by the user</comment>
   </data>
   <data name="ForwarderInstaller_DownloadError" xml:space="preserve">
-    <value>An error occurred while downloading the plugin files.\n\nThe plugin was not installed.</value>
+    <value>Si è verificato un errore scaricando il plugin.\n\nIl plugin non è stato installato.</value>
     <comment>Forwarder installer: message shown if the download of the plugin files fails for any reason</comment>
   </data>
   <data name="ForwarderInstaller_FormTitle" xml:space="preserve">
-    <value>Install Forwarder Plugin</value>
+    <value>Installa un plugin di inoltro</value>
     <comment>Forwarder installer: form title</comment>
   </data>
   <data name="ForwarderInstaller_Installing" xml:space="preserve">
-    <value>Installing plugin...</value>
+    <value>Installazione del plugin in corso...</value>
     <comment>Forwarder installer: displayed while the plugin is being installed</comment>
   </data>
   <data name="ForwarderInstaller_InstalledText" xml:space="preserve">
-    <value>The plugin '{0}' was installed successfully.</value>
+    <value>Il plugin '{0}' è stato installato correttamente.</value>
     <comment>Forwarder installer: text of the notification shown when a new plugin is installed. {0} is the name of the installed plugin.</comment>
   </data>
   <data name="ForwarderInstaller_InstalledTitle" xml:space="preserve">
-    <value>New Plugin Installed</value>
+    <value>Nuovo plugin installato</value>
     <comment>Forwarder installer: title of the notification shown when a new display is installed</comment>
   </data>
   <data name="ForwarderInstaller_NonexistentDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' does not exist.\n\nThe plugin could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non esiste.\n\nImpossibile installare il plugin.</value>
     <comment>Forwarder installer: message shown if the definition file could not be found. {0} is the file path</comment>
   </data>
   <data name="ForwarderInstaller_Prompt" xml:space="preserve">
-    <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <value>Vuoi installare questo plugin?\n\nNome: {0}\nAutore: {1}\nDescrizione: {2}</value>
     <comment>Forwarder installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
   </data>
   <data name="SubscriberInstaller_AlreadyInstalled" xml:space="preserve">
-    <value>Plugin '{0}' is already installed.</value>
+    <value>Il plugin '{0}' è già installato.</value>
     <comment>Subscriber installer: message shown if a plugin is already installed when attempting to install again</comment>
   </data>
   <data name="SubscriberInstaller_BadDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' is invalid.\n\nThe plugin could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non è valido.\n\nIl plugin non è stato installato.</value>
     <comment>Subscriber installer: message shown if the definition file is malformed. {0} is the path to the file</comment>
   </data>
   <data name="SubscriberInstaller_DownloadCancelled" xml:space="preserve">
-    <value>The installation of the plugin was cancelled.\n\nThe plugin was not installed.</value>
+    <value>L'installazione del plugin è stata cancellata.\n\nIl plugin non è stato installato.</value>
     <comment>Subscriber installer: message shown if the download is cancelled by the user</comment>
   </data>
   <data name="SubscriberInstaller_DownloadError" xml:space="preserve">
-    <value>An error occurred while downloading the plugin files.\n\nThe plugin was not installed.</value>
+    <value>Si è verificato un errore scaricando il plugin.\n\nIl plugin non è stato installato.</value>
     <comment>Subscriber installer: message shown if the download of the plugin files fails for any reason</comment>
   </data>
   <data name="SubscriberInstaller_FormTitle" xml:space="preserve">
-    <value>Install Subscriber Plugin</value>
+    <value>Installa un plugin per gli abbonamenti</value>
     <comment>Subscriber installer: form title</comment>
   </data>
   <data name="SubscriberInstaller_Installing" xml:space="preserve">
-    <value>Installing plugin...</value>
+    <value>Installo plugin...</value>
     <comment>Subscriber installer: displayed while the plugin is being installed</comment>
   </data>
   <data name="SubscriberInstaller_InstalledText" xml:space="preserve">
-    <value>The plugin '{0}' was installed successfully.</value>
+    <value>Il plugin '{0}' è stato installato correttamente.</value>
     <comment>Subscriber installer: text of the notification shown when a new plugin is installed. {0} is the name of the installed plugin.</comment>
   </data>
   <data name="SubscriberInstaller_InstalledTitle" xml:space="preserve">
-    <value>New Plugin Installed</value>
+    <value>Nuovo Plugin Installato</value>
     <comment>Subscriber installer: title of the notification shown when a new display is installed</comment>
   </data>
   <data name="SubscriberInstaller_NonexistentDefinitionFile" xml:space="preserve">
-    <value>The definition file '{0}' does not exist.\n\nThe plugin could not be installed.</value>
+    <value>Il file delle definizioni '{0}' non esiste.\n\nIl plugin non è stato installato.</value>
     <comment>Subscriber installer: message shown if the definition file could not be found. {0} is the file path</comment>
   </data>
   <data name="SubscriberInstaller_Prompt" xml:space="preserve">
-    <value>Do you want to install the following plugin?\n\nName: {0}\nAuthor: {1}\nDescription: {2}</value>
+    <value>Vuoi installare questo plugin?\n\nNome: {0}\nAutore: {1}\nDescrizione: {2}</value>
     <comment>Subscriber installer: displayed when a click-to-install link is clicked. {0} is the name of the plugin, {1} is the author, and {2} is the description</comment>
   </data>
   <data name="Security_RequirePasswordLANApps" xml:space="preserve">
-    <value>Require password for LAN apps</value>
+    <value>Richiedi la password per la applicazioni di rete</value>
     <comment>Security tab: checkbox for 'require password for LAN apps'</comment>
   </data>
   <data name="Displays_MultiMonitor_Identify" xml:space="preserve">
-    <value>Identify...</value>
+    <value>Identifica...</value>
     <comment>Displays tab: 'Identify...' context menu item</comment>
   </data>
   <data name="Displays_MultiMonitor_Monitor" xml:space="preserve">
@@ -1018,11 +1014,11 @@ to Twitter</value>
     <comment>Displays tab: name of all non-primary monitors</comment>
   </data>
   <data name="Displays_MultiMonitor_Primary" xml:space="preserve">
-    <value>Primary</value>
+    <value>Primario</value>
     <comment>Displays tab: name of the primary monitor</comment>
   </data>
   <data name="AddNotifyIO_NameLabel" xml:space="preserve">
-    <value>Name:</value>
+    <value>Nome:</value>
     <comment>Add notify.io form: name label</comment>
   </data>
   <data name="AddNotifyIO_OutletUrlLabel" xml:space="preserve">
@@ -1030,19 +1026,19 @@ to Twitter</value>
     <comment>Add notify.io form: outlet url label</comment>
   </data>
   <data name="AddSubscription_AddNotifyIO" xml:space="preserve">
-    <value>Subscribe to notify.io outlet</value>
+    <value>Abbonati a notify.io</value>
     <comment>Add subscription form: click to subscribe to notify.io notifications</comment>
   </data>
   <data name="LiteralString_Status_Connecting" xml:space="preserve">
-    <value>connecting...</value>
+    <value>connessione...</value>
     <comment>The string 'connecting...' (used in network display statuses)</comment>
   </data>
   <data name="LiteralString_Status_Reconnecting" xml:space="preserve">
-    <value>reconnecting...</value>
+    <value>riconnessione...</value>
     <comment>The string 'reconnecting...' (used in network display statuses)</comment>
   </data>
   <data name="NotifyIO_NotificationType" xml:space="preserve">
-    <value>Web Notification</value>
+    <value>Notifiche Web</value>
     <comment>Notify.IO notification type</comment>
   </data>
 </root>

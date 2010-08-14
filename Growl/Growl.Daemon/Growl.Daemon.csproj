@@ -45,9 +45,11 @@
     <Reference Include="Mono.Zeroconf, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=4.0.0.90, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncSocket.cs" />
@@ -57,9 +59,16 @@
     <Compile Include="ConnectedSocketCollection.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="FlashPolicy.cs" />
+    <Compile Include="GNTPFlashSocketReader.cs" />
+    <Compile Include="GNTPParser.cs" />
+    <Compile Include="GNTPRequest.cs" />
+    <Compile Include="GNTPRequestReader.cs" />
+    <Compile Include="GNTPSocketReader.cs" />
     <Compile Include="GNTPStreamReader.cs" />
+    <Compile Include="GNTPWebSocketReader.cs" />
     <Compile Include="GrowlServer.cs" />
     <Compile Include="MessageHandler.cs" />
+    <Compile Include="NextIndicator.cs" />
     <Compile Include="Pointer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceCache.cs" />
@@ -67,6 +76,7 @@
     <Compile Include="SubscriberKey.cs" />
     <Compile Include="SubscriptionConnector.cs" />
     <Compile Include="SubscriptionResponse.cs" />
+    <Compile Include="WebSocket.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Growl.Connector\Growl.Connector.csproj">
@@ -84,7 +94,6 @@
     </Content>
     <Content Include="Third Party Assemblies\Mono.Zeroconf.dll" />
     <Content Include="Third Party Assemblies\Mono.Zeroconf.Providers.Bonjour.dll" />
-    <None Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,11 +1,19 @@
-2.0.4 changes (v2.0.4.x)
+2.0.4 changes (v2.0.4.2)
 ------------------------------
 - fixed a bug in GrowlConnector that could cause a hang if the connection was lost in the middle of receiving a response
 - deprecated instance method GrowlConnector.IsGrowlRunning(); replaced with static GrowlConnector.IsGrowlRunningLocally()
 - updated GrowlConnector Register and Notify methods to accept a user-defined 'state' object that will get passed back in the response events (used to associate responses with requests)
 - updated Growl.Connector.Response class to include RequestData property (that data was formerly inaccessible from the response)
 - improvements to subscriptions to reduce number of renewal requests and updates of the UI
-
+- added /cmd:show switch to Growl.exe for launching Growl with the settings window open
+- added Detector.ShowSettingsWindow() method to launch Growl settings window from another application
+- added /ai switch to growlnotify to specify the application's icon when registering
+- added basis for WebSocket support as well as growlwebsocket.js client library. The only supported endpoint is: ws://localhost:23053/gntp
+- improved installation process for language packs on Vista/Win7 and other machines with UAC; now correctly automatically prompts to elevate privileges if required
+- removed ability to add new Twitter forwarding destinations (due to no workable oAuth/open source solution)
+- fixed a bug that caused redraw artifacts when quickly scrolling the 'Add Computer' list of forwarding options
+- fixed some rendering bugs in the History Details view
+- added Italian language translation (thanks to Umberto Nicoletti)
 
 2.0.3v2 changes (v2.0.3.5)
 ------------------------------

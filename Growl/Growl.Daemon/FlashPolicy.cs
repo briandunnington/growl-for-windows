@@ -12,7 +12,7 @@ namespace Growl.Daemon
         /// <summary>
         /// String that indicates the request may be a Flash policy request
         /// </summary>
-        public const string REQUEST_INDICATOR = "<";
+        public const string REQUEST_INDICATOR = "<pol";
 
         /// <summary>
         /// String that represents a valid Flash policy request

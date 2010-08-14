@@ -4,6 +4,13 @@ using System.Text;
 
 namespace Growl.DisplayStyle
 {
+    /// <summary>
+    /// Provides the base implementation for on-screen (visual) displays that provide multiple-monitor support.
+    /// </summary>
+    /// <remarks>
+    /// Most developers should inherit their displays from this class if they are
+    /// going to show a notification on-screen and want to support multiple monitors.
+    /// </remarks>
     public abstract class MultiMonitorVisualDisplay : VisualDisplay, IDisplayMultipleMonitor
     {
         /// <summary>
@@ -11,6 +18,10 @@ namespace Growl.DisplayStyle
         /// </summary>
         string preferredDisplayDeviceName;
 
+        /// <summary>
+        /// Gets the preferred display.
+        /// </summary>
+        /// <returns>The <see cref="System.Windows.Forms.Screen"/> to show the display on.</returns>
         public System.Windows.Forms.Screen GetPreferredDisplay()
         {
             return MultipleMonitorHelper.GetScreen(this.preferredDisplayDeviceName);

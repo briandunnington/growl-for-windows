@@ -98,5 +98,11 @@
     <Setting Name="RequireLANPassword" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="TwitterConsumerKey" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TwitterConsumerSecret" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

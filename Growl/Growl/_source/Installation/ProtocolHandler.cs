@@ -54,6 +54,15 @@ namespace Growl.Installation
                         }
                         il = null;
                         break;
+                    case "languageelevatedinstall" :
+                        InstallLanguage eil = new InstallLanguage();
+                        using (eil)
+                        {
+                            bool languageInstalled = eil.FinishElevatedInstall(data, ref queuedNotifications, ref signalValue);
+                            if (languageInstalled) result = ApplicationMain.Signal.UpdateLanguage;
+                        }
+                        eil = null;
+                        break;
                     case "forwarder":
                         InstallForwarder ifwd = new InstallForwarder();
                         using (ifwd)

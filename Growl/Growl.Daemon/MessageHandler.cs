@@ -50,62 +50,33 @@ namespace Growl.Daemon
         /// </summary>
         public event MessageHandlerSocketUsageCompleteEventHandler SocketUsageComplete;
 
-        //private static Regex regExMessageHeader = new Regex(@"(GNTP/)(?<Version>(.\..))\s+(?<Directive>(\S+))[\r\n]");
-
-        /// <summary>
-        /// Regex used to parse GNTP headers for local requests (dont require password)
-        /// </summary>
-        private static Regex regExMessageHeader_Local = new Regex(@"GNTP/(?<Version>.\..)\s+(?<Directive>\S+)\s+(((?<EncryptionAlgorithm>\S+):(?<IV>\S+))|((?<EncryptionAlgorithm>\S+)))\s*[\r\n]");
-
-        /// <summary>
-        /// Regex used to parse GNTP headers for non-local requests (password required)
-        /// </summary>
-        private static Regex regExMessageHeader_Remote = new Regex(@"GNTP/(?<Version>.\..)\s+(?<Directive>\S+)\s+(((?<EncryptionAlgorithm>\S+):(?<IV>\S+))\s+|((?<EncryptionAlgorithm>\S+)\s+))(?<KeyHashAlgorithm>(\S+)):(?<KeyHash>(\S+))\.(?<Salt>(\S+))\s*[\r\n]");
-
-
         private const long ACCEPT_TAG = 0;
-        private const long FLASH_POLICY_REQUEST_TAG = 1;
-        private const long FLASH_POLICY_RESPONSE_TAG = 2;
-        private const long GNTP_IDENTIFIER_TAG = 3;
-        private const long HEADER_TAG = 4;
-        private const long NOTIFICATION_TYPE_TAG = 5;
-        private const long RESOURCE_HEADER_TAG = 6;
-        private const long RESOURCE_TAG = 7;
-        private const long ENCRYPTED_HEADERS_TAG = 8;
-        private const long USAGECOMPLETE_TAG = 9;
+        private const long USAGECOMPLETE_TAG = 9999;
 
         private const long RESPONSE_SUCCESS_TAG = 97;
         private const long RESPONSE_ERROR_TAG = 98;
         private const long RESPONSE_TIMEOUT_TAG = 99;
 
-        /*
-        private const int TIMEOUT_INITIALREAD = 1 * 1000;
-        private const int TIMEOUT_FLASHPOLICYREQUEST = 1 * 1000;
-        private const int TIMEOUT_GNTP_HEADER = 1 * 1000;
-        private const int TIMEOUT_GNTP_BINARY = 5 * 60 * 1000; // five minutes
-        private const int TIMEOUT_ENCRYPTED_HEADERS = 5 * 1000;
-        private const int TIMEOUT_FLASHPOLICYRESPONSE = -1;
-        private const int TIMEOUT_ERROR_RESPONSE = -1;
-         * */
-
         private const int TIMEOUT_INITIALREAD = -1;
         private const int TIMEOUT_FLASHPOLICYREQUEST = -1;
-        private const int TIMEOUT_GNTP_HEADER = -1;
-        private const int TIMEOUT_GNTP_BINARY = -1;
-        private const int TIMEOUT_ENCRYPTED_HEADERS = -1;
         private const int TIMEOUT_FLASHPOLICYRESPONSE = -1;
         private const int TIMEOUT_ERROR_RESPONSE = -1;
         private const int TIMEOUT_USAGECOMPLETE = -1;
 
         /// <summary>
-        /// Message logged when a request is only partially read before encountering an error
-        /// </summary>
-        private const string PARTIAL_MESSAGE_NOTICE = "<Additional request data may not have been read after the message was invalidated.>";
-
-        /// <summary>
         /// Seperator line for log files
         /// </summary>
         private const string SEPERATOR = "\r\n\r\n-----------------------------------------------------\r\n\r\n";
+
+        /// <summary>
+        /// The parsed request
+        /// </summary>
+        GNTPRequest request;
+
+        /// <summary>
+        /// The class responsible for reading and parsing incoming requests
+        /// </summary>
+        GNTPRequestReader requestReader;
 
         /// <summary>
         /// The name of the server
@@ -128,9 +99,9 @@ namespace Growl.Daemon
         private bool allowNetworkNotifications = false;
 
         /// <summary>
-        /// Indicates if notifications originating from a Flash client are allowed
+        /// Indicates if notifications originating from a browser are allowed
         /// </summary>
-        private bool allowFlash = false;
+        private bool allowBrowerConnections = false;
 
         /// <summary>
         /// Indicates if client are allowed to subscribe to notifications from this server
@@ -138,24 +109,9 @@ namespace Growl.Daemon
         private bool allowSubscriptions = false;
 
         /// <summary>
-        /// The key used to validate and encrypt the message
-        /// </summary>
-        private Key key;
-
-        /// <summary>
         /// The list of valid passwords
         /// </summary>
         private PasswordManager passwordManager;
-
-        /// <summary>
-        /// The hex-encoded IV value from the request
-        /// </summary>
-        private string ivHex;
-
-        /// <summary>
-        /// The actual IV bytes from the request
-        /// </summary>
-        private byte[] iv;
 
         /// <summary>
         /// Indicates if the request must supply a password
@@ -163,99 +119,9 @@ namespace Growl.Daemon
         private bool passwordRequired = true;
 
         /// <summary>
-        /// Contains all of the data from the request that has already been read
-        /// </summary>
-        private StringBuilder alreadyReceived;
-
-        /// <summary>
-        /// The collection of headers parsed from the current request
-        /// </summary>
-        private HeaderCollection headers;
-
-        /// <summary>
-        /// The version of the GNTP request
-        /// </summary>
-        private string version;
-
-        /// <summary>
-        /// The type of GNTP request
-        /// </summary>
-        private RequestType directive;
-
-        /// <summary>
-        /// The type of hashing algorithm used in the request
-        /// </summary>
-        private Cryptography.HashAlgorithmType keyHashAlgorithm;
-
-        /// <summary>
-        /// The type of encryption used in the request
-        /// </summary>
-        private Cryptography.SymmetricAlgorithmType encryptionAlgorithm;
-
-        /// <summary>
-        /// The name of the application sending the request
-        /// </summary>
-        private string applicationName;
-
-        /// <summary>
-        /// For REGISTER requests, the number of notifications expected to be registered
-        /// </summary>
-        private int expectedNotifications = 0;
-
-        /// <summary>
-        /// For REGISTER requests, the number of notifcations still to be registered
-        /// </summary>
-        private int expectedNotificationsRemaining = 0;
-
-        /// <summary>
-        /// For REGISTER requests, the index of the current notification type
-        /// </summary>
-        private int currentNotification = 0;
-
-        /// <summary>
-        /// A collection of the groups of headers for each notification type to be registered
-        /// </summary>
-        private List<HeaderCollection> notificationsToBeRegistered;
-
-        /// <summary>
-        /// The number of binary pointers in the request
-        /// </summary>
-        private int pointersExpected = 0;
-
-        /// <summary>
-        /// The number of binary pointers still to be found in the request
-        /// </summary>
-        private int pointersExpectedRemaining = 0;
-
-        /// <summary>
-        /// The index of the current binary pointer
-        /// </summary>
-        private int currentPointer = 0;
-
-        /// <summary>
-        /// A collection of all pointers in the request
-        /// </summary>
-        private List<Pointer> pointers;
-
-        /// <summary>
         /// The callback info associated with the request
         /// </summary>
         private CallbackInfo callbackInfo;
-
-        /// <summary>
-        /// The callback data associated with the request
-        /// </summary>
-        private string callbackData;
-
-        /// <summary>
-        /// The callback data type associated with the request
-        /// </summary>
-        private string callbackDataType;
-
-        /// <summary>
-        /// The callback url associated with the request
-        /// </summary>
-        private string callbackUrl;
 
         /// <summary>
         /// The request info associated with the request
@@ -266,11 +132,6 @@ namespace Growl.Daemon
         /// The socket used to receive the request and send the response and callback
         /// </summary>
         private AsyncSocket socket;
-
-        /// <summary>
-        /// The text of the request after decryption (null if the request was not originally encrypted)
-        /// </summary>
-        private string decryptedRequest = null;
 
 
         /// <summary>
@@ -290,9 +151,9 @@ namespace Growl.Daemon
         /// <param name="logFolder">The path to the folder where log files are written</param>
         /// <param name="loggingEnabled">Indicates if logging is enabled or not</param>
         /// <param name="allowNetworkNotifications">Indicates if notifications from remote machines are allowed</param>
-        /// <param name="allowFlash">Indicates if notifications from Flash clients are allowed</param>
+        /// <param name="allowBrowerConnections">Indicates if notifications from browsers are allowed</param>
         /// <param name="allowSubscriptions">Indicates if clients are allowed to subscribe to notifications from this server</param>
-        public MessageHandler(string serverName, PasswordManager passwordManager, bool passwordRequired, string logFolder, bool loggingEnabled, bool allowNetworkNotifications, bool allowFlash, bool allowSubscriptions)
+        public MessageHandler(string serverName, PasswordManager passwordManager, bool passwordRequired, string logFolder, bool loggingEnabled, bool allowNetworkNotifications, bool allowBrowerConnections, bool allowSubscriptions)
         {
             this.serverName = serverName;
             this.passwordManager = passwordManager;
@@ -300,20 +161,12 @@ namespace Growl.Daemon
             this.logFolder = logFolder;
             this.loggingEnabled = loggingEnabled;
             this.allowNetworkNotifications = allowNetworkNotifications;
-            this.allowFlash = allowFlash;
+            this.allowBrowerConnections = allowBrowerConnections;
             this.allowSubscriptions = allowSubscriptions;
-        }
 
-        /// <summary>
-        /// Gets the name of the application sending the request
-        /// </summary>
-        /// <value>string</value>
-        public string ApplicationName
-        {
-            get
-            {
-                return this.applicationName;
-            }
+            this.serverName = serverName;
+            this.callbackInfo = new CallbackInfo();
+            this.requestInfo = new RequestInfo();
         }
 
         /// <summary>
@@ -341,42 +194,6 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Gets the type of the request
-        /// </summary>
-        /// <value><see cref="RequestType"/></value>
-        public RequestType Directive
-        {
-            get
-            {
-                return directive;
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of headers parsed from the request.
-        /// </summary>
-        /// <value><see cref="HeaderCollection"/></value>
-        public HeaderCollection Headers
-        {
-            get
-            {
-                return this.headers;
-            }
-        }
-
-        /// <summary>
-        /// Gets the collection of groups of headers for all notifications to be registered.
-        /// </summary>
-        /// <value><see cref="List{HeaderCollection}"/></value>
-        public List<HeaderCollection> NotificationsToBeRegistered
-        {
-            get
-            {
-                return this.notificationsToBeRegistered;
-            }
-        }
-
-        /// <summary>
         /// Gets the socket used for reading the request and writing the response and any callbacks.
         /// </summary>
         /// <value><see cref="AsyncSocket"/></value>
@@ -389,41 +206,19 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Gets the <see cref="Key"/> used to validate and encrypt the request
+        /// The parsed GNTP request.
         /// </summary>
-        /// <value><see cref="Key"/></value>
-        internal Key Key
+        /// <value><see cref="GNTPRequest"/></value>
+        /// <remarks>
+        /// This property will only be populated once the request has successfully been parsed.
+        /// </remarks>
+        public GNTPRequest Request
         {
             get
             {
-                return this.key;
+                return this.request;
             }
         }
-
-        /// <summary>
-        /// Gets the type of hash algorithm used in the request.
-        /// </summary>
-        /// <value><see cref="Cryptography.HashAlgorithmType"/></value>
-        internal Cryptography.HashAlgorithmType KeyHashAlgorithm
-        {
-            get
-            {
-                return this.keyHashAlgorithm;
-            }
-        }
-
-        /// <summary>
-        /// Gets the type of encryption algorithm used in the request
-        /// </summary>
-        /// <value><see cref="Cryptography.SymmetricAlgorithmType"/></value>
-        internal Cryptography.SymmetricAlgorithmType EncryptionAlgorithm
-        {
-            get
-            {
-                return this.encryptionAlgorithm;
-            }
-        }
-
 
         /// <summary>
         /// Performs an initial read of the received data to see if it looks like a
@@ -432,25 +227,92 @@ namespace Growl.Daemon
         /// <param name="socket"><see cref="AsyncSocket"/></param>
         public void InitialRead(AsyncSocket socket)
         {
-            this.alreadyReceived = new StringBuilder();
-            this.headers = new HeaderCollection();
-            this.notificationsToBeRegistered = new List<HeaderCollection>();
-            this.pointers = new List<Pointer>();
-            this.callbackInfo = new CallbackInfo();
-            this.requestInfo = new RequestInfo();
+            this.socket = socket;
+            socket.DidReadTimeout += new AsyncSocket.SocketDidReadTimeout(socket_DidReadTimeout);
 
             // log where this notification came from
             bool isLocal = System.Net.IPAddress.IsLoopback(socket.RemoteAddress);
             bool isLAN = Growl.CoreLibrary.IPUtilities.IsInSameSubnet(socket.LocalAddress, socket.RemoteAddress);
             this.requestInfo.SaveHandlingInfo(String.Format("Notification Origin: {0} [{1}]", socket.RemoteAddress.ToString(), (isLocal ? "LOCAL MACHINE" : (isLAN ? "LAN - same subnet" : "REMOTE NETWORK"))));
 
-            socket.DidReadTimeout += new AsyncSocket.SocketDidReadTimeout(socket_DidReadTimeout);
-
-            socket.Read(1, TIMEOUT_INITIALREAD, ACCEPT_TAG);
+            // read the first 4 bytes so we know what kind of request this is (GNTP, GNTP over WebSocket, Flash Policy request, etc)
+            socket.DidRead += new AsyncSocket.SocketDidRead(this.SocketDidReadIndicatorBytes);
+            socket.Read(4, TIMEOUT_INITIALREAD, ACCEPT_TAG);
         }
 
         /// <summary>
-        /// Handles the socket's DidReadTimeout event.
+        /// Handles the socket's DidRead event after reading only the first four bytes of data.
+        /// </summary>
+        /// <param name="socket">The <see cref="AsyncSocket"/></param>
+        /// <param name="readBytes">Array of <see cref="byte"/>s that were read</param>
+        /// <param name="tag">The tag identifying the read operation</param>
+        private void SocketDidReadIndicatorBytes(AsyncSocket socket, byte[] readBytes, long tag)
+        {
+            // remove this event handler since we dont need it any more
+            socket.DidRead -= new AsyncSocket.SocketDidRead(this.SocketDidReadIndicatorBytes);
+
+            Data data = new Data(readBytes);
+            string s = data.ToString();
+
+            if (tag == ACCEPT_TAG)
+            {
+                if (s == FlashPolicy.REQUEST_INDICATOR)
+                {
+                    GNTPFlashSocketReader gfsr = new GNTPFlashSocketReader(socket, allowBrowerConnections);
+                    gfsr.Read(readBytes);
+                }
+                else if (s == WebSocketHandshakeHandler.REQUEST_INDICATOR)
+                {
+                    // this is a GNTP over WebSocket request, so we have to do the WebSocket handshake first
+                    socket.Tag = readBytes;
+                    WebSocketHandshakeHandler wshh = new WebSocketHandshakeHandler(socket, "*", "ws://localhost:23053");
+                    wshh.DoHandshake(delegate()
+                    {
+                        // now pass off to the GNTPWebSocketReader (which is just a normal GNTPSocketReader that can deal with the WebSocket framing of packets)
+                        GNTPWebSocketReader gwsr = new GNTPWebSocketReader(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowerConnections, allowSubscriptions, this.requestInfo);
+                        this.requestReader = gwsr;
+                        gwsr.MessageParsed += new GNTPRequestReader.GNTPRequestReaderMessageParsedEventHandler(requestReader_MessageParsed);
+                        gwsr.Error += new GNTPRequestReader.GNTPRequestReaderErrorEventHandler(requestReader_Error);
+                        gwsr.Read(readBytes);
+                    });
+                }
+                else
+                {
+                    // this is a normal GNTP/TCP connection, so handle it as such
+                    GNTPSocketReader gsr = new GNTPSocketReader(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowerConnections, allowSubscriptions, this.requestInfo);
+                    this.requestReader = gsr;
+                    gsr.MessageParsed += new GNTPRequestReader.GNTPRequestReaderMessageParsedEventHandler(requestReader_MessageParsed);
+                    gsr.Error += new GNTPRequestReader.GNTPRequestReaderErrorEventHandler(requestReader_Error);
+                    gsr.Read(readBytes);
+                }
+            }
+            else
+            {
+                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST);
+            }
+        }
+
+        /// <summary>
+        /// Handles the requestReader's <see cref="GNTPRequestReader.MessageParsed"/> event
+        /// </summary>
+        /// <param name="request">The parsed <see cref="GNTPRequest"/></param>
+        void requestReader_MessageParsed(GNTPRequest request)
+        {
+            this.request = request;
+            OnMessageParsed(this.socket);
+        }
+
+        /// <summary>
+        /// Handles the requestReader's <see cref="GNTPRequestReader.Error"/> event
+        /// </summary>
+        /// <param name="error">The <see cref="Error"/> information</param>
+        void requestReader_Error(Error error)
+        {
+            WriteError(this.Socket, error);
+        }
+
+        /// <summary>
+        /// Handles the socket's <see cref="AsyncSocket.DidReadTimeout"/> event
         /// </summary>
         /// <param name="sender">The <see cref="AsyncSocket"/></param>
         /// <returns>Always returns <c>true</c></returns>
@@ -459,432 +321,6 @@ namespace Growl.Daemon
             sender.DidReadTimeout -= new AsyncSocket.SocketDidReadTimeout(socket_DidReadTimeout);
             WriteError(sender, ErrorCode.TIMED_OUT, ErrorDescription.TIMED_OUT);
             return true;
-        }
-
-        /// <summary>
-        /// Handles the socket's DidWrite event.
-        /// </summary>
-        /// <param name="sender">The <see cref="AsyncSocket"/></param>
-        /// <param name="tag">The tag identifying the write operation</param>
-        public void SocketDidWrite(AsyncSocket sender, long tag)
-        {
-            //Console.WriteLine("did write - " + tag.ToString());
-        }
-
-        /// <summary>
-        /// Handles the socket's DidRead event.
-        /// </summary>
-        /// <param name="socket">The <see cref="AsyncSocket"/></param>
-        /// <param name="readBytes">Array of <see cref="byte"/>s that were read</param>
-        /// <param name="tag">The tag identifying the read operation</param>
-        public void SocketDidRead(AsyncSocket socket, byte[] readBytes, long tag)
-        {
-            try
-            {
-                Data data = new Data(readBytes);
-                string s = data.ToString();
-                alreadyReceived.Append(s);
-
-                if (tag == ACCEPT_TAG)
-                {
-                    if (s == FlashPolicy.REQUEST_INDICATOR)
-                    {
-                        socket.Read(FlashPolicy.REQUEST.Length - s.Length, TIMEOUT_FLASHPOLICYREQUEST, FLASH_POLICY_REQUEST_TAG);
-                    }
-                    else
-                    {
-                        socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, GNTP_IDENTIFIER_TAG);
-                    }
-                }
-
-                else if (tag == FLASH_POLICY_REQUEST_TAG)
-                {
-                    string request = alreadyReceived.ToString();
-                    if (request == FlashPolicy.REQUEST)
-                    {
-                        if (this.allowFlash)
-                        {
-                            socket.Write(FlashPolicy.ResponseBytes, TIMEOUT_FLASHPOLICYRESPONSE, FLASH_POLICY_RESPONSE_TAG);
-                            socket.CloseAfterWriting();
-                        }
-                        else
-                        {
-                            WriteError(socket, ErrorCode.NOT_AUTHORIZED, ErrorDescription.FLASH_CONNECTIONS_NOT_ALLOWED);
-                        }
-                    }
-                    else
-                    {
-                        WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.UNRECOGNIZED_REQUEST);
-                    }
-                }
-
-                else if (tag == GNTP_IDENTIFIER_TAG)
-                {
-                    string line = alreadyReceived.ToString();
-                    Match match = ParseGNTPHeaderLine(line, this.passwordRequired);
-
-                    if (match.Success)
-                    {
-                        this.version = match.Groups["Version"].Value;
-                        if (version == MessageParser.GNTP_SUPPORTED_VERSION)
-                        {
-                            string d = match.Groups["Directive"].Value;
-                            if (Enum.IsDefined(typeof(RequestType), d))
-                            {
-                                this.directive = (RequestType) Enum.Parse(typeof(RequestType), d);
-
-                                // check for supported but not allowed requests
-                                if (this.directive == RequestType.SUBSCRIBE && !this.allowSubscriptions)
-                                {
-                                    WriteError(socket, ErrorCode.NOT_AUTHORIZED, ErrorDescription.SUBSCRIPTIONS_NOT_ALLOWED);
-                                }
-                                else
-                                {
-                                    this.encryptionAlgorithm = Cryptography.GetEncryptionType(match.Groups["EncryptionAlgorithm"].Value);
-                                    this.ivHex = (match.Groups["IV"] != null ? match.Groups["IV"].Value : null);
-                                    if (!String.IsNullOrEmpty(this.ivHex)) this.iv = Cryptography.HexUnencode(this.ivHex);
-                                    string keyHash = match.Groups["KeyHash"].Value.ToUpper();
-
-                                    bool authorized = false;
-                                    // Any of the following criteria require a password:
-                                    //    1. the request did not originate on the local machine or LAN
-                                    //    2. the request came from the LAN, but LAN passwords are required
-                                    //    2. it is a SUBSCRIBE request (all subscriptions require a password)
-                                    //    3. the user's preferences require even local requests to supply a password
-                                    // Additionally, even if a password is not required, it will be validated if the 
-                                    // sending appplication includes one
-                                    string errorDescription = ErrorDescription.INVALID_KEY;
-                                    if (this.passwordRequired || this.directive == RequestType.SUBSCRIBE || !String.IsNullOrEmpty(keyHash))
-                                    {
-                                        if (String.IsNullOrEmpty(keyHash))
-                                        {
-                                            errorDescription = ErrorDescription.MISSING_KEY;
-                                        }
-                                        else
-                                        {
-                                            string keyHashAlgorithmType = match.Groups["KeyHashAlgorithm"].Value;
-                                            this.keyHashAlgorithm = Cryptography.GetKeyHashType(keyHashAlgorithmType);
-                                            string salt = match.Groups["Salt"].Value.ToUpper();
-                                            authorized = this.passwordManager.IsValid(keyHash, salt, this.keyHashAlgorithm, this.encryptionAlgorithm, out this.key);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        authorized = true;
-                                        this.key = Key.None;
-                                    }
-
-                                    if (authorized)
-                                    {
-                                        if (this.encryptionAlgorithm == Cryptography.SymmetricAlgorithmType.PlainText)
-                                            socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, HEADER_TAG);
-                                        else
-                                            socket.Read(AsyncSocket.CRLFCRLFData, TIMEOUT_ENCRYPTED_HEADERS, ENCRYPTED_HEADERS_TAG);
-                                    }
-                                    else
-                                    {
-                                        WriteError(socket, ErrorCode.NOT_AUTHORIZED, errorDescription);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.UNSUPPORTED_DIRECTIVE, directive);
-                            }
-                        }
-                        else
-                        {
-                            WriteError(socket, ErrorCode.UNKNOWN_PROTOCOL_VERSION, ErrorDescription.UNSUPPORTED_VERSION, version);
-                        }
-                    }
-                    else
-                    {
-                        WriteError(socket, ErrorCode.UNKNOWN_PROTOCOL, ErrorDescription.MALFORMED_REQUEST);
-                    }
-                }
-
-                else if (tag == HEADER_TAG)
-                {
-                    if (s == MessageParser.BLANK_LINE)
-                    {
-                        // if this is a REGISTER message, check Notifications-Count value
-                        // to see how many notification sections to expect
-                        if (this.directive == RequestType.REGISTER)
-                        {
-                            if (this.expectedNotifications > 0)
-                            {
-                                socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, NOTIFICATION_TYPE_TAG);
-                            }
-                            else
-                            {
-                                // a REGISTER request with no notifications is not valid
-                                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.NO_NOTIFICATIONS_REGISTERED);
-                            }
-                        }
-                        else
-                        {
-                            // otherwise, check the number of resource pointers we got and start reading those
-                            this.pointersExpected = GetNumberOfPointers();
-                            if (this.pointersExpected > 0)
-                            {
-                                this.pointersExpectedRemaining = this.pointersExpected;
-                                this.currentPointer = 1;
-                                socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
-                            }
-                            else
-                            {
-                                OnMessageParsed(socket);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Header header = Header.ParseHeader(s);
-                        if (header != null)
-                        {
-                            bool addHeader = true;
-                            if (header.Name == Header.APPLICATION_NAME)
-                            {
-                                this.applicationName = header.Value;
-                            }
-                            if (header.Name == Header.NOTIFICATIONS_COUNT)
-                            {
-                                this.expectedNotifications = Convert.ToInt32(header.Value);
-                                this.expectedNotificationsRemaining = this.expectedNotifications;
-                                this.currentNotification = 1;
-                            }
-                            if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT)
-                            {
-                                this.callbackData = header.Value;
-                            }
-                            if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE)
-                            {
-                                this.callbackDataType = header.Value;
-                            }
-                            if (header.Name == Header.NOTIFICATION_CALLBACK_TARGET || header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET)   // left in for compatibility
-                            {
-                                this.callbackUrl = header.Value;
-                            }
-                            if (header.Name == Header.RECEIVED)
-                            {
-                                this.requestInfo.PreviousReceivedHeaders.Add(header);
-                                addHeader = false;
-                            }
-
-                            if(addHeader) this.headers.AddHeader(header);
-                        }
-                        socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, HEADER_TAG);
-                    }
-                }
-
-                else if (tag == NOTIFICATION_TYPE_TAG)
-                {
-                    if (s == MessageParser.BLANK_LINE)
-                    {
-                        this.expectedNotificationsRemaining--;
-                        if (this.expectedNotificationsRemaining > 0)
-                        {
-                            this.currentNotification++;
-                            socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, NOTIFICATION_TYPE_TAG);
-                        }
-                        else
-                        {
-                            // otherwise, check the number of resource pointers we got and start reading those
-                            this.pointersExpected = GetNumberOfPointers();
-                            if (this.pointersExpected > 0)
-                            {
-                                this.pointersExpectedRemaining = this.pointersExpected;
-                                this.currentPointer = 1;
-                                socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
-                            }
-                            else
-                            {
-                                OnMessageParsed(socket);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (this.notificationsToBeRegistered.Count < this.currentNotification)
-                        {
-                            this.notificationsToBeRegistered.Add(new HeaderCollection());
-                        }
-
-                        Header header = Header.ParseHeader(s);
-                        this.notificationsToBeRegistered[this.currentNotification - 1].AddHeader(header);
-                        socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, NOTIFICATION_TYPE_TAG);
-                    }
-                }
-
-                else if (tag == RESOURCE_HEADER_TAG)
-                {
-                    if (s == MessageParser.BLANK_LINE)
-                    {
-                        // we should have found an Identifier header and Length header, or we are just starting a new section
-                        Pointer p = this.pointers[this.currentPointer - 1];
-                        if (p.Identifier != null && p.Length > 0)
-                        {
-                            // read #of bytes
-                            int length = this.pointers[this.currentPointer - 1].Length;
-                            socket.Read(length, TIMEOUT_GNTP_BINARY, RESOURCE_TAG);
-                        }
-                        else
-                        {
-                            socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
-                        }
-                    }
-                    else
-                    {
-                        Header header = Header.ParseHeader(s);
-                        // should be Identifer or Length
-                        if (header != null)
-                        {
-                            bool validHeader = false;
-                            if (header.Name == Header.RESOURCE_IDENTIFIER)
-                            {
-                                this.pointers[this.currentPointer - 1].Identifier = header.Value;
-                                validHeader = true;
-                            }
-                            else if (header.Name == Header.RESOURCE_LENGTH)
-                            {
-                                this.pointers[this.currentPointer - 1].Length = Convert.ToInt32(header.Value);
-                                validHeader = true;
-                            }
-                            else
-                                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.UNRECOGNIZED_RESOURCE_HEADER, header.Name);
-
-                            if (validHeader) socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
-                        }
-                        else
-                        {
-                            WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.UNRECOGNIZED_RESOURCE_HEADER);
-                        }
-                    }
-                }
-
-                else if (tag == RESOURCE_TAG)
-                {
-                    // deal with data bytes
-                    //byte[] encryptionKey = this.key.GetEncryptionKey(this.keyHashAlgorithm);
-                    //byte[] bytes = Cryptography.Decrypt(encryptionKey, this.iv, data.ByteArray, this.encryptionAlgorithm);
-                    byte[] bytes = this.key.Decrypt(data.ByteArray, this.iv);
-
-                    Pointer pointer = this.pointers[this.currentPointer - 1];
-                    pointer.ByteArray = bytes;
-                    BinaryData binaryData = new BinaryData(pointer.Identifier, pointer.ByteArray);
-                    ResourceCache.Add(this.applicationName, binaryData);
-
-                    this.pointersExpectedRemaining--;
-                    if (this.pointersExpectedRemaining > 0)
-                    {
-                        this.currentPointer++;
-                        socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
-                    }
-                    else
-                    {
-                        OnMessageParsed(socket);
-                    }
-                }
-
-                else if (tag == ENCRYPTED_HEADERS_TAG)
-                {
-                    // see if a length was specified (the original spec did not require the main encrypted headers portion to specify a length)
-                    if (s.StartsWith(Header.RESOURCE_LENGTH))
-                    {
-                        Header header = Header.ParseHeader(s);
-                        if (header != null)
-                        {
-                            int len = Convert.ToInt32(header.Value);
-                            socket.Read(len, TIMEOUT_ENCRYPTED_HEADERS, ENCRYPTED_HEADERS_TAG);
-                            return;
-                        }
-                    }
-
-                    ParseEncryptedMessage(data.ByteArray);
-                    if (this.pointersExpected > 0)
-                        socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
-                    else
-                        OnMessageParsed(socket);
-                }
-
-                else
-                {
-                    WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST);
-                }
-            }
-            catch (GrowlException gEx)
-            {
-                WriteError(socket, gEx.ErrorCode, gEx.Message, gEx.AdditionalInfo);
-            }
-            catch(Exception ex)
-            {
-                WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST, ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Gets the number of pointers that need to be read from the request, taking
-        /// into account any pre-cached binary data.
-        /// </summary>
-        /// <returns>The number of pointers that need to be read</returns>
-        private int GetNumberOfPointers()
-        {
-            /* check to see if we have already cached the data for
-             * all pointers. if so, we can skip reading the binary sections.
-             * (unfortunately, if we have cached some of the sections but not all,
-             * we will probably have to read it all in again, depending on the order
-             * they are included)
-             * */
-            int c = 0;
-            foreach (Header header in this.headers.Pointers)
-            {
-                Pointer pointer = new Pointer(this.headers);
-                this.pointers.Add(pointer);
-
-                if (ResourceCache.IsCached(this.applicationName, header.GrowlResourcePointerID))
-                {
-                    BinaryData data = ResourceCache.Get(this.applicationName, header.GrowlResourcePointerID);
-                    pointer.Identifier = header.GrowlResourcePointerID;
-                    pointer.ByteArray = data.Data;
-                    c++;
-                }
-            }
-            foreach (HeaderCollection notification in this.notificationsToBeRegistered)
-            {
-                foreach (Header header in notification.Pointers)
-                {
-                    Pointer pointer = new Pointer(notification);
-                    this.pointers.Add(pointer);
-
-                    if (ResourceCache.IsCached(this.applicationName, header.GrowlResourcePointerID))
-                    {
-                        BinaryData data = ResourceCache.Get(this.applicationName, header.GrowlResourcePointerID);
-                        pointer.Identifier = header.GrowlResourcePointerID;
-                        pointer.ByteArray = data.Data;
-                        c++;
-                    }
-                }
-            }
-            int p = this.pointers.Count;
-
-            // check to see if all pointers were already cached
-            if (p == c) p = 0;  // if #cached == total#, we dont need to read any
-            else
-            {
-                // not all of the items are cached, so we have to re-read all of them.
-                // to do so, we have to clear any pointer data we may have set
-                foreach (Pointer pointer in this.pointers)
-                {
-                    pointer.Clear();
-                }
-            }
-
-            if (c > 0 && p == 0)
-            {
-                requestInfo.SaveHandlingInfo("ALL BINARY RESOURCES ALREADY CACHED");
-            }
-
-            return p;
         }
 
         /// <summary>
@@ -909,70 +345,6 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Logs the specified data.
-        /// </summary>
-        /// <param name="data">The <see cref="Data"/> to log</param>
-        public void Log(Data data)
-        {
-            try
-            {
-                if (this.loggingEnabled && !String.IsNullOrEmpty(this.logFolder))
-                {
-                    string filename = String.Format(@"GNTP_{0}.txt", this.requestInfo.RequestID);
-                    string filepath = PathUtility.Combine(this.logFolder, filename);
-                    bool exists = System.IO.File.Exists(filepath);
-                    if (!exists)
-                    {
-                        // log the initial request/response
-                        System.IO.StreamWriter w = System.IO.File.CreateText(filepath);
-                        using (w)
-                        {
-                            w.Write("Timestamp: {0}\r\n", DateTime.Now.ToString());
-                            foreach (string item in this.requestInfo.HandlingInfo)
-                            {
-                                w.Write(String.Format("{0}\r\n", item));
-                            }
-                            w.Write(SEPERATOR);
-                            w.Write(this.alreadyReceived.ToString());
-
-                            if (!String.IsNullOrEmpty(this.decryptedRequest))
-                            {
-                                w.Write(SEPERATOR);
-                                w.Write(this.decryptedRequest);
-                            }
-
-                            w.Write(SEPERATOR);
-                            w.Write(data.ToString());
-                            w.Close();
-                            this.requestInfo.HandlingInfo.Clear();
-                        }
-                    }
-                    else
-                    {
-                        // this is for logging callback data
-                        System.IO.StreamWriter w = new System.IO.StreamWriter(filepath, true);
-                        using (w)
-                        {
-                            w.Write(SEPERATOR);
-                            w.Write("Timestamp: {0}\r\n", DateTime.Now.ToString());
-                            foreach (string item in this.requestInfo.HandlingInfo)
-                            {
-                                w.Write(String.Format("{0}\r\n", item));
-                            }
-                            w.Write(SEPERATOR);
-                            w.Write(data.ToString());
-                            w.Close();
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                // suppress logging exceptions
-            }
-        }
-
-        /// <summary>
         /// Writes an error response back to the original sender.
         /// </summary>
         /// <param name="socket">The <see cref="AsyncSocket"/> used to write the response</param>
@@ -988,8 +360,18 @@ namespace Growl.Daemon
                     errorMessage += String.Format(" ({0})", arg);
                 }
             }
-
             Error error = new Error(errorCode, errorMessage);
+
+            WriteError(socket, error);
+        }
+
+        /// <summary>
+        /// Writes an error response back to the original sender.
+        /// </summary>
+        /// <param name="socket">The <see cref="AsyncSocket"/> used to write the response</param>
+        /// <param name="error">The error</param>
+        private void WriteError(AsyncSocket socket, Error error)
+        {
             if (this.Error != null)
             {
                 this.Error(error);
@@ -1001,9 +383,6 @@ namespace Growl.Daemon
             {
                 mb.AddHeader(header);
             }
-
-            // note that we may have only read part of the request
-            this.alreadyReceived.Append(PARTIAL_MESSAGE_NOTICE);
 
             Write(socket, mb, TIMEOUT_ERROR_RESPONSE, RESPONSE_ERROR_TAG, true, true);
         }
@@ -1040,6 +419,11 @@ namespace Growl.Daemon
             Data data = new Data(bytes);
             Log(data);
 
+            // give any custom readers the change to modify the output before we send it (especially useful for WebSockets that need to frame their data)
+            if (this.requestReader != null)
+                this.requestReader.BeforeResponse(ref bytes);
+
+            // send the data
             socket.Write(bytes, timeout, tag);
 
             // if we are the ones disconnecting, do it now.
@@ -1060,13 +444,79 @@ namespace Growl.Daemon
         }
 
         /// <summary>
+        /// Logs the specified data.
+        /// </summary>
+        /// <param name="data">The <see cref="Data"/> to log</param>
+        public void Log(Data data)
+        {
+            try
+            {
+                if (this.loggingEnabled && !String.IsNullOrEmpty(this.logFolder))
+                {
+                    string filename = String.Format(@"GNTP_{0}.txt", this.requestInfo.RequestID);
+                    string filepath = PathUtility.Combine(this.logFolder, filename);
+                    bool exists = System.IO.File.Exists(filepath);
+                    if (!exists)
+                    {
+                        // log the initial request/response
+                        System.IO.StreamWriter w = System.IO.File.CreateText(filepath);
+                        using (w)
+                        {
+                            w.Write("Timestamp: {0}\r\n", DateTime.Now.ToString());
+                            foreach (string item in this.requestInfo.HandlingInfo)
+                            {
+                                w.Write(String.Format("{0}\r\n", item));
+                            }
+                            w.Write(SEPERATOR);
+
+                            if (this.requestReader != null)
+                            {
+                                w.Write(this.requestReader.ReceivedData);
+
+                                if (!String.IsNullOrEmpty(this.requestReader.DecryptedData))
+                                {
+                                    w.Write(SEPERATOR);
+                                    w.Write(this.requestReader.DecryptedData);
+                                }
+                            }
+
+                            w.Write(SEPERATOR);
+                            w.Write(data.ToString());
+                            w.Close();
+                            this.requestInfo.HandlingInfo.Clear();
+                        }
+                    }
+                    else
+                    {
+                        // this is for logging callback data
+                        System.IO.StreamWriter w = new System.IO.StreamWriter(filepath, true);
+                        using (w)
+                        {
+                            w.Write(SEPERATOR);
+                            w.Write("Timestamp: {0}\r\n", DateTime.Now.ToString());
+                            foreach (string item in this.requestInfo.HandlingInfo)
+                            {
+                                w.Write(String.Format("{0}\r\n", item));
+                            }
+                            w.Write(SEPERATOR);
+                            w.Write(data.ToString());
+                            w.Close();
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // suppress logging exceptions
+            }
+        }
+
+        /// <summary>
         /// Called when the request is successfully parsed.
         /// </summary>
         /// <param name="socket">The <see cref="AsyncSocket"/> that the request came in on</param>
         private void OnMessageParsed(AsyncSocket socket)
         {
-            this.socket = socket;
-            
             // handle request information
             this.requestInfo.ReceivedFrom = socket.RemoteAddress.ToString();
             this.requestInfo.ReceivedBy = String.Format("{0} ({1})", Environment.MachineName, GrowlServer.ServerID);
@@ -1082,12 +532,7 @@ namespace Growl.Daemon
             }
 
             // handle callback information
-            CallbackContext context = null;
-            if (!String.IsNullOrEmpty(this.callbackData) && !String.IsNullOrEmpty(this.callbackDataType) && String.IsNullOrEmpty(this.callbackUrl))
-                context = new CallbackContext(this.callbackData, this.callbackDataType);
-            else if(!String.IsNullOrEmpty(this.callbackUrl))
-                context = new CallbackContext(this.callbackUrl);
-            this.callbackInfo.Context = context;
+            this.callbackInfo.Context = this.Request.CallbackContext;
             this.callbackInfo.MessageHandler = this;
             this.callbackInfo.RequestInfo = requestInfo;
 
@@ -1119,35 +564,6 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Parses the GNTP header line.
-        /// </summary>
-        /// <param name="line">The GNTP header</param>
-        /// <param name="passwordRequired">Indicates if the request must contain a password</param>
-        /// <returns></returns>
-        private static Match ParseGNTPHeaderLine(string line, bool passwordRequired)
-        {
-            Match match = null;
-            if (!passwordRequired)
-            {
-                // key not required
-                match = regExMessageHeader_Local.Match(line);
-
-                // if they *did* pass the key hash anyway, they need to at least have used the correct format
-                if (!match.Success)
-                    match = regExMessageHeader_Remote.Match(line);
-            }
-            else
-            {
-                match = regExMessageHeader_Remote.Match(line);
-
-                // if there is no match, see if it is due to a missing password
-                if (!match.Success)
-                    match = regExMessageHeader_Local.Match(line);
-            }
-            return match;
-        }
-
-        /// <summary>
         /// Checks the 'Received' headers to see if this machine has already handled this request
         /// </summary>
         /// <returns>
@@ -1173,141 +589,6 @@ namespace Growl.Daemon
                 }
             }
             return false;
-        }
-
-        /// <summary>
-        /// Parses the encrypted message.
-        /// </summary>
-        /// <param name="bytes">The encrypted bytes</param>
-        private void ParseEncryptedMessage(byte[] bytes)
-        {
-            byte[] encryptedBytes = null;
-
-            if (bytes[bytes.Length - 4] == ((byte)'\r')
-                && bytes[bytes.Length - 3] == ((byte)'\n')
-                && bytes[bytes.Length - 2] == ((byte)'\r')
-                && bytes[bytes.Length - 1] == ((byte)'\n'))
-            {
-                encryptedBytes = new byte[bytes.Length - 4];
-            }
-            else
-            {
-                encryptedBytes = new byte[bytes.Length];
-            }
-            Buffer.BlockCopy(bytes, 0, encryptedBytes, 0, encryptedBytes.Length);
-
-            byte[] decryptedBytes = this.key.Decrypt(encryptedBytes, this.iv);
-
-            // log the decrypted data
-#if DEBUG
-            this.decryptedRequest = Encoding.UTF8.GetString(decryptedBytes);
-#endif
-
-            System.IO.MemoryStream stream = new System.IO.MemoryStream(decryptedBytes);
-            using (stream)
-            {
-                GNTPStreamReader reader = new GNTPStreamReader(stream);
-                using (reader)
-                {
-                    // main headers
-                    while (!reader.EndOfStream)
-                    {
-                        string s = reader.ReadLine().Trim();
-
-                        if (String.IsNullOrEmpty(s))
-                        {
-                            // if this is a REGISTER message, check Notifications-Count value
-                            // to see how many notification sections to expect
-                            if (this.directive == RequestType.REGISTER)
-                            {
-                                if (this.expectedNotifications == 0)
-                                {
-                                    // a REGISTER request with no notifications is not valid
-                                    WriteError(socket, ErrorCode.INVALID_REQUEST, ErrorDescription.NO_NOTIFICATIONS_REGISTERED);
-                                }
-                            }
-                            break;
-                        }
-                        else
-                        {
-                            Header header = Header.ParseHeader(s);
-                            if (header != null)
-                            {
-                                bool addHeader = true;
-                                if (header.Name == Header.APPLICATION_NAME)
-                                {
-                                    this.applicationName = header.Value;
-                                }
-                                if (header.Name == Header.NOTIFICATIONS_COUNT)
-                                {
-                                    this.expectedNotifications = Convert.ToInt32(header.Value);
-                                    this.expectedNotificationsRemaining = this.expectedNotifications;
-                                    this.currentNotification = 1;
-                                }
-                                if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT)
-                                {
-                                    this.callbackData = header.Value;
-                                }
-                                if (header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TYPE)
-                                {
-                                    this.callbackDataType = header.Value;
-                                }
-                                if (header.Name == Header.NOTIFICATION_CALLBACK_TARGET || header.Name == Header.NOTIFICATION_CALLBACK_CONTEXT_TARGET)   // left in for compatibility
-                                {
-                                    this.callbackUrl = header.Value;
-                                }
-                                if (header.Name == Header.RECEIVED)
-                                {
-                                    this.requestInfo.PreviousReceivedHeaders.Add(header);
-                                    addHeader = false;
-                                }
-
-                                if (addHeader) this.headers.AddHeader(header);
-                            }
-                        }
-                    }
-
-                    // any notification type headers
-                    if (this.expectedNotifications > 0)
-                    {
-                        while (!reader.EndOfStream)
-                        {
-                            string s = reader.ReadLine().Trim();
-
-                            if (s == String.Empty)
-                            {
-                                this.expectedNotificationsRemaining--;
-                                if (this.expectedNotificationsRemaining > 0)
-                                {
-                                    this.currentNotification++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                if (this.notificationsToBeRegistered.Count < this.currentNotification)
-                                {
-                                    this.notificationsToBeRegistered.Add(new HeaderCollection());
-                                }
-
-                                Header header = Header.ParseHeader(s);
-                                this.notificationsToBeRegistered[this.currentNotification - 1].AddHeader(header);
-                            }
-                        }
-                    }
-
-                    // now that we have read the stream, check for any embedded resources
-                    this.pointersExpected = GetNumberOfPointers();
-                    if (this.pointersExpected > 0)
-                    {
-                        this.pointersExpectedRemaining = this.pointersExpected;
-                        this.currentPointer = 1;
-                    }
-                }
-            }
         }
     }
 }

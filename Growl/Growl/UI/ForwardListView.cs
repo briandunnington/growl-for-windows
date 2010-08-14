@@ -81,28 +81,21 @@ namespace Growl.UI
                 // NOTE: dont set the .Text or .SubItem properties here - it causes an erratic exception
 
                 bool drawEnabled = ShouldDrawEnabled(fc);
+                bool selected = this.SelectedIndices.Contains(e.ItemIndex);
 
                 // draw the background for selected states
-                if(drawEnabled)
+                if(drawEnabled && selected)
+                {
+                    e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, e.Bounds);
+                }
+                else
                 {
                     e.DrawBackground();
-                    if ((e.State & ListViewItemStates.Selected) != 0)
-                    {
-                        e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, bounds);
-                    }
-                    else
-                    {
-                        System.Drawing.SolidBrush backBrush = new System.Drawing.SolidBrush(this.BackColor);
-                        using (backBrush)
-                        {
-                            e.Graphics.FillRectangle(backBrush, bounds);
-                        }
-                    }
                 }
 
                 // draw the focus rectangle
-                if (e.Item.Selected)
-                    ControlPaint.DrawFocusRectangle(e.Graphics, bounds);
+                if (selected)
+                    ControlPaint.DrawFocusRectangle(e.Graphics, e.Bounds);
 
                 // draw icon
                 int newX = bounds.X;

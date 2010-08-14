@@ -50,7 +50,7 @@ namespace GrowlNETConnector.Sample
             this.growl.Notify(notification, callbackContext);
         }
 
-        void growl_NotificationCallback(Response response, CallbackData callbackData)
+        void growl_NotificationCallback(Response response, CallbackData callbackData, object state)
         {
             string text = String.Format("Response Type: {0}\r\nNotification ID: {1}\r\nCallback Data: {2}\r\nCallback Data Type: {3}\r\n", callbackData.Result, callbackData.NotificationID, callbackData.Data, callbackData.Type);
             MessageBox.Show(text, "Callback received", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);

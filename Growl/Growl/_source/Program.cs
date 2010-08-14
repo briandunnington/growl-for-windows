@@ -48,21 +48,6 @@ namespace Growl
         {
             Utility.WriteDebugInfo(String.Format("PROGRAM FOLDER: {0}", Application.StartupPath));
             Utility.WriteDebugInfo(String.Format("USER FOLDER: {0}", Utility.UserSettingFolder));   //NOTE: this is here as a bit of hack to ensure that the Utility static constructor runs first
-
-            // handle setting/overriding the culture information
-            if (!String.IsNullOrEmpty(Properties.Settings.Default.CultureCode))
-            {
-                try
-                {
-                    CultureInfo culture = new CultureInfo(Properties.Settings.Default.CultureCode);
-                    System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-                }
-                catch
-                {
-                    // suppress any exception (in case the culture in the .config file is not valid)
-                }
-            }
-            Properties.Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
         }
 
         private void InitializeComponent()
@@ -236,21 +221,28 @@ namespace Growl
             }
         }
 
-        private void ShowForm()
+        public void ShowForm()
         {
-            if (this.mainForm != null && this.mainForm.Visible) return;
+            if (this.mainForm != null && this.mainForm.Visible)
+            {
+                // do nothing for now
+            }
+            else
+            {
+                this.mainForm = new MainForm();
+                this.mainForm.FormClosed += new FormClosedEventHandler(mainForm_FormClosed);
+                this.mainForm.InitializePreferences();
 
-            this.mainForm = new MainForm();
-            this.mainForm.FormClosed += new FormClosedEventHandler(mainForm_FormClosed);
-            this.mainForm.InitializePreferences();
+                this.mainForm.OnOffButton.On = this.controller.IsOn;
+                this.mainForm.OnOffButton.Switched += new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
 
-            this.mainForm.OnOffButton.On = this.controller.IsOn;
-            this.mainForm.OnOffButton.Switched += new Growl.UI.OnOffSwitchedEventHandler(OnOffButton_Switched);
+                UpdateState(this.controller.IsOn, !this.controller.IsRunning);
+                this.mainForm.DoneInitializing();
 
-            UpdateState(this.controller.IsOn, !this.controller.IsRunning);
-            this.mainForm.DoneInitializing();
+                this.mainForm.ShowForm();
+            }
 
-            this.mainForm.ShowForm();
+            Growl.DisplayStyle.Win32.SetForegroundWindow(this.mainForm.Handle);
         }
 
         private void KillForm(object obj)
@@ -316,6 +308,7 @@ namespace Growl
             bool handleListenUrl = ((signal & ApplicationMain.Signal.HandleListenUrl) == ApplicationMain.Signal.HandleListenUrl);
             bool reloadForwarders = ((signal & ApplicationMain.Signal.ReloadForwarders) == ApplicationMain.Signal.ReloadForwarders);
             bool reloadSubscribers = ((signal & ApplicationMain.Signal.ReloadSubscribers) == ApplicationMain.Signal.ReloadSubscribers);
+            bool showSettings = ((signal & ApplicationMain.Signal.ShowSettings) == ApplicationMain.Signal.ShowSettings);
 
             if(!silent && this.controller != null) 
                 this.controller.SendSystemNotification(Properties.Resources.SystemNotification_Running_Title, Properties.Resources.SystemNotification_Running_Text, null);
@@ -328,14 +321,19 @@ namespace Growl
 
             if(updateLanguage)
             {
-                // read each subfolder in the app folder and find the one with the matching hash
-                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath);
-                foreach (System.IO.DirectoryInfo directory in di.GetDirectories())
+                if (signalValue == 0)
+                    Properties.Settings.Default.CultureCode = "";
+                else
                 {
-                    if (directory.Name.GetHashCode() == signalValue)
+                    // read each subfolder in the app folder and find the one with the matching hash
+                    System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath);
+                    foreach (System.IO.DirectoryInfo directory in di.GetDirectories())
                     {
-                        Properties.Settings.Default.CultureCode = directory.Name;
-                        break;
+                        if (directory.Name.GetHashCode() == signalValue)
+                        {
+                            Properties.Settings.Default.CultureCode = directory.Name;
+                            break;
+                        }
                     }
                 }
             }
@@ -363,6 +361,11 @@ namespace Growl
                  * so we could loop through the folders looking for a matching has (similar to how
                  * the updateLanguage section works above), but the DiscoverNewPlugins already
                  * loops through the folders anyway, so we can just let it do its thing. */
+            }
+
+            if (showSettings)
+            {
+                this.ShowForm();
             }
         }
 

@@ -250,7 +250,7 @@ namespace Growl.Connector
                     client = new TcpClient();
                     client.Connect(this.hostname, this.port);
                 }
-                catch (Exception ex)
+                catch
                 {
                     OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.CONNECTION_FAILURE), cs.UserState);
                 }
@@ -261,7 +261,7 @@ namespace Growl.Connector
                     stream = client.GetStream();
                     stream.Write(bytes, 0, bytes.Length);
                 }
-                catch (Exception ex)
+                catch
                 {
                     OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.WRITE_FAILURE), cs.UserState);
                 }
@@ -306,7 +306,7 @@ namespace Growl.Connector
                         del(response, cs.UserState);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     OnCommunicationFailure(new Response(ErrorCode.NETWORK_FAILURE, ErrorDescription.READ_FAILURE), cs.UserState);
                 }

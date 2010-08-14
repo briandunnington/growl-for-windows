@@ -18,7 +18,7 @@ namespace Growl.Installation
         private Growl.CoreLibrary.WebClientEx wc;
         private string uri;
         private bool appIsAlreadyRunning;
-        private string tempFolder;
+        private string tempFolder = Path.Combine(Utility.UserSettingFolder, TEMP_FOLDER);
         private System.Threading.ManualResetEvent mre = new System.Threading.ManualResetEvent(false);
         private System.Threading.AutoResetEvent are = new System.Threading.AutoResetEvent(false);
         private DownloadProgressChangedEventArgs progress;
@@ -44,7 +44,6 @@ namespace Growl.Installation
             bool languageInstalled = false;
             this.uri = uri;
             this.appIsAlreadyRunning = appIsAlreadyRunning;
-            this.tempFolder = Path.Combine(Utility.UserSettingFolder, TEMP_FOLDER);
 
             try
             {
@@ -52,6 +51,7 @@ namespace Growl.Installation
                 if (uri == "reset")
                 {
                     Properties.Settings.Default.CultureCode = "";
+                    Properties.Settings.Default.Save();
                     cultureCodeHash = 0;
                     languageInstalled = true;
                     return languageInstalled;
@@ -83,7 +83,8 @@ namespace Growl.Installation
                         if (Directory.Exists(this.tempFolder))
                             Directory.Delete(this.tempFolder, true);
                         Directory.CreateDirectory(this.tempFolder);
-                        string zipFileName = Path.Combine(this.tempFolder, String.Format("{0}.zip", System.Guid.NewGuid().ToString()));
+                        string guid = System.Guid.NewGuid().ToString();
+                        string zipFileName = GetTempZipFileName(guid);
                         info.LocalZipFileLocation = zipFileName;
 
                         wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
@@ -111,22 +112,22 @@ namespace Growl.Installation
                         if (this.errorMessage == null)
                         {
                             // unzip files to the correct location
-                            string languageFolder = Path.Combine(Application.StartupPath, info.CultureCode);
+                            string languageFolder = GetLanguageFolder(info.CultureCode);
                             if (!ApplicationMain.HasProgramLaunchedYet || !Directory.Exists(languageFolder))
                             {
                                 Utility.WriteDebugInfo(String.Format("Language '{0}' downloaded - starting unzip.", info.Name));
-                                Unzipper.UnZipFiles(info.LocalZipFileLocation, languageFolder, false);
 
-                                //InternalNotification n = new InternalNotification(Properties.Resources.DisplayInstaller_NewDisplayInstalledTitle, String.Format(Utility.GetResourceString(Properties.Resources.DisplayInstaller_NewDisplayInstalledText), info.Name), info.Name);
-                                string text = String.Format(Properties.Resources.LanguageInstaller_LanguageInstalledText, info.Name);
-                                if (ApplicationMain.HasProgramLaunchedYet) text += (" " + Properties.Resources.LanguageInstaller_RestartRequiredText);
-                                InternalNotification n = new InternalNotification(Properties.Resources.LanguageInstaller_LanguageInstalledTitle, Utility.GetResourceString(text), null);
-                                queuedNotifications.Add(n);
-
-                                Properties.Settings.Default.CultureCode = info.CultureCode;
-                                cultureCodeHash = info.CultureCode.GetHashCode();
-
-                                languageInstalled = true;
+                                // NOTE: installing a language pack requires elevated privileges (to write the resource assemblies to the bin folder).
+                                // as such, we have to be elevated first
+                                if (UserAccountControlHelper.IsElevated())
+                                {
+                                    cultureCodeHash = UnzipFilesToBin(info.Name, info.LocalZipFileLocation, info.CultureCode, ref queuedNotifications);
+                                }
+                                else
+                                {
+                                    string argument = String.Format("growl:languageelevatedinstall*{0}~{1}~{2}", info.CultureCode, info.Name, guid);
+                                    UserAccountControlHelper.LaunchElevatedApplication(System.Windows.Forms.Application.ExecutablePath, argument, true);
+                                }
 
                                 this.Close();
                             }
@@ -135,10 +136,6 @@ namespace Growl.Installation
                                 // display with the same name aleady exists...
                                 ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_AlreadyInstalled), info.Name), true);
                             }
-
-                            // clean up
-                            Utility.WriteDebugInfo(String.Format("Deleteing '{0}' zip file at {1}", info.Name, info.LocalZipFileLocation));
-                            if (File.Exists(info.LocalZipFileLocation)) File.Delete(info.LocalZipFileLocation);
                         }
                         else
                         {
@@ -160,6 +157,53 @@ namespace Growl.Installation
                 ShowMessage(String.Format(Utility.GetResourceString(Properties.Resources.LanguageInstaller_NonexistentDefinitionFile), this.uri), true);
             }
             return languageInstalled;
+        }
+
+        public bool FinishElevatedInstall(string data, ref List<InternalNotification> queuedNotifications, ref int cultureCodeHash)
+        {
+            // data format: {culturecode}~{name}~{tempfolderguid}
+            string[] parts = data.Split('~');
+            string cultureCode = parts[0];
+            string name = parts[1];
+            string tempfolderguid = parts[2];
+
+            string zipFileLocation = GetTempZipFileName(tempfolderguid);
+            cultureCodeHash = UnzipFilesToBin(name, zipFileLocation, cultureCode, ref queuedNotifications);
+            return true;
+        }
+
+        private int UnzipFilesToBin(string name, string zipFileLocation, string cultureCode, ref List<InternalNotification> queuedNotifications)
+        {
+            // unzip
+            string languageFolder = GetLanguageFolder(cultureCode);
+            Unzipper.UnZipFiles(zipFileLocation, languageFolder, false);
+
+            // clean up
+            Utility.WriteDebugInfo(String.Format("Deleteing '{0}' zip file at {1}", name, zipFileLocation));
+            if (File.Exists(zipFileLocation)) File.Delete(zipFileLocation);
+
+            // notify
+            string text = String.Format(Properties.Resources.LanguageInstaller_LanguageInstalledText, name);
+            if (ApplicationMain.HasProgramLaunchedYet) text += (" " + Properties.Resources.LanguageInstaller_RestartRequiredText);
+            InternalNotification n = new InternalNotification(Properties.Resources.LanguageInstaller_LanguageInstalledTitle, Utility.GetResourceString(text), null);
+            queuedNotifications.Add(n);
+
+            // done
+            Properties.Settings.Default.CultureCode = cultureCode;
+            int cultureCodeHash = cultureCode.GetHashCode();
+            return cultureCodeHash;
+        }
+
+        private string GetLanguageFolder(string cultureCode)
+        {
+            string languageFolder = Path.Combine(Application.StartupPath, cultureCode);
+            return languageFolder;
+        }
+
+        private string GetTempZipFileName(string guid)
+        {
+            string zipFileName = Path.Combine(this.tempFolder, String.Format("{0}.zip", guid));
+            return zipFileName;
         }
 
         private void StartDownload(object obj)

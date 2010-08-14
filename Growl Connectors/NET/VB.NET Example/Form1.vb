@@ -36,7 +36,7 @@ Public Class Form1
         Me.growl.Notify(n, cc)
     End Sub
 
-    Private Sub growl_NotificationCallback(ByVal response As Response, ByVal callbackData As CallbackData) Handles growl.NotificationCallback
+    Private Sub growl_NotificationCallback(ByVal response As Response, ByVal callbackData As CallbackData, ByVal state As Object) Handles growl.NotificationCallback
         Dim text As String = String.Format("Response Type: {0} - Notification ID: {1} - Callback Data: {2} - Callback Data Type: {3}", callbackData.Result, callbackData.NotificationID, callbackData.Data, callbackData.Type)
         MessageBox.Show(text, "Callback received", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
     End Sub

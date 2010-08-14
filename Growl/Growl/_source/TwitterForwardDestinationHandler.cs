@@ -36,10 +36,13 @@ namespace Growl
 
         public List<DestinationListItem> GetListItems()
         {
+            /* REMOVED 08.06.2010 - no workable solution for Twitter oAuth and open source projects, so forwarding to Twitter has been removed
             ForwardDestinationListItem item = new ForwardDestinationListItem(Properties.Resources.AddComputer_AddTwitter, KnownDestinationPlatformType.Twitter.GetIcon(), this);
             List<DestinationListItem> list = new List<DestinationListItem>();
             list.Add(item);
             return list;
+             * */
+            return new List<DestinationListItem>();
         }
 
         #endregion

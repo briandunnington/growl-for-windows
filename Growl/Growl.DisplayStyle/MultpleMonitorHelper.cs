@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace Growl.DisplayStyle
 {
+    /// <summary>
+    /// Provides helper methods useful when dealing with multiple monitor support.
+    /// </summary>
     public static class MultipleMonitorHelper
     {
         /// <summary>

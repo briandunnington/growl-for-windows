@@ -172,6 +172,23 @@ namespace Growl.CoreLibrary
         }
 
         /// <summary>
+        /// Shows the settings window.
+        /// </summary>
+        /// <remarks>
+        /// If GfW is not running, it will be launched.
+        /// </remarks>
+        public void ShowSettingsWindow()
+        {
+            if (this.IsInstalled)
+            {
+                string exePath = Path.Combine(this.InstallationFolder, "Growl.exe");
+                string args = "/cmd:show";
+                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo(exePath, args);
+                System.Diagnostics.Process.Start(info);
+            }
+        }
+
+        /// <summary>
         /// Returns the full path to where Growl is installed
         /// </summary>
         public string InstallationFolder

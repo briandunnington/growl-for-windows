@@ -247,12 +247,12 @@ namespace Growl
 
         void historyListView_RedrawStarted(object sender, EventArgs args)
         {
-            this.historyListView.Visible = false;
+            //this.historyListView.Visible = false;
         }
 
         void historyListView_RedrawFinished(object sender, EventArgs args)
         {
-            this.historyListView.Visible = true;
+            //this.historyListView.Visible = true;
         }
 
         void controller_Stopped(object sender, EventArgs e)

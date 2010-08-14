@@ -1115,7 +1115,7 @@ namespace Growl
             this.historyDaysTrackBar.Location = new System.Drawing.Point(1, 18);
             this.historyDaysTrackBar.Maximum = 7;
             this.historyDaysTrackBar.Name = "historyDaysTrackBar";
-            this.historyDaysTrackBar.Size = new System.Drawing.Size(172, 42);
+            this.historyDaysTrackBar.Size = new System.Drawing.Size(172, 45);
             this.historyDaysTrackBar.TabIndex = 6;
             this.historyDaysTrackBar.Scroll += new System.EventHandler(this.historyDaysTrackBar_Scroll);
             // 
@@ -1378,13 +1378,13 @@ namespace Growl
             this.removeApplicationToolStripMenuItem});
             this.contextMenuStripApplications.Name = "contextMenuStripApplications";
             this.contextMenuStripApplications.ShowImageMargin = false;
-            this.contextMenuStripApplications.Size = new System.Drawing.Size(144, 26);
+            this.contextMenuStripApplications.Size = new System.Drawing.Size(157, 26);
             this.contextMenuStripApplications.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripApplications_Closed);
             // 
             // removeApplicationToolStripMenuItem
             // 
             this.removeApplicationToolStripMenuItem.Name = "removeApplicationToolStripMenuItem";
-            this.removeApplicationToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.removeApplicationToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.removeApplicationToolStripMenuItem.Text = "Remove Application";
             this.removeApplicationToolStripMenuItem.Click += new System.EventHandler(this.removeApplicationToolStripMenuItem_Click);
             // 
@@ -1395,19 +1395,19 @@ namespace Growl
             this.removeComputerToolStripMenuItem});
             this.contextMenuStripForwardDestinations.Name = "contextMenuStripForwardDestinations";
             this.contextMenuStripForwardDestinations.ShowImageMargin = false;
-            this.contextMenuStripForwardDestinations.Size = new System.Drawing.Size(139, 48);
+            this.contextMenuStripForwardDestinations.Size = new System.Drawing.Size(150, 48);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // removeComputerToolStripMenuItem
             // 
             this.removeComputerToolStripMenuItem.Name = "removeComputerToolStripMenuItem";
-            this.removeComputerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.removeComputerToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.removeComputerToolStripMenuItem.Text = "Remove Computer";
             this.removeComputerToolStripMenuItem.Click += new System.EventHandler(this.removeComputerToolStripMenuItem_Click);
             // 
@@ -1418,19 +1418,19 @@ namespace Growl
             this.unsubscribeToolStripMenuItem});
             this.contextMenuStripSubscriptions.Name = "contextMenuStripSubscriptions";
             this.contextMenuStripSubscriptions.ShowImageMargin = false;
-            this.contextMenuStripSubscriptions.Size = new System.Drawing.Size(108, 48);
+            this.contextMenuStripSubscriptions.Size = new System.Drawing.Size(115, 48);
             // 
             // editSubscriptionToolStripMenuItem
             // 
             this.editSubscriptionToolStripMenuItem.Name = "editSubscriptionToolStripMenuItem";
-            this.editSubscriptionToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.editSubscriptionToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.editSubscriptionToolStripMenuItem.Text = "Edit";
             this.editSubscriptionToolStripMenuItem.Click += new System.EventHandler(this.editSubscriptionToolStripMenuItem_Click);
             // 
             // unsubscribeToolStripMenuItem
             // 
             this.unsubscribeToolStripMenuItem.Name = "unsubscribeToolStripMenuItem";
-            this.unsubscribeToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.unsubscribeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.unsubscribeToolStripMenuItem.Text = "Unsubscribe";
             this.unsubscribeToolStripMenuItem.Click += new System.EventHandler(this.unsubscribeToolStripMenuItem_Click);
             // 
@@ -1562,18 +1562,18 @@ namespace Growl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 373);
             this.Controls.Add(this.toolbarPanel);
-            this.Controls.Add(this.panelSecurity);
-            this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
             this.Controls.Add(this.panelGeneral);
             this.Controls.Add(this.panelDisplays);
             this.Controls.Add(this.panelAbout);
+            this.Controls.Add(this.panelSecurity);
+            this.Controls.Add(this.panelHistory);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(670, 400);
+            this.MinimumSize = new System.Drawing.Size(670, 411);
             this.Name = "MainForm";
             this.Text = "Growl";
             this.Load += new System.EventHandler(this.MainForm_Load);

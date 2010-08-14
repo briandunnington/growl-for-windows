@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Growl
@@ -9,18 +10,22 @@ namespace Growl
         [Flags()]
         internal enum Signal
         {
+            CancelLaunching = -1,
+
             Silent = 1,
             ReloadDisplays = 2,
             UpdateLanguage = 4,
             HandleListenUrl = 8,
             ReloadForwarders = 16,
-            ReloadSubscribers = 32
+            ReloadSubscribers = 32,
+            ShowSettings = 64
         }
 
         static Program program;
         static bool appIsAlreadyRunning;
         static bool silentMode;
         static bool loggingEnabled;
+        static bool showSettingsOnLaunch;
         static List<InternalNotification> queuedNotifications = new List<InternalNotification>();
 
         public static DateTime st;
@@ -43,6 +48,10 @@ namespace Growl
                 Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
                 AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
+                // handle setting/overriding the culture information (this has to be done early so that installation dialogs are translated)
+                SetCulture(Properties.Settings.Default.CultureCode);
+
+                // launch app
                 SingleInstanceApplication app = new SingleInstanceApplication("GrowlForWindows");
                 using (app)
                 {
@@ -62,6 +71,9 @@ namespace Growl
                         string protocolArgument = args[0];
                         Installation.ProtocolHandler handler = new Growl.Installation.ProtocolHandler(appIsAlreadyRunning);
                         signalFlag = handler.Process(protocolArgument, ref queuedNotifications, ref signalValue);
+
+                        // if for some reason we were told to cancel launching the app, lets honor that
+                        if (signalFlag == Signal.CancelLaunching) return;
                     }
 
                     // handle command line options
@@ -74,6 +86,43 @@ namespace Growl
                             {
                                 Parameter p = GetParameterValue(arg);
                                 if (p.Argument != null) parameters.Add(p.Argument, p);
+                            }
+                        }
+
+                        // the 'cmd' option is special in that it may require Growl to *not* launch, depending on the current state and command issued.
+                        // we handle it here first - if other parameters are also passed, they will be ignored.
+                        if(parameters.ContainsKey("/cmd"))
+                        {
+                            string cmd = parameters["/cmd"].Value.ToLower();
+                            // currently supported values: start, stop, show
+                            switch (cmd)
+                            {
+                                case "start" :
+                                    // 1. Growl is not running. Start it (service will start automatically)
+                                    // 2. Growl is running and started. do nothing
+                                    // 3. Growl is running and stopped. start it
+                                    // TODO: this is not complete. i am not sure if i am going to include this ever or not
+                                    break;
+                                case "stop" :
+                                    // 1. Growl is not running. do not launch it
+                                    // 2. Growl is running and started. stop it but do not close
+                                    // 3. Growl is running and stopped. do nothing
+                                    // TODO: this is not complete. i am not sure if i am going to include this ever or not
+                                    break;
+                                case "show" :
+                                    // 1. Growl is not running. Start it and open Settings window
+                                    // 2. Growl is running. Show Settings window
+                                    // 3. Growl is running and Settings window is already open. do nothing
+                                    if (appIsAlreadyRunning)
+                                    {
+                                        signalFlag = signalFlag | Signal.ShowSettings;
+                                        signalFlag = signalFlag | Signal.Silent;    // go silent to suppress the 'Growl is running' notification
+                                    }
+                                    else
+                                    {
+                                        showSettingsOnLaunch = true;
+                                    }
+                                    break;
                             }
                         }
 
@@ -146,6 +195,8 @@ namespace Growl
         {
             program.HandleSystemNotifications(ref queuedNotifications);
             program.HandleListenUrls();
+
+            if (showSettingsOnLaunch) program.ShowForm();
         }
 
         static void app_AnotherInstanceStarted(int signalFlag, int signalValue)
@@ -199,6 +250,24 @@ namespace Growl
             {
                 return program;
             }
+        }
+
+        static public void SetCulture(string cultureCode)
+        {
+            if (!String.IsNullOrEmpty(cultureCode))
+            {
+                try
+                {
+                    CultureInfo culture = new CultureInfo(cultureCode);
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+                }
+                catch
+                {
+                    // suppress any exception (in case the culture in the .config file is not valid)
+                }
+            }
+            Properties.Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+            Properties.Settings.Default.CultureCode = Properties.Resources.Culture.ToString();
         }
 
         static public void ForceGC()

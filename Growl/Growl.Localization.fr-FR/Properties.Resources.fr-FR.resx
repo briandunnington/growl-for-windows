@@ -294,7 +294,7 @@
     <comment>General tab: Sound Settings group box title</comment> 
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>En veille après secondes</value> 
+    <value>En veille après secondes: {0}</value> 
     <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment> 
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">

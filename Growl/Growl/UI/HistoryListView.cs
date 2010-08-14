@@ -127,16 +127,18 @@ namespace Growl.UI
 
         void HistoryListView_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            // draw the background and focus rectangle for selected and non-selected states
-            if ((e.ItemState & ListViewItemStates.Selected) != 0)
+            if (e.ItemIndex < 0) return;
+
+            //Console.WriteLine(e.ItemIndex + "-" + e.Bounds);
+
+            if (this.SelectedIndices.Contains(e.ItemIndex))
             {
                 e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, e.Bounds);
-                e.DrawFocusRectangle(e.Item.Bounds);
+                ControlPaint.DrawFocusRectangle(e.Graphics, e.Item.Bounds);
             }
             else
             {
-                //e.DrawBackground();
-                //e.DrawFocusRectangle(e.Item.Bounds);
+                e.DrawBackground();
             }
 
             // if this is the first column, we want to draw an icon as well
@@ -162,36 +164,45 @@ namespace Growl.UI
             }
 
             // draw text
+            string text = e.SubItem.Text.Replace("\r", " - ");
             System.Drawing.Rectangle rect = new System.Drawing.Rectangle(newX, e.Bounds.Top, e.Bounds.Right - newX, e.Item.Font.Height);
             System.Drawing.StringFormat sf = new System.Drawing.StringFormat();
             sf.Trimming = System.Drawing.StringTrimming.EllipsisCharacter;
-            sf.FormatFlags = System.Drawing.StringFormatFlags.NoClip;
-            System.Drawing.SolidBrush foreBrush = new System.Drawing.SolidBrush(e.Item.ForeColor);
+            sf.FormatFlags = System.Drawing.StringFormatFlags.NoClip | System.Drawing.StringFormatFlags.NoWrap;
+            System.Drawing.Color color = (e.ColumnIndex == 0 ? e.Item.ForeColor : System.Drawing.Color.FromArgb(System.Drawing.SystemColors.GrayText.ToArgb()));
+            System.Drawing.SolidBrush foreBrush = new System.Drawing.SolidBrush(color);
             using (foreBrush)
             {
-                TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.EndEllipsis | TextFormatFlags.LeftAndRightPadding;
-                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, rect, e.SubItem.ForeColor, System.Drawing.Color.Transparent, flags);
+                //TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.EndEllipsis | TextFormatFlags.LeftAndRightPadding | TextFormatFlags.SingleLine;
+                //TextRenderer.DrawText(e.Graphics, text, e.SubItem.Font, rect, e.SubItem.ForeColor, System.Drawing.Color.Transparent, flags);
+
+                e.Graphics.DrawString(text,
+                    e.SubItem.Font,
+                    foreBrush,
+                    rect,
+                    sf);
             }
         }
 
         void HistoryListView_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
+            if (e.ItemIndex < 0) return;
+
             if (this.View == View.Tile)
             {
                 // draw the background and focus rectangle for selected and non-selected states
-                if ((e.State & ListViewItemStates.Focused) == ListViewItemStates.Focused)
+                if (this.SelectedIndices.Contains(e.ItemIndex))
                 {
                     e.Graphics.FillRectangle(System.Drawing.Brushes.LightGray, e.Bounds);
-                    e.DrawFocusRectangle();
-                 }
-                else if(e.State > 0)
+                    ControlPaint.DrawFocusRectangle(e.Graphics, e.Bounds);
+                }
+                else
                 {
                     e.DrawBackground();
-                    e.DrawFocusRectangle();
                 }
 
                 // draw icon
-                PastNotification pn = (PastNotification) e.Item.Tag;
+                PastNotification pn = (PastNotification)e.Item.Tag;
                 int newX = e.Bounds.Left;
                 if (pn != null)
                 {
@@ -200,8 +211,8 @@ namespace Growl.UI
                     {
                         if (img != null)
                         {
-                            int x = e.Bounds.Left;
-                            int y = e.Bounds.Top;
+                            int x = e.Bounds.Left + 1;
+                            int y = e.Bounds.Top + 1;
                             e.Graphics.DrawImage(img, x, y);
                             newX = e.Bounds.Left + img.Width + this.Margin.Right;
                         }
@@ -214,9 +225,10 @@ namespace Growl.UI
                 sf.Trimming = System.Drawing.StringTrimming.EllipsisCharacter;
                 sf.FormatFlags = System.Drawing.StringFormatFlags.NoClip;
                 System.Drawing.SolidBrush foreBrush = new System.Drawing.SolidBrush(e.Item.ForeColor);
+                string text = e.Item.Text.Replace("\r", " - ");
                 using (foreBrush)
                 {
-                    e.Graphics.DrawString(e.Item.Text,
+                    e.Graphics.DrawString(text,
                         e.Item.Font,
                         foreBrush,
                         rect,
@@ -232,8 +244,9 @@ namespace Growl.UI
                     {
                         if (i < e.Item.SubItems.Count)
                         {
+                            text = e.Item.SubItems[i].Text.Replace("\r", " - ");
                             rect.Offset(0, e.Item.Font.Height);
-                            e.Graphics.DrawString(e.Item.SubItems[i].Text,
+                            e.Graphics.DrawString(text,
                                 e.Item.Font,
                                 subBrush,
                                 rect,
@@ -245,6 +258,7 @@ namespace Growl.UI
             else
             {
                 // DO NOT call e.DrawDefault or the DrawSubItem event will not be fired
+                //e.DrawDefault = true;
             }
         }
 
@@ -323,6 +337,11 @@ namespace Growl.UI
 
         public void Draw()
         {
+            Draw(this.View);
+        }
+
+        public void Draw(View view)
+        {
             //--DateTime st = DateTime.Now;
             //--Console.WriteLine("HLV.Draw() Start: {0}", st.Ticks);
 
@@ -379,12 +398,10 @@ namespace Growl.UI
                 //--Console.WriteLine("HLV.Draw() 1: {0}", (DateTime.Now - st).TotalSeconds);
 
                 // prepare view layouts
-                if (this.View != View.Details) this.View = View.Tile;
+                if (view != View.Details) view = View.Tile;
                 //--Console.WriteLine("HLV.Draw() 1.1: {0}", (DateTime.Now - st).TotalSeconds);
-                if (this.View == View.Tile)
+                if (view == View.Tile)
                 {
-                    this.View = System.Windows.Forms.View.Tile;
-
                     if (this.tileColumns == null)
                     {
                         ColumnHeader titleHeader = new ColumnHeader();
@@ -397,10 +414,8 @@ namespace Growl.UI
                     this.Columns.AddRange(this.tileColumns);
                     this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
                 }
-                else if (this.View == View.Details)
+                else if (view == View.Details)
                 {
-                    this.View = System.Windows.Forms.View.Details;
-
                     if (detailColumns == null)
                     {
                         int w = 80;
@@ -433,9 +448,9 @@ namespace Growl.UI
                         this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader, originHeader };
                     }
 
-                    this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
                     this.Columns.Clear();
                     this.Columns.AddRange(this.detailColumns);
+                    this.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
                     this.SetSortIcon(this.lvcs.ColumnToSort, this.lvcs.Order);
                 }
 
@@ -469,6 +484,63 @@ namespace Growl.UI
             //--DateTime et = DateTime.Now;
             //--Console.WriteLine("HLV.Draw() End: {0}", et.Ticks);
             //--Console.WriteLine("HLV.Draw() Elapsed: {0}", (et - st).TotalSeconds);
+        }
+
+        private void DrawX(View view)
+        {
+            //if (this.RedrawStarted != null)
+            //    this.RedrawStarted(this, EventArgs.Empty);
+
+            this.BeginUpdate();
+
+            this.Items.Clear();
+            this.Groups.Clear();
+            this.Columns.Clear();
+
+            ListViewGroup g1 = new ListViewGroup("Group 1");
+            ListViewGroup g2 = new ListViewGroup("Group 2");
+
+            ColumnHeader titleHeader = new ColumnHeader();
+            titleHeader.Name = "TITLE";
+            titleHeader.Text = Properties.Resources.History_Columns_Title;
+            ColumnHeader textHeader = new ColumnHeader();
+            textHeader.Name = "TEXT";
+            textHeader.Text = Properties.Resources.History_Columns_Text;
+            ColumnHeader appNameHeader = new ColumnHeader();
+            appNameHeader.Name = "APPLICATION";
+            appNameHeader.Text = Properties.Resources.History_Columns_Application;
+            ColumnHeader dateHeader = new ColumnHeader();
+            dateHeader.Name = "TIMESTAMP";
+            dateHeader.Text = Properties.Resources.History_Columns_Timestamp;
+            dateHeader.Tag = DATETIME_COMPARISON_INDICATOR;
+            ColumnHeader originHeader = new ColumnHeader();
+            originHeader.Name = "ORIGIN";
+            originHeader.Text = Properties.Resources.History_Columns_Origin;
+
+            ListViewItem[] items = new ListViewItem[40];
+            for (int i = 0; i < 20; i++)
+            {
+                ListViewItem lvi = new ListViewItem(new string[] { "item " + i.ToString(), "text", "app", "time", "origin" });
+                lvi.Group = g1;
+                items[i] = lvi;
+            }
+            for (int i = 20; i < 40; i++)
+            {
+                ListViewItem lvi = new ListViewItem(new string[] { "item " + i.ToString(), "text", "app", "time", "origin" });
+                lvi.Group = g2;
+                items[i] = lvi;
+            }
+
+            this.HeaderStyle = ColumnHeaderStyle.Clickable;
+
+            this.Columns.AddRange(new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader, originHeader });
+            this.Groups.AddRange(new ListViewGroup[] { g1, g2 });
+            this.Items.AddRange(items);
+
+            this.EndUpdate();
+
+            //if (this.RedrawFinished != null)
+            //    this.RedrawFinished(this, EventArgs.Empty);
         }
 
         private static bool StringContains(string str1, string str2)
@@ -611,7 +683,7 @@ namespace Growl.UI
                             {
                                 columnWidth += ch.Width;
                             }
-                            if(columnWidth < this.Width)
+                            if (columnWidth < this.Width)
                                 ShowScrollBar(this.Handle, 0, false);
                         }
                     }
@@ -657,8 +729,9 @@ namespace Growl.UI
         {
             if (this.View != View.Details)
             {
+                Draw(View.Details);
                 this.View = View.Details;
-                Draw();
+                this.Refresh();
             }
         }
 
@@ -666,8 +739,8 @@ namespace Growl.UI
         {
             if (this.View != View.Tile)
             {
+                Draw(View.Tile);
                 this.View = View.Tile;
-                Draw();
             }
         }
 

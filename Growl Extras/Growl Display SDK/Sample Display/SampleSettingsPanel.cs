@@ -23,16 +23,18 @@ namespace Sample_Display
     ///     3. The Growl client will ensure that the settings panel is never resized smaller than
     ///        450*155 pixels. Your panel should be layed out to work at this size, as well as handle
     ///        larger sizes (usually simply designing for 450*155 and setting .Anchor = Top | Left
-    ///        is preferred)
+    ///        is sufficient)
+    /// 
+    ///     4. Do *not* call GetSettings() or SaveSetting() from within the constructor. Your plugin
+    ///        is instantiated by GfW using reflection and the values for the plugin directory path
+    ///        and settings directory path are not yet available. Any initialization can instead be
+    ///        done in the Load() event.
     /// </summary>
     public partial class SampleSettingsPanel : SettingsPanelBase
     {
         public SampleSettingsPanel()
         {
             InitializeComponent();
-
-            string filename = GetFileFromSetting(@"c:\growl_display_sdk_sample.txt");
-            this.textBox1.Text = filename;
 
             this.Load +=new EventHandler(SampleSettingsPanel_Load);
 
@@ -42,6 +44,9 @@ namespace Sample_Display
 
         void SampleSettingsPanel_Load(object sender, EventArgs e)
         {
+            string filename = GetFileFromSetting(@"c:\growl_display_sdk_sample.txt");
+            this.textBox1.Text = filename;
+
             this.openFileDialog1.FileOk += new CancelEventHandler(openFileDialog1_FileOk);
         }
 

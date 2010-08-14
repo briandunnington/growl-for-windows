@@ -182,9 +182,9 @@ namespace Growl.Daemon
         private bool allowNetworkNotifications = false;
 
         /// <summary>
-        /// Indicates if Flash-based connections are allowed
+        /// Indicates if webpage notifications are allowed
         /// </summary>
-        private bool allowFlash = false;
+        private bool allowWebNotifications = false;
 
         /// <summary>
         /// Indicates if client subscriptions are allowed
@@ -352,21 +352,21 @@ namespace Growl.Daemon
         }
 
         /// <summary>
-        /// Indicates if Flash-based requests are allowed.
+        /// Indicates if webpage (browser-based) requests are allowed.
         /// </summary>
         /// <value>
-        /// <c>true</c> - Flash-based requests are allowed;
-        /// <c>false</c> - Flash-based requests are blocked
+        /// <c>true</c> - browser-based requests are allowed;
+        /// <c>false</c> - browser-based requests are blocked
         /// </value>
-        public bool AllowFlash
+        public bool AllowWebNotifications
         {
             get
             {
-                return this.allowFlash;
+                return this.allowWebNotifications;
             }
             set
             {
-                this.allowFlash = value;
+                this.allowWebNotifications = value;
             }
         }
 
@@ -517,10 +517,8 @@ namespace Growl.Daemon
             // SUPER IMPORTANT
             newSocket.AllowMultithreadedCallbacks = true;
 
-            MessageHandler mh = new MessageHandler(this.serverName, this.passwordManager, passwordRequired, this.logFolder, this.loggingEnabled, this.allowNetworkNotifications, this.allowFlash, this.allowSubscriptions);
+            MessageHandler mh = new MessageHandler(this.serverName, this.passwordManager, passwordRequired, this.logFolder, this.loggingEnabled, this.allowNetworkNotifications, this.allowWebNotifications, this.allowSubscriptions);
             newSocket.DidClose += new AsyncSocket.SocketDidClose(newSocket_DidClose);
-            newSocket.DidRead += new AsyncSocket.SocketDidRead(mh.SocketDidRead);
-            newSocket.DidWrite += new AsyncSocket.SocketDidWrite(mh.SocketDidWrite);
             mh.MessageParsed += new MessageHandler.MessageHandlerMessageParsedEventHandler(mh_MessageParsed);
             mh.Error += new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
             mh.SocketUsageComplete += new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
@@ -576,31 +574,32 @@ namespace Growl.Daemon
         private void HandleParsedMessage(object obj)
         {
             MessageHandler mh = (MessageHandler)obj;
+            GNTPRequest request = mh.Request;
 
             try
             {
                 Response response = null;
-                switch (mh.Directive)
+                switch (request.Directive)
                 {
                     case RequestType.REGISTER:
-                        Application application = Application.FromHeaders(mh.Headers);
+                        Application application = Application.FromHeaders(request.Headers);
                         List<NotificationType> notificationTypes = new List<NotificationType>();
-                        for (int i = 0; i < mh.NotificationsToBeRegistered.Count; i++)
+                        for (int i = 0; i < request.NotificationsToBeRegistered.Count; i++)
                         {
-                            HeaderCollection headers = mh.NotificationsToBeRegistered[i];
+                            HeaderCollection headers = request.NotificationsToBeRegistered[i];
                             notificationTypes.Add(NotificationType.FromHeaders(headers));
                         }
                         response = this.OnRegisterReceived(application, notificationTypes, mh.RequestInfo);
                         break;
                     case RequestType.NOTIFY:
-                        Notification notification = Notification.FromHeaders(mh.Headers);
+                        Notification notification = Notification.FromHeaders(request.Headers);
                         mh.CallbackInfo.NotificationID = notification.ID;
                         response = this.OnNotifyReceived(notification, mh.CallbackInfo, mh.RequestInfo);
                         break;
                     case RequestType.SUBSCRIBE:
-                        Subscriber subscriber = Subscriber.FromHeaders(mh.Headers);
+                        Subscriber subscriber = Subscriber.FromHeaders(request.Headers);
                         subscriber.IPAddress = mh.Socket.RemoteAddress.ToString();
-                        subscriber.Key = new SubscriberKey(mh.Key, subscriber.ID, mh.KeyHashAlgorithm, mh.EncryptionAlgorithm);
+                        subscriber.Key = new SubscriberKey(request.Key, subscriber.ID, request.Key.HashAlgorithm, request.Key.EncryptionAlgorithm);
                         response = this.OnSubscribeReceived(subscriber, mh.RequestInfo);
                         break;
                 }
@@ -610,7 +609,7 @@ namespace Growl.Daemon
                 if (response != null && response.IsOK)
                 {
                     responseType = ResponseType.OK;
-                    response.InResponseTo = mh.Directive.ToString();
+                    response.InResponseTo = request.Directive.ToString();
                 }
 
                 // no response
@@ -625,7 +624,7 @@ namespace Growl.Daemon
                     mb.AddHeader(header);
                 }
                 // return any application-specific data headers that were received
-                RequestData rd = RequestData.FromHeaders(mh.Headers);
+                RequestData rd = RequestData.FromHeaders(request.Headers);
                 AddRequestData(mb, rd);
 
                 bool requestComplete = !mh.CallbackInfo.ShouldKeepConnectionOpen();
@@ -652,6 +651,7 @@ namespace Growl.Daemon
             {
                 cbInfo.AlreadyResponded = true;
                 MessageHandler mh = cbInfo.MessageHandler;
+                GNTPRequest request = mh.Request;
                 ResponseType responseType = ResponseType.ERROR;
                 if (response != null)
                 {
@@ -679,7 +679,7 @@ namespace Growl.Daemon
                     mb.AddHeader(header);
                 }
                 // return any application-specific data headers that were received
-                RequestData rd = RequestData.FromHeaders(mh.Headers);
+                RequestData rd = RequestData.FromHeaders(request.Headers);
                 AddRequestData(mb, rd);
 
                 mh.WriteResponse(mb, true);
@@ -792,8 +792,7 @@ namespace Growl.Daemon
                         if (cs.Socket != null)
                         {
                             cs.Socket.DidClose -= new AsyncSocket.SocketDidClose(newSocket_DidClose);
-                            cs.Socket.DidRead -= new AsyncSocket.SocketDidRead(mh.SocketDidRead);
-                            cs.Socket.DidWrite -= new AsyncSocket.SocketDidWrite(mh.SocketDidWrite);
+                            //cs.Socket.DidRead -= new AsyncSocket.SocketDidRead(mh.SocketDidRead);
                         }
 
                         cs = null;
