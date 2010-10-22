@@ -220,6 +220,8 @@ namespace Growl
             LoadSubscriptions();
 
             // HISTORY
+            if (Properties.Settings.Default.HistoryView == View.Details.ToString())
+                this.historyListView.View = View.Details;
             this.historyTrackBarTimer.Tick += new EventHandler(historyTrackBarTimer_Tick);
             this.historyDaysTrackBar.Minimum = HistoryListView.MIN_NUMBER_OF_DAYS;
             this.historyDaysTrackBar.Maximum = HistoryListView.MAX_NUMBER_OF_DAYS;

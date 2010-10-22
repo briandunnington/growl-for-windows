@@ -17,7 +17,10 @@ namespace Growl.Daemon
         public const string REQUEST_INDICATOR = "GET ";
 
         private const long HANDSHAKE_REQUEST_TAG = 6000;
-        private const long HANDSHAKE_RESPONSE_TAG = 6001;
+        private const long HANDSHAKE_REQUEST_CHALLENGE_TAG = 6001;
+        private const long HANDSHAKE_RESPONSE_TAG = 6010;
+
+        byte[] requestBytes = null;
 
         /// <summary>
         /// Represents methods that handle the HandshakeComplete event
@@ -84,28 +87,40 @@ namespace Growl.Daemon
         /// <param name="tag">The tag identifying the read request.</param>
         void socket_DidRead(AsyncSocket sender, byte[] data, long tag)
         {
-            // remove this event handler since we dont need it any more
-            sender.DidRead -= new AsyncSocket.SocketDidRead(this.socket_DidRead);
+            // handle any data that may already have been read by the MessageHandler
+            byte[] previousBytes = (byte[])sender.Tag;
+            if (previousBytes != null) this.requestBytes = previousBytes;
+            sender.Tag = null;
 
-            if (tag == HANDSHAKE_REQUEST_TAG)
+            // append the new data to any already-read data
+            if (this.requestBytes != null)
             {
-                // handle any data that may already have been read
-                byte[] bytes = null;
-                byte[] previousBytes = (byte[])sender.Tag;
-                if (previousBytes != null)
-                {
-                    bytes = new byte[previousBytes.Length + data.Length];
-                    Array.Copy(previousBytes, bytes, previousBytes.Length);
-                    Array.Copy(data, 0, bytes, previousBytes.Length, data.Length);
-                }
-                else
-                {
-                    bytes = data;
-                }
+                byte[] bytes = new byte[this.requestBytes.Length + data.Length];
+                Array.Copy(this.requestBytes, bytes, this.requestBytes.Length);
+                Array.Copy(data, 0, bytes, this.requestBytes.Length, data.Length);
+                this.requestBytes = bytes;
+            }
+            else
+            {
+                this.requestBytes = data;
+            }
 
-                int size = data.Length;
+            // check the handshake at this point so we know if we should be looking for the challenge bytes or not
+            this.handshake = new Handshake(this.requestBytes, this.requestBytes.Length);
+            if (handshake.Protocol == WebSocketProtocolIdentifier.draft_ietf_hybi_thewebsocketprotocol_00 && tag != HANDSHAKE_REQUEST_CHALLENGE_TAG)
+            {
+                // read challenge bytes
+                socket.Read(8, -1, HANDSHAKE_REQUEST_CHALLENGE_TAG);
+            }
+            else
+            {
+                /* if we are here, we have read all of the necessary handshake info, so we can proceed */
+
+                // remove this event handler since we dont need it any more
+                sender.DidRead -= new AsyncSocket.SocketDidRead(this.socket_DidRead);
+
+                byte[] bytes = this.requestBytes;
                 this.handshake = new Handshake(bytes, bytes.Length);
-                Console.WriteLine(handshake.Protocol);
 
                 string response = "";
                 byte[] MD5Answer = null;
@@ -129,7 +144,7 @@ namespace Growl.Daemon
                         break;
                     case WebSocketProtocolIdentifier.draft_ietf_hybi_thewebsocketprotocol_00:
                         if (handshake.Fields == null ||
-                            handshake.Fields["origin"] != this.origin || // is the connection comming from the right place
+                            (this.origin != "*" && handshake.Fields["origin"] != this.origin) || // is the connection comming from the right place
                             handshake.Fields["host"] != this.location.Replace("ws://", "")) // is the connection trying to connect to us
                         {
                             throw new Exception("client handshake was invalid");
@@ -170,7 +185,7 @@ namespace Growl.Daemon
 
                             // get the last 8 byte of the client handshake
                             byte[] challenge = new byte[8];
-                            Array.Copy(handshake.Raw, size - 8, challenge, 0, 8);
+                            Array.Copy(handshake.Raw, bytes.Length - 8, challenge, 0, 8);
 
                             // convert the results to 32 bit big endian byte arrays
                             byte[] result1bytes = BitConverter.GetBytes(result1);
@@ -193,7 +208,7 @@ namespace Growl.Daemon
 
                             // put the relevant info into the response (the 
                             response = handshake.GetHostResponse()
-                                .Replace("{ORIGIN}", this.origin)
+                                .Replace("{ORIGIN}", handshake.Fields["origin"])
                                 .Replace("{LOCATION}", this.location + handshake.Fields["path"]);
 
                             // just echo the subprotocol for now. This should be picked up and made avaialbe to the application implementation.

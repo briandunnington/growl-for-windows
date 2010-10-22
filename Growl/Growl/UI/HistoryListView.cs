@@ -33,6 +33,8 @@ namespace Growl.UI
         ColumnHeader[] tileColumns;
         ColumnHeader[] detailColumns;
 
+        Dictionary<string, int> columnWidths;
+
         public HistoryListView()
         {
             InitializeComponent();
@@ -58,6 +60,7 @@ namespace Growl.UI
             this.DrawSubItem += new DrawListViewSubItemEventHandler(HistoryListView_DrawSubItem);
             this.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(HistoryListView_DrawColumnHeader);
             this.ColumnClick += new ColumnClickEventHandler(HistoryListView_ColumnClick);
+            this.ColumnWidthChanged += new ColumnWidthChangedEventHandler(HistoryListView_ColumnWidthChanged);
 
             this.ItemMouseHover += new ListViewItemMouseHoverEventHandler(HistoryListView_ItemMouseHover);
             this.MouseLeave += new EventHandler(HistoryListView_MouseLeave);
@@ -421,29 +424,28 @@ namespace Growl.UI
                         int w = 80;
                         int y = 60;
                         int x = (this.Width - (w * 2) - y - SCROLLBAR_WIDTH) / 2;
-                        //int x = (this.Width - (w * 3) - SCROLLBAR_WIDTH);
 
                         ColumnHeader titleHeader = new ColumnHeader();
                         titleHeader.Name = "TITLE";
                         titleHeader.Text = Properties.Resources.History_Columns_Title;
-                        titleHeader.Width = x;
+                        titleHeader.Width = GetDesiredColumnWidth(titleHeader.Name, x);
                         ColumnHeader textHeader = new ColumnHeader();
                         textHeader.Name = "TEXT";
                         textHeader.Text = Properties.Resources.History_Columns_Text;
-                        textHeader.Width = x;
+                        textHeader.Width = GetDesiredColumnWidth(textHeader.Name, x);
                         ColumnHeader appNameHeader = new ColumnHeader();
                         appNameHeader.Name = "APPLICATION";
                         appNameHeader.Text = Properties.Resources.History_Columns_Application;
-                        appNameHeader.Width = w;
+                        appNameHeader.Width = GetDesiredColumnWidth(appNameHeader.Name, w);
                         ColumnHeader dateHeader = new ColumnHeader();
                         dateHeader.Name = "TIMESTAMP";
                         dateHeader.Text = Properties.Resources.History_Columns_Timestamp;
-                        dateHeader.Width = w;
+                        dateHeader.Width = GetDesiredColumnWidth(dateHeader.Name, w);
                         dateHeader.Tag = DATETIME_COMPARISON_INDICATOR;
                         ColumnHeader originHeader = new ColumnHeader();
                         originHeader.Name = "ORIGIN";
                         originHeader.Text = Properties.Resources.History_Columns_Origin;
-                        originHeader.Width = y;
+                        originHeader.Width = GetDesiredColumnWidth(originHeader.Name, y);
 
                         this.detailColumns = new ColumnHeader[] { titleHeader, textHeader, appNameHeader, dateHeader, originHeader };
                     }
@@ -674,9 +676,10 @@ namespace Growl.UI
                         if (this.currentWidth > 0 && this.Columns.Count > 0)
                         {
                             int diff = this.Width - this.currentWidth;
-                            int half = diff / 2;
-                            this.Columns["TITLE"].Width += half;
-                            this.Columns["TEXT"].Width += half;
+                            int c1 = diff / 2;
+                            int c2 = c1 + (diff % 2);
+                            this.Columns["TITLE"].Width += c1;
+                            this.Columns["TEXT"].Width += c2;
 
                             int columnWidth = SCROLLBAR_WIDTH;
                             foreach (ColumnHeader ch in this.Columns)
@@ -694,6 +697,58 @@ namespace Growl.UI
             }
             this.currentWidth = this.Width;
             this.isResizing = false;
+        }
+
+        void HistoryListView_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            SaveColumnWidths();
+        }
+
+        private void SaveColumnWidths()
+        {
+            if (this.View == View.Details)
+            {
+                columnWidths = new Dictionary<string, int>();
+                StringBuilder sb = new StringBuilder();
+                foreach (ColumnHeader ch in this.Columns)
+                {
+                    if (!String.IsNullOrEmpty(ch.Name))
+                    {
+                        columnWidths.Add(ch.Name, ch.Width);
+                        sb.AppendFormat("{0}={1};", ch.Name, ch.Width);
+                    }
+                }
+                string val = sb.ToString();
+                if (!String.IsNullOrEmpty(val))
+                {
+                    Properties.Settings.Default.HistoryColumnWidths = val;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private int GetDesiredColumnWidth(string columnName, int fallback)
+        {
+            if (columnWidths == null)
+            {
+                columnWidths = new Dictionary<string,int>();
+                try
+                {
+                    string[] items = Properties.Settings.Default.HistoryColumnWidths.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string item in items)
+                    {
+                        string[] parts = item.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                        columnWidths.Add(parts[0], Convert.ToInt32(parts[1]));
+                    }
+                }
+                catch
+                {
+                    // just in case any weird values get saved, we will ignore them
+                }
+            }
+
+            int width = columnWidths.ContainsKey(columnName) ? columnWidths[columnName] : fallback;
+            return width;
         }
 
         private void InitializeComponent()
@@ -731,7 +786,8 @@ namespace Growl.UI
             {
                 Draw(View.Details);
                 this.View = View.Details;
-                this.Refresh();
+                Properties.Settings.Default.HistoryView = this.View.ToString();
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -741,6 +797,8 @@ namespace Growl.UI
             {
                 Draw(View.Tile);
                 this.View = View.Tile;
+                Properties.Settings.Default.HistoryView = this.View.ToString();
+                Properties.Settings.Default.Save();
             }
         }
 

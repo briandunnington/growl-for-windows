@@ -191,6 +191,8 @@ namespace Growl.Daemon
         /// </summary>
         private bool allowSubscriptions = false;
 
+        private object syncLock = new object();
+
 
         /// <summary>
         /// Creates a new instance of the Growl server.
@@ -523,8 +525,14 @@ namespace Growl.Daemon
             mh.Error += new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
             mh.SocketUsageComplete += new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
 
-            connectedSockets.Add(new ConnectedSocket(newSocket));
-            connectedHandlers.Add(newSocket, mh);
+            // lock here since in very rare cases, we can get flooded with so many incoming sockets that
+            // the Add() throws an IndexOutOfRange exception (only ever happened when running GrowlHammer with loads of
+            // simultaneous connections)
+            lock (syncLock)
+            {
+                connectedSockets.Add(new ConnectedSocket(newSocket));
+                connectedHandlers.Add(newSocket, mh);
+            }
 
             mh.InitialRead(newSocket);
         }
@@ -636,7 +644,7 @@ namespace Growl.Daemon
             }
             catch(Exception ex)
             {
-                mh.WriteError(ErrorCode.INVALID_REQUEST, ex.Message);
+                mh.WriteError(ErrorCode.INTERNAL_SERVER_ERROR, ex.Message);
             }
         }
 
@@ -779,33 +787,39 @@ namespace Growl.Daemon
         {
             if (sender != null)
             {
-                if (this.connectedHandlers.ContainsKey(sender))
+                lock (syncLock)
                 {
-                    MessageHandler mh = this.connectedHandlers[sender];
-                    this.connectedHandlers.Remove(sender);
-
-                    if (this.connectedSockets.Contains(sender))
+                    if (sender != null)
                     {
-                        ConnectedSocket cs = this.connectedSockets[sender];
-                        this.connectedSockets.Remove(sender);
-
-                        if (cs.Socket != null)
+                        if (this.connectedHandlers.ContainsKey(sender))
                         {
-                            cs.Socket.DidClose -= new AsyncSocket.SocketDidClose(newSocket_DidClose);
-                            //cs.Socket.DidRead -= new AsyncSocket.SocketDidRead(mh.SocketDidRead);
+                            MessageHandler mh = this.connectedHandlers[sender];
+                            this.connectedHandlers.Remove(sender);
+
+                            if (this.connectedSockets.Contains(sender))
+                            {
+                                ConnectedSocket cs = this.connectedSockets[sender];
+                                this.connectedSockets.Remove(sender);
+
+                                if (cs.Socket != null)
+                                {
+                                    cs.Socket.DidClose -= new AsyncSocket.SocketDidClose(newSocket_DidClose);
+                                    //cs.Socket.DidRead -= new AsyncSocket.SocketDidRead(mh.SocketDidRead);
+                                }
+
+                                cs = null;
+                            }
+
+                            if (mh != null)
+                            {
+                                mh.MessageParsed -= new MessageHandler.MessageHandlerMessageParsedEventHandler(mh_MessageParsed);
+                                mh.Error -= new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
+                                mh.SocketUsageComplete -= new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
+                            }
+
+                            mh = null;
                         }
-
-                        cs = null;
                     }
-
-                    if (mh != null)
-                    {
-                        mh.MessageParsed -= new MessageHandler.MessageHandlerMessageParsedEventHandler(mh_MessageParsed);
-                        mh.Error -= new MessageHandler.MessageHandlerErrorEventHandler(mh_Error);
-                        mh.SocketUsageComplete -= new MessageHandler.MessageHandlerSocketUsageCompleteEventHandler(mh_SocketUsageComplete);
-                    }
-
-                    mh = null;
                 }
 
                 sender = null;
@@ -824,7 +838,7 @@ namespace Growl.Daemon
             if (count > 0)
             {
                 Queue<AsyncSocket> queue = new Queue<AsyncSocket>(this.connectedSockets.Count);
-                lock (this.connectedSockets)
+                lock (syncLock)
                 {
                     foreach (ConnectedSocket cs in this.connectedSockets)
                     {
@@ -974,6 +988,7 @@ namespace Growl.Daemon
 
                     if (this.bonjour != null)
                     {
+                        this.bonjour.Stop();
                         this.bonjour.Dispose();
                         this.bonjour = null;
                     }

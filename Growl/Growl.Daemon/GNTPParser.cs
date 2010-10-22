@@ -915,6 +915,9 @@ namespace Growl.Daemon
             }
             int p = this.pointers.Count;
 
+            // TODO: this effectively causes no cached resources to ever be used
+            //c = int.MaxValue;
+
             // check to see if all pointers were already cached
             if (p == c) p = 0;  // if #cached == total#, we dont need to read any
             else

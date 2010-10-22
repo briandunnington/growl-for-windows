@@ -31,6 +31,7 @@ namespace Growl.Displays.Visor
             this.titleLabel.Size = new System.Drawing.Size(493, 25);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "[title]";
+            this.titleLabel.UseMnemonic = false;
             // 
             // applicationNameLabel
             // 

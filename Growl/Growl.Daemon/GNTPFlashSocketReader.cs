@@ -81,7 +81,7 @@ namespace Growl.Daemon
                     }
                     else
                     {
-                        OnError(ErrorCode.NOT_AUTHORIZED, ErrorDescription.FLASH_CONNECTIONS_NOT_ALLOWED);
+                        OnError(ErrorCode.NOT_AUTHORIZED, ErrorDescription.BROWSER_CONNECTIONS_NOT_ALLOWED);
                     }
                 }
                 else

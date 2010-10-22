@@ -76,7 +76,7 @@ namespace Growl.Connector
         /// <summary>
         /// Flash-based connections are not allowed
         /// </summary>
-        public const string FLASH_CONNECTIONS_NOT_ALLOWED = "Flash-based connections are not allowed";
+        public const string BROWSER_CONNECTIONS_NOT_ALLOWED = "Browser-based connections are not allowed";
         /// <summary>
         /// This server does not allow subscriptions
         /// </summary>

@@ -23,7 +23,7 @@ namespace iRate
 
             this.starRating.RatingValueChanged += new iRate.Controls.StarRating.RatingValueChangedEventHandler(starRating_RatingValueChanged);
 
-            this.AutoClose(5000);
+            this.SetAutoCloseInterval(5000);
         }
 
         void iRateWindow_Load(object sender, EventArgs e)
@@ -46,7 +46,8 @@ namespace iRate
         {
             base.SetNotification(n);
 
-            if (n.Duration > 0) this.AutoClose(n.Duration * 1000);
+            if (n.Duration > 0) this.SetAutoCloseInterval(n.Duration * 1000);
+            this.Sticky = n.Sticky;
 
             Image image = n.Image;
             if (image != null)

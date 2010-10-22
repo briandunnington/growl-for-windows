@@ -27,14 +27,23 @@ namespace Growl.UI
         public ListControl()
             : base()
         {
+            /*
+            this.DoubleBuffered = true;
+            this.SetStyle(
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw |
+                ControlStyles.UserPaint,
+                true);
+             * */
+
+
             this.BorderStyle = BorderStyle.Fixed3D;
             this.BackColor = Color.White;
 
             this.Resize += new EventHandler(ListControl2_Resize);
 
-            this.listbox = new ListBox();
+            this.listbox = new BetterListBox();
             this.Controls.Add(listbox);
-            this.listbox.DrawMode = DrawMode.OwnerDrawFixed;
             this.listbox.FormattingEnabled = true;
             this.listbox.IntegralHeight = false;
             this.listbox.ItemHeight = 18;
@@ -73,6 +82,8 @@ namespace Growl.UI
 
         void ListControl_DrawItem(object sender, DrawItemEventArgs e)
         {
+            if (e.Index < 0) return;
+
             if (this.listbox.Items != null && this.listbox.Items.Count > 0)
             {
                 if (e.Index != ListBox.NoMatches)
@@ -138,20 +149,19 @@ namespace Growl.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            // draw header
             Rectangle headerRect = new Rectangle(0, 0, ClientSize.Width, headerHeight);
             Brush b1 = new SolidBrush(Color.FromArgb(222, 222, 222));
             using (b1)
             {
                 e.Graphics.FillRectangle(b1, headerRect);
             }
-
             headerRect.Height = headerRect.Height - 1;
             Brush b2 = new SolidBrush(Color.FromArgb(248, 248, 248));
             using (b2)
             {
                 e.Graphics.FillRectangle(b2, headerRect);
             }
-
             TextRenderer.DrawText(e.Graphics, this.headerText, this.headerFont, headerRect, this.ForeColor, TextFormatFlags.Left);
 
             base.OnPaint(e);

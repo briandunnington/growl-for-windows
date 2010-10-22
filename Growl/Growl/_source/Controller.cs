@@ -228,8 +228,15 @@ namespace Growl
 
             if (this.mutex != null)
             {
-                this.mutex.ReleaseMutex();
-                this.mutex.Close();
+                try
+                {
+                    this.mutex.ReleaseMutex();
+                    this.mutex.Close();
+                    this.mutex = null;
+                }
+                catch
+                {
+                }
             }
 
             if (this.gntpListener != null)
@@ -1751,7 +1758,17 @@ namespace Growl
                 if (disposing)
                 {
                     if (this.mutex != null)
-                        this.mutex.Close();
+                    {
+                        try
+                        {
+                            this.mutex.ReleaseMutex();
+                            this.mutex.Close();
+                            this.mutex = null;
+                        }
+                        catch
+                        {
+                        }
+                    }
 
                     DisplayStyleManager.DisplayLoaded -= new DisplayStyleManager.DisplayLoadedEventHandler(DisplayStyleManager_DisplayLoaded);
 
@@ -1759,6 +1776,7 @@ namespace Growl
                     {
                         this.bonjour.ServiceFound -= new Bonjour.NetServiceFoundEventHandler(bonjour_ServiceFound);
                         this.bonjour.ServiceRemoved -= new Bonjour.NetServiceRemovedEventHandler(bonjour_ServiceRemoved);
+                        this.bonjour.Stop();
                         this.bonjour.Dispose();
                         this.bonjour = null;
                     }

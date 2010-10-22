@@ -1,3 +1,22 @@
+2.0.5x changes (v2.0.5.2)
+------------------------------
+- fixed a bug that could cause very long text with no spaces (such as urls) to be truncated in some displays
+
+2.0.5 changes (v2.0.5.2)
+------------------------------
+- fixed a bug in the WebSocket handling of the WHATWG protocol (aka draft-hixie-thewebsocketprotocol-76)
+- fixed a bug that did not honor the 'Allow notifications from websites' preference (always allowed notifications)
+- fixed a bug that caused redraw artifacts when quickly scrolling the 'Applications' or 'Notifications' lists
+- fixed a bug that crashed GfW if you exited the app while it was turned off (not listening for notifications)
+- added ability to save preferred History view (Tile or Details)
+- changed socket handling so that all incoming data is read (even if cached resources are used). this works around an issue in Winsock that sends a RST if data is received after the socket input stream is shutdown or closed: http://groups.google.com/group/growl-for-windows/browse_thread/thread/2523afc60296594
+- fixed a concurrency bug that that occurred when many simultaneous notifications with no image were received at the same time (DefaultIcon contention)
+- fixed a concurrency bug that occurred when many simultaneous notifications that referenced the same cached binary resource were received at the same time
+- fixed a bug in Visor display that causes ampersands to render incorrectly (UseMnemonic)
+- added Toasty forwarder to forward to Windows Phones
+- released Notifo subscription plugin and updated Notifo forwarder plugin (to prevent loops) - thanks to Jonathan Yee
+	
+
 2.0.4 changes (v2.0.4.2)
 ------------------------------
 - fixed a bug in GrowlConnector that could cause a hang if the connection was lost in the middle of receiving a response

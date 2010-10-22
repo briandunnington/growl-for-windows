@@ -28,6 +28,7 @@ namespace Growl.Daemon
         byte[] FRAME_BEGIN_INDICATOR = new byte[] { FRAME_BEGIN };
         byte[] FRAME_END_INDICATOR = new byte[] { FRAME_END };
 
+        bool allowed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GNTPWebSocketReader"/> class.
@@ -42,7 +43,7 @@ namespace Growl.Daemon
         public GNTPWebSocketReader(AsyncSocket socket, PasswordManager passwordManager, bool passwordRequired, bool allowNetworkNotifications, bool allowBrowserConnections, bool allowSubscriptions, RequestInfo requestInfo)
             : base(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowserConnections, allowSubscriptions, requestInfo)
         {
-
+            this.allowed = allowBrowserConnections;
         }
 
         /// <summary>
@@ -51,8 +52,15 @@ namespace Growl.Daemon
         /// <param name="alreadyReadBytes">Any bytes that were already read from the socket</param>
         public override void Read(byte[] alreadyReadBytes)
         {
-            this.Socket.DidRead += new AsyncSocket.SocketDidRead(this.SocketDidRead);
-            SocketDidRead(this.Socket, alreadyReadBytes, CONNECTION_ESTABLISHED_TAG);
+            if (this.allowed)
+            {
+                this.Socket.DidRead += new AsyncSocket.SocketDidRead(this.SocketDidRead);
+                SocketDidRead(this.Socket, alreadyReadBytes, CONNECTION_ESTABLISHED_TAG);
+            }
+            else
+            {
+                OnError(ErrorCode.NOT_AUTHORIZED, ErrorDescription.BROWSER_CONNECTIONS_NOT_ALLOWED);
+            }
         }
 
         /// <summary>

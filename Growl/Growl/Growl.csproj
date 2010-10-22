@@ -87,6 +87,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\BetterListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\ButtonEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -152,6 +155,12 @@
     </Compile>
     <Compile Include="UI\ProwlForwardInputs.designer.cs">
       <DependentUpon>ProwlForwardInputs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToastyForwardInputs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ToastyForwardInputs.Designer.cs">
+      <DependentUpon>ToastyForwardInputs.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Toolbar.cs">
       <SubType>Component</SubType>
@@ -227,6 +236,10 @@
     <EmbeddedResource Include="UI\ProwlForwardInputs.resx">
       <DependentUpon>ProwlForwardInputs.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ToastyForwardInputs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToastyForwardInputs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TwitterForwardInputs.resx">
       <DependentUpon>TwitterForwardInputs.cs</DependentUpon>
@@ -378,6 +391,8 @@
     <Compile Include="_source\SingleInstanceApplication.cs" />
     <Compile Include="_source\SubscribedForwardDestination.cs" />
     <Compile Include="_source\SubscriptionManager.cs" />
+    <Compile Include="_source\ToastyForwardDestination.cs" />
+    <Compile Include="_source\ToastyForwardDestinationHandler.cs" />
     <Compile Include="_source\TwitterForwardDestination.cs" />
     <Compile Include="_source\TwitterForwardDestinationHandler.cs" />
     <Compile Include="_source\UserAccountControlHelper.cs" />
@@ -467,9 +482,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\growl.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\growl.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\growl_dim.ico" />
@@ -570,6 +582,8 @@
     <None Include="Resources\8.png" />
     <None Include="Resources\9.png" />
     <None Include="Resources\multiplemonitors.png" />
+    <None Include="Resources\growl.png" />
+    <None Include="Resources\toasty.png" />
     <Content Include="update.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -27,10 +27,11 @@ namespace Growl.Displays.Plain
             this.applicationNameLabel.BackColor = System.Drawing.Color.Transparent;
             this.applicationNameLabel.Location = new System.Drawing.Point(9, 59);
             this.applicationNameLabel.Name = "applicationNameLabel";
-            this.applicationNameLabel.Size = new System.Drawing.Size(240, 18);
+            this.applicationNameLabel.Size = new System.Drawing.Size(240, 13);
             this.applicationNameLabel.TabIndex = 7;
             this.applicationNameLabel.Text = "From: [application]";
             this.applicationNameLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.applicationNameLabel.UseMnemonic = false;
             this.applicationNameLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.applicationNameLabel_LabelHeightChanged);
             // 
             // descriptionLabel
@@ -38,10 +39,11 @@ namespace Growl.Displays.Plain
             this.descriptionLabel.BackColor = System.Drawing.Color.Transparent;
             this.descriptionLabel.Location = new System.Drawing.Point(9, 27);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(240, 32);
+            this.descriptionLabel.Size = new System.Drawing.Size(240, 13);
             this.descriptionLabel.TabIndex = 6;
             this.descriptionLabel.Text = "[description]";
             this.descriptionLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.descriptionLabel.UseMnemonic = false;
             this.descriptionLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.descriptionLabel_LabelHeightChanged);
             // 
             // titleLabel
@@ -50,10 +52,11 @@ namespace Growl.Displays.Plain
             this.titleLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.Location = new System.Drawing.Point(9, 9);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(240, 18);
+            this.titleLabel.Size = new System.Drawing.Size(240, 16);
             this.titleLabel.TabIndex = 5;
             this.titleLabel.Text = "[title]";
             this.titleLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.titleLabel.UseMnemonic = false;
             this.titleLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.titleLabel_LabelHeightChanged);
             // 
             // pictureBox1

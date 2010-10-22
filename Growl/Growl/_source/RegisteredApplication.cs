@@ -80,7 +80,12 @@ namespace Growl
         {
             System.Drawing.Image icon = ImageCache.Get(this.Name, this.IconID);
             if (icon == null)
-                icon = new System.Drawing.Bitmap(DefaultIcon);
+            {
+                lock (DefaultIcon)
+                {
+                    icon = new System.Drawing.Bitmap(DefaultIcon);
+                }
+            }
             return icon;
         }
 

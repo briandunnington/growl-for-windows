@@ -35,7 +35,7 @@ namespace Growl
             if (this.pastNotifications == null) this.pastNotifications = new List<PastNotification>();
             this.pastNotifications.Clear();
 
-            DateTime cutoffTime = DateTime.Now.Date.AddDays(-8); // this needs to change at some point to it is not hard-coded in case the HistoryListView control changes
+            DateTime cutoffTime = DateTime.Now.Date.AddDays(-8); // this needs to change at some point so it is not hard-coded in case the HistoryListView control changes
             System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(HistoryFolder);
             System.IO.FileInfo[] files = d.GetFiles("*.notification", System.IO.SearchOption.AllDirectories);
 

@@ -52,10 +52,11 @@ namespace Growl
             // built-in displays
             LoadBuiltIn(new BonjourForwardDestinationHandler());   // make sure this is the first item in the list
             LoadBuiltIn(new ManualForwardDestinationHandler());
-            LoadBuiltIn(new ProwlForwardDestinationHandler());
-            LoadBuiltIn(new TwitterForwardDestinationHandler());
             LoadBuiltIn(new EmailForwardDestinationHandler());
+            LoadBuiltIn(new TwitterForwardDestinationHandler());
+            LoadBuiltIn(new ProwlForwardDestinationHandler());
             // -- add additional built-in display styles here
+            LoadBuiltIn(new ToastyForwardDestinationHandler());
 
             // user-specific plugins
             List<PluginInfo> pis = (List<PluginInfo>) ssPluginInfo.Load();

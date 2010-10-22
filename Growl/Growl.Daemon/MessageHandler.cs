@@ -61,7 +61,7 @@ namespace Growl.Daemon
         private const int TIMEOUT_FLASHPOLICYREQUEST = -1;
         private const int TIMEOUT_FLASHPOLICYRESPONSE = -1;
         private const int TIMEOUT_ERROR_RESPONSE = -1;
-        private const int TIMEOUT_USAGECOMPLETE = -1;
+        private const int TIMEOUT_USAGECOMPLETE = 5 * 60 * 1000;    // if they havent finished sending everything after we are done, we dont want to wait forever
 
         /// <summary>
         /// Seperator line for log files
@@ -101,7 +101,7 @@ namespace Growl.Daemon
         /// <summary>
         /// Indicates if notifications originating from a browser are allowed
         /// </summary>
-        private bool allowBrowerConnections = false;
+        private bool allowBrowserConnections = false;
 
         /// <summary>
         /// Indicates if client are allowed to subscribe to notifications from this server
@@ -151,9 +151,9 @@ namespace Growl.Daemon
         /// <param name="logFolder">The path to the folder where log files are written</param>
         /// <param name="loggingEnabled">Indicates if logging is enabled or not</param>
         /// <param name="allowNetworkNotifications">Indicates if notifications from remote machines are allowed</param>
-        /// <param name="allowBrowerConnections">Indicates if notifications from browsers are allowed</param>
+        /// <param name="allowBrowserConnections">Indicates if notifications from browsers are allowed</param>
         /// <param name="allowSubscriptions">Indicates if clients are allowed to subscribe to notifications from this server</param>
-        public MessageHandler(string serverName, PasswordManager passwordManager, bool passwordRequired, string logFolder, bool loggingEnabled, bool allowNetworkNotifications, bool allowBrowerConnections, bool allowSubscriptions)
+        public MessageHandler(string serverName, PasswordManager passwordManager, bool passwordRequired, string logFolder, bool loggingEnabled, bool allowNetworkNotifications, bool allowBrowserConnections, bool allowSubscriptions)
         {
             this.serverName = serverName;
             this.passwordManager = passwordManager;
@@ -161,7 +161,7 @@ namespace Growl.Daemon
             this.logFolder = logFolder;
             this.loggingEnabled = loggingEnabled;
             this.allowNetworkNotifications = allowNetworkNotifications;
-            this.allowBrowerConnections = allowBrowerConnections;
+            this.allowBrowserConnections = allowBrowserConnections;
             this.allowSubscriptions = allowSubscriptions;
 
             this.serverName = serverName;
@@ -258,7 +258,7 @@ namespace Growl.Daemon
             {
                 if (s == FlashPolicy.REQUEST_INDICATOR)
                 {
-                    GNTPFlashSocketReader gfsr = new GNTPFlashSocketReader(socket, allowBrowerConnections);
+                    GNTPFlashSocketReader gfsr = new GNTPFlashSocketReader(socket, allowBrowserConnections);
                     gfsr.Read(readBytes);
                 }
                 else if (s == WebSocketHandshakeHandler.REQUEST_INDICATOR)
@@ -269,7 +269,7 @@ namespace Growl.Daemon
                     wshh.DoHandshake(delegate()
                     {
                         // now pass off to the GNTPWebSocketReader (which is just a normal GNTPSocketReader that can deal with the WebSocket framing of packets)
-                        GNTPWebSocketReader gwsr = new GNTPWebSocketReader(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowerConnections, allowSubscriptions, this.requestInfo);
+                        GNTPWebSocketReader gwsr = new GNTPWebSocketReader(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowserConnections, allowSubscriptions, this.requestInfo);
                         this.requestReader = gwsr;
                         gwsr.MessageParsed += new GNTPRequestReader.GNTPRequestReaderMessageParsedEventHandler(requestReader_MessageParsed);
                         gwsr.Error += new GNTPRequestReader.GNTPRequestReaderErrorEventHandler(requestReader_Error);
@@ -279,7 +279,7 @@ namespace Growl.Daemon
                 else
                 {
                     // this is a normal GNTP/TCP connection, so handle it as such
-                    GNTPSocketReader gsr = new GNTPSocketReader(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowerConnections, allowSubscriptions, this.requestInfo);
+                    GNTPSocketReader gsr = new GNTPSocketReader(socket, passwordManager, passwordRequired, allowNetworkNotifications, allowBrowserConnections, allowSubscriptions, this.requestInfo);
                     this.requestReader = gsr;
                     gsr.MessageParsed += new GNTPRequestReader.GNTPRequestReaderMessageParsedEventHandler(requestReader_MessageParsed);
                     gsr.Error += new GNTPRequestReader.GNTPRequestReaderErrorEventHandler(requestReader_Error);
@@ -423,25 +423,66 @@ namespace Growl.Daemon
             if (this.requestReader != null)
                 this.requestReader.BeforeResponse(ref bytes);
 
+            // if we are done sending stuff back (all responses and callbacks), we need to initiate an orderly shutdown
+            if (!disconnectAfterWriting && requestComplete)
+                OrderlySocketShutdown();
+
             // send the data
             socket.Write(bytes, timeout, tag);
 
-            // if we are the ones disconnecting, do it now.
-            // otherwise, we need to know if the request is complete (all callbacks are done)
-            // if so, we must trigger another read attempt so we can be notified of the other end's decision to disconnect
-            // if not, we can just leave the socket alone until the request is complete
+            // if we are the ones disconnecting, do it now. (usually if we are sending back an error response)
+            // if not, we can just leave the socket alone
             if (disconnectAfterWriting)
-                socket.CloseAfterWriting();
-            else if (requestComplete)
             {
-                socket.CloseAfterWriting();
                 OnSocketUsageComplete(socket);
+                socket.CloseAfterWriting();
             }
-
-            /* TODO: as3growl testing ONLY
-            InitialRead(socket);
-             * */
         }
+
+        # region socket shutdown code
+
+        /* this needs some explanation.
+         * if we are done with the socket (written all responses and callbacks and the socket is not being reused),
+         * then we consider it done. however, there is a bug/feature of the Winsock library that will cause a 
+         * TCP RST packet if we shutdown or close before all incoming data is read. this can happen if we
+         * used cached and cached resources and thus didnt read all of the request before sending the response.
+         * in this case, after we are done, we want to shutdown our sending side and then just read the rest
+         * of the incoming queue and discard the data.
+         * http://msdn.microsoft.com/en-us/library/ms740481(VS.85).aspx
+         * http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4929549
+         * */
+
+        void OrderlySocketShutdown()
+        {
+            socket.DidWrite += new AsyncSocket.SocketDidWrite(SocketDoneWriting);
+        }
+
+        void SocketDoneWriting(AsyncSocket sender, long tag)
+        {
+            socket.DidWrite -= SocketDoneWriting;
+            sender.DidReadTimeout -= socket_DidReadTimeout;
+            socket.Shutdown(System.Net.Sockets.SocketShutdown.Send);
+            socket.DidRead += new AsyncSocket.SocketDidRead(SocketReadRemainder);
+            socket.DidClose += new AsyncSocket.SocketDidClose(SocketCloseAfterReadingRemainder);
+            socket.Read(TIMEOUT_USAGECOMPLETE, USAGECOMPLETE_TAG);
+            OnSocketUsageComplete(socket);
+        }
+
+        void SocketReadRemainder(AsyncSocket sender, byte[] data, long tag)
+        {
+            socket.Read(TIMEOUT_USAGECOMPLETE, USAGECOMPLETE_TAG);
+        }
+
+        void SocketCloseAfterReadingRemainder(AsyncSocket sender)
+        {
+            socket.DidRead -= SocketReadRemainder;
+            socket.DidClose -= SocketCloseAfterReadingRemainder;
+
+            // the socket will actually be closed by AsyncSocket when it reads 0 bytes.
+            // the GrowlServer class will be notified and can clean itself up as well
+        }
+
+        # endregion socket shutdown code
 
         /// <summary>
         /// Logs the specified data.
@@ -554,8 +595,9 @@ namespace Growl.Daemon
         /// <param name="socket">The <see cref="AsyncSocket"/> used in the transaction</param>
         protected void OnSocketUsageComplete(AsyncSocket socket)
         {
-            // kick of one final read so we know when the socket closes
-            socket.Read(TIMEOUT_USAGECOMPLETE, USAGECOMPLETE_TAG);
+            // TODO: temporarily removed while figuring out socket shutdown
+            // // kick of one final read so we know when the socket closes
+            // socket.Read(TIMEOUT_USAGECOMPLETE, USAGECOMPLETE_TAG);
 
             if (this.SocketUsageComplete != null)
             {

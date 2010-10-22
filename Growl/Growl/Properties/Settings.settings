@@ -104,5 +104,11 @@
     <Setting Name="TwitterConsumerSecret" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="HistoryView" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HistoryColumnWidths" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

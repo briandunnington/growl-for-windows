@@ -1866,6 +1866,18 @@ namespace Growl.Daemon
             }
         }
 
+        public void Shutdown(SocketShutdown how)
+        {
+            if (socket6 != null)
+            {
+                socket6.Shutdown(how);
+            }
+            if (socket4 != null)
+            {
+                socket4.Shutdown(how);
+            }
+        }
+
         /// <summary>
         /// In the event of an error, this method may be called during SocketWillClose
         /// to read any data that's left on the socket.

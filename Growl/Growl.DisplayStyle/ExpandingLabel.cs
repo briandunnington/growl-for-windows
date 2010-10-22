@@ -105,15 +105,28 @@ namespace Growl.DisplayStyle
             format.FormatFlags |= StringFormatFlags.LineLimit;
             format.Trimming = StringTrimming.None;
             SizeF size = g.MeasureString(text, font, desWidth, format);
+
+            int rem = 0;
+            int lines = Math.DivRem(Convert.ToInt32(Math.Ceiling(size.Height)), font.Height, out rem);
+            if (rem != 0) lines++;
+            int adjustedHeight = lines * font.Height;
+            size = new SizeF(size.Width, adjustedHeight);
+            
             Size returnSize = size.ToSize();
-             * */
+            * */
 
             Size size = new Size(desWidth, Int32.MaxValue);
-            TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.WordBreak | TextFormatFlags.LeftAndRightPadding;
+            TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.WordBreak | TextFormatFlags.LeftAndRightPadding | TextFormatFlags.TextBoxControl;
             Size returnSize = TextRenderer.MeasureText(text, font, size, flags);
 
             if (returnSize.Height < minHeight)
                 returnSize = new Size(returnSize.Width, minHeight);
+
+            /*
+            // HACK - actually, this probably is not needed anymore since the TextBoxControl flag should take care of things
+            if (returnSize.Width > desWidth)
+                returnSize = new Size(returnSize.Width, returnSize.Height + minHeight);
+             * */
 
             return returnSize;
         }
