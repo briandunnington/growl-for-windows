@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PhonyBalloony")]
+[assembly: AssemblyTitle("GrowlExtras.Subscribers.PhonyBalloony")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("element code project")]
-[assembly: AssemblyProduct("PhonyBalloony")]
-[assembly: AssemblyCopyright("Copyright © element code project 2010")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("GrowlExtras.Subscribers.PhonyBalloony")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d6ec9a72-c9a2-45c4-8960-2c0401d48677")]
+[assembly: Guid("56fed495-5d8a-4d5d-8e10-8ea25db9711c")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -29,5 +29,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

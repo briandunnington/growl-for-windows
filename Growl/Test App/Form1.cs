@@ -162,7 +162,7 @@ namespace Test_App
             Notification notification = new Notification(app.Name, nt1.Name, "123456", "\u2065 Your docu;ment\nwas publi&shed", "File 'c:\\file.txt' was successfully published at 8:57pm.\n\nClick this notification to open the file.\n\nThis is a test of the expanding displays.");
             notification.Sticky = false;
             notification.Priority = Priority.Emergency;
-            //notification.Icon = "http://atomicbride.com/Apple.gif";
+            notification.Icon = "http://atomicbride.com/Apple.gif";
             //notification.Icon = "http://haxe.org/favicon.ico";
             notification.CustomTextAttributes.Add("Filename", @"c:\file.txt");
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");

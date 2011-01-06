@@ -69,6 +69,15 @@ namespace Growl.Installation
                     this.YesButton.Visible = true;
                     this.NoButton.Visible = true;
                     this.OKButton.Visible = false;
+
+                    /* NOTE: there is a bug that is caused when Growl is launched via protocol handler (growl:) from Opera.
+                     * when that happens, the call to ShowDialog hangs.
+                     * i could not find any documentation on this or any reason why it would be happening (not on a non-ui thread, windows handle is already created, etc).
+                     * the only fix i could find was to Show/Hide the form before calling ShowDialog. i dont even know why this works, but it does.
+                     * */
+                    this.Show();
+                    this.Hide();
+
                     DialogResult result = this.ShowDialog();
                     if (result == DialogResult.Yes)
                     {

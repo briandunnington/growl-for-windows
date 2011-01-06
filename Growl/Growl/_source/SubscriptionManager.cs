@@ -230,7 +230,7 @@ namespace Growl
 
         public static void Update(Subscription subscription, bool enabled)
         {
-            if (enabled)
+            if (enabled && subscription.Enabled)
                 subscription.Subscribe();
             else
                 subscription.Kill();

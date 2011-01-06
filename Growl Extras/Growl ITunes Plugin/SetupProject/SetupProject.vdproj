@@ -15,19 +15,25 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_3FCD9AEAF58F945E0371BDCB927CB278"
+        "MsmKey" = "8:_33085B6E5E322A87756314CD448F7541"
+        "OwnerKey" = "8:_E29B5232C3BAAE58FE0D7727E9758964"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_33085B6E5E322A87756314CD448F7541"
+        "OwnerKey" = "8:_6602E903ED00D3E9E67E9926E17FF8CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_33085B6E5E322A87756314CD448F7541"
         "OwnerKey" = "8:_5FA486B696D84901906DF4BC4254640B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3FCD9AEAF58F945E0371BDCB927CB278"
-        "OwnerKey" = "8:_400F0D09AC7EE1E8E43071A91B49CB60"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_400F0D09AC7EE1E8E43071A91B49CB60"
+        "MsmKey" = "8:_417E80779C7EFC42A49A959A7B070A96"
         "OwnerKey" = "8:_5FA486B696D84901906DF4BC4254640B"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,43 +51,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5D11CE144DC299149BD4A8C3ECA2779B"
+        "OwnerKey" = "8:_417E80779C7EFC42A49A959A7B070A96"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5FA486B696D84901906DF4BC4254640B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_607F6354EE139BA3BB754A1BE50CBCAF"
-        "OwnerKey" = "8:_86AAFABC244ED7A2116E985B2676554B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_607F6354EE139BA3BB754A1BE50CBCAF"
-        "OwnerKey" = "8:_DD261856878E159493FD8F74D957282B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_607F6354EE139BA3BB754A1BE50CBCAF"
-        "OwnerKey" = "8:_5FA486B696D84901906DF4BC4254640B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_86AAFABC244ED7A2116E985B2676554B"
-        "OwnerKey" = "8:_5FA486B696D84901906DF4BC4254640B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_86AAFABC244ED7A2116E985B2676554B"
-        "OwnerKey" = "8:_DD261856878E159493FD8F74D957282B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A362504ED57F35F72E703AC08646C6CB"
+        "MsmKey" = "8:_6602E903ED00D3E9E67E9926E17FF8CE"
         "OwnerKey" = "8:_5FA486B696D84901906DF4BC4254640B"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -93,20 +75,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DD261856878E159493FD8F74D957282B"
+        "MsmKey" = "8:_E29B5232C3BAAE58FE0D7727E9758964"
         "OwnerKey" = "8:_5FA486B696D84901906DF4BC4254640B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F6144EF04E4F13C07656C2A8705CB8C3"
-        "OwnerKey" = "8:_3FCD9AEAF58F945E0371BDCB927CB278"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F6144EF04E4F13C07656C2A8705CB8C3"
-        "OwnerKey" = "8:_A362504ED57F35F72E703AC08646C6CB"
+        "MsmKey" = "8:_E29B5232C3BAAE58FE0D7727E9758964"
+        "OwnerKey" = "8:_6602E903ED00D3E9E67E9926E17FF8CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -124,37 +100,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DD261856878E159493FD8F74D957282B"
+        "OwnerKey" = "8:_6602E903ED00D3E9E67E9926E17FF8CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_86AAFABC244ED7A2116E985B2676554B"
+        "OwnerKey" = "8:_E29B5232C3BAAE58FE0D7727E9758964"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_607F6354EE139BA3BB754A1BE50CBCAF"
+        "OwnerKey" = "8:_33085B6E5E322A87756314CD448F7541"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_400F0D09AC7EE1E8E43071A91B49CB60"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A362504ED57F35F72E703AC08646C6CB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3FCD9AEAF58F945E0371BDCB927CB278"
+        "OwnerKey" = "8:_417E80779C7EFC42A49A959A7B070A96"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -318,20 +282,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3FCD9AEAF58F945E0371BDCB927CB278"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_33085B6E5E322A87756314CD448F7541"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Interop.iTunesLib, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3FCD9AEAF58F945E0371BDCB927CB278"
+                    "_33085B6E5E322A87756314CD448F7541"
                     {
-                    "Name" = "8:Interop.iTunesLib.dll"
+                    "Name" = "8:Growl.CoreLibrary.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.iTunesLib.dll"
+            "SourcePath" = "8:Growl.CoreLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
@@ -349,20 +313,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_400F0D09AC7EE1E8E43071A91B49CB60"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_417E80779C7EFC42A49A959A7B070A96"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ITunesPluginApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Interop.iTunesLib, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_400F0D09AC7EE1E8E43071A91B49CB60"
+                    "_417E80779C7EFC42A49A959A7B070A96"
                     {
-                    "Name" = "8:ITunesPluginApp.dll"
+                    "Name" = "8:Interop.iTunesLib.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:ITunesPluginApp.dll"
+            "SourcePath" = "8:Interop.iTunesLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
@@ -400,21 +364,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_607F6354EE139BA3BB754A1BE50CBCAF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D11CE144DC299149BD4A8C3ECA2779B"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_607F6354EE139BA3BB754A1BE50CBCAF"
-                    {
-                    "Name" = "8:Growl.CoreLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Growl.CoreLibrary.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:iTunes.exe"
+            "TargetName" = "8:iTunes.exe"
             "Tag" = "8:"
             "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
             "Condition" = "8:"
@@ -427,55 +380,24 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_86AAFABC244ED7A2116E985B2676554B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6602E903ED00D3E9E67E9926E17FF8CE"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.UDPLegacy, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_86AAFABC244ED7A2116E985B2676554B"
+                    "_6602E903ED00D3E9E67E9926E17FF8CE"
                     {
-                    "Name" = "8:Growl.Connector.dll"
+                    "Name" = "8:Growl.UDPLegacy.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Growl.Connector.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A362504ED57F35F72E703AC08646C6CB"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Interop.iTunesLib, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A362504ED57F35F72E703AC08646C6CB"
-                    {
-                    "Name" = "8:Interop.iTunesLib.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Interop.iTunesLib.dll"
+            "SourcePath" = "8:Growl.UDPLegacy.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
@@ -513,20 +435,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DD261856878E159493FD8F74D957282B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E29B5232C3BAAE58FE0D7727E9758964"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.UDPLegacy, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_DD261856878E159493FD8F74D957282B"
+                    "_E29B5232C3BAAE58FE0D7727E9758964"
                     {
-                    "Name" = "8:Growl.UDPLegacy.dll"
+                    "Name" = "8:Growl.Connector.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Growl.UDPLegacy.dll"
+            "SourcePath" = "8:Growl.Connector.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
@@ -541,26 +463,6 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F6144EF04E4F13C07656C2A8705CB8C3"
-            {
-            "SourcePath" = "8:iTunes.exe"
-            "TargetName" = "8:iTunes.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -631,14 +533,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Growl iTunes Plug-in"
-        "ProductCode" = "8:{94C9B37F-3F8B-41F7-8268-AFC6A6612C5D}"
-        "PackageCode" = "8:{E444A3F2-E8DF-4BF9-9959-429CA158BD39}"
+        "ProductCode" = "8:{F24D04E0-60F6-4EE5-9F62-E6CD51599A1A}"
+        "PackageCode" = "8:{BF83930A-D997-466D-9BB5-8CDBF67510B3}"
         "UpgradeCode" = "8:{1EA21D5A-FE5B-4205-AA02-41F3833C7532}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.10"
         "Manufacturer" = "8:Growl Extras"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1157,7 +1059,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_54DD3845547141CF8B06EE3BB08E3656"
             {
-            "SourcePath" = "8:..\\CustomInstaller\\obj\\Debug\\CustomInstaller.dll"
+            "SourcePath" = "8:..\\CustomInstaller\\obj\\Release\\CustomInstaller.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_392C00FB31B44C92B87166DF711C20FB"
@@ -1185,7 +1087,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5FA486B696D84901906DF4BC4254640B"
             {
-            "SourcePath" = "8:..\\Growl ITunes Plugin\\obj\\Debug\\GrowlExtras.ITunesPlugin.exe"
+            "SourcePath" = "8:..\\Growl ITunes Plugin\\obj\\Release\\GrowlExtras.ITunesPlugin.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1A74119C31614CF2A8D5FF12CF5DB6E0"

@@ -521,7 +521,7 @@ namespace Growl
 
         # region Notification handling
 
-        public void ProcessRegistration(Growl.UDPLegacy.RegistrationPacket rp, string receivedFrom)
+        public List<string> ProcessRegistration(Growl.UDPLegacy.RegistrationPacket rp, string receivedFrom)
         {
             /* THIS METHOD RESENDS THE UDP MESSAGE AS A LOCAL GNTP MESSAGE
             Growl.Connector.Application application = new Growl.Connector.Application(rp.ApplicationName);
@@ -549,9 +549,11 @@ namespace Growl
             }
             Growl.Connector.RequestInfo requestInfo = new Growl.Connector.RequestInfo();
             gntpListener_RegisterReceived(application, notificationTypes, requestInfo);
+            List<string> extraLogInfo = (requestInfo != null ? requestInfo.HandlingInfo : null);
+            return extraLogInfo;
         }
 
-        public void ProcessNotification(Growl.UDPLegacy.NotificationPacket np, string receivedFrom)
+        public List<string> ProcessNotification(Growl.UDPLegacy.NotificationPacket np, string receivedFrom)
         {
             /* THIS METHOD RESENDS THE UDP MESSAGE AS A LOCAL GNTP MESSAGE
             Growl.Connector.Application application = new Growl.Connector.Application(np.ApplicationName);
@@ -568,16 +570,18 @@ namespace Growl
             Growl.Connector.Notification notification = new Growl.Connector.Notification(np.ApplicationName, np.NotificationType.Name, String.Empty, np.Title, np.Description, null, np.Sticky, np.Priority, null);
             Growl.Connector.RequestInfo requestInfo = new Growl.Connector.RequestInfo();
             gntpListener_NotifyReceived(notification, null, requestInfo);
+            List<string> extraLogInfo = (requestInfo != null ? requestInfo.HandlingInfo : null);
+            return extraLogInfo;
         }
 
-        void udpListener_NotificationReceived(Growl.UDPLegacy.NotificationPacket np, string receivedFrom)
+        void udpListener_NotificationReceived(Growl.UDPLegacy.NotificationPacket np, string receivedFrom, ref List<string> extraLogInfo)
         {
-            ProcessNotification(np, receivedFrom);
+            extraLogInfo = ProcessNotification(np, receivedFrom);
         }
 
-        void udpListener_RegistrationReceived(Growl.UDPLegacy.RegistrationPacket rp, string receivedFrom)
+        void udpListener_RegistrationReceived(Growl.UDPLegacy.RegistrationPacket rp, string receivedFrom, ref List<string> extraLogInfo)
         {
-            ProcessRegistration(rp, receivedFrom);
+            extraLogInfo = ProcessRegistration(rp, receivedFrom);
         }
 
         Growl.Connector.Response gntpListener_NotifyReceived(Growl.Connector.Notification notification, Growl.Daemon.CallbackInfo callbackInfo, Growl.Connector.RequestInfo requestInfo)
@@ -960,11 +964,16 @@ namespace Growl
                     try
                     {
                         Growl.Connector.CallbackContext context = null;
-                        if (callbackInfo != null) context = callbackInfo.Context;
-                        requestInfo.SaveHandlingInfo(String.Format("Forwarding to {0} ({1})", fc.Description, fc.AddressDisplay));
+                        ForwardDestination.ForwardedNotificationCallbackHandler callback = null;
+                        if (callbackInfo != null)
+                        {
+                            context = callbackInfo.Context;
+                            callbackInfo.ForwardedNotificationCallback += new Growl.Daemon.CallbackInfo.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback);
+                            callback = new ForwardDestination.ForwardedNotificationCallbackHandler(callbackInfo.HandleCallbackFromForwarder);
+                        }
 
-                        callbackInfo.ForwardedNotificationCallback += new Growl.Daemon.CallbackInfo.ForwardedNotificationCallbackHandler(growl_ForwardedNotificationCallback);
-                        fc.ForwardNotification(notification, context, requestInfo, this.activityMonitor.IsIdle, new ForwardDestination.ForwardedNotificationCallbackHandler(callbackInfo.HandleCallbackFromForwarder));
+                        requestInfo.SaveHandlingInfo(String.Format("Forwarding to {0} ({1})", fc.Description, fc.AddressDisplay));
+                        fc.ForwardNotification(notification, context, requestInfo, this.activityMonitor.IsIdle, callback);
                     }
                     catch
                     {
@@ -984,7 +993,16 @@ namespace Growl
             if (fc != null)
             {
                 if (this.forwards.ContainsKey(fc.Key))
+                {
                     this.forwards.Remove(fc.Key);
+                    try
+                    {
+                        fc.Remove();
+                    }
+                    catch
+                    {
+                    }
+                }
                 this.forwards.Add(fc.Key, fc);
                 OnForwardDestinationsUpdated();
             }
@@ -993,7 +1011,16 @@ namespace Growl
         public void RemoveForwardDestination(ForwardDestination fc)
         {
             if (this.forwards.ContainsKey(fc.Key))
+            {
                 this.forwards.Remove(fc.Key);
+                try
+                {
+                    fc.Remove();
+                }
+                catch
+                {
+                }
+            }
             OnForwardDestinationsUpdated();
         }
 
@@ -1007,6 +1034,15 @@ namespace Growl
                     this.subscriptions.Remove(subscription.Key);
                     s.Kill();
                     s.StatusChanged -= new Subscription.SubscriptionStatusChangedEventHandler(subscription_StatusChanged);
+
+                    try
+                    {
+                        s.Remove();
+                    }
+                    catch
+                    {
+                    }
+
                     s = null;
                 }
 
@@ -1027,6 +1063,15 @@ namespace Growl
                     this.subscriptions.Remove(subscription.Key);
                     s.Kill();
                     s.StatusChanged -= new Subscription.SubscriptionStatusChangedEventHandler(subscription_StatusChanged);
+
+                    try
+                    {
+                        s.Remove();
+                    }
+                    catch
+                    {
+                    }
+
                     s = null;
                 }
                 OnSubscriptionsUpdated(true);

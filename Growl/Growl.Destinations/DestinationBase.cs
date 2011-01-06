@@ -231,6 +231,10 @@ namespace Growl.Destinations
         /// <returns><see cref="DestinationBase"/></returns>
         public abstract DestinationBase Clone();
 
+        public virtual void Remove()
+        {
+        }
+
         /// <summary>
         /// Called when the <see cref="DestinationBase.Enabled"/> property changes.
         /// </summary>

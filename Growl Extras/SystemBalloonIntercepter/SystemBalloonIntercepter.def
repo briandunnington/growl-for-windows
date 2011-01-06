@@ -1,5 +1,0 @@
-LIBRARY	SystemHookCore
-
-EXPORTS
-    InitializeCallWndProcHook
-    UninitializeCallWndProcHook

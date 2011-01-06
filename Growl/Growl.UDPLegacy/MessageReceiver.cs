@@ -17,14 +17,16 @@ namespace Growl.UDPLegacy
         /// </summary>
         /// <param name="rp">The <see cref="RegistrationPacket"/> containing the data received</param>
         /// <param name="receivedFrom">The host that sent the message</param>
-        public delegate void RegistrationHandler(RegistrationPacket rp, string receivedFrom);
+        /// <param name="extraLogInfo">Any extra data to write to the log file after the request has been processed</param>
+        public delegate void RegistrationHandler(RegistrationPacket rp, string receivedFrom, ref List<string> extraLogInfo);
 
         /// <summary>
         /// Event handler for the <see cref="NotificationReceived"/> event
         /// </summary>
         /// <param name="np">The <see cref="NotificationPacket"/> containing the data received</param>
         /// <param name="receivedFrom">The host that sent the message</param>
-        public delegate void NotificationHandler(NotificationPacket np, string receivedFrom);
+        /// <param name="extraLogInfo">Any extra data to write to the log file after the request has been processed</param>
+        public delegate void NotificationHandler(NotificationPacket np, string receivedFrom, ref List<string> extraLogInfo);
 
         /// <summary>
         /// Fires when a registration message is received
@@ -285,6 +287,7 @@ namespace Growl.UDPLegacy
 
             StringBuilder sb = new StringBuilder();
             bool processed = false;
+            List<string> extraLogInfo = new List<string>();
 
             // parse the packet
             if (bytes != null && bytes.Length > 18)
@@ -301,7 +304,7 @@ namespace Growl.UDPLegacy
                     RegistrationPacket rp = RegistrationPacket.FromPacket(bytes, this.passwordManager, passwordRequired);
                     if (rp != null)
                     {
-                        this.OnRegistrationPacketReceived(rp, receivedFrom);
+                        this.OnRegistrationPacketReceived(rp, receivedFrom, ref extraLogInfo);
                         processed = true;
 
                         sb.AppendFormat("Protocol Version:         {0}\r\n", rp.ProtocolVersion);
@@ -324,7 +327,7 @@ namespace Growl.UDPLegacy
                     NotificationPacket np = NotificationPacket.FromPacket(bytes, this.passwordManager, passwordRequired);
                     if (np != null)
                     {
-                        this.OnNotificationPacketReceived(np, receivedFrom);
+                        this.OnNotificationPacketReceived(np, receivedFrom, ref extraLogInfo);
                         processed = true;
 
                         sb.AppendFormat("Protocol Version:  {0}\r\n", np.ProtocolVersion);
@@ -350,7 +353,7 @@ namespace Growl.UDPLegacy
             {
                 sb.Append("Malformed packet - not enough bytes");
             }
-            Log(sb.ToString(), bytes, receivedFrom, processed);
+            Log(sb.ToString(), bytes, receivedFrom, processed, extraLogInfo);
         }
 
         /// <summary>
@@ -358,11 +361,12 @@ namespace Growl.UDPLegacy
         /// </summary>
         /// <param name="rp">The <see cref="RegistrationPacket"/> containing the information received</param>
         /// <param name="receivedFrom">The host from which the packet was received</param>
+        /// <param name="extraLogInfo">Any additional information to log after the request has been processed</param>
         /// <remarks>
         /// </remarks>
-        protected virtual void OnRegistrationPacketReceived(RegistrationPacket rp, string receivedFrom)
+        protected virtual void OnRegistrationPacketReceived(RegistrationPacket rp, string receivedFrom, ref List<string> extraLogInfo)
         {
-            if (this.RegistrationReceived != null) this.RegistrationReceived(rp, receivedFrom);
+            if (this.RegistrationReceived != null) this.RegistrationReceived(rp, receivedFrom, ref extraLogInfo);
         }
 
         /// <summary>
@@ -370,9 +374,10 @@ namespace Growl.UDPLegacy
         /// </summary>
         /// <param name="np">The <see cref="NotificationPacket"/> containing the information received</param>
         /// <param name="receivedFrom">The host from which the packet was received</param>
-        protected virtual void OnNotificationPacketReceived(NotificationPacket np, string receivedFrom)
+        /// <param name="extraLogInfo">Any additional information to log after the request has been processed</param>
+        protected virtual void OnNotificationPacketReceived(NotificationPacket np, string receivedFrom, ref List<string> extraLogInfo)
         {
-            if (this.NotificationReceived != null) this.NotificationReceived(np, receivedFrom);
+            if (this.NotificationReceived != null) this.NotificationReceived(np, receivedFrom, ref extraLogInfo);
         }
 
         /// <summary>
@@ -382,7 +387,8 @@ namespace Growl.UDPLegacy
         /// <param name="bytes">The actual bytes received</param>
         /// <param name="receivedFrom">The address of the sender</param>
         /// <param name="processed">Indicates if the request was valid and successfully processed</param>
-        private void Log(string packetInfo, byte[] bytes, string receivedFrom, bool processed)
+        /// <param name="extraLogInfo">Any additional information to log after the request has been processed</param>
+        private void Log(string packetInfo, byte[] bytes, string receivedFrom, bool processed, List<string> extraLogInfo)
         {
             try
             {
@@ -405,6 +411,14 @@ namespace Growl.UDPLegacy
                         w.BaseStream.Write(bytes, 0, bytes.Length);
                         w.Write(SEPERATOR);
                         w.Write("Result: {0}\r\n", (processed ? RESULT_OK : RESULT_ERROR));
+                        w.Write(SEPERATOR);
+                        if (extraLogInfo != null)
+                        {
+                            foreach (string item in extraLogInfo)
+                            {
+                                w.Write(String.Format("{0}\r\n", item));
+                            }
+                        }
                         w.Close();
                     }
                 }

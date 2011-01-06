@@ -1,0 +1,6 @@
+The gTraySpy.dll and gTraySpy64.dlls are based almost entirely on the
+source code of Jonas Conrad: 
+	http://www.assembla.com/code/gTraySpy/subversion/nodes
+
+That code is in turn based on Mike Lin's geOTraySpy/traysaver code:
+	http://www.mlin.net/other.shtml

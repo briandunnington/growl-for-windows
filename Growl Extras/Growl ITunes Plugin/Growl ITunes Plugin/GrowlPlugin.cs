@@ -55,7 +55,7 @@ namespace GrowlExtras.ITunesPlugin
             this.udpGrowl.Password = password;
         }
 
-        void growl_NotificationCallback(Growl.Connector.Response response, Growl.Connector.CallbackData callbackData)
+        void growl_NotificationCallback(Growl.Connector.Response response, Growl.Connector.CallbackData callbackData, object state)
         {
             if (callbackData != null)
             {

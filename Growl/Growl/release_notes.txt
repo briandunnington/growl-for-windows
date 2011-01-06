@@ -1,6 +1,16 @@
-2.0.5x changes (v2.0.5.2)
+2.0.X changes (v2.0.6.X)
+------------------------------
+
+
+
+
+
+2.0.6 changes (v2.0.6.1)
 ------------------------------
 - fixed a bug that could cause very long text with no spaces (such as urls) to be truncated in some displays
+- fixed a bug that caused auto-install links to not work properly when called from Opera
+- fixed a bug that caused UDP notifications to not get forwarded
+- released Boxcar subscription plugin and updated Boxcar forwarder plugin (to prevent loops)
 
 2.0.5 changes (v2.0.5.2)
 ------------------------------
@@ -15,7 +25,6 @@
 - fixed a bug in Visor display that causes ampersands to render incorrectly (UseMnemonic)
 - added Toasty forwarder to forward to Windows Phones
 - released Notifo subscription plugin and updated Notifo forwarder plugin (to prevent loops) - thanks to Jonathan Yee
-	
 
 2.0.4 changes (v2.0.4.2)
 ------------------------------
