@@ -28,7 +28,6 @@ namespace Growl
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChooseForwarding));
             this.buttonSave = new Growl.UI.ButtonEx();
             this.buttonClose = new Growl.UI.ButtonEx();
@@ -79,6 +78,7 @@ namespace Growl
             // 
             // forwardListView1
             // 
+            this.forwardListView1.AllDisabled = true;
             this.forwardListView1.Computers = null;
             this.forwardListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.forwardListView1.LabelWrap = false;

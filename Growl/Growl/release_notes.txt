@@ -1,8 +1,18 @@
-2.0.X changes (v2.0.6.X)
+2.0.7.2 changes (v2.0.7.2)
 ------------------------------
+- fixed regression in UDP packet format ('flags' was coming through as 4 bytes instead of 2)
 
-
-
+2.0.7 changes (v2.0.7.1)
+------------------------------
+- updated all Growl claw icons to match new Mac icons
+- made History item text copyable (select item and then Ctrl-C)
+- created user-configurable setting for length of time to store history items (HistoryDaysToStore in user.config)
+- updated Websocket support to draft-ietf-hybi-thewebsocketprotocol-14 protocol version
+- fixed an issue where thumbnail images for old history items were not deleted from disk
+- fixed issues with Standard display that caused issues with high DPI settings
+- fixed a bug in Growl.Connector.dll that didnt handle newlines (\n) in callback data properly
+- released Notify My Android forwarder plugin
+- released Phony Balloony subscriber plugin (deprecated Phony Balloony stand-alone program)
 
 
 2.0.6 changes (v2.0.6.1)

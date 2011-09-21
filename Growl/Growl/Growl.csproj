@@ -490,9 +490,6 @@
     <None Include="Resources\growl_highlighted.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\growl_paused.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\growl_stopped.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -560,7 +557,7 @@
     <None Include="lib\ICSharpCode.SharpZipLib.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="growl.ico" />
+    <None Include="growl.ico" />
     <Content Include="icons_license.pdf" />
     <Content Include="Growl.exe.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -570,7 +567,6 @@
     <None Include="lib\Newtonsoft.Json.dll" />
     <Content Include="license.txt" />
     <Content Include="release_notes.txt" />
-    <None Include="Resources\growl1.png" />
     <None Include="Resources\notifyio.png" />
     <None Include="Resources\1.png" />
     <None Include="Resources\2.png" />

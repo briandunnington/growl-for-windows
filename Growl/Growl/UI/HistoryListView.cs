@@ -65,6 +65,8 @@ namespace Growl.UI
             this.ItemMouseHover += new ListViewItemMouseHoverEventHandler(HistoryListView_ItemMouseHover);
             this.MouseLeave += new EventHandler(HistoryListView_MouseLeave);
 
+            this.KeyDown += new KeyEventHandler(HistoryListView_KeyDown);
+
             // 
             // contextMenu
             // 
@@ -93,6 +95,28 @@ namespace Growl.UI
             UpdateEndOfToday();
 
             this.ResumeLayout();
+        }
+
+        void HistoryListView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                if (this.SelectedItems.Count == 1)
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    ListViewItem lvi = this.SelectedItems[0];
+                    if (lvi.SubItems != null)
+                    {
+                        foreach (ListViewItem.ListViewSubItem lvsi in lvi.SubItems)
+                        {
+                            sb.AppendLine(lvsi.Text.Replace("\r", " - "));
+                        }
+                    }
+
+                    Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
+                }
+            }
         }
 
         void HistoryListView_ColumnClick(object sender, ColumnClickEventArgs e)

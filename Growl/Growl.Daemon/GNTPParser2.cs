@@ -12,14 +12,10 @@ namespace Growl.Daemon
     /// This class handles parsing GNTP requests. Data is fed in and parsed in real-time.
     /// If the request is malformed or invalid, an error event will be triggered. Otherwise,
     /// when an entire valid request has been read, a 'message parsed' event will be triggered.
-    /// 
-    /// NOTE that currently, the parser is geared for use with the GNTPSocketReader and thus
-    /// expects data to be fed in in a certain way. This limitation will be removed eventually,
-    /// but it works for now.
     /// </summary>
-    class GNTPParser
+    class GNTPParser2
     {
-        private const long ACCEPT_TAG = 0;
+        private const long START_TAG = 0;
         private const long GNTP_IDENTIFIER_TAG = 1;
         private const long HEADER_TAG = 2;
         private const long NOTIFICATION_TYPE_TAG = 3;
@@ -213,6 +209,10 @@ namespace Growl.Daemon
         /// </summary>
         private string decryptedRequest = null;
 
+        List<byte> buffer;
+        MemoryStream ms;
+        GNTPStreamReader gntpReader;
+        byte[] nextIndicator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GNTPParser"/> class.
@@ -223,7 +223,7 @@ namespace Growl.Daemon
         /// <param name="allowBrowserConnections">Indicates if browser requests are allowed</param>
         /// <param name="allowSubscriptions">Indicates if SUBSCRIPTION requests are allowed</param>
         /// <param name="requestInfo">The <see cref="RequestInfo"/> associated with this request</param>
-        public GNTPParser(PasswordManager passwordManager, bool passwordRequired, bool allowNetworkNotifications, bool allowBrowserConnections, bool allowSubscriptions, RequestInfo requestInfo)
+        public GNTPParser2(PasswordManager passwordManager, bool passwordRequired, bool allowNetworkNotifications, bool allowBrowserConnections, bool allowSubscriptions, RequestInfo requestInfo)
         {
             this.passwordManager = passwordManager;
             this.passwordRequired = passwordRequired;
@@ -237,6 +237,12 @@ namespace Growl.Daemon
             this.notificationsToBeRegistered = new List<HeaderCollection>();
             this.pointers = new List<Pointer>();
             this.callbackInfo = new CallbackInfo();
+
+            ms = new MemoryStream();
+            gntpReader = new GNTPStreamReader(ms);
+            buffer = new List<byte>();
+            nextIndicator = AsyncSocket.CRLFData;
+            tag = GNTP_IDENTIFIER_TAG;
         }
 
         /// <summary>
@@ -248,10 +254,6 @@ namespace Growl.Daemon
             get
             {
                 return this.tag;
-            }
-            set
-            {
-                this.tag = value;
             }
         }
 
@@ -271,37 +273,96 @@ namespace Growl.Daemon
             }
         }
 
+        private bool ReadUntilIndicator()
+        {
+            return ReadUntilIndicator(0);
+        }
+
+        private bool ReadUntilIndicator(int indicatorIndex)
+        {
+            byte indicator = nextIndicator[indicatorIndex];
+            int b = gntpReader.Read();
+            if (b == -1)
+                return false;
+
+            buffer.Add((byte) b);
+            if (b == indicator)
+            {
+                if (indicatorIndex == nextIndicator.Length - 1)
+                    return true;
+                else
+                    return ReadUntilIndicator(++indicatorIndex);
+            }
+            else
+                return ReadUntilIndicator(indicatorIndex);
+        }
+
         /// <summary>
         /// Parses the specified input bytes and returns information on what is expected next.
         /// </summary>
         /// <param name="inputBytes">The input bytes to parse.</param>
-        /// <returns>
-        /// A <see cref="NextIndicator"/> instance that can be used by the reading class to 
-        /// figure out what is expected next.
-        /// </returns>
-        /// <remarks>
-        /// NOTE that currently, the parser is geared for use with the GNTPSocketReader and thus
-        /// expects data to be fed in in a certain way. This limitation will be removed eventually,
-        /// but it works for now.
-        /// </remarks>
-        public NextIndicator Parse(byte[] inputBytes)
+        public void Parse(byte[] inputBytes)
         {
             try
             {
-                Data data = new Data(inputBytes);
+                long pos = ms.Position;
+                ms.Write(inputBytes, 0, inputBytes.Length);
+                ms.Position = pos;
+                Process();
+            }
+            catch (GrowlException gEx)
+            {
+                OnError(gEx.ErrorCode, gEx.Message, gEx.AdditionalInfo);
+            }
+            catch (Exception ex)
+            {
+                OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST, ex.Message);
+            }
+        }
+
+        private void Process()
+        {
+            try
+            {
+                while (ReadUntilIndicator())
+                {
+                    ProcessBuffer();
+                }
+            }
+            catch (GrowlException gEx)
+            {
+                OnError(gEx.ErrorCode, gEx.Message, gEx.AdditionalInfo);
+            }
+            catch (Exception ex)
+            {
+                OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST, ex.Message);
+            }
+        }
+
+        private void ContinueProcessing()
+        {
+            buffer.Clear();
+            Process();
+        }
+
+        private void ProcessBuffer()
+        {
+            try
+            {
+                Data data = new Data(buffer.ToArray());
                 string s = data.ToString();
                 alreadyReceived.Append(s);
 
-                if (tag == ACCEPT_TAG)
+                if (tag == START_TAG)
                 {
-                    // do nothing here but wait for more data
+                    // start looking for GNTP header
                     tag = GNTP_IDENTIFIER_TAG;
-                    return NextIndicator.CRLF;
+                    ContinueProcessing();
                 }
 
                 else if (tag == GNTP_IDENTIFIER_TAG)
                 {
-                    string line = alreadyReceived.ToString();
+                    string line = s;
                     Match match = ParseGNTPHeaderLine(line, this.passwordRequired);
 
                     if (match.Success)
@@ -318,7 +379,6 @@ namespace Growl.Daemon
                                 if (this.directive == RequestType.SUBSCRIBE && !this.allowSubscriptions)
                                 {
                                     OnError(ErrorCode.NOT_AUTHORIZED, ErrorDescription.SUBSCRIPTIONS_NOT_ALLOWED);
-                                    return NextIndicator.None;
                                 }
                                 else
                                 {
@@ -361,39 +421,33 @@ namespace Growl.Daemon
                                         if (this.encryptionAlgorithm == Cryptography.SymmetricAlgorithmType.PlainText)
                                         {
                                             tag = HEADER_TAG;
-                                            return NextIndicator.CRLF;
-                                            //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, HEADER_TAG);
+                                            ContinueProcessing();
                                         }
                                         else
                                         {
                                             tag = ENCRYPTED_HEADERS_TAG;
-                                            return NextIndicator.CRLFCRLF;
-                                            //socket.Read(AsyncSocket.CRLFCRLFData, TIMEOUT_ENCRYPTED_HEADERS, ENCRYPTED_HEADERS_TAG);
+                                            ContinueProcessing();
                                         }
                                     }
                                     else
                                     {
                                         OnError(ErrorCode.NOT_AUTHORIZED, errorDescription);
-                                        return NextIndicator.None;
                                     }
                                 }
                             }
                             else
                             {
                                 OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.UNSUPPORTED_DIRECTIVE, d);
-                                return NextIndicator.None;
                             }
                         }
                         else
                         {
                             OnError(ErrorCode.UNKNOWN_PROTOCOL_VERSION, ErrorDescription.UNSUPPORTED_VERSION, version);
-                            return NextIndicator.None;
                         }
                     }
                     else
                     {
                         OnError(ErrorCode.UNKNOWN_PROTOCOL, ErrorDescription.MALFORMED_REQUEST);
-                        return NextIndicator.None;
                     }
                 }
 
@@ -408,14 +462,12 @@ namespace Growl.Daemon
                             if (this.expectedNotifications > 0)
                             {
                                 tag = NOTIFICATION_TYPE_TAG;
-                                return NextIndicator.CRLF;
-                                //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, NOTIFICATION_TYPE_TAG);
+                                ContinueProcessing();
                             }
                             else
                             {
                                 // a REGISTER request with no notifications is not valid
                                 OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.NO_NOTIFICATIONS_REGISTERED);
-                                return NextIndicator.None;
                             }
                         }
                         else
@@ -427,13 +479,11 @@ namespace Growl.Daemon
                                 this.pointersExpectedRemaining = this.pointersExpected;
                                 this.currentPointer = 1;
                                 tag = RESOURCE_HEADER_TAG;
-                                return NextIndicator.CRLF;
-                                //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
+                                ContinueProcessing();
                             }
                             else
                             {
                                 OnMessageParsed();
-                                return NextIndicator.None;
                             }
                         }
                     }
@@ -474,8 +524,7 @@ namespace Growl.Daemon
                             if (addHeader) this.headers.AddHeader(header);
                         }
                         tag = HEADER_TAG;
-                        return NextIndicator.CRLF;
-                        //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, HEADER_TAG);
+                        ContinueProcessing();
                     }
                 }
 
@@ -488,8 +537,7 @@ namespace Growl.Daemon
                         {
                             this.currentNotification++;
                             tag = NOTIFICATION_TYPE_TAG;
-                            return NextIndicator.CRLF;
-                            //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, NOTIFICATION_TYPE_TAG);
+                            ContinueProcessing();
                         }
                         else
                         {
@@ -500,13 +548,11 @@ namespace Growl.Daemon
                                 this.pointersExpectedRemaining = this.pointersExpected;
                                 this.currentPointer = 1;
                                 tag = RESOURCE_HEADER_TAG;
-                                return NextIndicator.CRLF;
-                                //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
+                                ContinueProcessing();
                             }
                             else
                             {
                                 OnMessageParsed();
-                                return NextIndicator.None;
                             }
                         }
                     }
@@ -520,8 +566,7 @@ namespace Growl.Daemon
                         Header header = Header.ParseHeader(s);
                         this.notificationsToBeRegistered[this.currentNotification - 1].AddHeader(header);
                         tag = NOTIFICATION_TYPE_TAG;
-                        return NextIndicator.CRLF;
-                        //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, NOTIFICATION_TYPE_TAG);
+                        ContinueProcessing();
                     }
                 }
 
@@ -536,14 +581,12 @@ namespace Growl.Daemon
                             // read #of bytes
                             int length = this.pointers[this.currentPointer - 1].Length;
                             tag = RESOURCE_TAG;
-                            return new NextIndicator(length);
-                            //socket.Read(length, TIMEOUT_GNTP_BINARY, RESOURCE_TAG);
+                            ContinueProcessing();
                         }
                         else
                         {
                             tag = RESOURCE_HEADER_TAG;
-                            return NextIndicator.CRLF;
-                            //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
+                            ContinueProcessing();
                         }
                     }
                     else
@@ -566,20 +609,17 @@ namespace Growl.Daemon
                             else
                             {
                                 OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.UNRECOGNIZED_RESOURCE_HEADER, header.Name);
-                                return NextIndicator.None;
                             }
 
                             if (validHeader)
                             {
                                 tag = RESOURCE_HEADER_TAG;
-                                return NextIndicator.CRLF;
-                                //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
+                                ContinueProcessing();
                             }
                         }
                         else
                         {
                             OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.UNRECOGNIZED_RESOURCE_HEADER);
-                            return NextIndicator.None;
                         }
                     }
                 }
@@ -599,13 +639,11 @@ namespace Growl.Daemon
                     {
                         this.currentPointer++;
                         tag = RESOURCE_HEADER_TAG;
-                        return NextIndicator.CRLF;
-                        //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
+                        ContinueProcessing();
                     }
                     else
                     {
                         OnMessageParsed();
-                        return NextIndicator.None;
                     }
                 }
 
@@ -619,8 +657,7 @@ namespace Growl.Daemon
                         {
                             int len = Convert.ToInt32(header.Value);
                             tag = ENCRYPTED_HEADERS_TAG;
-                            return new NextIndicator(len);
-                            //socket.Read(len, TIMEOUT_ENCRYPTED_HEADERS, ENCRYPTED_HEADERS_TAG);
+                            ContinueProcessing();
                         }
                     }
 
@@ -628,34 +665,27 @@ namespace Growl.Daemon
                     if (this.pointersExpected > 0)
                     {
                         tag = RESOURCE_HEADER_TAG;
-                        return NextIndicator.CRLF;
-                        //socket.Read(AsyncSocket.CRLFData, TIMEOUT_GNTP_HEADER, RESOURCE_HEADER_TAG);
+                        ContinueProcessing();
                     }
                     else
                     {
                         OnMessageParsed();
-                        return NextIndicator.None;
                     }
                 }
 
                 else
                 {
                     OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST);
-                    return NextIndicator.None;
                 }
             }
             catch (GrowlException gEx)
             {
                 OnError(gEx.ErrorCode, gEx.Message, gEx.AdditionalInfo);
-                return NextIndicator.None;
             }
             catch (Exception ex)
             {
                 OnError(ErrorCode.INVALID_REQUEST, ErrorDescription.MALFORMED_REQUEST, ex.Message);
-                return NextIndicator.None;
             }
-
-            return NextIndicator.None;
         }
 
         /// <summary>

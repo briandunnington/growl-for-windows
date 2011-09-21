@@ -59,6 +59,18 @@ namespace Growl.Daemon
             }
         }
 
+        public long ParserTag
+        {
+            get
+            {
+                return parser.Tag;
+            }
+            set
+            {
+                parser.Tag = value;
+            }
+        }
+
         /// <summary>
         /// Reads the socket data and handles the request
         /// </summary>

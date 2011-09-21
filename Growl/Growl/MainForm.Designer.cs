@@ -926,10 +926,10 @@ namespace Growl
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = global::Growl.FormResources.growl_big;
-            this.pictureBox1.Location = new System.Drawing.Point(311, 24);
+            this.pictureBox1.Location = new System.Drawing.Point(407, 48);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(346, 279);
+            this.pictureBox1.Size = new System.Drawing.Size(256, 256);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -1562,6 +1562,7 @@ namespace Growl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 373);
             this.Controls.Add(this.toolbarPanel);
+            this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
@@ -1569,7 +1570,6 @@ namespace Growl
             this.Controls.Add(this.panelDisplays);
             this.Controls.Add(this.panelAbout);
             this.Controls.Add(this.panelSecurity);
-            this.Controls.Add(this.panelHistory);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

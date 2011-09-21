@@ -61,10 +61,10 @@
     <Compile Include="FlashPolicy.cs" />
     <Compile Include="GNTPFlashSocketReader.cs" />
     <Compile Include="GNTPParser.cs" />
+    <Compile Include="GNTPParser2.cs" />
     <Compile Include="GNTPRequest.cs" />
     <Compile Include="GNTPRequestReader.cs" />
     <Compile Include="GNTPSocketReader.cs" />
-    <Compile Include="GNTPStreamReader.cs" />
     <Compile Include="GNTPWebSocketReader.cs" />
     <Compile Include="GrowlServer.cs" />
     <Compile Include="MessageHandler.cs" />

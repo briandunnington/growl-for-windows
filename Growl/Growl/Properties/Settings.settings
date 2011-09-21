@@ -110,5 +110,8 @@
     <Setting Name="HistoryColumnWidths" Provider="Growl.UserSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="HistoryDaysToSave" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

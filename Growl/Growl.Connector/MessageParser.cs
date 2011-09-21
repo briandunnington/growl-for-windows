@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using Growl.CoreLibrary;
 
 namespace Growl.Connector
 {
@@ -80,7 +81,7 @@ namespace Growl.Connector
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
             using (stream)
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader(stream);
+                GNTPStreamReader reader = new GNTPStreamReader(stream);
                 using (reader)
                 {
                     bool isError = false;

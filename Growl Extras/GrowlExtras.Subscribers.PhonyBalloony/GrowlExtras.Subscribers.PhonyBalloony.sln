@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowlTray", "GrowlTray\GrowlTray.csproj", "{E75F4755-B9C7-426B-9070-A2BDADBC71DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowlTrayPluginTester", "GrowlTrayPluginTester\GrowlTrayPluginTester.csproj", "{2927B682-21A3-4CF8-A6F9-E055D5A01E92}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,12 +29,6 @@ Global
 		{E75F4755-B9C7-426B-9070-A2BDADBC71DF}.Release32|Any CPU.Build.0 = Release|Any CPU
 		{E75F4755-B9C7-426B-9070-A2BDADBC71DF}.Release64|Any CPU.ActiveCfg = Release64|Any CPU
 		{E75F4755-B9C7-426B-9070-A2BDADBC71DF}.Release64|Any CPU.Build.0 = Release64|Any CPU
-		{2927B682-21A3-4CF8-A6F9-E055D5A01E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2927B682-21A3-4CF8-A6F9-E055D5A01E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2927B682-21A3-4CF8-A6F9-E055D5A01E92}.Release32|Any CPU.ActiveCfg = Release|Any CPU
-		{2927B682-21A3-4CF8-A6F9-E055D5A01E92}.Release32|Any CPU.Build.0 = Release|Any CPU
-		{2927B682-21A3-4CF8-A6F9-E055D5A01E92}.Release64|Any CPU.ActiveCfg = Release64|Any CPU
-		{2927B682-21A3-4CF8-A6F9-E055D5A01E92}.Release64|Any CPU.Build.0 = Release64|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

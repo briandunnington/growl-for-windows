@@ -83,6 +83,10 @@ namespace GrowlTray
         public const uint TTS_ALWAYSTIP = 0x01;
         public const uint TTM_POP = WM_USER + 28;
 
+        public const uint NOTIFYICON_VERSION = 3;
+        public const uint NOTIFYICON_VERSION_4 = 4;
+
+
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int command);
 

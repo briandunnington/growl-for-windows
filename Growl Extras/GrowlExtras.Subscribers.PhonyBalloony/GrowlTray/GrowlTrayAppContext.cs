@@ -19,6 +19,8 @@ namespace GrowlTray
         bool GROWL = true;
 #endif
 
+        const string CALLBACK_DATA_SEPARATOR = ":";
+
         const uint MSG_STOP = Win32.WM_USER + 100;
 
         bool restoreBalloonRegistryOnQuit = false;
@@ -51,11 +53,29 @@ namespace GrowlTray
 
             this.growl = new GrowlConnector();
             this.growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+            this.growl.NotificationCallback += new GrowlConnector.CallbackEventHandler(growl_NotificationCallback);
             if(GROWL) this.growl.Register(app, types);
 
             timer = new Timer();
             timer.Interval = 5 * 1000;
             timer.Tick += new EventHandler(timer_Tick);
+        }
+
+        void growl_NotificationCallback(Response response, CallbackData callbackData, object state)
+        {
+            if (callbackData != null)
+            {
+                if (callbackData.Result == Growl.CoreLibrary.CallbackResult.CLICK)
+                {
+                    string[] data = callbackData.Data.Split(CALLBACK_DATA_SEPARATOR.ToCharArray());
+                    IntPtr hWnd = new IntPtr(Convert.ToInt32(data[0]));
+                    uint msg = Convert.ToUInt32(data[1]);
+                    IntPtr wparam = new IntPtr(Convert.ToInt32(data[2]));
+                    IntPtr lparam = new IntPtr(Convert.ToInt32(data[3]));
+
+                    Win32.SendMessage(hWnd, msg, wparam, lparam);
+                }
+            }
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -93,7 +113,14 @@ namespace GrowlTray
             {
                 Win32.COPYDATASTRUCT cds = new Win32.COPYDATASTRUCT();
                 cds = (Win32.COPYDATASTRUCT)m.GetLParam(typeof(Win32.COPYDATASTRUCT));
-                HandleCopyData(m.HWnd, m.WParam, cds);
+                try
+                {
+                    HandleCopyData(m.HWnd, m.WParam, cds);
+                }
+                catch (Exception ex)
+                {
+                    Log(ex.ToString());
+                }
             }
         }
 
@@ -121,6 +148,8 @@ namespace GrowlTray
             Log("className: " + className);
             bool is64bit = Win32.Is64BitOperatingSystem();
             Log("64-bit: " + is64bit.ToString());
+            Log("OS: " + Environment.OSVersion.VersionString);
+            Log("XP: " + isXP.ToString());
             bool res;
             if (is64bit) res = SetTrayHook64(className);
             else res = SetTrayHook(className);
@@ -219,12 +248,15 @@ namespace GrowlTray
             uint CustomBalloonIconHandle;
             Image image = null;
 
+            CallbackContext callback = null;
+
             if (isXP)
             {
                 Win32.TRAYINFO ti = (Win32.TRAYINFO)Marshal.PtrToStructure(cds.lpData, typeof(Win32.TRAYINFO));
                 Win32.NOTIFYICONDATA data = ti.nid;
                 if (!IsFlagSet((int)ti.nid.Flags, (int)Win32.IconDataMembers.Info)) return;
                 if (data.szInfo == "") return; //ignore dummy notification
+                
                 szTitle = data.szInfoTitle;
                 szText = data.szInfo;
                 info = data.dwInfoFlags;
@@ -233,8 +265,11 @@ namespace GrowlTray
                 Win32.GetWindowThreadProcessId((IntPtr)data.hWnd, out szPid);
                 CustomBalloonIconHandle = 0;
 
+
+
                 // handle custom icons
                 if (IsFlagSet((int)ti.nid.dwInfoFlags, (int)Win32.BalloonFlags.USER) && (IntPtr)ti.nid.hIcon != IntPtr.Zero)
+                {
                     if ((IntPtr)ti.nid.hIcon != IntPtr.Zero)
                     {
                         System.Drawing.Icon icon = System.Drawing.Icon.FromHandle((IntPtr)ti.nid.hIcon);
@@ -243,6 +278,28 @@ namespace GrowlTray
                             image = icon.ToBitmap();
                         }
                     }
+                }
+
+                // handle callbacks - format: hwnd:msg:wparam:lparam
+                if (ti.nid.uCallbackMsg > 0)
+                {
+                    string hwnd = handle.ToString();
+                    string msg = ti.nid.uCallbackMsg.ToString();
+                    string wparam = null;
+                    string lparam = null;
+                    if (ti.nid.uTimeoutOrVersion == 4)
+                    {
+                        wparam = MakeLParam(LoWord(0), HiWord(0)).ToString();
+                        lparam = MakeLParam(LoWord(0x405), HiWord(Convert.ToInt32(ti.nid.uID))).ToString();
+                    }
+                    else
+                    {
+                        wparam = ti.nid.uID.ToString();
+                        lparam = 0x405.ToString();
+                    }
+                    string d = String.Join(CALLBACK_DATA_SEPARATOR, new string[] { hwnd, msg, wparam, lparam });
+                    callback = new CallbackContext(d, "balloonclick");
+                }
             }
             else
             {
@@ -267,6 +324,27 @@ namespace GrowlTray
                     {
                         image = icon.ToBitmap();
                     }
+                }
+
+                // handle callbacks - format: hwnd:msg:wparam:lparam
+                if (ti.nid.uCallbackMsg > 0)
+                {
+                    string hwnd = handle.ToString();
+                    string msg = ti.nid.uCallbackMsg.ToString();
+                    string wparam = null;
+                    string lparam = null;
+                    if(ti.nid.uTimeoutOrVersion == 4)
+                    {
+                        wparam = MakeLParam(LoWord(0), HiWord(0)).ToString();
+                        lparam = MakeLParam(LoWord(0x405), HiWord(Convert.ToInt32(ti.nid.uID))).ToString();
+                    }
+                    else
+                    {
+                        wparam = ti.nid.uID.ToString();
+                        lparam = 0x405.ToString();
+                    }
+                    string d = String.Join(CALLBACK_DATA_SEPARATOR, new string[] { hwnd, msg, wparam, lparam });
+                    callback = new CallbackContext(d, "balloonclick");
                 }
             }
 
@@ -341,7 +419,7 @@ namespace GrowlTray
             // TODO: NOTIFY
             Notification n = new Notification(appName, ntNameOther, String.Empty, szTitle, szText);
             n.Icon = image;
-            if (GROWL) growl.Notify(n);
+            if (GROWL) growl.Notify(n, callback);
         }
 
         [DllImport("gTraySpy.dll")]
@@ -364,23 +442,27 @@ namespace GrowlTray
 
         static bool isXPOS()
         {
-            System.IO.FileInfo shell32 = new System.IO.FileInfo(System.IO.Path.Combine(System.Environment.SystemDirectory, "shell32.dll"));
-            if (shell32.Exists)
-            {
-                System.Diagnostics.FileVersionInfo theVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(shell32.FullName);
-                int i = theVersion.FileVersion.IndexOf('.');
-                if (i > 0)
-                {
-                    try
-                    {
-                        int ver = int.Parse(theVersion.FileVersion.Substring(0, i));
-                        if (ver >= 6) return false;
-                        else return true;
-                    }
-                    catch { }
-                }
-            }
-            return false;
+            // Ex: Microsoft Windows NT 5.2.3790 Service Pack 2
+
+            if (Environment.OSVersion.Version.Major >= 6) return false;
+            else return true;
+        }
+
+        static int MakeLong(int LoWord, int HiWord)
+        {
+            return (HiWord << 16) | (LoWord & 0xffff);
+        }
+        static IntPtr MakeLParam(int LoWord, int HiWord)
+        {
+            return (IntPtr)((HiWord << 16) | (LoWord & 0xffff));
+        }
+        static int HiWord(int Number)
+        {
+            return (Number >> 16) & 0xffff;
+        }
+        static int LoWord(int Number)
+        {
+            return Number & 0xffff;
         }
     }
 }

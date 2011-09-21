@@ -35,7 +35,7 @@ namespace Growl
             if (this.pastNotifications == null) this.pastNotifications = new List<PastNotification>();
             this.pastNotifications.Clear();
 
-            DateTime cutoffTime = DateTime.Now.Date.AddDays(-8); // this needs to change at some point so it is not hard-coded in case the HistoryListView control changes
+            DateTime cutoffTime = DateTime.Now.Date.AddDays(-Properties.Settings.Default.HistoryDaysToSave);
             System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(HistoryFolder);
             System.IO.FileInfo[] files = d.GetFiles("*.notification", System.IO.SearchOption.AllDirectories);
 
@@ -44,6 +44,8 @@ namespace Growl
                 if (file.CreationTime < cutoffTime)
                 {
                     file.Delete();
+                    string imgFileName = file.FullName.Replace(".notification", ".img");
+                    File.Delete(imgFileName);
                 }
                 else
                 {
@@ -77,18 +79,6 @@ namespace Growl
             DeleteHistory();
             this.PastNotifications.Clear();
         }
-
-        /*
-// remove invalid entries //TODO: maybe move this out into some kind of scheduled timer process
-DateTime cutoff = DateTime.Now.AddDays(-MAX_NUMBER_OF_DAYS).Date;
-foreach (PastNotification pn in invalidNotifications)
-{
-    if (pn.Timestamp < cutoff)
-        this.pastNotifications.Remove(pn);
-}
-invalidNotifications.Clear();
-invalidNotifications = null;
- * */
 
         public List<PastNotification> PastNotifications
         {

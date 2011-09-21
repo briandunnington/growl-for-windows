@@ -226,8 +226,15 @@ namespace Growl
 
             if (requestInfo == null) requestInfo = new Growl.Connector.RequestInfo();
 
+            // if this notification originated from Toasty in the first place, dont re-forward it
+            if (((notification.ApplicationName == "Toasty") && notification.CustomTextAttributes.ContainsKey("ToastyDeviceID")) && notification.CustomTextAttributes["ToastyDeviceID"].Equals(this.DeviceID, StringComparison.InvariantCultureIgnoreCase))
+            {
+                requestInfo.HandlingInfo.Add(String.Format("Aborted forwarding due to circular notification (deviceID:{0})", this.DeviceID));
+                send = false;
+            }
+
             // if a minimum priority is set, check that
-            if (this.MinimumPriority != null && this.MinimumPriority.HasValue && notification.Priority < this.MinimumPriority.Value)
+            if (send && this.MinimumPriority != null && this.MinimumPriority.HasValue && notification.Priority < this.MinimumPriority.Value)
             {
                 requestInfo.SaveHandlingInfo(String.Format("Forwarding to Toasty ({0}) cancelled - Notification priority must be at least '{1}' (was actually '{2}').", this.Description, this.MinimumPriority.Value.ToString(), notification.Priority.ToString()));
                 send = false;

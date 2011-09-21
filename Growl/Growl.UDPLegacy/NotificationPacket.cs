@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Growl.Connector;
+using Growl.CoreLibrary;
 
 namespace Growl.UDPLegacy
 {
@@ -139,11 +140,11 @@ namespace Growl.UDPLegacy
             ByteBuilder bb = new ByteBuilder();
             bb.Append((byte)this.protocolVersion);
             bb.Append((byte)this.packetType);
-            bb.Append(flags);
-            bb.Append(ByteBuilder.GetStringLength(this.notificationType.Name));
-            bb.Append(ByteBuilder.GetStringLength(this.title));
-            bb.Append(ByteBuilder.GetStringLength(this.description));
-            bb.Append(ByteBuilder.GetStringLength(this.applicationName));
+            bb.Append((short)flags);
+            bb.Append(ByteBuilder.GetStringLengthAsShort(this.notificationType.Name));
+            bb.Append(ByteBuilder.GetStringLengthAsShort(this.title));
+            bb.Append(ByteBuilder.GetStringLengthAsShort(this.description));
+            bb.Append(ByteBuilder.GetStringLengthAsShort(this.applicationName));
             bb.Append(this.notificationType.Name);
             bb.Append(this.title);
             bb.Append(this.description);

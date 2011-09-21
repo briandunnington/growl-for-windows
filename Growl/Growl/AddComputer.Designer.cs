@@ -41,6 +41,7 @@ namespace Growl
             this.bonjourListBox1.ItemHeight = 48;
             this.bonjourListBox1.Location = new System.Drawing.Point(0, 0);
             this.bonjourListBox1.Name = "bonjourListBox1";
+            this.bonjourListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.bonjourListBox1.Size = new System.Drawing.Size(338, 168);
             this.bonjourListBox1.TabIndex = 4;
             // 

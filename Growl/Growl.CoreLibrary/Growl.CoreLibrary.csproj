@@ -53,9 +53,11 @@
   <ItemGroup>
     <Compile Include="Base64.cs" />
     <Compile Include="BinaryData.cs" />
+    <Compile Include="ByteBuilder.cs" />
     <Compile Include="CallbackResult.cs" />
     <Compile Include="DebugInfo.cs" />
     <Compile Include="Detector.cs" />
+    <Compile Include="GNTPStreamReader.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="IPUtilities.cs" />
     <Compile Include="NotificationCallbackDelegate.cs" />

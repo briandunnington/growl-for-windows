@@ -256,7 +256,7 @@ namespace Test_App
             notification.CustomTextAttributes.Add("Timestamp", "8:57pm");
             notification.CustomBinaryAttributes.Add("File", new BinaryData(new byte[] { 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78 }));
 
-            string data = "this is my context";
+            string data = "this is my context\nthis is after a line break";
             string type = typeof(string).ToString();
             CallbackContext context = new CallbackContext(data, type);
 

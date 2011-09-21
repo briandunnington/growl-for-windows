@@ -44,6 +44,7 @@ namespace Growl.Displays.Standard
             this.titleLabel.Size = new System.Drawing.Size(242, 16);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "[title]";
+            this.titleLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             this.titleLabel.UseMnemonic = false;
             this.titleLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.titleLabel_LabelHeightChanged);
             // 
@@ -74,7 +75,6 @@ namespace Growl.Displays.Standard
             // 
             // descriptionLabel
             // 
-            this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionLabel.BackColor = System.Drawing.Color.Transparent;
             this.descriptionLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descriptionLabel.Location = new System.Drawing.Point(3, 25);
@@ -82,13 +82,14 @@ namespace Growl.Displays.Standard
             this.descriptionLabel.Size = new System.Drawing.Size(242, 30);
             this.descriptionLabel.TabIndex = 1;
             this.descriptionLabel.Text = "[description]";
+            this.descriptionLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             this.descriptionLabel.UseMnemonic = false;
             this.descriptionLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.descriptionLabel_LabelHeightChanged);
             // 
             // StandardWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(250, 75);
             this.ControlBox = false;
@@ -96,11 +97,9 @@ namespace Growl.Displays.Standard
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.applicationNameLabel);
             this.Controls.Add(this.titleLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "StandardWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Standard";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
