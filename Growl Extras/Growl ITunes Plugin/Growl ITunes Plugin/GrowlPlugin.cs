@@ -7,6 +7,8 @@ namespace GrowlExtras.ITunesPlugin
 {
     internal class GrowlPlugin : ITunesHandler
     {
+        string id = "ITunesGrowlPluginNotification";
+
         // old
         private Growl.UDPLegacy.MessageSender udpGrowl;
         private Growl.UDPLegacy.NotificationType udpNotificationType;
@@ -138,7 +140,7 @@ namespace GrowlExtras.ITunesPlugin
 
                     //Growl.CoreLibrary.Resource albumIcon = artworkFilePath;
                     Growl.CoreLibrary.Resource albumIcon = (artworkData != null ? new Growl.CoreLibrary.BinaryData(artworkData) : null);
-                    Growl.Connector.Notification notification = new Growl.Connector.Notification(application.Name, nt1.Name, callback.Data, title, text, albumIcon, false, Growl.Connector.Priority.Normal, null);
+                    Growl.Connector.Notification notification = new Growl.Connector.Notification(application.Name, nt1.Name, id, title, text, albumIcon, false, Growl.Connector.Priority.Normal, id);
 
                     notification.CustomTextAttributes.Add("iTunes-Artist", song.Artist);
                     notification.CustomTextAttributes.Add("iTunes-Album", song.Album);

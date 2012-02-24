@@ -15,20 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_30A3287B410C794A1383A8CD13D7BC43"
+        "MsmKey" = "8:_1B81B629500B121FAB7B05FF8F686EE0"
         "OwnerKey" = "8:_7A586B1C057C4F128A12F8427FBC0489"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_30A3287B410C794A1383A8CD13D7BC43"
+        "MsmKey" = "8:_1B81B629500B121FAB7B05FF8F686EE0"
         "OwnerKey" = "8:_BEBC431829564744AC0AC2825DA0B7B8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_30A3287B410C794A1383A8CD13D7BC43"
-        "OwnerKey" = "8:_AFE22207329470E4C341815A7132027E"
+        "MsmKey" = "8:_1B81B629500B121FAB7B05FF8F686EE0"
+        "OwnerKey" = "8:_EAD9E6577DAE3072658B5329D32B12DC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -45,26 +45,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AFE22207329470E4C341815A7132027E"
-        "OwnerKey" = "8:_7A586B1C057C4F128A12F8427FBC0489"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_BEBC431829564744AC0AC2825DA0B7B8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_30A3287B410C794A1383A8CD13D7BC43"
+        "MsmKey" = "8:_EAD9E6577DAE3072658B5329D32B12DC"
+        "OwnerKey" = "8:_7A586B1C057C4F128A12F8427FBC0489"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4FB4DE78230B43BCA6ED52280F998086"
+        "OwnerKey" = "8:_7A586B1C057C4F128A12F8427FBC0489"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -76,13 +70,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7A586B1C057C4F128A12F8427FBC0489"
+        "OwnerKey" = "8:_4FB4DE78230B43BCA6ED52280F998086"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AFE22207329470E4C341815A7132027E"
+        "OwnerKey" = "8:_EAD9E6577DAE3072658B5329D32B12DC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1B81B629500B121FAB7B05FF8F686EE0"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -103,6 +103,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -119,6 +127,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -176,14 +192,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_30A3287B410C794A1383A8CD13D7BC43"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1B81B629500B121FAB7B05FF8F686EE0"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_30A3287B410C794A1383A8CD13D7BC43"
+                    "_1B81B629500B121FAB7B05FF8F686EE0"
                     {
                     "Name" = "8:Growl.CoreLibrary.dll"
                     "Attributes" = "3:512"
@@ -238,37 +254,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AFE22207329470E4C341815A7132027E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AFE22207329470E4C341815A7132027E"
-                    {
-                    "Name" = "8:Growl.DisplayStyle.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Growl.DisplayStyle.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_816BE869B9B64541861771CC2123DE0F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BEBC431829564744AC0AC2825DA0B7B8"
             {
             "AssemblyRegister" = "3:1"
@@ -298,6 +283,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EAD9E6577DAE3072658B5329D32B12DC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.DisplayStyle, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_EAD9E6577DAE3072658B5329D32B12DC"
+                    {
+                    "Name" = "8:Growl.DisplayStyle.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.DisplayStyle.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_816BE869B9B64541861771CC2123DE0F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -367,14 +383,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Speak Display"
-        "ProductCode" = "8:{D884FC55-112C-4FD9-8DBB-0BFBF81884A7}"
-        "PackageCode" = "8:{F5238B68-FFBA-4444-8139-9C017207850D}"
+        "ProductCode" = "8:{9B8AAA99-4D0F-49F7-B864-FB570DFF5587}"
+        "PackageCode" = "8:{7DDBC335-0ABF-4546-9DE0-C28F339CE6BB}"
         "UpgradeCode" = "8:{5A7B3A45-65A8-4012-A2E4-8DBF566BA399}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.1.0"
         "Manufacturer" = "8:Growl Extras"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -888,7 +904,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7A586B1C057C4F128A12F8427FBC0489"
             {
-            "SourcePath" = "8:..\\Speak Display\\obj\\Debug\\Speak.dll"
+            "SourcePath" = "8:..\\Speak Display\\obj\\Release\\Speak.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_816BE869B9B64541861771CC2123DE0F"

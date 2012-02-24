@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<display>
+  <name>Folder Watch Subscriber</name>
+  <author>Brian Dunnington</author>
+  <version>1.0</version>
+  <packageurl>http://www.growlforwindows.com/web/folderwatch.zip</packageurl>
+
+  <description>
+    <![CDATA[
+    Get notified of changes to local files and folders
+    ]]>
+  </description>
+</display>

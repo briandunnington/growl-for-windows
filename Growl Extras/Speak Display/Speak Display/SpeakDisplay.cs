@@ -27,7 +27,7 @@ namespace Speak
 
         public override string Version
         {
-            get { return "1.0"; }
+            get { return "1.1"; }
         }
 
         public override string Website
@@ -37,14 +37,48 @@ namespace Speak
 
         protected override void HandleNotification(Notification notification, string displayName)
         {
-            StringBuilder sb = new StringBuilder();
+            /*
+            string xml = @"<p>
+                            <s>You have 4 new messages.</s>
+                            <s>The first is from Stephanie Williams and arrived at <break/> 3:45pm.
+                            </s>
+                            <s>
+                              The subject is <prosody rate=""-20%"">ski trip</prosody>
+                            </s>
+                          </p>";
+             * */
 
             PromptBuilder pb = new PromptBuilder();
-            pb.AppendText(notification.Title, PromptEmphasis.Strong);
+
+            // handle title
+            if (notification.CustomTextAttributes != null && notification.CustomTextAttributes.ContainsKey("Notification-Title-SSML"))
+                pb.AppendSsmlMarkup(notification.CustomTextAttributes["Notification-Title-SSML"]);
+            else
+                pb.AppendText(notification.Title, PromptEmphasis.Strong);
+
             pb.AppendBreak();
-            pb.AppendText(notification.Description);
-            
-            ss.Speak(pb);
+
+            // handle text
+            if (notification.CustomTextAttributes != null && notification.CustomTextAttributes.ContainsKey("Notification-Text-SSML"))
+                pb.AppendSsmlMarkup(notification.CustomTextAttributes["Notification-Text-SSML"]);
+            else
+                pb.AppendText(notification.Description);
+
+            try
+            {
+                ss.Speak(pb);
+            }
+            catch (Exception ex)
+            {
+                Growl.CoreLibrary.DebugInfo.WriteLine("Unable to speak input: " + ex.Message);
+
+                // fall back to plain text (if the plain text is what failed the first time, it wont work this time either but wont hurt anything)
+                pb.ClearContent();
+                pb.AppendText(notification.Title, PromptEmphasis.Strong);
+                pb.AppendBreak();
+                pb.AppendText(notification.Description);
+                ss.Speak(pb);
+            }
         }
 
         public override void CloseAllOpenNotifications()
