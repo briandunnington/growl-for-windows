@@ -8,6 +8,8 @@ namespace Growl.UI
 {
     public class Toolbar : ToolStrip
     {
+        float scale;
+
         public Toolbar()
         {
             this.Renderer = new ToolbarRenderer();

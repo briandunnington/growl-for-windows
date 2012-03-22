@@ -70,6 +70,18 @@ namespace Growl.Displays.Smokestack
 
         protected override void HandleNotification(Notification notification, string displayName)
         {
+            if (!String.IsNullOrEmpty(notification.CoalescingGroup))
+            {
+                foreach (NotificationWindow nw in this.ActiveWindows)
+                {
+                    if (nw.CoalescingGroup == notification.CoalescingGroup)
+                    {
+                        ((SmokestackWindow)nw).Close(true);
+                        break;
+                    }
+                }
+            }
+
             SmokestackWindow win = new SmokestackWindow();
             win.Tag = this;
             win.SetNotification(notification);

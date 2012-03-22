@@ -1,3 +1,25 @@
+2.0.9 changes (v2.0.9.1)
+------------------------------
+- set NoImpersonate flag on custom installer actions (in hopes of avoiding some 2869 errors) - http://blogs.msdn.com/b/astebner/archive/2006/10/23/mailbag-how-to-set-the-noimpersonate-flag-for-a-custom-action-in-visual-studio-2005.aspx
+- merged setup.exe and Growl.msi into a single GrowlInstaller.exe self-extracting file
+- added coalescing support to native Plain, Smokestack, and Standard displays (queueing displays such as Toast and Visor do not support coalescing)
+- fixed issue where application icon and default notification type icon were not updated if they were currently selected in the UI when a re-register request came in
+- fixed issue where application was cut-off if it was longer than one line (on Applications tab)
+- Growl now saves forwarder/subscription pref changes to disk immediately instead of only when Growl exits
+- fixed issue where settings specified in growl.exe.config were not honored on the first run
+- updated iTunes plugin to support coalescing (one notification on screen at a time)
+
+2.0.8 changes (v2.0.8.1)
+------------------------------
+- updated all UI elements to work with various high-DPI settings (old style and new style, above and below 120dpi)
+- added ability to automatically pause Growl when another application is running fullscreen
+- updated Bonjour TXT data to include GNTP version and websocket supported version
+- better detection of another instance of Growl running in a separate user session
+- fixed errant extra trailing space in GNTP header line of unencrypted responses
+- fix for issue 37 (Could not created registry key for HKEY_USERS32\SID\Software\Classes) - changed installer to install for Everyone instead of Just Me
+- updated growlnotify to return an error code instead of always returning 0
+- added temporary workaround to enable forwarding to Growl on Mac (v1.3.1+) (unencrypted requests)
+
 2.0.7.2 changes (v2.0.7.2)
 ------------------------------
 - fixed regression in UDP packet format ('flags' was coming through as 4 bytes instead of 2)
@@ -13,7 +35,6 @@
 - fixed a bug in Growl.Connector.dll that didnt handle newlines (\n) in callback data properly
 - released Notify My Android forwarder plugin
 - released Phony Balloony subscriber plugin (deprecated Phony Balloony stand-alone program)
-
 
 2.0.6 changes (v2.0.6.1)
 ------------------------------

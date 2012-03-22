@@ -57,6 +57,7 @@
     <Compile Include="MultpleMonitorHelper.cs" />
     <Compile Include="NotificationLite.cs" />
     <Compile Include="PopupAnimator.cs" />
+    <Compile Include="PositionSettingScaler.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Win32.cs" />
     <Compile Include="Win32Animator.cs" />

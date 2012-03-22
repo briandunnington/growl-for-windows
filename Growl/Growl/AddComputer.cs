@@ -133,6 +133,11 @@ namespace Growl
                 {
                     Utility.WriteDebugInfo(String.Format("EXCEPTION: '{0}' Update() failed", this.dbEdit.Description));
                 }
+
+                if (this.isSubscription)
+                    this.controller.EditSubscription((Subscription)this.dbEdit);
+                else
+                    this.controller.EditForwardDestination((ForwardDestination)this.dbEdit);
             }
             else
             {

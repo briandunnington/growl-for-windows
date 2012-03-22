@@ -42,6 +42,8 @@ namespace Growl
             this.labelDefaultSound.Text = Properties.Resources.General_SoundSettings_SoundLabel;
             this.checkBoxMuteAllSounds.Text = Properties.Resources.General_SoundSettings_MuteLabel;
             this.checkBoxAutoStart.Text = Properties.Resources.General_AutoStart;
+            this.groupBoxFullscreenSettings.Text = Properties.Resources.General_FullscreenSettingsTitle;
+            this.labelFullscreenPause.Text = Properties.Resources.General_FullscreenSettings_AutoPause;
 
             this.labelPrefSound.Text = Properties.Resources.Applications_Preferences_SoundLabel;
             this.labelPrefSticky.Text = Properties.Resources.Applications_Preferences_StickyLabel;
@@ -87,6 +89,30 @@ namespace Growl
             this.labelAboutOriginal2.Text = Properties.Resources.About_OriginalLabel2;
             this.labelAboutGrowlVersion.Text = Properties.Resources.About_GrowlVersion;
 
+            // scaling
+            int toolbarHeight = this.toolStrip1.Height + 2;
+            this.toolbarPanel.Height = this.toolStrip1.Height + (int)(2 * ApplicationMain.ScalingFactor);
+
+            this.toolbarButtonGeneral.Height = toolbarHeight;
+            this.toolbarButtonApplications.Height = toolbarHeight;
+            this.toolbarButtonDisplays.Height = toolbarHeight;
+            this.toolbarButtonNetwork.Height = toolbarHeight;
+            this.toolbarButtonSecurity.Height = toolbarHeight;
+            this.toolbarButtonHistory.Height = toolbarHeight;
+            this.toolbarButtonAbout.Height = toolbarHeight;
+
+            this.toolbarButtonGeneral.Width = (int)(this.toolbarButtonGeneral.Width * ApplicationMain.ScalingFactor);
+            this.toolbarButtonApplications.Width = (int)(this.toolbarButtonApplications.Width * ApplicationMain.ScalingFactor);
+            this.toolbarButtonDisplays.Width = (int)(this.toolbarButtonDisplays.Width * ApplicationMain.ScalingFactor);
+            this.toolbarButtonNetwork.Width = (int)(this.toolbarButtonNetwork.Width * ApplicationMain.ScalingFactor);
+            this.toolbarButtonSecurity.Width = (int)(this.toolbarButtonSecurity.Width * ApplicationMain.ScalingFactor);
+            this.toolbarButtonHistory.Width = (int)(this.toolbarButtonHistory.Width * ApplicationMain.ScalingFactor);
+            this.toolbarButtonAbout.Width = (int)(this.toolbarButtonAbout.Width * ApplicationMain.ScalingFactor);
+
+            this.forwardListView.TileSize = new Size(this.forwardListView.TileSize.Width, (int)(this.forwardListView.TileSize.Height * ApplicationMain.ScalingFactor));
+            this.subscribedListView.TileSize = new Size(this.subscribedListView.TileSize.Width, (int)(this.subscribedListView.TileSize.Height * ApplicationMain.ScalingFactor));
+            this.historyListView.TileSize = new Size(this.historyListView.TileSize.Width, (int)(this.historyListView.TileSize.Height * ApplicationMain.ScalingFactor));
+
             // handle the 'consider me idle after X seconds' radio button
             // (since the textbox needs to be placed at the appropriate position within the label)
             string idleAfterText = Properties.Resources.General_IdleSettings_IdleAfter;
@@ -95,7 +121,7 @@ namespace Growl
                 string before = idleAfterText.Substring(0, idleAfterText.IndexOf('{'));
                 string after = idleAfterText.Substring(idleAfterText.IndexOf('}') + 1);
                 this.radioButtonIdleAfter.Text = before;
-                this.textBoxIdleAfterSeconds.Location = new Point(this.radioButtonIdleAfter.Bounds.Right - 6, this.radioButtonIdleAfter.Location.Y - 1);
+                this.textBoxIdleAfterSeconds.Location = new Point(this.radioButtonIdleAfter.Bounds.Right - ((int)(6 * ApplicationMain.ScalingFactor)), this.radioButtonIdleAfter.Location.Y - ((int)(1 * ApplicationMain.ScalingFactor)));
                 idleAfterText = String.Format(idleAfterText, "         "); // this leaves space for the textbox
             }
             this.radioButtonIdleAfter.Text = idleAfterText;
@@ -171,12 +197,12 @@ namespace Growl
         internal void InitializePreferences()
         {
             this.controller = Controller.GetController();
-            this.controller.ApplicationRegistered += new Controller.ApplicationRegisteredDelegate(controller_ApplicationRegistered);
-            this.controller.NotificationReceived += new Controller.NotificationReceivedDelegate(controller_NotificationReceived);
-            this.controller.NotificationPast += new Controller.NotificationPastDelegate(controller_NotificationPast);
-            this.controller.BonjourServiceUpdate += new Controller.BonjourServiceUpdateDelegate(controller_BonjourServiceUpdate);
+            this.controller.ApplicationRegistered += new EventHandler<ApplicationRegisteredEventArgs>(controller_ApplicationRegistered);
+            this.controller.NotificationReceived += new EventHandler<NotificationReceivedEventArgs>(controller_NotificationReceived);
+            this.controller.NotificationPast += new EventHandler<NotificationPastEventArgs>(controller_NotificationPast);
+            this.controller.BonjourServiceUpdate += new EventHandler<BonjourServiceUpdatedEventArgs>(controller_BonjourServiceUpdate);
             this.controller.ForwardDestinationsUpdated += new EventHandler(controller_ForwardDestinationsUpdated);
-            this.controller.SubscriptionsUpdated += new Controller.SubscriptionsUpdatedDelegate(controller_SubscriptionsUpdated);
+            this.controller.SubscriptionsUpdated += new EventHandler<SubscriptionsUpdatedEventArgs>(controller_SubscriptionsUpdated);
 
 
             // GENERAL
@@ -192,6 +218,7 @@ namespace Growl
                 this.textBoxIdleAfterSeconds.Enabled = true;
                 this.radioButtonIdleAfter.Checked = true;
             }
+            this.checkBoxFullscreenPause.Checked = Properties.Settings.Default.AutoPauseFullscreen;
 
             // APPLICATIONS
             LoadRegisteredApplications();
@@ -515,19 +542,70 @@ namespace Growl
             }
         }
 
-        void controller_ApplicationRegistered(RegisteredApplication ra)
+        void controller_ApplicationRegistered(object sender, ApplicationRegisteredEventArgs e)
         {
-            BindApplicationList();
+            if (e.Existing)
+            {
+                RegisteredApplication ra = e.Application;
+
+                Growl.UI.ListControl lc = null;
+                ListControlItem selectedLCI = null;
+
+                lc = this.listControlApplications;
+                selectedLCI = lc.SelectedItem as ListControlItem;
+                if (selectedLCI != null)
+                {
+                    RegisteredApplication app = (RegisteredApplication)selectedLCI.RegisteredObject;
+                    if (app.Name == ra.Name)
+                    {
+                        int i = lc.SelectedIndex;
+                        lc.SelectedIndex = -1;
+                        lc.SelectedIndex = i;
+                    }
+                }
+
+                /*
+                RegisteredApplication ra = e.Application;
+
+                Growl.UI.ListControl lc = null;
+                ListControlItem selectedLCI = null;
+
+                lc = this.listControlApplications;
+                selectedLCI = lc.SelectedItem as ListControlItem;
+                if (selectedLCI != null)
+                {
+                    RegisteredApplication app = (RegisteredApplication)selectedLCI.RegisteredObject;
+                    if (app.Name == ra.Name)
+                    {
+                        if (this.pictureBoxApplication.Image != null) this.pictureBoxApplication.Image.Dispose();
+                        this.pictureBoxApplication.Image = app.GetIcon();
+
+                        lc = this.listControlApplicationNotifications;
+                        selectedLCI = lc.SelectedItem as ListControlItem;
+                        if (selectedLCI != null)
+                        {
+                            IRegisteredObject iro = selectedLCI.RegisteredObject;
+                            if (this.pictureBoxApplicationNotification.Image != null) this.pictureBoxApplicationNotification.Image.Dispose();
+                            this.pictureBoxApplicationNotification.Image = iro.GetIcon();
+                        }
+                    }
+                }
+                */
+            }
+            else
+            {
+                BindApplicationList();
+            }
         }
 
-        void controller_NotificationReceived(Growl.DisplayStyle.Notification n)
+        void controller_NotificationReceived(object sender, NotificationReceivedEventArgs e)
         {
             // do nothing for now
         }
 
-        void controller_NotificationPast(PastNotification pn)
+        void controller_NotificationPast(object sender, NotificationPastEventArgs e)
         {
-            this.historyListView.AddNotification(pn);
+            this.historyListView.AddNotification(e.PastNotification);
         }
 
         void controller_ForwardDestinationsUpdated(object sender, EventArgs e)
@@ -535,15 +613,15 @@ namespace Growl
             this.BindForwardList();
         }
 
-        void controller_BonjourServiceUpdate(BonjourForwardDestination bfc)
+        void controller_BonjourServiceUpdate(object sender, BonjourServiceUpdatedEventArgs e)
         {
             //BindForwardList();
             this.forwardListView.Refresh();
         }
 
-        void controller_SubscriptionsUpdated(bool countChanged)
+        void controller_SubscriptionsUpdated(object sender, SubscriptionsUpdatedEventArgs e)
         {
-            if (countChanged)
+            if (e.CountChanged)
             {
                 BindSubscriptionList();
             }
@@ -577,12 +655,12 @@ namespace Growl
                 {
                     // unregister event handlers
                     this.toolbarPanel.Paint -= new PaintEventHandler(toolbarPanel_Paint);
-                    this.controller.ApplicationRegistered -= new Controller.ApplicationRegisteredDelegate(controller_ApplicationRegistered);
-                    this.controller.NotificationReceived -= new Controller.NotificationReceivedDelegate(controller_NotificationReceived);
-                    this.controller.NotificationPast -= new Controller.NotificationPastDelegate(controller_NotificationPast);
-                    this.controller.BonjourServiceUpdate -= new Controller.BonjourServiceUpdateDelegate(controller_BonjourServiceUpdate);
+                    this.controller.ApplicationRegistered -= new EventHandler<ApplicationRegisteredEventArgs>(controller_ApplicationRegistered);
+                    this.controller.NotificationReceived -= new EventHandler<NotificationReceivedEventArgs>(controller_NotificationReceived);
+                    this.controller.NotificationPast -= new EventHandler<NotificationPastEventArgs>(controller_NotificationPast);
+                    this.controller.BonjourServiceUpdate -= new EventHandler<BonjourServiceUpdatedEventArgs>(controller_BonjourServiceUpdate);
                     this.controller.ForwardDestinationsUpdated -= new EventHandler(controller_ForwardDestinationsUpdated);
-                    this.controller.SubscriptionsUpdated -= new Controller.SubscriptionsUpdatedDelegate(controller_SubscriptionsUpdated);
+                    this.controller.SubscriptionsUpdated -= new EventHandler<SubscriptionsUpdatedEventArgs>(controller_SubscriptionsUpdated);
                     this.passwordManagerControl1.Updated -= new EventHandler(passwordManagerControl1_Updated);
                     this.historyTrackBarTimer.Tick -= new EventHandler(historyTrackBarTimer_Tick);
 
@@ -1473,6 +1551,11 @@ namespace Growl
             // notify the display of the user's choice and save the setting
             Display d = (Display)this.pictureBoxMultipleMonitors.Tag;
             this.controller.SetPreferredDeviceForDisplay(d, selectedDeviceName);
+        }
+
+        private void checkBoxFullscreenPause_CheckedChanged(object sender, EventArgs e)
+        {
+            this.controller.AutoPauseFullscreen = checkBoxFullscreenPause.Checked;
         }
     }
 }

@@ -86,6 +86,18 @@ namespace Growl.DisplayStyle
         }
 
         /// <summary>
+        /// Gets the final opacity as specificed in the constructor
+        /// </summary>
+        /// <value>The final opacity.</value>
+        public double FinalOpacity
+        {
+            get
+            {
+                return finalOpacity;
+            }
+        }
+
+        /// <summary>
         /// Handles starting the fade-in animation
         /// </summary>
         /// <param name="sender">The object that fired the event</param>
@@ -193,7 +205,7 @@ namespace Growl.DisplayStyle
         /// </remarks>
         public override void CancelClosing()
         {
-            if (this.timer != null)
+            if (this.timer != null && fadeInComplete)
             {
                 this.timer.Stop();
             }

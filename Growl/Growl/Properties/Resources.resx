@@ -384,7 +384,7 @@ If another version of Growl is already running, please close that version and tr
     <comment>General tab: Sound Settings group box title</comment>
   </data>
   <data name="General_IdleSettings_IdleAfter" xml:space="preserve">
-    <value>Consider me idle after            seconds</value>
+    <value>Consider me idle after {0} seconds</value>
     <comment>General tab: Radio button text for 'consider me idle after x seconds'</comment>
   </data>
   <data name="General_IdleSettings_NeverIdle" xml:space="preserve">
@@ -1136,5 +1136,13 @@ to Twitter</value>
   </data>
   <data name="toasty" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toasty.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="General_FullscreenSettings_AutoPause" xml:space="preserve">
+    <value>Automatically pause Growl when a fullscreen application is running</value>
+    <comment>General tab: checkbox label for auto-pausing Growl when a fullscreen application is running</comment>
+  </data>
+  <data name="General_FullscreenSettingsTitle" xml:space="preserve">
+    <value>Full-screen Settings</value>
+    <comment>General tab: Fullscreen settings group box title</comment>
   </data>
 </root>

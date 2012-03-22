@@ -46,7 +46,7 @@ namespace Growl.UI
             this.passwordListBox.ItemHeight = 18;
             this.passwordListBox.Location = new System.Drawing.Point(0, 0);
             this.passwordListBox.Name = "passwordListBox";
-            this.passwordListBox.Size = new System.Drawing.Size(195, 184);
+            this.passwordListBox.Size = new System.Drawing.Size(195, 238);
             this.passwordListBox.TabIndex = 0;
             this.passwordListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.passwordListBox_DrawItem);
             this.passwordListBox.SelectedIndexChanged += new System.EventHandler(this.passwordListBox_SelectedIndexChanged);
@@ -59,12 +59,12 @@ namespace Growl.UI
             this.editToolStripMenuItem});
             this.contextMenuEdit.Name = "contextMenuEdit";
             this.contextMenuEdit.ShowImageMargin = false;
-            this.contextMenuEdit.Size = new System.Drawing.Size(79, 26);
+            this.contextMenuEdit.Size = new System.Drawing.Size(70, 26);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(78, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(69, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
@@ -83,7 +83,7 @@ namespace Growl.UI
             this.editPanel.Controls.Add(this.buttonSave);
             this.editPanel.Location = new System.Drawing.Point(0, 0);
             this.editPanel.Name = "editPanel";
-            this.editPanel.Size = new System.Drawing.Size(195, 219);
+            this.editPanel.Size = new System.Drawing.Size(195, 240);
             this.editPanel.TabIndex = 5;
             this.editPanel.Visible = false;
             // 
@@ -118,6 +118,7 @@ namespace Growl.UI
             // 
             this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxDescription.HighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(250)))), ((int)(((byte)(184)))));
             this.textBoxDescription.Location = new System.Drawing.Point(5, 134);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(184, 23);
@@ -128,6 +129,7 @@ namespace Growl.UI
             // 
             this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxPassword.HighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(250)))), ((int)(((byte)(184)))));
             this.textBoxPassword.Location = new System.Drawing.Point(5, 88);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(184, 23);
@@ -139,7 +141,7 @@ namespace Growl.UI
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCancel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonCancel.BackgroundImage")));
-            this.buttonCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.FlatAppearance.BorderSize = 0;
             this.buttonCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -147,7 +149,7 @@ namespace Growl.UI
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonCancel.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonCancel.Location = new System.Drawing.Point(4, 182);
+            this.buttonCancel.Location = new System.Drawing.Point(4, 203);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(0);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(73, 32);
@@ -160,7 +162,7 @@ namespace Growl.UI
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonSave.BackgroundImage")));
-            this.buttonSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonSave.Enabled = false;
             this.buttonSave.FlatAppearance.BorderSize = 0;
@@ -169,7 +171,7 @@ namespace Growl.UI
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonSave.Location = new System.Drawing.Point(116, 182);
+            this.buttonSave.Location = new System.Drawing.Point(116, 203);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(0);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(73, 32);
@@ -181,10 +183,10 @@ namespace Growl.UI
             // buttonRemovePassword
             // 
             this.buttonRemovePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRemovePassword.DisabledImage = Growl.FormResources.button_remove_dim;
+            this.buttonRemovePassword.DisabledImage = global::Growl.FormResources.button_remove_dim;
             this.buttonRemovePassword.Enabled = false;
-            this.buttonRemovePassword.Image = Growl.FormResources.button_remove;
-            this.buttonRemovePassword.Location = new System.Drawing.Point(36, 187);
+            this.buttonRemovePassword.Image = global::Growl.FormResources.button_remove;
+            this.buttonRemovePassword.Location = new System.Drawing.Point(36, 243);
             this.buttonRemovePassword.Margin = new System.Windows.Forms.Padding(0);
             this.buttonRemovePassword.Name = "buttonRemovePassword";
             this.buttonRemovePassword.Size = new System.Drawing.Size(32, 32);
@@ -196,9 +198,9 @@ namespace Growl.UI
             // buttonAddPassword
             // 
             this.buttonAddPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonAddPassword.DisabledImage = Growl.FormResources.button_add_dim;
-            this.buttonAddPassword.Image = Growl.FormResources.button_add;
-            this.buttonAddPassword.Location = new System.Drawing.Point(0, 187);
+            this.buttonAddPassword.DisabledImage = global::Growl.FormResources.button_add_dim;
+            this.buttonAddPassword.Image = global::Growl.FormResources.button_add;
+            this.buttonAddPassword.Location = new System.Drawing.Point(0, 243);
             this.buttonAddPassword.Margin = new System.Windows.Forms.Padding(0);
             this.buttonAddPassword.Name = "buttonAddPassword";
             this.buttonAddPassword.Size = new System.Drawing.Size(32, 32);
@@ -209,8 +211,7 @@ namespace Growl.UI
             // 
             // PasswordManagerControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.editPanel);
             this.Controls.Add(this.buttonRemovePassword);
@@ -219,7 +220,7 @@ namespace Growl.UI
             this.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "PasswordManagerControl";
-            this.Size = new System.Drawing.Size(195, 243);
+            this.Size = new System.Drawing.Size(195, 276);
             this.Load += new System.EventHandler(this.PasswordManagerControl_Load);
             this.contextMenuEdit.ResumeLayout(false);
             this.editPanel.ResumeLayout(false);

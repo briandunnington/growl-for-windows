@@ -22,6 +22,9 @@ namespace Growl
             this.buttonSave.Text = Properties.Resources.Button_Save;
             this.buttonClose.Text = Properties.Resources.Button_Cancel;
             this.Text = Properties.Resources.ChooseForwarding_FormTitle;
+
+            // scale
+            this.forwardListView1.TileSize = new Size(this.forwardListView1.TileSize.Width, (int)(this.forwardListView1.TileSize.Height * ApplicationMain.ScalingFactor));
         }
 
         private void ChooseForwarding_Load(object sender, EventArgs e)

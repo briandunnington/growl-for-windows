@@ -32,9 +32,7 @@ namespace Growl.DisplayStyle
         public string NotificationID;
 
         /// <summary>
-        /// The 'replacement group' id for a notification.
-        /// In other words, if a subsequent notification is sent from the same app with the same coalescing ID,
-        /// it should replace any existing notification from the same app with the same coalescing ID.
+        /// The application-specific coalescing id. (See CoalescingGroup property for more info)
         /// </summary>
         public string CoalescingID;
 
@@ -124,6 +122,8 @@ namespace Growl.DisplayStyle
         /// <remarks>
         /// Notifications from the same application with the same CoalescingID will be in the same
         /// coalescing group. If no CoalescingID is supplied, CoalescingGroup will return an empty string.
+        /// Generally, a notification with a matching CoalescingGroup should replace any existing 
+        /// notification same CoalescingGroup value.
         /// </remarks>
         public string CoalescingGroup
         {

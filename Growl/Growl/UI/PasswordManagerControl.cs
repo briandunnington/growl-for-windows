@@ -28,6 +28,9 @@ namespace Growl.UI
             this.buttonCancel.Text = Properties.Resources.Button_Cancel;
             this.buttonSave.Text = Properties.Resources.Button_Save;
 
+            // scale
+            this.passwordListBox.ItemHeight = (int)(this.passwordListBox.ItemHeight * ApplicationMain.ScalingFactor);
+
             this.tooltip = new ToolTip();
         }
 

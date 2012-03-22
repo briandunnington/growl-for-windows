@@ -74,15 +74,24 @@ namespace Growl.Displays.Standard
 
         protected override void HandleNotification(Notification notification, string displayName)
         {
+            if (!String.IsNullOrEmpty(notification.CoalescingGroup))
+            {
+                foreach (NotificationWindow nw in this.ActiveWindows)
+                {
+                    if (nw.CoalescingGroup == notification.CoalescingGroup)
+                    {
+                        ((StandardWindow)nw).Close(true);
+                        break;
+                    }
+                }
+            }
+
             StandardWindow win = new StandardWindow();
             win.Tag = this;
             win.SetNotification(notification);
             win.Color1 = GetColorFromSetting(SETTING_COLOR1, COLOR1);
             win.Color2 = GetColorFromSetting(SETTING_COLOR2, COLOR2);
-
             this.Show(win);
-
-            //this.sound.Play();
         }
 
         private Color GetColorFromSetting(string settingName, Color defaultColor)

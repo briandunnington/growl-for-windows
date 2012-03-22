@@ -64,6 +64,18 @@ namespace Growl.Displays.Plain
 
         protected override void HandleNotification(Notification notification, string displayName)
         {
+            if (!String.IsNullOrEmpty(notification.CoalescingGroup))
+            {
+                foreach (NotificationWindow nw in this.ActiveWindows)
+                {
+                    if (nw.CoalescingGroup == notification.CoalescingGroup)
+                    {
+                        ((PlainWindow)nw).Close(true);
+                        break;
+                    }
+                }
+            }
+
             PlainWindow win = new PlainWindow();
             win.Tag = this;
             win.SetNotification(notification);

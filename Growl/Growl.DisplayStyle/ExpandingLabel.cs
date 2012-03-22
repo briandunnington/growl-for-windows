@@ -13,6 +13,7 @@ namespace Growl.DisplayStyle
     {
         private bool dontExpand = false;
         private System.Drawing.Text.TextRenderingHint textRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+        private int minimumHeight = 1;
 
         /// <summary>
         /// Creates a new instance of this class
@@ -20,6 +21,8 @@ namespace Growl.DisplayStyle
         public ExpandingLabel()
         {
             InitializeComponent();
+
+            minimumHeight = this.Height;
 
             this.AutoSize = false;
             this.UseMnemonic = false;
@@ -117,8 +120,11 @@ namespace Growl.DisplayStyle
 
             Size size = new Size(desWidth, Int32.MaxValue);
             TextFormatFlags flags = TextFormatFlags.Default | TextFormatFlags.ExternalLeading | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.NoClipping | TextFormatFlags.WordBreak | TextFormatFlags.LeftAndRightPadding | TextFormatFlags.TextBoxControl;
+            //Size textSize = TextRenderer.MeasureText(text, font, size, flags);
+            //Size returnSize = new Size(textSize.Width, (int)(textSize.Height / scalingFactor));
             Size returnSize = TextRenderer.MeasureText(text, font, size, flags);
 
+            // REMOVED 9.23.2011 - this part works, but we were always passing the current size (not minimum size), so it was never allowing the size to shrink once expanded
             if (returnSize.Height < minHeight)
                 returnSize = new Size(returnSize.Width, minHeight);
 
@@ -145,18 +151,19 @@ namespace Growl.DisplayStyle
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data</param>
         protected override void OnTextChanged(EventArgs e)
         {
-            if (!dontExpand && !bChanging)
+            // IMPORTANT: dont trigger this unless the event handler is hooked up or else the sizes will get out of sync.
+            if(this.LabelHeightChanged != null && !dontExpand && !bChanging)
             {
                 bChanging = true;
                 int originalHeight = this.Height;
 
                 int preferredWidth = this.ClientSize.Width;
-                Size size = this.MeasureStringExtended(this.Text, this.Font, preferredWidth, this.Height);
+                Size size = this.MeasureStringExtended(this.Text, this.Font, preferredWidth, minimumHeight);
                 int newHeight = size.Height;
                 this.Height = newHeight;
 
                 LabelHeightChangedEventArgs args = new LabelHeightChangedEventArgs(originalHeight, newHeight);
-                if (args.HeightChange != 0 && this.LabelHeightChanged != null)
+                if (args.HeightChange != 0)
                 {
                     this.LabelHeightChanged(args);
                 }
@@ -167,6 +174,7 @@ namespace Growl.DisplayStyle
             }
             else
             {
+                this.minimumHeight = this.Height;
                 base.OnTextChanged(e);
             }
         }

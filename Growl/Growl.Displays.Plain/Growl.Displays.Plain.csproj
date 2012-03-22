@@ -30,8 +30,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PlainDisplay.cs" />
@@ -55,6 +57,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PlainSettingsPanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PlainSettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PlainWindow.resx">
       <DependentUpon>PlainWindow.cs</DependentUpon>
       <SubType>Designer</SubType>

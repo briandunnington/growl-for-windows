@@ -24,6 +24,8 @@ namespace Growl.Displays.Plain
             // 
             // applicationNameLabel
             // 
+            this.applicationNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.applicationNameLabel.BackColor = System.Drawing.Color.Transparent;
             this.applicationNameLabel.Location = new System.Drawing.Point(9, 59);
             this.applicationNameLabel.Name = "applicationNameLabel";
@@ -36,6 +38,8 @@ namespace Growl.Displays.Plain
             // 
             // descriptionLabel
             // 
+            this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionLabel.BackColor = System.Drawing.Color.Transparent;
             this.descriptionLabel.Location = new System.Drawing.Point(9, 27);
             this.descriptionLabel.Name = "descriptionLabel";
@@ -48,6 +52,8 @@ namespace Growl.Displays.Plain
             // 
             // titleLabel
             // 
+            this.titleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
             this.titleLabel.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.Location = new System.Drawing.Point(9, 9);
@@ -71,8 +77,8 @@ namespace Growl.Displays.Plain
             // 
             // PlainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(260, 82);
             this.Controls.Add(this.applicationNameLabel);

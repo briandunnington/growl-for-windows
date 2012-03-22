@@ -31,6 +31,7 @@ namespace Growl.UI
             this.DesktopLocation = new Point(x, y);
 
             this.historyListView1.GroupBy = HistoryGroupItemsBy.Application;
+            this.historyListView1.TileSize = new Size(this.historyListView1.Width, (int)(this.historyListView1.TileSize.Height * ApplicationMain.ScalingFactor));
 
             this.pictureBox1.Image = Growl.FormResources.growl;
             this.pictureBoxClose.Image = normal;

@@ -40,24 +40,20 @@ namespace Growl.Displays.Smokestack
         int imageSize = 48;
         int imagePadding = 12;
 
+        double finalOpacity = 0.8;
+
 
         public SmokestackWindow()
         {
             InitializeComponent();
+            this.Height = this.Height + arrowSize;
 
-            this.Animator = new FadeAnimator(this, 250, 100, 0.8);
+            this.Animator = new FadeAnimator(this, 250, 100, finalOpacity);
             PauseWhenMouseOver = true;
 
             HookUpClickEvents(this);
 
             this.AfterLoad += new EventHandler(SmokestackWindow_AfterLoad);
-
-            // set size
-            this.Width = 250;
-            this.Height = this.Height + arrowSize;
-
-            // set initial opacity
-            //this.Opacity = 0.98;
 
             // border brush
             this.borderBrush = new SolidBrush(this.borderColor);

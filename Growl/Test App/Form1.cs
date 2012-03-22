@@ -273,7 +273,7 @@ namespace Test_App
             //System.IO.File.WriteAllBytes(@"C:\Documents and Settings\brian\Desktop\growl protocol\tests\Request_FlashPolicyRequest.txt", System.Text.Encoding.UTF8.GetBytes("<policy-file-request/>\0"));
 
 
-            string dir = @"C:\Documents and Settings\brian\Desktop\growl\growl protocol\tests\";
+            string dir = @"D:\SUPERMAN_D\_Growl\growl\growl protocol\tests\";
             string resultsdir = dir + @"results\";
 
             if (System.IO.Directory.Exists(resultsdir))

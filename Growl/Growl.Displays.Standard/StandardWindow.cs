@@ -19,10 +19,13 @@ namespace Growl.Displays.Standard
 
         int radius = 12;
         int borderWidth = 1;
+        int minHeight = 0;
 
         public StandardWindow()
         {
             InitializeComponent();
+
+            this.minHeight = this.Height;
 
             this.Load += new EventHandler(StandardWindow_Load);
             this.FormClosed += new FormClosedEventHandler(StandardWindow_FormClosed);
@@ -32,10 +35,6 @@ namespace Growl.Displays.Standard
             this.Animator = new FadeAnimator(this, 300, 250, FadeAnimator.MAX_OPACITY);
 
             HookUpClickEvents(this);
-
-            // set size
-            this.Width = 250;
-            this.Height = 75;
 
             int duration = 4000;
             string d = System.Configuration.ConfigurationManager.AppSettings["Duration"];
@@ -161,12 +160,12 @@ namespace Growl.Displays.Standard
 
             if (n.Duration > 0) this.SetAutoCloseInterval(n.Duration * 1000);
 
-            //Image image = n.GetImage();
             Image image = n.Image;
             if (image != null)
             {
                 this.pictureBox1.Image = image;
                 this.pictureBox1.Visible = true;
+
                 int offset = this.pictureBox1.Width + 6;
                 this.descriptionLabel.Left = this.descriptionLabel.Left + offset;
                 this.descriptionLabel.Width = this.descriptionLabel.Width - offset;
@@ -201,8 +200,15 @@ namespace Growl.Displays.Standard
         {
             if (args.HeightChange != 0)
             {
-                this.Size = new Size(this.Size.Width, this.Size.Height + args.HeightChange);
-                this.Location = new Point(this.Location.X, this.Location.Y - args.HeightChange);
+                int heightChange = args.HeightChange;
+                int newHeight = this.Height + heightChange;
+                if (newHeight < this.minHeight)
+                {
+                    newHeight = this.minHeight;
+                    heightChange = newHeight - this.Height;
+                }
+                this.Height = newHeight;
+                this.Location = new Point(this.Location.X, this.Location.Y - heightChange);
             }
         }
     }

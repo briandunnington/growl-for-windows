@@ -30,6 +30,8 @@ namespace Growl
 
         public static DateTime st;
 
+        public static float ScalingFactor = 1;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -52,7 +54,17 @@ namespace Growl
                 SetCulture(Properties.Settings.Default.CultureCode);
 
                 // launch app
-                SingleInstanceApplication app = new SingleInstanceApplication("GrowlForWindows");
+                SingleInstanceApplication app = null;
+                try
+                {
+                    app = new SingleInstanceApplication("GrowlForWindows");
+                }
+                catch(Exception e)
+                {
+                    HandleUnhandledException(e, "Growl", "Growl is already running under another session on this computer. Only one instance of Growl can run at a time.");
+                    return;
+                }
+
                 using (app)
                 {
                     // register support for data: uris
@@ -332,6 +344,11 @@ namespace Growl
 
         static void HandleUnhandledException(Exception e)
         {
+            HandleUnhandledException(e, "Growl - Fatal Exception", "Growl encountered a fatal error and cannot continue.\r\n\r\nPlease see the Event Viewer for details.");
+        }
+
+        static void HandleUnhandledException(Exception e, string title, string msgtext)
+        {
             try
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -342,7 +359,6 @@ namespace Growl
                 }
                 string logtext = sb.ToString();
 
-                string msgtext = "Growl encountered a fatal error and cannot continue.\r\n\r\nPlease see the Event Viewer for details.";
                 Utility.WriteDebugInfo(msgtext);
                 Utility.WriteDebugInfo(logtext);
 
@@ -354,7 +370,7 @@ namespace Growl
                 System.Diagnostics.EventLog elog = new System.Diagnostics.EventLog();
                 elog.Source = source;
                 elog.WriteEntry(logtext, System.Diagnostics.EventLogEntryType.Error);
-                MessageBox.Show(msgtext, "Growl - Fatal Exception", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                MessageBox.Show(msgtext, title, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
             catch
             {

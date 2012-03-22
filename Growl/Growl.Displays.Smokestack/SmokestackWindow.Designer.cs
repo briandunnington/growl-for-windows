@@ -16,8 +16,8 @@ namespace Growl.Displays.Smokestack
         private void InitializeComponent()
         {
             this.panel1 = new Growl.Displays.Smokestack.PanelEx();
-            this.titleLabel = new Growl.DisplayStyle.ExpandingLabel();
             this.descriptionLabel = new Growl.DisplayStyle.ExpandingLabel();
+            this.titleLabel = new Growl.DisplayStyle.ExpandingLabel();
             this.applicationNameLabel = new Growl.DisplayStyle.ExpandingLabel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -28,13 +28,29 @@ namespace Growl.Displays.Smokestack
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.titleLabel);
             this.panel1.Controls.Add(this.descriptionLabel);
+            this.panel1.Controls.Add(this.titleLabel);
             this.panel1.Controls.Add(this.applicationNameLabel);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(242, 100);
             this.panel1.TabIndex = 0;
+            // 
+            // descriptionLabel
+            // 
+            this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.descriptionLabel.BackColor = System.Drawing.Color.Transparent;
+            this.descriptionLabel.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descriptionLabel.ForeColor = System.Drawing.Color.White;
+            this.descriptionLabel.Location = new System.Drawing.Point(10, 71);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(228, 19);
+            this.descriptionLabel.TabIndex = 2;
+            this.descriptionLabel.Text = "[description]";
+            this.descriptionLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.descriptionLabel.UseMnemonic = false;
+            this.descriptionLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.descriptionLabel_LabelHeightChanged);
             // 
             // titleLabel
             // 
@@ -48,47 +64,35 @@ namespace Growl.Displays.Smokestack
             this.titleLabel.Size = new System.Drawing.Size(174, 19);
             this.titleLabel.TabIndex = 1;
             this.titleLabel.Text = "[title]";
+            this.titleLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.titleLabel.UseMnemonic = false;
             this.titleLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.titleLabel_LabelHeightChanged);
-            // 
-            // descriptionLabel
-            // 
-            this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.descriptionLabel.BackColor = System.Drawing.Color.Transparent;
-            this.descriptionLabel.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriptionLabel.ForeColor = System.Drawing.Color.White;
-            this.descriptionLabel.Location = new System.Drawing.Point(10, 70);
-            this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(228, 19);
-            this.descriptionLabel.TabIndex = 2;
-            this.descriptionLabel.Text = "[description]";
-            this.descriptionLabel.UseMnemonic = false;
-            this.descriptionLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.descriptionLabel_LabelHeightChanged);
             // 
             // applicationNameLabel
             // 
             this.applicationNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.applicationNameLabel.BackColor = System.Drawing.Color.Transparent;
             this.applicationNameLabel.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.applicationNameLabel.ForeColor = System.Drawing.Color.White;
             this.applicationNameLabel.Location = new System.Drawing.Point(5, 10);
             this.applicationNameLabel.Name = "applicationNameLabel";
             this.applicationNameLabel.Size = new System.Drawing.Size(174, 29);
             this.applicationNameLabel.TabIndex = 0;
-            this.applicationNameLabel.Text = "[appname]";
+            this.applicationNameLabel.Text = "[app]";
+            this.applicationNameLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.applicationNameLabel.UseMnemonic = false;
             this.applicationNameLabel.LabelHeightChanged += new Growl.DisplayStyle.ExpandingLabel.LabelHeightChangedEventHandler(this.applicationNameLabel_LabelHeightChanged);
             // 
             // SmokestackWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Red;
             this.ClientSize = new System.Drawing.Size(250, 101);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SmokestackWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

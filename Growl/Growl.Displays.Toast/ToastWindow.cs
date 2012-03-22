@@ -150,7 +150,7 @@ namespace Growl.Displays.Toast
         {
             if (args.HeightChange != 0)
             {
-                this.Size = new Size(this.Size.Width, this.Size.Height + args.HeightChange);
+                this.Height += args.HeightChange;
                 this.Location = new Point(this.Location.X, this.Location.Y - args.HeightChange);
             }
         }

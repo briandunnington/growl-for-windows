@@ -12,23 +12,16 @@ namespace Growl
 {
     internal class Controller : IDisposable
     {
-        public delegate void FailedToStartEventHandler(object sender, PortConflictEventArgs args);
-        public delegate void ApplicationRegisteredDelegate(RegisteredApplication ra);
-        public delegate void NotificationReceivedDelegate(Growl.DisplayStyle.Notification n);
-        public delegate void NotificationPastDelegate(PastNotification pn);
-        public delegate void SubscriptionsUpdatedDelegate(bool countChanged);
-        public delegate void BonjourServiceUpdateDelegate(BonjourForwardDestination bfc);
-
         public event EventHandler Started;
         public event EventHandler Stopped;
-        public event FailedToStartEventHandler FailedToStart;
-        public event FailedToStartEventHandler FailedToStartUDPLegacy;
-        public event ApplicationRegisteredDelegate ApplicationRegistered;
-        public event NotificationReceivedDelegate NotificationReceived;
-        public event NotificationPastDelegate NotificationPast;
+        public event EventHandler<PortConflictEventArgs> FailedToStart;
+        public event EventHandler<PortConflictEventArgs> FailedToStartUDPLegacy;
+        public event EventHandler<ApplicationRegisteredEventArgs> ApplicationRegistered;
+        public event EventHandler<NotificationReceivedEventArgs> NotificationReceived;
+        public event EventHandler<NotificationPastEventArgs> NotificationPast;
         public event EventHandler ForwardDestinationsUpdated;
-        public event SubscriptionsUpdatedDelegate SubscriptionsUpdated;
-        public event BonjourServiceUpdateDelegate BonjourServiceUpdate;
+        public event EventHandler<SubscriptionsUpdatedEventArgs> SubscriptionsUpdated;
+        public event EventHandler<BonjourServiceUpdatedEventArgs> BonjourServiceUpdate;
 
         private static Controller singleton;
         private bool disposed;
@@ -51,6 +44,7 @@ namespace Growl
         
         private Growl.Connector.PasswordManager passwordManager;
         private ActivityMonitor activityMonitor;
+        private FullScreenHelper fullscreenHelper;
         private Bonjour bonjour;
         private Display lastUsedDisplay;
         private List<PastNotification> missedNotifications = new List<PastNotification>();
@@ -134,11 +128,14 @@ namespace Growl
             StartBonjour();
 
             this.activityMonitor = new ActivityMonitor();
-            this.activityMonitor.WentIdle += new ActivityMonitor.ActivityMonitorEventHandler(activityMonitor_WentIdle);
-            this.activityMonitor.ResumedActivity += new ActivityMonitor.ActivityMonitorEventHandler(activityMonitor_ResumedActivity);
+            this.activityMonitor.WentIdle += new EventHandler<ActivityMonitor.ActivityMonitorEventArgs>(activityMonitor_WentIdle);
+            this.activityMonitor.ResumedActivity += new EventHandler<ActivityMonitor.ActivityMonitorEventArgs>(activityMonitor_ResumedActivity);
             this.activityMonitor.StillActive += new EventHandler(activityMonitor_StillActive);
             this.activityMonitor.CheckForIdle = Properties.Settings.Default.CheckForIdle;
             this.activityMonitor.IdleAfterSeconds = Properties.Settings.Default.IdleAfterSeconds;
+
+            this.fullscreenHelper = new FullScreenHelper();
+            this.fullscreenHelper.ExitedFullscreen += new EventHandler(fullscreenHelper_ExitedFullscreen);
         }
 
         public bool Start()
@@ -754,10 +751,10 @@ namespace Growl
                 ra.SetIcon(applicationIcon);
                 if (Properties.Settings.Default.ManuallyEnableNewApplications) ra.Preferences.PrefEnabled = false;
                 this.applications.Add(ra.Name, ra);
-
-                // fire ApplicationRegistered event
-                this.OnApplicationRegistered(ra);
             }
+
+            // fire ApplicationRegistered event
+            this.OnApplicationRegistered(ra, exisiting);
 
             if (ra.Enabled && !exisiting)
             {
@@ -1024,6 +1021,11 @@ namespace Growl
             OnForwardDestinationsUpdated();
         }
 
+        public void EditForwardDestination(ForwardDestination fc)
+        {
+            SaveForwardPrefs();
+        }
+
         public void AddSubscription(Subscription subscription)
         {
             if (subscription != null)
@@ -1078,6 +1080,11 @@ namespace Growl
             }
         }
 
+        public void EditSubscription(Subscription subscription)
+        {
+            SaveSubsriptionPrefs();
+        }
+
         private void ShowNotification(Growl.DisplayStyle.Notification notification, Display display, Growl.Daemon.CallbackInfo cbInfo, bool recordInMissedNotifications, Growl.Connector.RequestInfo requestInfo)
         {
             // could be cross-thread, so check for invokerequired
@@ -1093,6 +1100,14 @@ namespace Growl
             else
             {
                 if (display == null) display = this.growlDefaultDisplay;
+
+                // check for fullscreen handling
+                if (!paused && (this.AutoPauseFullscreen && this.fullscreenHelper.IsFullScreenAppActive()))
+                {
+                    Utility.WriteDebugInfo("Fullscreen app detected - automatically pausing Growl");
+                    ApplicationMain.Program.Pause(true);
+                    this.fullscreenHelper.StartChecking();
+                }
 
                 // if not a system notification and we are paused, dont show
                 if (recordInMissedNotifications && paused)
@@ -1231,7 +1246,7 @@ namespace Growl
 
         # region Activity Monitor Event Handlers
 
-        void activityMonitor_ResumedActivity(ActivityMonitor.ActivityMonitorEventArgs args)
+        void activityMonitor_ResumedActivity(object sender, ActivityMonitor.ActivityMonitorEventArgs args)
         {
             // refresh all displays (this handles the case where sticky notifications were received while the 
             // screen was locked and thus drawn with just a black space)
@@ -1255,7 +1270,7 @@ namespace Growl
             this.paused = false;
         }
 
-        void activityMonitor_WentIdle(ActivityMonitor.ActivityMonitorEventArgs args)
+        void activityMonitor_WentIdle(object sender, ActivityMonitor.ActivityMonitorEventArgs args)
         {
             if (args.Reason == ActivityMonitor.ActivityMonitorEventReason.ApplicationPaused)
                 this.paused = true;
@@ -1274,6 +1289,25 @@ namespace Growl
         }
 
         # endregion Activity Monitor Event Handlers
+
+        void fullscreenHelper_ExitedFullscreen(object sender, EventArgs e)
+        {
+            // could be cross-thread, so check for invokerequired
+            if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
+            {
+                MethodInvoker invoker = new MethodInvoker(delegate()
+                {
+                    fullscreenHelper_ExitedFullscreen(sender, e);
+                });
+
+                this.synchronizingObject.Invoke(invoker, null);
+            }
+            else
+            {
+                Utility.WriteDebugInfo("Fullscreen app no longer active - automatically unpausing Growl");
+                ApplicationMain.Program.Pause(false);
+            }
+        }
 
         # region Bonjour Event Handlers
 
@@ -1455,13 +1489,13 @@ namespace Growl
             }
         }
 
-        protected void OnApplicationRegistered(RegisteredApplication ra)
+        protected void OnApplicationRegistered(RegisteredApplication ra, bool existing)
         {
             if (this.synchronizingObject != null && this.synchronizingObject.InvokeRequired)
             {
                 MethodInvoker invoker = new MethodInvoker(delegate()
                 {
-                    OnApplicationRegistered(ra);
+                    OnApplicationRegistered(ra, existing);
                 });
                 this.synchronizingObject.Invoke(invoker, null);
             }
@@ -1469,7 +1503,8 @@ namespace Growl
             {
                 if (this.ApplicationRegistered != null)
                 {
-                    this.ApplicationRegistered(ra);
+                    ApplicationRegisteredEventArgs args = new ApplicationRegisteredEventArgs(ra, existing);
+                    this.ApplicationRegistered(this, args);
                 }
                 SaveApplicationPrefs();
             }
@@ -1489,7 +1524,8 @@ namespace Growl
             {
                 if (this.NotificationReceived != null)
                 {
-                    this.NotificationReceived(n);
+                    NotificationReceivedEventArgs args = new NotificationReceivedEventArgs(n);
+                    this.NotificationReceived(this, args);
                 }
             }
         }
@@ -1508,7 +1544,8 @@ namespace Growl
             {
                 if (this.NotificationPast != null)
                 {
-                    this.NotificationPast(pn);
+                    NotificationPastEventArgs args = new NotificationPastEventArgs(pn);
+                    this.NotificationPast(this, args);
                 }
             }
         }
@@ -1547,7 +1584,8 @@ namespace Growl
             {
                 if (this.SubscriptionsUpdated != null)
                 {
-                    this.SubscriptionsUpdated(countChanged);
+                    SubscriptionsUpdatedEventArgs args = new SubscriptionsUpdatedEventArgs(countChanged);
+                    this.SubscriptionsUpdated(this, args);
                 }
                 if (countChanged) SaveSubsriptionPrefs();
             }
@@ -1567,7 +1605,8 @@ namespace Growl
             {
                 if (this.BonjourServiceUpdate != null)
                 {
-                    this.BonjourServiceUpdate(bfc);
+                    BonjourServiceUpdatedEventArgs args = new BonjourServiceUpdatedEventArgs(bfc);
+                    this.BonjourServiceUpdate(this, args);
                 }
             }
         }
@@ -1786,6 +1825,19 @@ namespace Growl
             }
         }
 
+        public bool AutoPauseFullscreen
+        {
+            get
+            {
+                return Properties.Settings.Default.AutoPauseFullscreen;
+            }
+            set
+            {
+                Properties.Settings.Default.AutoPauseFullscreen = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         # endregion Properties
 
         #region IDisposable Members
@@ -1828,8 +1880,8 @@ namespace Growl
 
                     if (this.activityMonitor != null)
                     {
-                        this.activityMonitor.WentIdle -= new ActivityMonitor.ActivityMonitorEventHandler(activityMonitor_WentIdle);
-                        this.activityMonitor.ResumedActivity -= new ActivityMonitor.ActivityMonitorEventHandler(activityMonitor_ResumedActivity);
+                        this.activityMonitor.WentIdle -= new EventHandler<ActivityMonitor.ActivityMonitorEventArgs>(activityMonitor_WentIdle);
+                        this.activityMonitor.ResumedActivity -= new EventHandler<ActivityMonitor.ActivityMonitorEventArgs>(activityMonitor_ResumedActivity);
                         this.activityMonitor.StillActive -= new EventHandler(activityMonitor_StillActive);
                         this.activityMonitor.Dispose();
                         this.activityMonitor = null;

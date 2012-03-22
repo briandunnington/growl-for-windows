@@ -10,6 +10,8 @@ namespace Growl
     {
         public const string FriendlyName = "UserSettingsProvider";
 
+        private const string APP_SETTINGS_SECTION_GROUP_NAME = "userSettings";
+        private const string APP_SETTINGS_SECTION_NAME = "Growl.Properties.Settings";
         private const string USER_SETTINGS_SECTION_NAME = "userSettings";
         string path = SettingSaver.GetPath("user.config");
         string pathBackup = SettingSaver.GetPath("user.config.bak");
@@ -50,6 +52,9 @@ namespace Growl
 
         public override SettingsPropertyValueCollection GetPropertyValues(SettingsContext context, SettingsPropertyCollection collection)
         {
+            Configuration config = null;
+            ClientSettingsSection clientSettings = null;
+
             // set all of the inherited default values first in case we have failure later
             SettingsPropertyValueCollection settings = new SettingsPropertyValueCollection();
             foreach (SettingsProperty prop in collection)
@@ -59,11 +64,27 @@ namespace Growl
                 settings.Add(spv);
             }
 
+            // now read in app-level settings
+            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSectionGroup configSectionGroup = config.GetSectionGroup(APP_SETTINGS_SECTION_GROUP_NAME);
+            if (configSectionGroup != null)
+            {
+                ConfigurationSection configSection = configSectionGroup.Sections[APP_SETTINGS_SECTION_NAME];
+                if (configSection != null)
+                {
+                    clientSettings = (ClientSettingsSection)configSection;
+                    foreach (SettingsPropertyValue spv in settings)
+                    {
+                        DeserializeFromXmlElement(spv.Property, spv, clientSettings);
+                    }
+                }
+            }
+
             // now read in overridden user settings
             try
             {
-                Configuration config = null;
-                ClientSettingsSection clientSettings = GetUserSettings(out config, true);
+                config = null;
+                clientSettings = GetUserSettings(out config, true);
                 foreach (SettingsPropertyValue spv in settings)
                 {
                     DeserializeFromXmlElement(spv.Property, spv, clientSettings);

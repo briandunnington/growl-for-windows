@@ -18,6 +18,9 @@ namespace Growl
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelGeneral = new System.Windows.Forms.Panel();
+            this.groupBoxFullscreenSettings = new System.Windows.Forms.GroupBox();
+            this.labelFullscreenPause = new System.Windows.Forms.Label();
+            this.checkBoxFullscreenPause = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.onOffButton1 = new Growl.UI.OnOffButton();
             this.checkBoxAutoStart = new System.Windows.Forms.CheckBox();
@@ -132,6 +135,7 @@ namespace Growl
             this.toolbarButtonHistory = new System.Windows.Forms.ToolStripButton();
             this.toolbarButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.panelGeneral.SuspendLayout();
+            this.groupBoxFullscreenSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).BeginInit();
             this.groupBoxIdleSettings.SuspendLayout();
@@ -172,6 +176,7 @@ namespace Growl
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGeneral.BackColor = System.Drawing.Color.Transparent;
+            this.panelGeneral.Controls.Add(this.groupBoxFullscreenSettings);
             this.panelGeneral.Controls.Add(this.groupBox1);
             this.panelGeneral.Controls.Add(this.groupBoxIdleSettings);
             this.panelGeneral.Controls.Add(this.groupBoxSoundSettings);
@@ -181,14 +186,45 @@ namespace Growl
             this.panelGeneral.TabIndex = 2;
             this.panelGeneral.Visible = false;
             // 
+            // groupBoxFullscreenSettings
+            // 
+            this.groupBoxFullscreenSettings.Controls.Add(this.labelFullscreenPause);
+            this.groupBoxFullscreenSettings.Controls.Add(this.checkBoxFullscreenPause);
+            this.groupBoxFullscreenSettings.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
+            this.groupBoxFullscreenSettings.Location = new System.Drawing.Point(336, 104);
+            this.groupBoxFullscreenSettings.Name = "groupBoxFullscreenSettings";
+            this.groupBoxFullscreenSettings.Size = new System.Drawing.Size(268, 88);
+            this.groupBoxFullscreenSettings.TabIndex = 7;
+            this.groupBoxFullscreenSettings.TabStop = false;
+            this.groupBoxFullscreenSettings.Text = "Full-screen Settings";
+            // 
+            // labelFullscreenPause
+            // 
+            this.labelFullscreenPause.Location = new System.Drawing.Point(43, 29);
+            this.labelFullscreenPause.Name = "labelFullscreenPause";
+            this.labelFullscreenPause.Size = new System.Drawing.Size(215, 59);
+            this.labelFullscreenPause.TabIndex = 1;
+            this.labelFullscreenPause.Text = "Automatically pause Growl when a fullscreen application is running";
+            // 
+            // checkBoxFullscreenPause
+            // 
+            this.checkBoxFullscreenPause.AutoSize = true;
+            this.checkBoxFullscreenPause.Location = new System.Drawing.Point(22, 32);
+            this.checkBoxFullscreenPause.Name = "checkBoxFullscreenPause";
+            this.checkBoxFullscreenPause.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxFullscreenPause.TabIndex = 0;
+            this.checkBoxFullscreenPause.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.checkBoxFullscreenPause.UseVisualStyleBackColor = true;
+            this.checkBoxFullscreenPause.CheckedChanged += new System.EventHandler(this.checkBoxFullscreenPause_CheckedChanged);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.onOffButton1);
             this.groupBox1.Controls.Add(this.checkBoxAutoStart);
             this.groupBox1.Controls.Add(this.labelCurrentState);
-            this.groupBox1.Location = new System.Drawing.Point(96, 10);
+            this.groupBox1.Location = new System.Drawing.Point(56, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(468, 89);
+            this.groupBox1.Size = new System.Drawing.Size(548, 88);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             // 
@@ -230,9 +266,9 @@ namespace Growl
             this.groupBoxIdleSettings.Controls.Add(this.radioButtonIdleAfter);
             this.groupBoxIdleSettings.Controls.Add(this.radioButtonIdleNever);
             this.groupBoxIdleSettings.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxIdleSettings.Location = new System.Drawing.Point(96, 185);
+            this.groupBoxIdleSettings.Location = new System.Drawing.Point(56, 201);
             this.groupBoxIdleSettings.Name = "groupBoxIdleSettings";
-            this.groupBoxIdleSettings.Size = new System.Drawing.Size(468, 89);
+            this.groupBoxIdleSettings.Size = new System.Drawing.Size(548, 88);
             this.groupBoxIdleSettings.TabIndex = 5;
             this.groupBoxIdleSettings.TabStop = false;
             this.groupBoxIdleSettings.Text = "Idle Settings";
@@ -240,7 +276,7 @@ namespace Growl
             // textBoxIdleAfterSeconds
             // 
             this.textBoxIdleAfterSeconds.Enabled = false;
-            this.textBoxIdleAfterSeconds.Location = new System.Drawing.Point(184, 53);
+            this.textBoxIdleAfterSeconds.Location = new System.Drawing.Point(178, 53);
             this.textBoxIdleAfterSeconds.Name = "textBoxIdleAfterSeconds";
             this.textBoxIdleAfterSeconds.Size = new System.Drawing.Size(37, 23);
             this.textBoxIdleAfterSeconds.TabIndex = 2;
@@ -250,7 +286,7 @@ namespace Growl
             // radioButtonIdleAfter
             // 
             this.radioButtonIdleAfter.AutoSize = true;
-            this.radioButtonIdleAfter.Location = new System.Drawing.Point(28, 54);
+            this.radioButtonIdleAfter.Location = new System.Drawing.Point(22, 55);
             this.radioButtonIdleAfter.Name = "radioButtonIdleAfter";
             this.radioButtonIdleAfter.Size = new System.Drawing.Size(251, 22);
             this.radioButtonIdleAfter.TabIndex = 1;
@@ -263,7 +299,7 @@ namespace Growl
             // 
             this.radioButtonIdleNever.AutoSize = true;
             this.radioButtonIdleNever.Checked = true;
-            this.radioButtonIdleNever.Location = new System.Drawing.Point(28, 26);
+            this.radioButtonIdleNever.Location = new System.Drawing.Point(22, 25);
             this.radioButtonIdleNever.Name = "radioButtonIdleNever";
             this.radioButtonIdleNever.Size = new System.Drawing.Size(209, 22);
             this.radioButtonIdleNever.TabIndex = 0;
@@ -278,9 +314,9 @@ namespace Growl
             this.groupBoxSoundSettings.Controls.Add(this.labelDefaultSound);
             this.groupBoxSoundSettings.Controls.Add(this.comboBoxDefaultSound);
             this.groupBoxSoundSettings.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxSoundSettings.Location = new System.Drawing.Point(96, 108);
+            this.groupBoxSoundSettings.Location = new System.Drawing.Point(56, 104);
             this.groupBoxSoundSettings.Name = "groupBoxSoundSettings";
-            this.groupBoxSoundSettings.Size = new System.Drawing.Size(468, 68);
+            this.groupBoxSoundSettings.Size = new System.Drawing.Size(268, 88);
             this.groupBoxSoundSettings.TabIndex = 4;
             this.groupBoxSoundSettings.TabStop = false;
             this.groupBoxSoundSettings.Text = "Sound Settings";
@@ -288,7 +324,7 @@ namespace Growl
             // checkBoxMuteAllSounds
             // 
             this.checkBoxMuteAllSounds.AutoSize = true;
-            this.checkBoxMuteAllSounds.Location = new System.Drawing.Point(304, 29);
+            this.checkBoxMuteAllSounds.Location = new System.Drawing.Point(22, 57);
             this.checkBoxMuteAllSounds.Name = "checkBoxMuteAllSounds";
             this.checkBoxMuteAllSounds.Size = new System.Drawing.Size(117, 22);
             this.checkBoxMuteAllSounds.TabIndex = 22;
@@ -300,7 +336,7 @@ namespace Growl
             // 
             this.labelDefaultSound.AutoSize = true;
             this.labelDefaultSound.Font = new System.Drawing.Font("Trebuchet MS", 9.75F);
-            this.labelDefaultSound.Location = new System.Drawing.Point(25, 29);
+            this.labelDefaultSound.Location = new System.Drawing.Point(19, 29);
             this.labelDefaultSound.Name = "labelDefaultSound";
             this.labelDefaultSound.Size = new System.Drawing.Size(94, 18);
             this.labelDefaultSound.TabIndex = 21;
@@ -311,7 +347,7 @@ namespace Growl
             this.comboBoxDefaultSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDefaultSound.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.comboBoxDefaultSound.FormattingEnabled = true;
-            this.comboBoxDefaultSound.Location = new System.Drawing.Point(119, 29);
+            this.comboBoxDefaultSound.Location = new System.Drawing.Point(116, 26);
             this.comboBoxDefaultSound.Name = "comboBoxDefaultSound";
             this.comboBoxDefaultSound.Size = new System.Drawing.Size(139, 21);
             this.comboBoxDefaultSound.TabIndex = 20;
@@ -531,7 +567,6 @@ namespace Growl
             // comboBoxPrefDisplay
             // 
             this.comboBoxPrefDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPrefDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPrefDisplay.FormattingEnabled = true;
             this.comboBoxPrefDisplay.Location = new System.Drawing.Point(106, 77);
             this.comboBoxPrefDisplay.Name = "comboBoxPrefDisplay";
@@ -562,7 +597,6 @@ namespace Growl
             // comboBoxPrefEnabled
             // 
             this.comboBoxPrefEnabled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPrefEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPrefEnabled.FormattingEnabled = true;
             this.comboBoxPrefEnabled.ItemHeight = 13;
             this.comboBoxPrefEnabled.Location = new System.Drawing.Point(106, 52);
@@ -585,9 +619,9 @@ namespace Growl
             // 
             this.labelApplication.BackColor = System.Drawing.Color.Transparent;
             this.labelApplication.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelApplication.Location = new System.Drawing.Point(61, 1);
+            this.labelApplication.Location = new System.Drawing.Point(61, -5);
             this.labelApplication.Name = "labelApplication";
-            this.labelApplication.Size = new System.Drawing.Size(364, 47);
+            this.labelApplication.Size = new System.Drawing.Size(364, 58);
             this.labelApplication.TabIndex = 2;
             this.labelApplication.Text = "label1";
             this.labelApplication.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -757,7 +791,7 @@ namespace Growl
             // 
             this.buttonPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonPreviewDisplay.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonPreviewDisplay.BackgroundImage")));
-            this.buttonPreviewDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonPreviewDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonPreviewDisplay.FlatAppearance.BorderSize = 0;
             this.buttonPreviewDisplay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonPreviewDisplay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
@@ -986,6 +1020,9 @@ namespace Growl
             // 
             // passwordManagerControl1
             // 
+            this.passwordManagerControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.passwordManagerControl1.BackColor = System.Drawing.Color.Transparent;
             this.passwordManagerControl1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordManagerControl1.Location = new System.Drawing.Point(399, 38);
@@ -1081,15 +1118,16 @@ namespace Growl
             // 
             // buttonClearHistory
             // 
+            this.buttonClearHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonClearHistory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonClearHistory.BackgroundImage")));
-            this.buttonClearHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonClearHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonClearHistory.FlatAppearance.BorderSize = 0;
             this.buttonClearHistory.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonClearHistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonClearHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClearHistory.Font = new System.Drawing.Font("Trebuchet MS", 10.25F, System.Drawing.FontStyle.Bold);
             this.buttonClearHistory.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonClearHistory.Location = new System.Drawing.Point(112, 256);
+            this.buttonClearHistory.Location = new System.Drawing.Point(112, 262);
             this.buttonClearHistory.Margin = new System.Windows.Forms.Padding(0);
             this.buttonClearHistory.Name = "buttonClearHistory";
             this.buttonClearHistory.Size = new System.Drawing.Size(73, 32);
@@ -1471,89 +1509,110 @@ namespace Growl
             this.toolbarButtonHistory,
             this.toolbarButtonAbout});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(74, 1);
+            this.toolStrip1.Location = new System.Drawing.Point(69, 1);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
             this.toolStrip1.ShowItemToolTips = false;
-            this.toolStrip1.Size = new System.Drawing.Size(521, 67);
+            this.toolStrip1.Size = new System.Drawing.Size(550, 67);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolbarButtonGeneral
             // 
             this.toolbarButtonGeneral.AutoSize = false;
+            this.toolbarButtonGeneral.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.toolbarButtonGeneral.Image = global::Growl.FormResources.tab_general;
+            this.toolbarButtonGeneral.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonGeneral.Name = "toolbarButtonGeneral";
             this.toolbarButtonGeneral.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonGeneral.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonGeneral.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonGeneral.Text = "General";
+            this.toolbarButtonGeneral.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonGeneral.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolbarButtonApplications
             // 
             this.toolbarButtonApplications.AutoSize = false;
+            this.toolbarButtonApplications.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.toolbarButtonApplications.Image = global::Growl.FormResources.tab_applications;
+            this.toolbarButtonApplications.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonApplications.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonApplications.Name = "toolbarButtonApplications";
             this.toolbarButtonApplications.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonApplications.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonApplications.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonApplications.Text = "Applications";
+            this.toolbarButtonApplications.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonApplications.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolbarButtonDisplays
             // 
             this.toolbarButtonDisplays.AutoSize = false;
+            this.toolbarButtonDisplays.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.toolbarButtonDisplays.Image = global::Growl.FormResources.tab_displays;
+            this.toolbarButtonDisplays.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonDisplays.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonDisplays.Name = "toolbarButtonDisplays";
             this.toolbarButtonDisplays.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonDisplays.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonDisplays.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonDisplays.Text = "Displays";
+            this.toolbarButtonDisplays.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonDisplays.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolbarButtonNetwork
             // 
             this.toolbarButtonNetwork.AutoSize = false;
+            this.toolbarButtonNetwork.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.toolbarButtonNetwork.Image = global::Growl.FormResources.tab_network;
+            this.toolbarButtonNetwork.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonNetwork.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonNetwork.Name = "toolbarButtonNetwork";
             this.toolbarButtonNetwork.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonNetwork.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonNetwork.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonNetwork.Text = "Network";
+            this.toolbarButtonNetwork.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonNetwork.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolbarButtonSecurity
             // 
             this.toolbarButtonSecurity.AutoSize = false;
+            this.toolbarButtonSecurity.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.toolbarButtonSecurity.Image = global::Growl.FormResources.tab_security;
+            this.toolbarButtonSecurity.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonSecurity.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonSecurity.Name = "toolbarButtonSecurity";
             this.toolbarButtonSecurity.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonSecurity.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonSecurity.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonSecurity.Text = "Security";
+            this.toolbarButtonSecurity.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonSecurity.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolbarButtonHistory
             // 
             this.toolbarButtonHistory.AutoSize = false;
+            this.toolbarButtonHistory.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.toolbarButtonHistory.Image = global::Growl.FormResources.tab_history;
+            this.toolbarButtonHistory.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonHistory.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonHistory.Name = "toolbarButtonHistory";
             this.toolbarButtonHistory.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonHistory.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonHistory.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonHistory.Text = "History";
+            this.toolbarButtonHistory.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolbarButtonAbout
             // 
             this.toolbarButtonAbout.AutoSize = false;
-            this.toolbarButtonAbout.Image = global::Growl.FormResources.growl;
+            this.toolbarButtonAbout.Font = new System.Drawing.Font("Trebuchet MS", 9F);
+            this.toolbarButtonAbout.Image = global::Growl.FormResources.tab_about;
+            this.toolbarButtonAbout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbarButtonAbout.Margin = new System.Windows.Forms.Padding(0);
             this.toolbarButtonAbout.Name = "toolbarButtonAbout";
             this.toolbarButtonAbout.Padding = new System.Windows.Forms.Padding(10, 4, 10, 0);
-            this.toolbarButtonAbout.Size = new System.Drawing.Size(72, 69);
+            this.toolbarButtonAbout.Size = new System.Drawing.Size(75, 69);
             this.toolbarButtonAbout.Text = "About";
+            this.toolbarButtonAbout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolbarButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // MainForm
@@ -1562,7 +1621,6 @@ namespace Growl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 373);
             this.Controls.Add(this.toolbarPanel);
-            this.Controls.Add(this.panelHistory);
             this.Controls.Add(this.panelApplications);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.panelInitializing);
@@ -1570,6 +1628,7 @@ namespace Growl
             this.Controls.Add(this.panelDisplays);
             this.Controls.Add(this.panelAbout);
             this.Controls.Add(this.panelSecurity);
+            this.Controls.Add(this.panelHistory);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -1580,6 +1639,8 @@ namespace Growl
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.panelGeneral.ResumeLayout(false);
+            this.groupBoxFullscreenSettings.ResumeLayout(false);
+            this.groupBoxFullscreenSettings.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.onOffButton1)).EndInit();
@@ -1745,5 +1806,8 @@ namespace Growl
         private System.Windows.Forms.PictureBox pictureBoxMultipleMonitors;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMultipleMonitors;
         private System.Windows.Forms.CheckBox checkBoxRequireLANPassword;
+        private System.Windows.Forms.GroupBox groupBoxFullscreenSettings;
+        private System.Windows.Forms.CheckBox checkBoxFullscreenPause;
+        private System.Windows.Forms.Label labelFullscreenPause;
     }
 }

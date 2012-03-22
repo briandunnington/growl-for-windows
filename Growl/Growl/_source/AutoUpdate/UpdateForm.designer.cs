@@ -44,7 +44,7 @@ namespace Growl.AutoUpdate
             // YesButton
             // 
             this.YesButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("YesButton.BackgroundImage")));
-            this.YesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.YesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.YesButton.FlatAppearance.BorderSize = 0;
             this.YesButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.YesButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
@@ -64,7 +64,7 @@ namespace Growl.AutoUpdate
             // NoButton
             // 
             this.NoButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("NoButton.BackgroundImage")));
-            this.NoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.NoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.NoButton.DialogResult = System.Windows.Forms.DialogResult.No;
             this.NoButton.FlatAppearance.BorderSize = 0;
             this.NoButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -85,7 +85,7 @@ namespace Growl.AutoUpdate
             // OKButton
             // 
             this.OKButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("OKButton.BackgroundImage")));
-            this.OKButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.OKButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.OKButton.FlatAppearance.BorderSize = 0;
             this.OKButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.OKButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
@@ -103,8 +103,8 @@ namespace Growl.AutoUpdate
             // 
             // UpdateForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(338, 121);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.NoButton);

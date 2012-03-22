@@ -15,7 +15,7 @@ namespace Growl.Installation
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstallDisplay));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstallLanguage));
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.InfoLabel = new System.Windows.Forms.Label();
             this.OKButton = new Growl.UI.ButtonEx();
@@ -45,7 +45,7 @@ namespace Growl.Installation
             // OKButton
             // 
             this.OKButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("OKButton.BackgroundImage")));
-            this.OKButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.OKButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.OKButton.FlatAppearance.BorderSize = 0;
             this.OKButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -65,7 +65,7 @@ namespace Growl.Installation
             // NoButton
             // 
             this.NoButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("NoButton.BackgroundImage")));
-            this.NoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.NoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.NoButton.DialogResult = System.Windows.Forms.DialogResult.No;
             this.NoButton.FlatAppearance.BorderSize = 0;
             this.NoButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -86,7 +86,7 @@ namespace Growl.Installation
             // YesButton
             // 
             this.YesButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("YesButton.BackgroundImage")));
-            this.YesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.YesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.YesButton.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.YesButton.FlatAppearance.BorderSize = 0;
             this.YesButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -104,10 +104,10 @@ namespace Growl.Installation
             this.YesButton.Visible = false;
             this.YesButton.Click += new System.EventHandler(this.YesButton_Click);
             // 
-            // InstallDisplay
+            // InstallLanguage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(338, 165);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.NoButton);
@@ -120,7 +120,7 @@ namespace Growl.Installation
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "InstallDisplay";
+            this.Name = "InstallLanguage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Install Display";
             this.ResumeLayout(false);

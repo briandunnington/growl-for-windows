@@ -71,7 +71,7 @@ namespace Growl.Displays.Plain
 
             if (n.Duration > 0) this.SetAutoCloseInterval(n.Duration * 1000);
 
-            // handle the image. if the image is not set, move the other controls over to compensate
+            // handle the image. if the image is set, move the other controls over to compensate
             Image image = n.Image;
             if (image != null)
             {
@@ -134,7 +134,7 @@ namespace Growl.Displays.Plain
         {
             if (args.HeightChange != 0)
             {
-                this.Size = new Size(this.Size.Width, this.Size.Height + args.HeightChange);
+                this.Height += args.HeightChange;
                 this.Location = new Point(this.Location.X, this.Location.Y - args.HeightChange);
             }
         }

@@ -33,7 +33,7 @@ namespace Growl.AutoUpdate
             ReadCurrentManifest();
         }
 
-        public Updater(string appPath, string currentVersion, string updateLocation)
+        private Updater(string appPath, string currentVersion, string updateLocation)
         {
             this.appPath = appPath;
             this.manifestFile = Path.Combine(this.appPath, MANIFEST_FILE_NAME);

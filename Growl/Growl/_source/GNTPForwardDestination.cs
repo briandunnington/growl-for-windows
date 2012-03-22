@@ -90,7 +90,11 @@ namespace Growl
             {
                 try
                 {
-                    return Cryptography.GetEncryptionType(Properties.Settings.Default.GNTPForwardEncryptionAlgorithm);
+                    //TODO: remove this once Growl on Mac support encryption
+                    if (Platform == KnownDestinationPlatformType.Mac)
+                        return Cryptography.SymmetricAlgorithmType.PlainText;
+                    else
+                        return Cryptography.GetEncryptionType(Properties.Settings.Default.GNTPForwardEncryptionAlgorithm);
                 }
                 catch
                 {
@@ -125,6 +129,9 @@ namespace Growl
             Forwarder growl = new Forwarder(this.Password, this.IPAddress, this.Port, requestInfo);
             growl.KeyHashAlgorithm = this.HashAlgorithm;
             growl.EncryptionAlgorithm = this.EncryptionAlgorithm;
+#if DEBUG
+            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+#endif
             growl.Register(application, notificationTypes.ToArray());
         }
 
@@ -133,6 +140,9 @@ namespace Growl
             Forwarder growl = new Forwarder(this.Password, this.IPAddress, this.Port, requestInfo);
             growl.KeyHashAlgorithm = this.HashAlgorithm;
             growl.EncryptionAlgorithm = this.EncryptionAlgorithm;
+#if DEBUG
+            //growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+#endif
             growl.ForwardedNotificationCallback += callbackFunction;
             growl.Notify(notification, callbackContext);
         }

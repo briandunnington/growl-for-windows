@@ -113,5 +113,8 @@
     <Setting Name="HistoryDaysToSave" Provider="Growl.UserSettingsProvider" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
     </Setting>
+    <Setting Name="AutoPauseFullscreen" Provider="Growl.UserSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

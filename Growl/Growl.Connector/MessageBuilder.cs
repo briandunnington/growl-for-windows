@@ -132,11 +132,11 @@ namespace Growl.Connector
             {
                 string keyHash = key.KeyHash;
                 string salt = key.Salt;
-                hashInfo = String.Format("{0}:{1}.{2}", DisplayName.Fetch(key.HashAlgorithm), keyHash, salt);
+                hashInfo = String.Format(" {0}:{1}.{2}", DisplayName.Fetch(key.HashAlgorithm), keyHash, salt);
             }
 
             // start building message
-            string s = String.Format("{0} {1} {2}", messageType, encryptionInfo, hashInfo);
+            string s = String.Format("{0} {1}{2}", messageType, encryptionInfo, hashInfo);
             allBytes.AddRange(protocolHeaderBytes);
             allBytes.AddRange(GetStringBytes(s.ToUpper()));
             allBytes.AddRange(blankLineBytes);

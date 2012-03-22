@@ -223,7 +223,7 @@ namespace Growl
         {
 #if (DEBUG)
             if(info != null)
-                Console.WriteLine(info);
+                System.Diagnostics.Debug.WriteLine(info);
 #endif
         }
     }

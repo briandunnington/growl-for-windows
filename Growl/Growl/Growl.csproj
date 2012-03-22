@@ -301,6 +301,8 @@
     <Compile Include="_source\DisposableResourceManager.cs" />
     <Compile Include="_source\EmailForwardDestination.cs" />
     <Compile Include="_source\EmailForwardDestinationHandler.cs" />
+    <Compile Include="_source\EventArgs.cs" />
+    <Compile Include="_source\FullScreenHelper.cs" />
     <Compile Include="_source\GNTPSubscriptionHandler.cs" />
     <Compile Include="_source\HttpWebRequestEx.cs" />
     <Compile Include="_source\Installation\InstallSubscriber.cs">
@@ -375,7 +377,6 @@
     <Compile Include="_source\NoneDisplay.cs" />
     <Compile Include="_source\NotificationPreferences.cs" />
     <Compile Include="_source\PluginFinder.cs" />
-    <Compile Include="_source\PortConflictEventArgs.cs" />
     <Compile Include="_source\PrefDuration.cs" />
     <Compile Include="_source\PrefEnabled.cs" />
     <Compile Include="_source\PrefForward.cs" />
@@ -580,6 +581,7 @@
     <None Include="Resources\multiplemonitors.png" />
     <None Include="Resources\growl.png" />
     <None Include="Resources\toasty.png" />
+    <None Include="Resources\tab_about.png" />
     <Content Include="update.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

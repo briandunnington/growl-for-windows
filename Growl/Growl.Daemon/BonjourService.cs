@@ -157,8 +157,9 @@ namespace Growl.Daemon
             Stop();
 
             Mono.Zeroconf.TxtRecord txt = new Mono.Zeroconf.TxtRecord();
-            txt.Add("txtvers", "1");
+            txt.Add("version", "1.0");
             txt.Add("platform", "windows");
+            txt.Add("websocket", "13");
 
             Mono.Zeroconf.RegisterService s = new Mono.Zeroconf.RegisterService();
             s.Name = name;

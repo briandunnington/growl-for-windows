@@ -165,10 +165,18 @@ namespace Growl
                 // this will force creation of the handle without showing the menu
                 Utility.WriteDebugInfo("ContextMenu Handle: {0}", this.contextMenu.Handle);
 
+                // scaling factor
+                float currentDPI = 0;
+                using (Graphics g = this.contextMenu.CreateGraphics())
+                {
+                    currentDPI = g.DpiX;
+                }
+                ApplicationMain.ScalingFactor = currentDPI / 96;
+
                 // configure the controller
                 this.controller = Controller.GetController();
-                this.controller.FailedToStart += new Controller.FailedToStartEventHandler(controller_FailedToStart);
-                this.controller.FailedToStartUDPLegacy += new Controller.FailedToStartEventHandler(controller_FailedToStartUDPLegacy);
+                this.controller.FailedToStart += new EventHandler<PortConflictEventArgs>(controller_FailedToStart);
+                this.controller.FailedToStartUDPLegacy += new EventHandler<PortConflictEventArgs>(controller_FailedToStartUDPLegacy);
                 this.controller.Initialize(Application.ExecutablePath, this.contextMenu);
 
                 this.wpr = new WndProcReader(WndProc);
@@ -487,12 +495,12 @@ namespace Growl
 
         private void pauseGrowlToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateState(true, true);
+            Pause(true);
         }
 
         private void unpauseGrowlToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateState(true, false);
+            Pause(false);
         }
 
         private void muteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -553,6 +561,11 @@ namespace Growl
                 this.updateForm.LaunchUpdater(args.Manifest, args.UpdateAvailable, args.ErrorArgs);
             }
             this.autoUpdateTimer.Start();
+        }
+
+        internal void Pause(bool pause)
+        {
+            UpdateState(true, pause);
         }
 
         internal void Mute(bool mute)
@@ -769,8 +782,8 @@ namespace Growl
 
                     if (this.controller != null)
                     {
-                        this.controller.FailedToStart -= new Controller.FailedToStartEventHandler(controller_FailedToStart);
-                        this.controller.FailedToStartUDPLegacy -= new Controller.FailedToStartEventHandler(controller_FailedToStartUDPLegacy);
+                        this.controller.FailedToStart -= new EventHandler<PortConflictEventArgs>(controller_FailedToStart);
+                        this.controller.FailedToStartUDPLegacy -= new EventHandler<PortConflictEventArgs>(controller_FailedToStartUDPLegacy);
                         this.controller.Dispose();
                         this.controller = null;
                     }

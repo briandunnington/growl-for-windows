@@ -46,7 +46,7 @@ namespace Growl.UI
             this.Controls.Add(listbox);
             this.listbox.FormattingEnabled = true;
             this.listbox.IntegralHeight = false;
-            this.listbox.ItemHeight = 18;
+            this.listbox.ItemHeight = (int)(18 * ApplicationMain.ScalingFactor);
             this.listbox.BorderStyle = BorderStyle.None;
             this.listbox.DrawItem += new DrawItemEventHandler(ListControl_DrawItem);
             this.listbox.ForeColorChanged += new EventHandler(ListControl_ForeColorChanged);

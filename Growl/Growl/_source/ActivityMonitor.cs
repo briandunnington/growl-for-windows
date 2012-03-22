@@ -8,11 +8,9 @@ namespace Growl
 {
     internal class ActivityMonitor : IDisposable
     {
-        public event ActivityMonitorEventHandler WentIdle;
-        public event ActivityMonitorEventHandler ResumedActivity;
+        public event EventHandler<ActivityMonitorEventArgs> WentIdle;
+        public event EventHandler<ActivityMonitorEventArgs> ResumedActivity;
         public event EventHandler StillActive;
-
-        public delegate void ActivityMonitorEventHandler(ActivityMonitorEventArgs args);
 
         private bool isStarted;
         private bool isInactive;
@@ -85,14 +83,14 @@ namespace Growl
 
         public void PauseApplication()
         {
-            if (!this.isPaused) this.OnWentIdle(new ActivityMonitorEventArgs(ActivityMonitorEventReason.ApplicationPaused));
+            if (!this.isPaused) OnWentIdle(new ActivityMonitorEventArgs(ActivityMonitorEventReason.ApplicationPaused));
             Stop();
             this.isPaused = true;
         }
 
         public void UnpauseApplication()
         {
-            if (this.isPaused) this.ResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.ApplicationUnpaused));
+            if (this.isPaused) OnResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.ApplicationUnpaused));
             Start();
             this.isPaused = false;
         }
@@ -125,7 +123,7 @@ namespace Growl
         {
             if (this.WentIdle != null)
             {
-                this.WentIdle(args);
+                this.WentIdle(this, args);
             }
         }
 
@@ -133,7 +131,7 @@ namespace Growl
         {
             if (this.ResumedActivity != null)
             {
-                this.ResumedActivity(args);
+                this.ResumedActivity(this, args);
             }
         }
 
@@ -238,12 +236,12 @@ namespace Growl
             {
                 this.isLocked = true;
                 StopTimer();    // dont check for idle while locked
-                this.OnWentIdle(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopLocked));
+                OnWentIdle(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopLocked));
                 Utility.WriteDebugInfo("system locked");
             }
             else if (e.Reason == SessionSwitchReason.SessionUnlock)
             {
-                this.ResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopUnlocked));
+                OnResumedActivity(new ActivityMonitorEventArgs(ActivityMonitorEventReason.DesktopUnlocked));
                 this.isLocked = false;
                 MaybeStartTimer();   // start checking for idle again
                 Utility.WriteDebugInfo("system unlocked");
