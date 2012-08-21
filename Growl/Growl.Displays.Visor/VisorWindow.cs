@@ -47,6 +47,8 @@ namespace Growl.Displays.Visor
             // set size & location
             this.Width = screen.Bounds.Width;
             this.Location = screen.Bounds.Location;
+            this.titleLabel.Width = this.Width / 2;
+            this.descriptionLabel.Width = this.Width / 2;
 
             // set initial opacity
             this.Opacity = 0.90;

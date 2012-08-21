@@ -1,3 +1,8 @@
+v.NEXT
+------------------------------
+- expanded width of title & text display fields in Visor display so that all text was not bunched up in the left corner on very wide screens
+
+
 2.0.9 changes (v2.0.9.1)
 ------------------------------
 - set NoImpersonate flag on custom installer actions (in hopes of avoiding some 2869 errors) - http://blogs.msdn.com/b/astebner/archive/2006/10/23/mailbag-how-to-set-the-noimpersonate-flag-for-a-custom-action-in-visual-studio-2005.aspx
