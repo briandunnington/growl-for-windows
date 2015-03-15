@@ -1,0 +1,14 @@
+"this is the notification text" /t:"my notification" /id:12345 /s:true /p:2 /i:"c:\apple.png" /a:"growlnotify example" /r:"Example Notification" /n:"Example Notification" /protocol:GNTP /host:localhost /port:23053 /pass:"secret" /enc:DES /hash:SHA256
+
+
+OTHER STUFF:
+
+"C:\Program Files\Microsoft\ILMerge\ilmerge" [/lib:directory]* [/log[:filename]] [/keyfile:filename [/delaysign]] [/internalize[:filename]] [/t[arget]:(library|exe|winexe)] [/closed] [/ndebug] [/ver:version] [/copyattrs] [/xmldocs] [/attr:filename] ([/targetplatform:<version>[,<platformdir>]]|v1|v1.1|v2) [/useFullPublicKeyForReferences] [/zeroPeKind] [/wildcards] [/allowDup[:typename]]* [/allowDuplicateResources] [/union] [/align:n] /out:filename <primary assembly> [<other assemblies>...]
+
+"C:\Program Files\Microsoft\ILMerge\ilmerge" /out:"$(TargetDir)growlnotify.combined.exe" "$(TargetDir)$(TargetFileName)" "$(TargetDir)Growl.Connector.dll" "$(TargetDir)Growl.CoreLibrary.dll"
+
+"C:\Program Files\Microsoft\ILMerge\ilmerge" /out:D:\_Growl\Growl Extras\growlnotify\bin\Release\growlnotify.combined.exe D:\_Growl\Growl Extras\growlnotify\bin\Release\growlnotify.exe D:\_Growl\Growl Extras\growlnotify\bin\Release\Growl.Connector.dll D:\_Growl\Growl Extras\growlnotify\bin\Release\Growl.CoreLibrary.dll
+
+growlnotify /t:"my notification" /id:12345 /s:true /p:2 /i:"c:\apple.png" /a:"growlnotify example" /r:"Example Notification" /n:"Example Notification" /host:localhost /port:23053 /pass:"secret" /enc:DES /hash:SHA256 "this is the notification text"
+
+"D:\_Growl\Growl Extras\growlnotify\bin\Debug\growlnotify" /t:"my notification" /id:12345 /s:true /p:2 /i:"c:\apple.png" /a:"growlnotify example" /r:"Example Notification" /n:"Example Notification" /host:localhost /port:23053 /pass:"secret" /enc:DES /hash:SHA256 "this is the notification text"

@@ -1,0 +1,301 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Threading;
+using Microsoft.Win32;
+using Growl.Connector;
+
+namespace growlnotify
+{
+    public class Program
+    {
+        static GrowlConnector growl;
+        static EventWaitHandle ewh;
+
+        static void Main(string[] args)
+        {
+            //Get a pointer to the forground window.  The idea here is that
+            //IF the user is starting our application from an existing console
+            //shell, that shell will be the uppermost window.  We'll get it
+            //and attach to it
+
+            /*
+            IntPtr ptr = GetForegroundWindow();
+            int u;
+            GetWindowThreadProcessId(ptr, out u);
+            Process process = Process.GetProcessById(u);
+
+            if (process.ProcessName == "cmd")    //Is the uppermost window a cmd process?
+            {
+                AttachConsole(process.Id);
+            }
+             * */
+
+            bool needToFreeConsole = AttachConsole(-1);
+
+            if (args == null || args.Length == 0)
+            {
+                Console.WriteLine("Invalid arguments. See /? for usage.");
+                return;
+            }
+
+            if (args[0] == "/?")
+            {
+                Console.WriteLine();
+                string usage = global::growlnotify.Properties.Resources.usage;
+                Console.WriteLine(usage);
+                return;
+            }
+
+            // parse parameters
+            Dictionary<string, Parameter> parameters = new Dictionary<string, Parameter>();
+            try
+            {
+                foreach (string arg in args)
+                {
+                    Parameter p = GetParameterValue(arg);
+                    parameters.Add(p.Argument, p);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Bad arguments : " + ex.Message);
+                return;
+            }
+            
+            // set default values
+            string messageText = "";
+            string title = "growlnotify";
+            string id = "";
+            bool sticky = false;
+            int priorityInt = 0;
+            string iconFile = null;
+            string applicationName = "growlnotify";
+            string notificationTypeToRegister = null;
+            string notificationType = "General Notification";
+            string callbackUrl = null;
+            string callbackContextData = null;
+            string protocol = "GNTP";
+            string host = "localhost";
+            string password = null;
+            Cryptography.SymmetricAlgorithmType encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+            Cryptography.HashAlgorithmType hashAlgorithm = Cryptography.HashAlgorithmType.MD5;
+            int port = GrowlConnector.TCP_PORT;
+
+            // validate required parameters
+            if (!parameters.ContainsKey("messagetext"))
+            {
+                Console.WriteLine("Missing 'messagetext' argument. See /? for usage");
+                return;
+            }
+            else
+            {
+                messageText = parameters["messagetext"].Value;
+            }
+            if (parameters.ContainsKey("/t"))
+            {
+                title = parameters["/t"].Value;
+            }
+            if (parameters.ContainsKey("/id"))
+            {
+                id = parameters["/id"].Value;
+            }
+            if (parameters.ContainsKey("/s"))
+            {
+                string s = parameters["/s"].Value.ToLower();
+                if (s == "true") sticky = true;
+            }
+            if (parameters.ContainsKey("/p"))
+            {
+                priorityInt = Convert.ToInt32(parameters["/p"].Value);
+            }
+            if (parameters.ContainsKey("/i"))
+            {
+                iconFile = parameters["/i"].Value;
+            }
+            if (parameters.ContainsKey("/a"))
+            {
+                applicationName = parameters["/a"].Value;
+            }
+            if (parameters.ContainsKey("/r"))
+            {
+                notificationTypeToRegister = parameters["/r"].Value;
+            }
+            if (parameters.ContainsKey("/n"))
+            {
+                notificationType = parameters["/n"].Value;
+            }
+            if (parameters.ContainsKey("/cu"))
+            {
+                callbackUrl = parameters["/cu"].Value;
+            }
+            if (parameters.ContainsKey("/cc"))
+            {
+                callbackContextData = parameters["/cc"].Value;
+            }
+            if (parameters.ContainsKey("/protocol"))
+            {
+                protocol = parameters["/protocol"].Value;
+            }
+            if (parameters.ContainsKey("/host"))
+            {
+                host = parameters["/host"].Value;
+            }
+            if (parameters.ContainsKey("/port"))
+            {
+                port = Convert.ToInt32(parameters["/port"].Value);
+            }
+            else
+            {
+                if (protocol == "UDP") port = 9887;
+            }
+            if (parameters.ContainsKey("/pass"))
+            {
+                password = parameters["/pass"].Value;
+            }
+            if (parameters.ContainsKey("/enc"))
+            {
+                switch (parameters["/enc"].Value.ToUpper())
+                {
+                    case "DES" :
+                        encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.DES;
+                        break;
+                    case "3DES":
+                        encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.TripleDES;
+                        break;
+                    case "AES":
+                        encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.AES;
+                        break;
+                    default :
+                        encryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
+                        break;
+                }
+            }
+            if (parameters.ContainsKey("/hash"))
+            {
+                switch (parameters["/hash"].Value.ToUpper())
+                {
+                    case "SHA1":
+                        hashAlgorithm = Cryptography.HashAlgorithmType.SHA1;
+                        break;
+                    case "SHA256":
+                        hashAlgorithm = Cryptography.HashAlgorithmType.SHA256;
+                        break;
+                    case "SHA512":
+                        hashAlgorithm = Cryptography.HashAlgorithmType.SHA512;
+                        break;
+                    default:
+                        hashAlgorithm = Cryptography.HashAlgorithmType.MD5;
+                        break;
+                }
+            }
+
+            // set up a waithandle so we can wait for responses
+            ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+            // set up growl connector
+            growl = new GrowlConnector(password, host, port);
+            growl.EncryptionAlgorithm = encryptionAlgorithm;
+            growl.KeyHashAlgorithm = hashAlgorithm;
+            growl.OKResponse += new GrowlConnector.ResponseEventHandler(growl_Response);
+            growl.ErrorResponse += new GrowlConnector.ResponseEventHandler(growl_Response);
+
+            // do any registration first
+            if (notificationTypeToRegister != null || applicationName == "growlnotify")
+            {
+                if (String.IsNullOrEmpty(notificationTypeToRegister)) notificationTypeToRegister = "General Notification";
+                Application application = new Application(applicationName);
+                NotificationType type = new NotificationType(notificationTypeToRegister);
+                NotificationType[] types = new NotificationType[] { type };
+                growl.Register(application, types);
+                ewh.WaitOne();  // wait just to be sure the registration gets there first
+            }
+
+            // handle any callback information
+            CallbackContext callback = null;
+            if (callbackUrl != null)
+            {
+                callback = new CallbackContext();
+                UrlCallbackTarget target = new UrlCallbackTarget();
+                target.Url = callbackUrl;
+                callback.SetUrlCallbackTarget(target);
+                callback.Data = (String.IsNullOrEmpty(callbackContextData) ? "none" : callbackContextData);
+                callback.Type = "string";
+            }
+
+            ewh.Reset();
+
+            // send the notification
+            Growl.CoreLibrary.Resource icon = iconFile;
+            Priority priority = (Enum.IsDefined(typeof(Priority), priorityInt) ? (Priority)priorityInt : Priority.Normal);
+            Notification notification = new Notification(applicationName, notificationType, id, title, messageText, icon, sticky, priority, null);
+            growl.Notify(notification, callback);
+            ewh.WaitOne();
+
+            Console.WriteLine();
+
+            if(needToFreeConsole)
+                FreeConsole();
+        }
+
+        static void growl_Response(Response response)
+        {
+            if (response.IsOK)
+                Console.WriteLine("Notification sent successfully");
+            else
+                Console.WriteLine(String.Format("Notification failed: {0} - {1}", response.ErrorCode, response.ErrorDescription));
+
+            // signal that a response was received
+            ewh.Set();
+        }
+
+        private static Parameter GetParameterValue(string argument)
+        {
+            if (argument.StartsWith("/"))
+            {
+                string[] parts = argument.Split(new char[] { ':' }, 2);
+                string val = parts[1];
+                if (val.StartsWith("\"") && val.EndsWith("\""))
+                {
+                    val = val.Substring(1, val.Length - 2);
+                }
+                return new Parameter(parts[0], val);
+            }
+            else
+                return new Parameter("messagetext", argument);
+        }
+
+        private struct Parameter
+        {
+            public Parameter(string arg, string val)
+            {
+                this.Argument = arg;
+
+                if (val == null) val = String.Empty;
+                val = val.Replace("\\n", "\n");
+                val = val.Replace("\\\n", "\\n");
+                this.Value = val;
+            }
+
+            public string Argument;
+            public string Value;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool FreeConsole();
+
+        [DllImport("kernel32", SetLastError = true)]
+        static extern bool AttachConsole(int dwProcessId);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+    }
+}

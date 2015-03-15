@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<display>
+  <!-- <name> should contain the friendly name of your plugin. this will be displayed to the user when asking if they would like to install the plugin -->
+  <name>Webhook Forwarder</name>
+
+  <!-- <author> should identify the creator of the plugin -->
+  <author>Brian Dunnington</author>
+
+  <!-- <version> can be any value (not just numbers or version strings) that identifies the version of the plugin -->
+  <version>1.0</version>
+
+  <!-- <packageurl> should be the full url to the location of the .zip file that contains all of your plugin's required files -->
+  <packageurl>http://www.growlforwindows.com/gfw/d.ashx?f=forwarders/webhook.zip</packageurl>
+
+  <!-- The description should be short (~15 words) and will be displayed to the user when asking if they would like to install the plugin
+       Make sure you wrap the description in a CDATA tag if you are using any special characters. -->
+  <description>
+    <![CDATA[
+    Forwards notification to a url using HTTP POST.
+    ]]>
+  </description>
+</display>
